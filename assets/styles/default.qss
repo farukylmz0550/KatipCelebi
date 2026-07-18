@@ -1,0 +1,507 @@
+/* ================================================================
+   Katip Celebi — Custom Theme Template
+   ================================================================
+
+   This is a starting point. Edit the values below to create your own
+   look. Save the file and reload the app to see your changes.
+
+   Sections:
+     1. Colours        — change these to re-skin everything at once
+     2. Base           — window, labels, general typography
+     3. Buttons        — normal, primary, danger
+     4. Input fields   — text boxes, combo boxes, spin boxes
+     5. Sidebar        — navigation panel
+     6. Cards          — book cards, metric cards
+     7. Tables         — data grids
+     8. Scrollbars     — thin overlays
+     9. Progress bars  — fill indicators
+    10. Tooltips       — hover hints
+
+   Tip: Search for "EDIT:" to find every value you might want to
+   change. Everything else usually works as-is.
+   ================================================================ */
+
+
+/* ================================================================
+   1. COLOURS — the one place to change the palette
+   ================================================================
+
+   These are the only colour values. Every widget below references
+   them, so changing a line here re-skins the whole app at once.
+
+   Format:  property: #RRGGBB;
+   ================================================================ */
+
+/*
+   EDIT: Background colours
+   bg_main     — the window background
+   bg_surface  — cards, panels, input fields
+   bg_sidebar  — the left navigation strip
+   bg_hover    — what buttons and rows turn on mouse-over
+*/
+
+/*
+   EDIT: Text colours
+   fg_main     — primary text (headings, body)
+   fg_dim      — secondary text (subtitles, hints)
+   fg_link     — clickable links
+*/
+
+/*
+   EDIT: Accent colours
+   accent      — toggles, sliders, links, active indicators
+   accent_fg   — text on top of the accent colour
+   danger      — destructive actions (delete buttons)
+   danger_fg   — text on danger background
+*/
+
+
+/* ================================================================
+   2. BASE — window, labels, general typography
+   ================================================================ */
+
+QWidget {
+    /* EDIT: window background and default text colour */
+    background-color: #f0f0f0;
+    color: #000000;
+    font-family: "Segoe UI", "Noto Sans", sans-serif;
+    font-size: 13px;
+}
+
+QLabel {
+    background: transparent;
+    padding: 1px;
+}
+
+QMainWindow {
+    background-color: #f0f0f0;
+}
+
+
+/* ================================================================
+   3. BUTTONS — normal, primary, danger
+   ================================================================ */
+
+/*
+   EDIT: The main button colour is controlled by QPushButton below.
+   #primaryButton is for the one main action per screen (the
+   "save" or "start" button). #dangerButton is for deletes.
+*/
+
+QPushButton {
+    /* EDIT: button face, text, border */
+    background-color: #e1e1e1;
+    border: 1px solid #adadad;
+    border-radius: 3px;
+    color: #000000;
+    padding: 4px 12px;
+    min-height: 20px;
+    font-weight: normal;
+}
+
+QPushButton:hover {
+    /* EDIT: hover colour */
+    background-color: #d5d5d5;
+    border-color: #0078d7;
+}
+
+QPushButton:pressed {
+    background-color: #c8c8c8;
+    border-color: #005499;
+}
+
+QPushButton:disabled {
+    background-color: #f0f0f0;
+    color: #a0a0a0;
+    border-color: #c0c0c0;
+}
+
+QPushButton:focus {
+    border: 1px solid #0078d7;
+}
+
+/* Primary (suggested) action button */
+#primaryButton, QPushButton:default {
+    /* EDIT: primary button colours */
+    background-color: #0078d7;
+    color: #ffffff;
+    border: 1px solid #005499;
+}
+
+#primaryButton:hover, QPushButton:default:hover {
+    background-color: #006cbd;
+}
+
+#primaryButton:pressed, QPushButton:default:pressed {
+    background-color: #005499;
+}
+
+/* Danger (destructive) button */
+#dangerButton {
+    background-color: transparent;
+    color: #c42b1c;
+    border: none;
+}
+
+#dangerButton:hover {
+    background-color: #c42b1c;
+    color: #ffffff;
+}
+
+
+/* ================================================================
+   4. INPUT FIELDS — text boxes, combo boxes, spin boxes
+   ================================================================ */
+
+/*
+   EDIT: Input fields have a white background with a sunken border,
+   like classic Windows controls.
+*/
+
+QLineEdit, QTextEdit, QSpinBox {
+    /* EDIT: field background, border, text */
+    background-color: #ffffff;
+    border: 1px solid #7a7a7a;
+    border-radius: 2px;
+    color: #000000;
+    padding: 3px 6px;
+    selection-background-color: #0078d7;
+    selection-color: #ffffff;
+}
+
+QLineEdit { min-height: 20px; }
+
+QTextEdit {
+    border: 2px inset #c0c0c0;
+    border-radius: 0px;
+    padding: 4px;
+}
+
+QSpinBox {
+    min-height: 20px;
+}
+
+QLineEdit:focus, QTextEdit:focus, QComboBox:focus, QSpinBox:focus {
+    /* EDIT: focus ring colour */
+    border: 2px solid #0078d7;
+}
+
+QComboBox {
+    /* EDIT: dropdown background */
+    background-color: #ffffff;
+    border: 1px solid #7a7a7a;
+    border-radius: 2px;
+    color: #000000;
+    padding: 3px 6px;
+    min-height: 20px;
+}
+
+QComboBox::drop-down {
+    border: none;
+    width: 24px;
+    subcontrol-origin: padding;
+    subcontrol-position: center right;
+}
+
+QComboBox::down-arrow {
+    image: url(%(chevron)s);
+    width: 14px;
+    height: 14px;
+}
+
+QComboBox QAbstractItemView {
+    /* EDIT: dropdown list background */
+    background-color: #ffffff;
+    border: 1px solid #7a7a7a;
+    color: #000000;
+    selection-background-color: #0078d7;
+    selection-color: #ffffff;
+    outline: none;
+    padding: 2px;
+}
+
+QSpinBox::up-button, QSpinBox::down-button {
+    border: none;
+    background: transparent;
+    width: 16px;
+}
+
+QCheckBox { color: #000000; }
+
+
+/* ================================================================
+   5. SIDEBAR — navigation panel
+   ================================================================ */
+
+/*
+   EDIT: The sidebar has a slightly different background from the
+   main window, with a thin border on the right.
+*/
+
+#sidebar {
+    /* EDIT: sidebar background */
+    background-color: #e8e8e8;
+    border: none;
+    border-right: 1px solid #c0c0c0;
+}
+
+#brandLabel {
+    /* EDIT: app name at top of sidebar */
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#navButton {
+    /* EDIT: navigation button style */
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    color: #000000;
+    font-weight: normal;
+    min-height: 20px;
+    padding: 7px 12px;
+    text-align: left;
+}
+
+#navButton:hover {
+    /* EDIT: nav hover */
+    background-color: #d0d0d0;
+    border-color: #b0b0b0;
+}
+
+#navButton:checked {
+    /* EDIT: selected nav item */
+    background-color: #0078d7;
+    color: #ffffff;
+    border-color: #005499;
+    font-weight: bold;
+}
+
+
+/* ================================================================
+   6. CARDS — book cards, metric cards
+   ================================================================ */
+
+/*
+   EDIT: Cards are slightly raised panels with a border.
+*/
+
+#bookCard {
+    /* EDIT: card background and border */
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+}
+
+#bookCard:hover {
+    background-color: #e8f4fd;
+    border-color: #0078d7;
+}
+
+#cardName {
+    color: #000000;
+    font-size: 12px;
+}
+
+#cardStars {
+    /* EDIT: star rating colour */
+    color: #e6a800;
+    font-size: 13px;
+}
+
+#cardBadge {
+    color: #0078d7;
+    font-size: 11px;
+}
+
+#metricCard {
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+}
+
+#metricValue {
+    color: #000000;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#metricCaption {
+    color: #606060;
+    font-size: 12px;
+}
+
+
+/* ================================================================
+   7. TABLES — data grids
+   ================================================================ */
+
+QTableWidget, QTableView {
+    /* EDIT: table background */
+    background-color: #ffffff;
+    alternate-background-color: #f5f5f5;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+    color: #000000;
+    gridline-color: #e0e0e0;
+}
+
+QTableWidget::item, QTableView::item {
+    padding: 4px 6px;
+}
+
+QTableWidget::item:selected, QTableView::item:selected {
+    /* EDIT: selected row */
+    background-color: #0078d7;
+    color: #ffffff;
+}
+
+QHeaderView::section {
+    /* EDIT: column headers */
+    background-color: #e8e8e8;
+    border: none;
+    border-bottom: 2px solid #c0c0c0;
+    border-right: 1px solid #d0d0d0;
+    color: #000000;
+    font-weight: bold;
+    padding: 6px 8px;
+}
+
+QTableCornerButton::section {
+    background-color: #e8e8e8;
+    border: none;
+}
+
+
+/* ================================================================
+   8. SCROLLBARS — thin overlays
+   ================================================================ */
+
+QScrollBar:vertical {
+    background: transparent;
+    width: 12px;
+    margin: 0;
+    border: none;
+}
+
+QScrollBar::handle:vertical {
+    /* EDIT: scrollbar handle colour */
+    background-color: #c0c0c0;
+    border: 2px solid #e8e8e8;
+    border-radius: 4px;
+    min-height: 30px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background-color: #a0a0a0;
+}
+
+QScrollBar:horizontal {
+    background: transparent;
+    height: 12px;
+    margin: 0;
+    border: none;
+}
+
+QScrollBar::handle:horizontal {
+    background-color: #c0c0c0;
+    border: 2px solid #e8e8e8;
+    border-radius: 4px;
+    min-width: 30px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background-color: #a0a0a0;
+}
+
+QScrollBar::add-line, QScrollBar::sub-line {
+    height: 0;
+    width: 0;
+    border: none;
+}
+
+QScrollBar::add-page, QScrollBar::sub-page {
+    background: none;
+}
+
+
+/* ================================================================
+   9. PROGRESS BARS — fill indicators
+   ================================================================ */
+
+QProgressBar {
+    /* EDIT: progress bar track */
+    background-color: #e0e0e0;
+    border: 1px solid #c0c0c0;
+    border-radius: 3px;
+    color: #000000;
+    text-align: center;
+    min-height: 18px;
+}
+
+QProgressBar::chunk {
+    /* EDIT: progress bar fill */
+    background-color: #0078d7;
+    border-radius: 2px;
+}
+
+
+/* ================================================================
+   10. TOOLTIPS — hover hints
+   ================================================================ */
+
+QToolTip {
+    /* EDIT: tooltip colours */
+    background-color: #ffffe1;
+    color: #000000;
+    border: 1px solid #000000;
+    padding: 2px;
+}
+
+
+/* ================================================================
+   SPECIAL ELEMENTS — app-specific object names
+   ================================================================ */
+
+#emptyLabel {
+    color: #808080;
+    font-size: 14px;
+    padding: 60px 0;
+}
+
+#pageTitle {
+    color: #000000;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#welcomeTitle {
+    color: #000000;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#pageSubtitle, #statusLabel {
+    color: #606060;
+    font-size: 13px;
+}
+
+#detailFieldLabel {
+    color: #000000;
+    font-size: 12px;
+    font-weight: bold;
+    padding-top: 8px;
+}
+
+#searchField {
+    background-color: #ffffff;
+    border: 1px solid #7a7a7a;
+    border-radius: 12px;
+    min-height: 20px;
+    padding: 6px 12px;
+}
+
+#searchField:focus {
+    border: 2px solid #0078d7;
+}

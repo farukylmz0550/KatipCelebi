@@ -1,0 +1,17 @@
+# What the app needs to run.
+PyQt6>=6.5
+PyQt6-Charts>=6.5
+# The statistics pages draw with QtCharts; the icons are SVG.
+openpyxl>=3.1
+# Material Design 3's colour engine: one seed in, the whole palette out.
+# Google's own algorithm, ported. MIT, which GPLv3 can take in.
+materialyoucolor>=3.0
+# The one secret the app keeps -- an Open Library sign-in, if you save it --
+# goes in the OS credential store, never a file. keyring is the door to it.
+keyring>=24
+# The Adwaita theme for native GNOME look (system package, not pip):
+#   Fedora/RHEL: sudo dnf install adwaita-qt6
+#   Arch/Manjaro: sudo pacman -S adwaita-qt6
+#   Ubuntu/Debian: sudo apt install adwaita-qt6
+#   openSUSE: sudo zypper install adwaita-qt6
+# Without it, the Adwaita themes fall back to Fusion with Adwaita's own colours.

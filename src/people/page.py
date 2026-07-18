@@ -1,0 +1,256 @@
+# Katip Celebi
+# Copyright (C) 2026 farukylmz0550
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+"""The People page: who you lend to, and what they have of yours."""
+
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (
+    QAbstractItemView,
+    QHBoxLayout,
+    QHeaderView,
+    QLabel,
+    QLineEdit,
+    QMessageBox,
+    QPushButton,
+    QTableWidget,
+    QTableWidgetItem,
+    QVBoxLayout,
+    QWidget,
+)
+
+from people.model import as_date
+from people.store import Ledger
+from shared.texts import text
+
+
+class PeoplePage(QWidget):
+    """Add people, drop people, and see what each of them is holding."""
+
+    def __init__(self, ledger: Ledger, parent=None):
+        super().__init__(parent)
+        self.ledger = ledger
+        self._build()
+
+    def _build(self) -> None:
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(28, 24, 28, 20)
+        layout.setSpacing(12)
+
+        title = QLabel(text("nav_people"))
+        title.setObjectName("pageTitle")
+        layout.addWidget(title)
+
+        self.count_label = QLabel()
+        self.count_label.setObjectName("pageSubtitle")
+        layout.addWidget(self.count_label)
+
+        add_row = QHBoxLayout()
+        self.name_edit = QLineEdit()
+        self.name_edit.setPlaceholderText(text("person_name_hint"))
+        self.name_edit.returnPressed.connect(self.add_person)
+        add_row.addWidget(self.name_edit, 1)
+        self.add_button = QPushButton(text("person_add"))
+        self.add_button.setObjectName("primaryButton")  # the main action here
+        self.add_button.clicked.connect(self.add_person)
+        add_row.addWidget(self.add_button)
+        self.remove_button = QPushButton(text("person_remove"))
+        self.remove_button.clicked.connect(self.remove_person)
+        add_row.addWidget(self.remove_button)
+        layout.addLayout(add_row)
+
+        self.status_label = QLabel()
+        self.status_label.setObjectName("statusLabel")
+        layout.addWidget(self.status_label)
+
+        self.empty_label = QLabel(text("people_empty"))
+        self.empty_label.setObjectName("emptyLabel")
+        self.empty_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.empty_label.hide()
+        layout.addWidget(self.empty_label)
+
+        self.table = QTableWidget(0, 4)
+        self.table.setHorizontalHeaderLabels(
+            [
+                text("col_person"),
+                text("col_trust"),
+                text("col_returned"),
+                text("col_out"),
+            ]
+        )
+        self.table.setSelectionBehavior(
+            QAbstractItemView.SelectionBehavior.SelectRows
+        )
+        self.table.setSelectionMode(
+            QAbstractItemView.SelectionMode.SingleSelection
+        )
+        self.table.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers
+        )
+        self.table.horizontalHeader().setSectionResizeMode(
+            0, QHeaderView.ResizeMode.Stretch
+        )
+        self.table.itemSelectionChanged.connect(self._show_history)
+        layout.addWidget(self.table, 1)
+
+        self.history_label = QLabel(text("history_none"))
+        self.history_label.setObjectName("pageSubtitle")
+        layout.addWidget(self.history_label)
+
+        self.history = QTableWidget(0, 3)
+        self.history.setHorizontalHeaderLabels(
+            [text("col_book"), text("col_lent"), text("col_returned_on")]
+        )
+        self.history.setEditTriggers(
+            QAbstractItemView.EditTrigger.NoEditTriggers
+        )
+        self.history.horizontalHeader().setSectionResizeMode(
+            0, QHeaderView.ResizeMode.Stretch
+        )
+        layout.addWidget(self.history, 1)
+
+    # ------------------------------------------------------------ the list ---
+    def refresh(self) -> None:
+        """Redraw from the ledger, keeping whoever was selected selected."""
+        chosen = self.selected_person_id()
+        self.count_label.setText(
+            text("people_count").format(n=len(self.ledger.people))
+        )
+        # An empty table is a grid of nothing that explains nothing.
+        nobody = not self.ledger.people
+        self.empty_label.setVisible(nobody)
+        self.table.setVisible(not nobody)
+        self.table.setRowCount(len(self.ledger.people))
+        for row, person in enumerate(self.ledger.people):
+            out = len(self.ledger.books_out_with(person.id))
+            cells = (
+                person.name,
+                str(self.ledger.trust_score(person.id)),
+                str(len(self.ledger.loans_of(person.id)) - out),
+                str(out),
+            )
+            for column, value in enumerate(cells):
+                item = QTableWidgetItem(value)
+                if column == 0:
+                    # The id rides along with the name, so a selected row can
+                    # be turned back into a person without matching on the
+                    # text.
+                    item.setData(Qt.ItemDataRole.UserRole, person.id)
+                self.table.setItem(row, column, item)
+
+        if chosen:
+            self.select_person(chosen)
+        self._show_history()
+
+    def selected_person_id(self) -> str:
+        items = self.table.selectedItems()
+        if not items:
+            return ""
+        return (
+            self.table.item(items[0].row(), 0).data(Qt.ItemDataRole.UserRole)
+            or ""
+        )
+
+    def select_person(self, person_id: str) -> None:
+        for row in range(self.table.rowCount()):
+            if (
+                self.table.item(row, 0).data(Qt.ItemDataRole.UserRole)
+                == person_id
+            ):
+                self.table.selectRow(row)
+                return
+
+    # -------------------------------------------------------------- adding ---
+    def add_person(self) -> None:
+        name = self.name_edit.text()
+        if not name.strip():
+            self.status_label.setText(text("person_needs_name"))
+            return
+        if self.ledger.person_named(name) is not None:
+            self.status_label.setText(
+                text("person_already_known").format(name=name.strip())
+            )
+            return
+        if self.ledger.add_person(name) is None:
+            QMessageBox.critical(
+                self,
+                text("save_failed_title"),
+                text("save_failed").format(path=self.ledger.people_path),
+            )
+            return
+        self.name_edit.clear()
+        self.status_label.setText(text("person_added"))
+        self.refresh()
+
+    def remove_person(self) -> None:
+        person_id = self.selected_person_id()
+        if not person_id:
+            self.status_label.setText(text("person_pick_first"))
+            return
+        person = self.ledger.find_person(person_id)
+        out = self.ledger.books_out_with(person_id)
+        if out:
+            # Their name is written into those loans; removing them would leave
+            # the history naming somebody the app no longer has.
+            QMessageBox.information(
+                self,
+                text("person_still_has_books_title"),
+                text("person_still_has_books").format(
+                    name=person.name,
+                    books="\n".join(loan.book_title for loan in out),
+                ),
+            )
+            return
+        if (
+            QMessageBox.question(
+                self,
+                text("person_remove_title"),
+                text("person_remove_confirm").format(name=person.name),
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                QMessageBox.StandardButton.No,
+            )
+            != QMessageBox.StandardButton.Yes
+        ):
+            return
+        if not self.ledger.remove_person(person_id):
+            QMessageBox.critical(
+                self,
+                text("save_failed_title"),
+                text("save_failed").format(path=self.ledger.people_path),
+            )
+            return
+        self.status_label.setText(text("person_removed"))
+        self.refresh()
+
+    # ------------------------------------------------------------ history ---
+    def _show_history(self) -> None:
+        person_id = self.selected_person_id()
+        if not person_id:
+            self.history_label.setText(text("history_none"))
+            self.history.setRowCount(0)
+            return
+
+        person = self.ledger.find_person(person_id)
+        loans = list(reversed(self.ledger.loans_of(person_id)))  # newest first
+        self.history_label.setText(text("history_of").format(name=person.name))
+        self.history.setRowCount(len(loans))
+        for row, loan in enumerate(loans):
+            cells = (
+                loan.book_title,
+                as_date(loan.lent_date),
+                as_date(loan.return_date) or text("still_out"),
+            )
+            for column, value in enumerate(cells):
+                self.history.setItem(row, column, QTableWidgetItem(value))

@@ -1,0 +1,160 @@
+# Katip Celebi
+# Copyright (C) 2026 farukylmz0550
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+"""The settings file: small, but it is what remembers where the books are."""
+
+from pathlib import Path
+from typing import Any, Optional
+import json
+import logging
+
+from shared.paths import config_path
+from shared.storage import backup_file, write_atomically
+
+logger = logging.getLogger("katipcelebi")
+
+
+def _readable() -> bool:
+    """Whether the settings file, if present, is something we can parse."""
+    path = config_path()
+    if not path.exists():
+        return True
+    try:
+        return isinstance(json.loads(path.read_text(encoding="utf-8")), dict)
+    except (json.JSONDecodeError, OSError, ValueError, UnicodeDecodeError):
+        return False
+
+
+def load() -> dict:
+    """Every setting. An empty dict when there is nothing readable."""
+    path = config_path()
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError, ValueError, UnicodeDecodeError):
+        logger.warning("Could not read %s", path, exc_info=True)
+        return {}
+    if not isinstance(data, dict):
+        logger.warning("%s is not a JSON object", path)
+        return {}
+    return data
+
+
+def update(**values: Any) -> bool:
+    """Merge settings in. True when they reached the disk.
+
+    Returns a result rather than swallowing it: the caller that has just moved
+    the user's library somewhere needs to know whether the note saying where it
+    went was actually saved.
+    """
+    path = config_path()
+    # A file we cannot parse still holds the library's location. load() reads
+    # it as {}, so merging into that and writing would replace the lot with
+    # just the key being set -- one theme change and the app forgets where the
+    # books are. Keep the bytes first.
+    if not _readable():
+        backup_file(path)
+        logger.error("Settings file %s is damaged; kept a copy as .bak", path)
+
+    data = load()
+    data.update(values)
+    try:
+        # Same durable temp-and-rename as the library: a settings file
+        # half-written by a power cut is exactly how a damaged one comes about,
+        # and losing this one loses where the books are.
+        write_atomically(path, json.dumps(data, ensure_ascii=False, indent=2))
+        return True
+    except OSError:
+        logger.warning("Could not write %s", path, exc_info=True)
+        return False
+
+
+# ------------------------------------------------------------------------
+# Named settings. One pair per thing we remember, so no caller has to know
+# what the key is spelled like.
+
+
+def library_dir() -> Optional[Path]:
+    """Where the user keeps their books.
+
+    None until they have said, and None again if it has gone.
+    """
+    saved = load().get("library_dir")
+    # isinstance, like language() below: the file is one people open and edit,
+    # and a "library_dir" that came back as a number or a list would blow up
+    # in Path() -- a crash at startup over the one setting whose whole job is
+    # to survive a damaged file.
+    if isinstance(saved, str) and saved and Path(saved).is_dir():
+        return Path(saved)
+    return None
+
+
+def set_library_dir(folder: Path) -> bool:
+    return update(library_dir=str(folder))
+
+
+def theme() -> str:
+    """Which of the six themes the user picked.
+
+    Falls back to the default, and migrates the old light/dark/system setting:
+    a file written before there were six themes still knows whether it wanted
+    light or dark, and that maps onto the Material pair. The old "system"
+    setting maps onto the new "system" theme.
+    """
+    from shared.theme import DEFAULT_THEME, M3_DARK, M3_LIGHT, SYSTEM, THEMES
+
+    data = load()
+    saved = data.get("theme")
+    if saved in THEMES:
+        return saved
+    old = data.get("theme_mode")  # the pre-five-themes setting
+    if old == "system":
+        return SYSTEM
+    if old == "light":
+        return M3_LIGHT
+    if old == "dark":
+        return M3_DARK
+    return DEFAULT_THEME
+
+
+def set_theme(name: str) -> bool:
+    return update(theme=name)
+
+
+def language() -> str:
+    """Which language the user picked. English until they say otherwise.
+
+    Not validated here against what files exist: texts.use() does that, and
+    falls back to English for a code with no file -- so a language whose file
+    was later removed leaves a readable app rather than a broken setting.
+    """
+    from shared.texts import BASE
+
+    saved = load().get("language")
+    return saved if isinstance(saved, str) and saved else BASE
+
+
+def set_language(code: str) -> bool:
+    return update(language=code)
+
+
+def setup_done() -> bool:
+    return bool(load().get("setup_done", False))
+
+
+def set_setup_done() -> bool:
+    return update(setup_done=True)

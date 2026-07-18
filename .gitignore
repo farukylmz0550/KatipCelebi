@@ -1,0 +1,42 @@
+# The user's own library, if the app is ever run from inside this folder.
+# Never commit these: people.json and loans.json hold the names of the people
+# you lend books to, and who had what, when.
+library.json
+people.json
+loans.json
+goals.json
+katipcelebi.log
+katipcelebi.log.*
+
+# The rescue copy kept when a data file cannot be read.
+*.json.damaged.bak
+*.bak
+
+# Exported spreadsheets and the ISBN-import template.
+*.xlsx
+
+# PyInstaller build output.
+build/
+dist/
+*.spec
+
+# Python.
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+*.egg
+.venv/
+venv/
+
+# Test and tool caches.
+.pytest_cache/
+.mypy_cache/
+htmlcov/
+.coverage
+.coverage.*
+
+# OS files.
+.DS_Store
+Thumbs.db
+desktop.ini
