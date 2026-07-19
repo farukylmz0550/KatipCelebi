@@ -18,7 +18,6 @@ katipcelebi.log.*
 # PyInstaller build output.
 build/
 dist/
-*.spec
 
 # Python.
 __pycache__/
