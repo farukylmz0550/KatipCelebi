@@ -37,10 +37,10 @@ pyinstaller KatipCelebi.spec && \
 mkdir -p pkg/usr/share/applications pkg/usr/share/icons/hicolor/256x256/apps && \
 cp assets/katipcelebi.png pkg/usr/share/icons/hicolor/256x256/apps/katipcelebi.png && \
 printf '[Desktop Entry]\nType=Application\nName=Katip Celebi\nExec=/opt/katipcelebi/KatipCelebi\nIcon=katipcelebi\nCategories=Office;\n' > pkg/usr/share/applications/katipcelebi.desktop && \
-fpm -s dir -t deb -n katipcelebi -v 2.0 \
+fpm -s dir -t deb -n katipcelebi -v 1.0 \
   --deb-depends "libgl1-mesa-glx, libxkbcommon0, libdbus-1-3, libxcb-cursor0" \
   -C dist/KatipCelebi usr=/opt/katipcelebi && \
-echo "Build complete: katipcelebi_2.0_amd64.deb"
+echo "Build complete: katipcelebi_1.0_amd64.deb"
 ```
 
 ### Fedora (dnf)
@@ -55,10 +55,10 @@ pyinstaller KatipCelebi.spec && \
 mkdir -p pkg/usr/share/applications pkg/usr/share/icons/hicolor/256x256/apps && \
 cp assets/katipcelebi.png pkg/usr/share/icons/hicolor/256x256/apps/katipcelebi.png && \
 printf '[Desktop Entry]\nType=Application\nName=Katip Celebi\nExec=/opt/katipcelebi/KatipCelebi\nIcon=katipcelebi\nCategories=Office;\n' > pkg/usr/share/applications/katipcelebi.desktop && \
-fpm -s dir -t rpm -n katipcelebi -v 2.0 \
+fpm -s dir -t rpm -n katipcelebi -v 1.0 \
   --rpm-depends "mesa-libGL, libxkbcommon, dbus-libs, xcb-util-cursor" \
   -C dist/KatipCelebi usr=/opt/katipcelebi && \
-echo "Build complete: katipcelebi-2.0-1.x86_64.rpm"
+echo "Build complete: katipcelebi-1.0-1.x86_64.rpm"
 ```
 
 ### Arch Linux (pacman)
@@ -77,8 +77,8 @@ cp assets/katipcelebi.png pkg/usr/share/icons/hicolor/256x256/apps/katipcelebi.p
 printf '#!/bin/sh\nexec /opt/katipcelebi/KatipCelebi "$@"\n' > pkg/usr/bin/katipcelebi && \
 chmod +x pkg/usr/bin/katipcelebi && \
 printf '[Desktop Entry]\nType=Application\nName=Katip Celebi\nExec=/opt/katipcelebi/KatipCelebi\nIcon=katipcelebi\nCategories=Office;\n' > pkg/usr/share/applications/katipcelebi.desktop && \
-tar -czf katipcelebi-2.0-1-x86_64.pkg.tar.zst -C pkg . && \
-echo "Build complete: katipcelebi-2.0-1-x86_64.pkg.tar.zst"
+tar -czf katipcelebi-1.0-1-x86_64.pkg.tar.zst -C pkg . && \
+echo "Build complete: katipcelebi-1.0-1-x86_64.pkg.tar.zst"
 ```
 
 ## Development
