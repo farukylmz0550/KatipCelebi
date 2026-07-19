@@ -16,10 +16,12 @@ A desktop book library manager built with PyQt6. Track your books, lending histo
 
 Clone the repository and run the one-liner for your platform. Each command installs system dependencies, Python packages, and builds a native package.
 
+All build commands use the bundled `KatipCelebi.spec` — no need to pass `--add-data`, `--name`, `--windowed`, or `--icon` flags.
+
 ### Windows (PowerShell, requires [Python 3.11+](https://www.python.org/downloads/))
 
 ```powershell
-git clone https://github.com/farukylmz0550/KatipCelebi.git; cd KatipCelebi; pip install -r requirements.txt pyinstaller; pyinstaller --name KatipCelebi --windowed --onedir --icon assets/katipcelebi.ico --add-data "assets;assets" --add-data "src;src" src/app.py; echo "Build complete: dist\KatipCelebi\KatipCelebi.exe"
+git clone https://github.com/farukylmz0550/KatipCelebi.git; cd KatipCelebi; pip install -r requirements.txt pyinstaller; pyinstaller KatipCelebi.spec; echo "Build complete: dist\KatipCelebi\KatipCelebi.exe"
 ```
 
 ### Ubuntu / Debian (apt)
@@ -31,8 +33,7 @@ libgl1-mesa-glx libxkbcommon0 libdbus-1-3 libxcb-cursor0 \
 adwaita-qt6 || true && \
 python3 -m venv .venv && . .venv/bin/activate && \
 pip install -r requirements.txt pyinstaller && \
-pyinstaller --name KatipCelebi --windowed --onedir --icon assets/katipcelebi.ico \
-  --add-data "assets:assets" --add-data "src:src" src/app.py && \
+pyinstaller KatipCelebi.spec && \
 mkdir -p pkg/usr/share/applications pkg/usr/share/icons/hicolor/256x256/apps && \
 cp assets/katipcelebi.png pkg/usr/share/icons/hicolor/256x256/apps/katipcelebi.png && \
 printf '[Desktop Entry]\nType=Application\nName=Katip Celebi\nExec=/opt/katipcelebi/KatipCelebi\nIcon=katipcelebi\nCategories=Office;\n' > pkg/usr/share/applications/katipcelebi.desktop && \
@@ -50,8 +51,7 @@ sudo dnf install -y python3 python3-pip mesa-libGL libxkbcommon dbus-libs \
 xcb-util-cursor adwaita-qt6 || true && \
 python3 -m venv .venv && . .venv/bin/activate && \
 pip install -r requirements.txt pyinstaller && \
-pyinstaller --name KatipCelebi --windowed --onedir --icon assets/katipcelebi.ico \
-  --add-data "assets:assets" --add-data "src:src" src/app.py && \
+pyinstaller KatipCelebi.spec && \
 mkdir -p pkg/usr/share/applications pkg/usr/share/icons/hicolor/256x256/apps && \
 cp assets/katipcelebi.png pkg/usr/share/icons/hicolor/256x256/apps/katipcelebi.png && \
 printf '[Desktop Entry]\nType=Application\nName=Katip Celebi\nExec=/opt/katipcelebi/KatipCelebi\nIcon=katipcelebi\nCategories=Office;\n' > pkg/usr/share/applications/katipcelebi.desktop && \
@@ -69,8 +69,7 @@ sudo pacman -S --needed python python-pip mesa libxkbcommon dbus xcb-util-cursor
 adwaita-qt6 || true && \
 python3 -m venv .venv && . .venv/bin/activate && \
 pip install -r requirements.txt pyinstaller && \
-pyinstaller --name KatipCelebi --windowed --onedir --icon assets/katipcelebi.ico \
-  --add-data "assets:assets" --add-data "src:src" src/app.py && \
+pyinstaller KatipCelebi.spec && \
 mkdir -p pkg/usr/bin pkg/usr/share/katipcelebi \
   pkg/usr/share/applications pkg/usr/share/icons/hicolor/256x256/apps && \
 cp -r dist/KatipCelebi/* pkg/usr/share/katipcelebi/ && \
@@ -89,7 +88,6 @@ git clone https://github.com/farukylmz0550/KatipCelebi.git && cd KatipCelebi
 python3 -m venv .venv && . .venv/bin/activate   # Linux/macOS
 python -m venv .venv; .\.venv\Scripts\Activate   # Windows
 pip install -r requirements.txt
-python -m pytest              # run tests
 python src/app.py             # launch the app
 ```
 
@@ -108,7 +106,7 @@ KatipCelebi/
 │   ├── icons/              # SVG icons
 │   ├── lang/               # en, tr, ru, zh, es, fr
 │   └── styles/             # default.qss (custom theme template)
-├── tests/                  # 790+ tests
+├── KatipCelebi.spec        # PyInstaller build spec
 ├── requirements.txt
 └── LICENSE                 # GPLv3
 ```
