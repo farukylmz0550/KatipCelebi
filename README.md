@@ -112,6 +112,7 @@ KatipCelebi/
 ├── KatipCelebi.spec        # PyInstaller build spec
 ├── requirements.txt
 └── LICENSE                 # GPLv3
+└── CONTRIBUTING.Mmd        # Contributing rules file
 ```
 
 ## Custom Themes
