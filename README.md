@@ -1,3 +1,6 @@
+> [!WARNING]
+> This project was entirely developed using **Vibe Coding**.
+
 # Katip Celebi
 
 A desktop book library manager built with PyQt6. Track your books, lending history, reading goals, and statistics — all in a clean, modern interface with Material 3 and Adwaita theme support.
