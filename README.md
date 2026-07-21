@@ -24,7 +24,7 @@ All build commands use the bundled `KatipCelebi.spec` — no need to pass `--add
 ### Windows (PowerShell, requires [Python 3.11+](https://www.python.org/downloads/))
 
 ```powershell
-git clone https://github.com/farukylmz0550/KatipCelebi.git; cd KatipCelebi; pip install -r requirements.txt pyinstaller; pyinstaller KatipCelebi.spec; echo "Build complete: dist\KatipCelebi\KatipCelebi.exe"
+$ErrorActionPreference='Stop'; cd $HOME; if (Test-Path KatipCelebi) { Remove-Item -Recurse -Force KatipCelebi }; git clone https://github.com/farukylmz0550/KatipCelebi.git; cd KatipCelebi; python -m pip install --upgrade pip; python -m pip install -r requirements.txt pyinstaller; python -m PyInstaller KatipCelebi.spec; Write-Host "Build complete: $PWD\dist\KatipCelebi\KatipCelebi.exe"
 ```
 
 ### Ubuntu / Debian (apt)
