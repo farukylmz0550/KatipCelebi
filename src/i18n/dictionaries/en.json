@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "books": "Books",
+    "lending": "Lending",
+    "stats": "Stats",
+    "achievements": "Achievements",
+    "leaderboard": "Leaderboard",
+    "logout": "Log out"
+  },
+  "auth": {
+    "login": "Log in",
+    "register": "Create account",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "loginCta": "Log in",
+    "registerCta": "Create account",
+    "noAccount": "No account yet?",
+    "haveAccount": "Already have an account?",
+    "invalidCredentials": "Invalid email or password"
+  },
+  "books": {
+    "title": "My Books",
+    "addBook": "Add book",
+    "isbn": "ISBN",
+    "lookup": "Look up",
+    "bookTitle": "Title",
+    "author": "Author",
+    "add": "Add",
+    "import": "Bulk import",
+    "importPlaceholder": "One ISBN per line",
+    "importCta": "Import",
+    "status": {
+      "TO_READ": "To read",
+      "READING": "Reading",
+      "FINISHED": "Finished"
+    },
+    "markFinished": "Mark finished",
+    "delete": "Delete",
+    "empty": "No books yet — add your first one!"
+  },
+  "lending": {
+    "title": "Lending",
+    "book": "Book",
+    "borrower": "Borrower name",
+    "lendCta": "Lend",
+    "returned": "Returned",
+    "markReturned": "Mark returned",
+    "empty": "No lending records yet."
+  },
+  "stats": {
+    "title": "Reading stats",
+    "totalBooks": "Total books",
+    "finished": "Finished",
+    "reading": "Reading",
+    "level": "Level",
+    "xp": "XP",
+    "byMonth": "Books finished by month"
+  },
+  "achievements": {
+    "title": "Achievements",
+    "first_book_title": "First Book",
+    "first_book_desc": "Add your first book to your library.",
+    "first_finish_title": "Bookworm Beginnings",
+    "first_finish_desc": "Finish your first book.",
+    "ten_finished_title": "Avid Reader",
+    "ten_finished_desc": "Finish 10 books.",
+    "first_lending_title": "Generous Reader",
+    "first_lending_desc": "Lend your first book to someone.",
+    "five_authors_title": "Well Read",
+    "five_authors_desc": "Read books from 5 different authors."
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "rank": "Rank",
+    "name": "Name",
+    "level": "Level",
+    "xp": "XP"
+  }
+}

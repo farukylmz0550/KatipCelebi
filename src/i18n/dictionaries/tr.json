@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "books": "Kitaplar",
+    "lending": "Ödünç",
+    "stats": "İstatistikler",
+    "achievements": "Başarımlar",
+    "leaderboard": "Liderlik Tablosu",
+    "logout": "Çıkış yap"
+  },
+  "auth": {
+    "login": "Giriş yap",
+    "register": "Hesap oluştur",
+    "email": "E-posta",
+    "password": "Şifre",
+    "name": "Ad",
+    "loginCta": "Giriş yap",
+    "registerCta": "Hesap oluştur",
+    "noAccount": "Hesabın yok mu?",
+    "haveAccount": "Zaten hesabın var mı?",
+    "invalidCredentials": "E-posta veya şifre hatalı"
+  },
+  "books": {
+    "title": "Kitaplarım",
+    "addBook": "Kitap ekle",
+    "isbn": "ISBN",
+    "lookup": "Ara",
+    "bookTitle": "Başlık",
+    "author": "Yazar",
+    "add": "Ekle",
+    "import": "Toplu içe aktar",
+    "importPlaceholder": "Her satıra bir ISBN",
+    "importCta": "İçe aktar",
+    "status": {
+      "TO_READ": "Okunacak",
+      "READING": "Okunuyor",
+      "FINISHED": "Bitti"
+    },
+    "markFinished": "Bitirildi olarak işaretle",
+    "delete": "Sil",
+    "empty": "Henüz kitap yok — ilk kitabını ekle!"
+  },
+  "lending": {
+    "title": "Ödünç Verme",
+    "book": "Kitap",
+    "borrower": "Ödünç alan",
+    "lendCta": "Ödünç ver",
+    "returned": "İade edildi",
+    "markReturned": "İade edildi olarak işaretle",
+    "empty": "Henüz ödünç kaydı yok."
+  },
+  "stats": {
+    "title": "Okuma İstatistikleri",
+    "totalBooks": "Toplam kitap",
+    "finished": "Bitirilen",
+    "reading": "Okunan",
+    "level": "Seviye",
+    "xp": "XP",
+    "byMonth": "Aylara göre bitirilen kitaplar"
+  },
+  "achievements": {
+    "title": "Başarımlar",
+    "first_book_title": "İlk Kitap",
+    "first_book_desc": "Kütüphanene ilk kitabını ekle.",
+    "first_finish_title": "Okumaya Başlangıç",
+    "first_finish_desc": "İlk kitabını bitir.",
+    "ten_finished_title": "Hevesli Okuyucu",
+    "ten_finished_desc": "10 kitap bitir.",
+    "first_lending_title": "Cömert Okuyucu",
+    "first_lending_desc": "İlk kitabını birine ödünç ver.",
+    "five_authors_title": "Geniş Ufuk",
+    "five_authors_desc": "5 farklı yazardan kitap oku."
+  },
+  "leaderboard": {
+    "title": "Liderlik Tablosu",
+    "rank": "Sıra",
+    "name": "Ad",
+    "level": "Seviye",
+    "xp": "XP"
+  }
+}
