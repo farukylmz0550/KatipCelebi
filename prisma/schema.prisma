@@ -23,6 +23,7 @@ model User {
   email        String   @unique
   passwordHash String
   name         String
+  isAdmin      Boolean  @default(false)
   xp           Int      @default(0)
   createdAt    DateTime @default(now())
 
