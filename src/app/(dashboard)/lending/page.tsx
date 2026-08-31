@@ -20,11 +20,11 @@ export default async function LendingPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-semibold">{dict.lending.title}</h1>
-      <section className="rounded-lg border border-neutral-200 bg-white p-4">
+      <section className="rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
         <LendingForm books={books} dict={dict.lending} />
       </section>
       <ul className="space-y-2">
-        {records.length === 0 && <p className="text-neutral-500">{dict.lending.empty}</p>}
+        {records.length === 0 && <p className="text-neutral-500 dark:text-neutral-400">{dict.lending.empty}</p>}
         {records.map((record) => (
           <LendingRow key={record.id} record={record} dict={dict.lending} />
         ))}

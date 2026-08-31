@@ -1,12 +1,16 @@
 import Link from "next/link";
+import { Moon, Sun } from "lucide-react";
 import { auth, signOut } from "@/auth";
 import { getDictionary, getLocale, LOCALES } from "@/i18n/get-dictionary";
 import { setLocale } from "@/app/actions/locale";
+import { getTheme } from "@/lib/theme";
+import { setTheme } from "@/app/actions/theme";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
   const dict = await getDictionary();
   const locale = await getLocale();
+  const theme = await getTheme();
 
   const links = [
     { href: "/books", label: dict.nav.books },
@@ -18,31 +22,53 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
-      <header className="border-b border-neutral-200 bg-white">
+      <header className="border-b border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
           <nav className="flex gap-4 text-sm font-medium">
             {links.map((link) => (
-              <Link key={link.href} href={link.href} className="text-neutral-700 hover:text-neutral-950">
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-neutral-700 hover:text-neutral-950 dark:text-neutral-300 dark:hover:text-white"
+              >
                 {link.label}
               </Link>
             ))}
           </nav>
           <div className="flex items-center gap-3 text-sm">
-            <form action={async () => {
-              "use server";
-              const next = locale === "en" ? "tr" : "en";
-              await setLocale(next);
-            }}>
-              <button type="submit" className="rounded border border-neutral-300 px-2 py-1">
+            <form
+              action={async () => {
+                "use server";
+                await setTheme(theme === "dark" ? "light" : "dark");
+              }}
+            >
+              <button
+                type="submit"
+                aria-label="Toggle theme"
+                className="rounded border border-neutral-300 p-1.5 dark:border-neutral-700"
+              >
+                {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+              </button>
+            </form>
+            <form
+              action={async () => {
+                "use server";
+                const next = locale === "en" ? "tr" : "en";
+                await setLocale(next);
+              }}
+            >
+              <button type="submit" className="rounded border border-neutral-300 px-2 py-1 dark:border-neutral-700">
                 {LOCALES.filter((l) => l !== locale)[0]}
               </button>
             </form>
-            <span className="text-neutral-500">{session?.user?.name}</span>
-            <form action={async () => {
-              "use server";
-              await signOut({ redirectTo: "/login" });
-            }}>
-              <button type="submit" className="underline text-neutral-600">
+            <span className="text-neutral-500 dark:text-neutral-400">{session?.user?.name}</span>
+            <form
+              action={async () => {
+                "use server";
+                await signOut({ redirectTo: "/login" });
+              }}
+            >
+              <button type="submit" className="underline text-neutral-600 dark:text-neutral-400">
                 {dict.nav.logout}
               </button>
             </form>

@@ -16,8 +16,8 @@ export default async function LeaderboardPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-semibold">{dict.leaderboard.title}</h1>
-      <table className="w-full overflow-hidden rounded-lg border border-neutral-200 bg-white text-left text-sm">
-        <thead className="bg-neutral-100 text-neutral-600">
+      <table className="w-full overflow-hidden rounded-lg border border-neutral-200 bg-white text-left text-sm dark:border-neutral-800 dark:bg-neutral-900">
+        <thead className="bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300">
           <tr>
             <th className="px-3 py-2">{dict.leaderboard.rank}</th>
             <th className="px-3 py-2">{dict.leaderboard.name}</th>
@@ -27,7 +27,7 @@ export default async function LeaderboardPage() {
         </thead>
         <tbody>
           {users.map((user, i) => (
-            <tr key={user.id} className={user.id === userId ? "bg-[#cde2fb]/40" : ""}>
+            <tr key={user.id} className={user.id === userId ? "bg-[#cde2fb]/40 dark:bg-[#184f95]/30" : ""}>
               <td className="px-3 py-2 tabular-nums">{i + 1}</td>
               <td className="px-3 py-2">{user.name}</td>
               <td className="px-3 py-2 tabular-nums">{levelForXp(user.xp)}</td>

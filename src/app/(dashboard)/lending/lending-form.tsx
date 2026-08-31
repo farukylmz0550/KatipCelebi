@@ -20,7 +20,7 @@ export function LendingForm({ books, dict }: { books: Book[]; dict: { book: stri
 
   return (
     <div className="flex flex-wrap gap-2">
-      <select value={bookId} onChange={(e) => setBookId(e.target.value)} className="rounded border border-neutral-300 px-2 py-1">
+      <select value={bookId} onChange={(e) => setBookId(e.target.value)} className="rounded border border-neutral-300 px-2 py-1 dark:border-neutral-700 dark:bg-neutral-800">
         {books.map((book) => (
           <option key={book.id} value={book.id}>
             {book.title}
@@ -31,9 +31,9 @@ export function LendingForm({ books, dict }: { books: Book[]; dict: { book: stri
         value={borrowerName}
         onChange={(e) => setBorrowerName(e.target.value)}
         placeholder={dict.borrower}
-        className="rounded border border-neutral-300 px-2 py-1"
+        className="rounded border border-neutral-300 px-2 py-1 dark:border-neutral-700 dark:bg-neutral-800"
       />
-      <button type="button" onClick={handleSubmit} disabled={pending || !bookId || !borrowerName} className="rounded bg-neutral-900 px-3 py-1 text-white disabled:opacity-50">
+      <button type="button" onClick={handleSubmit} disabled={pending || !bookId || !borrowerName} className="rounded bg-neutral-900 px-3 py-1 text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900">
         {dict.lendCta}
       </button>
     </div>

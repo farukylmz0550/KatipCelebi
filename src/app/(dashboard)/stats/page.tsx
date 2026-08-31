@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { getTheme } from "@/lib/theme";
 import { levelProgress } from "@/lib/gamification";
 import { monthlyFinishCounts } from "@/lib/stats";
 import { StatTile } from "./stat-tile";
@@ -9,6 +10,7 @@ import { MonthlyChart } from "./monthly-chart";
 export default async function StatsPage() {
   const userId = await requireUserId();
   const dict = await getDictionary();
+  const theme = await getTheme();
 
   const [user, totalBooks, reading, finishedBooks] = await Promise.all([
     db.user.findUniqueOrThrow({ where: { id: userId }, select: { xp: true } }),
@@ -31,8 +33,8 @@ export default async function StatsPage() {
         <StatTile label={dict.stats.xp} value={user.xp} />
       </div>
       <div>
-        <h2 className="mb-2 text-sm font-medium text-neutral-600">{dict.stats.byMonth}</h2>
-        <MonthlyChart data={chartData} label={dict.stats.finished} />
+        <h2 className="mb-2 text-sm font-medium text-neutral-600 dark:text-neutral-400">{dict.stats.byMonth}</h2>
+        <MonthlyChart data={chartData} label={dict.stats.finished} dark={theme === "dark"} />
       </div>
     </div>
   );

@@ -22,10 +22,14 @@ export default async function AchievementsPage() {
           return (
             <li
               key={achievement.id}
-              className={`rounded-lg border p-4 ${isUnlocked ? "border-[#2a78d6] bg-white" : "border-neutral-200 bg-neutral-100 opacity-60"}`}
+              className={`rounded-lg border p-4 ${
+                isUnlocked
+                  ? "border-[#2a78d6] bg-white dark:border-[#3987e5] dark:bg-neutral-900"
+                  : "border-neutral-200 bg-neutral-100 opacity-60 dark:border-neutral-800 dark:bg-neutral-900"
+              }`}
             >
               <p className="font-medium">{labels[`${achievement.key}_title`]}</p>
-              <p className="text-sm text-neutral-500">{labels[`${achievement.key}_desc`]}</p>
+              <p className="text-sm text-neutral-500 dark:text-neutral-400">{labels[`${achievement.key}_desc`]}</p>
             </li>
           );
         })}
