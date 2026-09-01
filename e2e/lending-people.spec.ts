@@ -11,10 +11,12 @@ test.describe("lending + people", () => {
     await login(page, admin.email, admin.password);
     // seed two books
     await page.goto("/books");
-    await page.getByPlaceholder("Title").fill("Book One");
+    await page.getByPlaceholder("Title", { exact: true }).fill("Book One");
     await page.getByRole("button", { name: /^add$/i }).click();
-    await page.getByPlaceholder("Title").fill("Book Two");
+    await expect(page.getByText("Book One", { exact: true }).first()).toBeVisible();
+    await page.getByPlaceholder("Title", { exact: true }).fill("Book Two");
     await page.getByRole("button", { name: /^add$/i }).click();
+    await expect(page.getByText("Book Two", { exact: true }).first()).toBeVisible();
   });
 
   test("create lending (person auto-create, XP+5) and return", async ({ page }) => {
@@ -80,7 +82,7 @@ test.describe("lending + people", () => {
     await page.goto("/people");
     await page.getByRole("link", { name: "Mehmet" }).click();
     await page.getByRole("button", { name: /remove/i }).click();
-    await expect(page.getByText("Mehmet")).toBeHidden();
+    await expect(page.getByRole("link", { name: "Mehmet" })).toBeHidden();
   });
 
   test("lending via book detail with datalist", async ({ page }) => {
