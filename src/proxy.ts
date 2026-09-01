@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
-const PUBLIC_PATHS = ["/login", "/register", "/setup"];
+const PUBLIC_PATHS = ["/login", "/register", "/setup", "/api/test"];
 
 export default auth(async (req) => {
   const pathname = req.nextUrl.pathname;
@@ -21,5 +21,5 @@ export default auth(async (req) => {
 });
 
 export const config = {
-  matcher: ["/((?!api/auth|api/register|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!api/auth|api/register|api/test|_next/static|_next/image|favicon.ico).*)"],
 };
