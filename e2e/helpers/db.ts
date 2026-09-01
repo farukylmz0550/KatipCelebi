@@ -1,4 +1,6 @@
 export async function resetDb(page?: any) {
+  // Wait for any pending server actions to finish (avoid busy DB)
+  await new Promise((r) => setTimeout(r, 800));
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const { execSync } = await import("node:child_process");
