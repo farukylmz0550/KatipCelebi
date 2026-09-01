@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(rm -f reset-migration.mjs)",
+      "Bash(curl -s http://localhost:3000/setup)"
     ]
   }
 }

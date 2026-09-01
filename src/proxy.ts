@@ -1,14 +1,23 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
-const PUBLIC_PATHS = ["/login", "/register"];
+const PUBLIC_PATHS = ["/login", "/register", "/setup"];
 
-export default auth((req) => {
-  const isPublic = PUBLIC_PATHS.some((path) => req.nextUrl.pathname.startsWith(path));
+export default auth(async (req) => {
+  const pathname = req.nextUrl.pathname;
+  const isSetup = pathname.startsWith("/setup");
+  const isPublic = PUBLIC_PATHS.some((path) => pathname.startsWith(path));
+
+  // Lightweight setup check without importing Prisma in middleware: rely on setup page self-redirect.
+  // The auth callback below handles unauthenticated redirect; setup is public to allow first admin.
   if (!req.auth && !isPublic) {
     const loginUrl = new URL("/login", req.nextUrl.origin);
     return NextResponse.redirect(loginUrl);
   }
+
+  // Authenticated users should not visit setup; unauthenticated hitting login/register when setup needed
+  // is handled by /setup page redirect — middleware keeps /setup public.
+  if (isSetup) return NextResponse.next();
 });
 
 export const config = {

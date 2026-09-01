@@ -1,6 +1,7 @@
 {
   "nav": {
     "books": "Kitaplar",
+    "people": "Kişiler",
     "lending": "Ödünç",
     "stats": "İstatistikler",
     "achievements": "Başarımlar",
@@ -48,6 +49,24 @@
     "markReturned": "İade edildi olarak işaretle",
     "empty": "Henüz ödünç kaydı yok."
   },
+  "people": {
+    "title": "Kişiler",
+    "count": "Kişiler",
+    "add": "Ekle",
+    "remove": "Sil",
+    "namePlaceholder": "Kişi adı",
+    "trust": "Güven",
+    "returned": "İade",
+    "out": "Dışarıda",
+    "id": "ID",
+    "history": "Geçmiş",
+    "historyEmpty": "Geçmiş yok",
+    "historyFor": "Geçmiş",
+    "empty": "Henüz kişi yok",
+    "stillHasBooks": "Hala dışarıda kitabı var",
+    "alreadyExists": "Zaten var",
+    "needsName": "İsim gerekli"
+  },
   "stats": {
     "title": "Okuma İstatistikleri",
     "totalBooks": "Toplam kitap",
@@ -55,7 +74,16 @@
     "reading": "Okunan",
     "level": "Seviye",
     "xp": "XP",
-    "byMonth": "Aylara göre bitirilen kitaplar"
+    "byMonth": "Aylara göre bitirilen kitaplar",
+    "yearlyGoal": "Yıllık hedef",
+    "monthlyGoal": "Aylık hedef",
+    "goalTarget": "Hedef",
+    "noGoal": "Hedef yok",
+    "reached": "Ulaşıldı!",
+    "setGoal": "Kaydet",
+    "progress": "İlerleme",
+    "averageDays": "Bitirme ort. gün",
+    "totalFinished": "Toplam bitirilen"
   },
   "achievements": {
     "title": "Başarımlar",

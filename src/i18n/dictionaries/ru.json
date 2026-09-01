@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "books": "Книги",
+    "people": "Люди",
+    "lending": "Выдачи",
+    "stats": "Статистика",
+    "achievements": "Достижения",
+    "leaderboard": "Рейтинг",
+    "logout": "Выйти"
+  },
+  "auth": {
+    "login": "Вход",
+    "register": "Регистрация",
+    "email": "Почта",
+    "password": "Пароль",
+    "name": "Имя",
+    "loginCta": "Войти",
+    "registerCta": "Создать",
+    "noAccount": "Нет аккаунта?",
+    "haveAccount": "Уже есть аккаунт?",
+    "invalidCredentials": "Неверная почта или пароль"
+  },
+  "books": {
+    "title": "Мои Книги",
+    "addBook": "Добавить книгу",
+    "isbn": "ISBN",
+    "lookup": "Найти",
+    "bookTitle": "Название",
+    "author": "Автор",
+    "add": "Добавить",
+    "import": "Массовый импорт",
+    "importPlaceholder": "Один ISBN в строке",
+    "importCta": "Импорт",
+    "status": {
+      "TO_READ": "К прочтению",
+      "READING": "Читаю",
+      "FINISHED": "Прочитано"
+    },
+    "markFinished": "Отметить как прочитано",
+    "delete": "Удалить",
+    "empty": "Пока нет книг — добавьте первую!"
+  },
+  "lending": {
+    "title": "Выдачи",
+    "book": "Книга",
+    "borrower": "Заёмщик",
+    "lendCta": "Выдать",
+    "returned": "Возвращено",
+    "markReturned": "Отметить возврат",
+    "empty": "Пока нет выдач."
+  },
+  "people": {
+    "title": "Люди",
+    "count": "Люди",
+    "add": "Добавить",
+    "remove": "Удалить",
+    "namePlaceholder": "Имя человека",
+    "trust": "Доверие",
+    "returned": "Возвращено",
+    "out": "На руках",
+    "id": "ID",
+    "history": "История",
+    "historyEmpty": "Нет истории",
+    "historyFor": "История для",
+    "empty": "Пока нет людей",
+    "stillHasBooks": "Есть книги на руках",
+    "alreadyExists": "Уже существует",
+    "needsName": "Имя обязательно"
+  },
+  "stats": {
+    "title": "Статистика",
+    "totalBooks": "Всего книг",
+    "finished": "Прочитано",
+    "reading": "Читаю",
+    "level": "Уровень",
+    "xp": "XP",
+    "byMonth": "Книг завершено по месяцам",
+    "yearlyGoal": "Годовая цель",
+    "monthlyGoal": "Месячная цель",
+    "goalTarget": "Цель",
+    "noGoal": "Нет цели",
+    "reached": "Достигнуто!",
+    "setGoal": "Сохранить",
+    "progress": "Прогресс",
+    "averageDays": "Ср. дней",
+    "totalFinished": "Всего завершено"
+  },
+  "achievements": {
+    "title": "Достижения",
+    "first_book_title": "Первая Книга",
+    "first_book_desc": "Добавьте первую книгу.",
+    "first_finish_title": "Начинающий Читатель",
+    "first_finish_desc": "Прочитайте первую книгу.",
+    "ten_finished_title": "Заядлый Читатель",
+    "ten_finished_desc": "Прочитайте 10 книг.",
+    "first_lending_title": "Щедрый Читатель",
+    "first_lending_desc": "Дайте книгу взаймы.",
+    "five_authors_title": "Начитанный",
+    "five_authors_desc": "Прочитайте 5 авторов."
+  },
+  "leaderboard": {
+    "title": "Рейтинг",
+    "rank": "Место",
+    "name": "Имя",
+    "level": "Уровень",
+    "xp": "XP"
+  }
+}

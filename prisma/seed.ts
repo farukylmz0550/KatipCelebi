@@ -1,9 +1,11 @@
 import "dotenv/config";
-import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { ACHIEVEMENT_RULES } from "../src/lib/gamification";
 
-const db = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) });
+const dbUrl = (process.env.DATABASE_URL ?? "file:/home/farukylmz/Desktop/katipcelebi/prisma/dev.db").replace(/^"|"$/g, "");
+const adapter = new PrismaBetterSqlite3({ url: dbUrl });
+const db = new PrismaClient({ adapter });
 
 async function main() {
   for (const rule of ACHIEVEMENT_RULES) {

@@ -7,24 +7,26 @@ export type IsbnLookupResult = {
 
 /** Looks up a single ISBN via the Open Library API. Returns null if not found. */
 export async function lookupIsbn(isbn: string): Promise<IsbnLookupResult | null> {
+  const { fetchBook } = await import("./books/openlibrary");
   const cleaned = isbn.replace(/[^0-9Xx]/g, "");
-  const res = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${cleaned}&format=json&jscmd=data`);
-  if (!res.ok) return null;
-
-  const data = await res.json();
-  const entry = data[`ISBN:${cleaned}`];
-  if (!entry) return null;
-
+  const book = await fetchBook(cleaned);
+  if (!book) return null;
   return {
     isbn: cleaned,
-    title: entry.title ?? cleaned,
-    author: entry.authors?.map((a: { name: string }) => a.name).join(", "),
-    coverUrl: entry.cover?.medium ?? entry.cover?.large,
+    title: book.title,
+    author: book.authors,
+    coverUrl: book.coverUrl,
   };
 }
 
-/** Looks up many ISBNs (bulk import), skipping any that fail. */
+/** Looks up many ISBNs (bulk import) with throttle & abort on 3 consecutive failures. */
 export async function lookupIsbns(isbns: string[]): Promise<IsbnLookupResult[]> {
+  const { fetchBooksWithThrottle } = await import("./books/openlibrary");
+  // For simple text import, use throttled version to avoid hammering OL
+  if (isbns.length > 5) {
+    const books = await fetchBooksWithThrottle(isbns);
+    return books.map((b, i) => ({ isbn: isbns[i].replace(/[^0-9Xx]/g, ""), title: b.title, author: b.authors, coverUrl: b.coverUrl })).filter((r) => !!r.title);
+  }
   const results = await Promise.all(isbns.map((isbn) => lookupIsbn(isbn).catch(() => null)));
   return results.filter((r): r is IsbnLookupResult => r !== null);
 }

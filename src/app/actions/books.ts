@@ -56,10 +56,18 @@ export async function setBookStatus(bookId: string, status: "TO_READ" | "READING
   const book = await db.book.findFirst({ where: { id: bookId, userId } });
   if (!book) throw new Error("Not found");
 
-  await db.book.update({
-    where: { id: bookId },
-    data: { status, finishedAt: status === "FINISHED" ? new Date() : null },
-  });
+  const data: Record<string, unknown> = { status };
+  if (status === "FINISHED") {
+    data.finishedAt = new Date();
+    if (!book.startedAt) data.startedAt = new Date();
+  } else if (status === "READING") {
+    if (!book.startedAt) data.startedAt = new Date();
+    data.finishedAt = null;
+  } else {
+    data.finishedAt = null;
+  }
+
+  await db.book.update({ where: { id: bookId }, data });
 
   if (status === "FINISHED" && book.status !== "FINISHED") {
     await awardXp(userId, XP_REWARDS.BOOK_FINISHED);
@@ -67,6 +75,30 @@ export async function setBookStatus(bookId: string, status: "TO_READ" | "READING
   }
   revalidatePath("/books");
   revalidatePath("/stats");
+  revalidatePath(`/books/${bookId}`);
+}
+
+export async function updateBook(bookId: string, data: Partial<{
+  title: string; subtitle: string; author: string; authors: string; publishers: string; publishDate: string; publishPlaces: string;
+  editionName: string; series: string; numberOfPages: string; languages: string; isbn10: string; isbn13: string;
+  subjects: string; rating: number; notes: string; tags: string; signed: boolean; copies: number;
+}>) {
+  const userId = await requireUserId();
+  const book = await db.book.findFirst({ where: { id: bookId, userId } });
+  if (!book) throw new Error("Not found");
+  if (data.title !== undefined && !data.title.trim()) throw new Error("Title required");
+  const update: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(data)) {
+    if (v === undefined) continue;
+    if (k === "rating") update.rating = Math.max(0, Math.min(5, Math.floor(Number(v)))) ;
+    else if (k === "copies") update.copies = Math.max(1, Math.min(999, Math.floor(Number(v))));
+    else if (k === "signed") update.signed = !!v;
+    else if (k === "authors") update.author = typeof v === "string" ? v.trim() : v;
+    else update[k] = typeof v === "string" ? v.trim() : v;
+  }
+  await db.book.update({ where: { id: bookId }, data: update });
+  revalidatePath("/books");
+  revalidatePath(`/books/${bookId}`);
 }
 
 export async function deleteBook(bookId: string) {

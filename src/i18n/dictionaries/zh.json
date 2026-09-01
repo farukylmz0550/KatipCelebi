@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "books": "书籍",
+    "people": "人物",
+    "lending": "借阅",
+    "stats": "统计",
+    "achievements": "成就",
+    "leaderboard": "排行榜",
+    "logout": "退出"
+  },
+  "auth": {
+    "login": "登录",
+    "register": "注册",
+    "email": "邮箱",
+    "password": "密码",
+    "name": "姓名",
+    "loginCta": "登录",
+    "registerCta": "注册",
+    "noAccount": "还没有账户？",
+    "haveAccount": "已有账户？",
+    "invalidCredentials": "邮箱或密码错误"
+  },
+  "books": {
+    "title": "我的书籍",
+    "addBook": "添加书籍",
+    "isbn": "ISBN",
+    "lookup": "查找",
+    "bookTitle": "标题",
+    "author": "作者",
+    "add": "添加",
+    "import": "批量导入",
+    "importPlaceholder": "每行一个 ISBN",
+    "importCta": "导入",
+    "status": {
+      "TO_READ": "待读",
+      "READING": "在读",
+      "FINISHED": "已读"
+    },
+    "markFinished": "标记为已读",
+    "delete": "删除",
+    "empty": "还没有书籍 — 添加第一本！"
+  },
+  "lending": {
+    "title": "借阅",
+    "book": "书籍",
+    "borrower": "借阅人",
+    "lendCta": "借出",
+    "returned": "已归还",
+    "markReturned": "标记归还",
+    "empty": "暂无借阅记录。"
+  },
+  "people": {
+    "title": "人物",
+    "count": "人物",
+    "add": "添加",
+    "remove": "删除",
+    "namePlaceholder": "人名",
+    "trust": "信任",
+    "returned": "已归还",
+    "out": "在外",
+    "id": "ID",
+    "history": "历史",
+    "historyEmpty": "无历史",
+    "historyFor": "历史",
+    "empty": "暂无人物",
+    "stillHasBooks": "还有书在外",
+    "alreadyExists": "已存在",
+    "needsName": "需要姓名"
+  },
+  "stats": {
+    "title": "统计",
+    "totalBooks": "总书籍",
+    "finished": "已完成",
+    "reading": "在读",
+    "level": "等级",
+    "xp": "经验",
+    "byMonth": "按月完成",
+    "yearlyGoal": "年度目标",
+    "monthlyGoal": "月度目标",
+    "goalTarget": "目标",
+    "noGoal": "无目标",
+    "reached": "已达成！",
+    "setGoal": "设置",
+    "progress": "进度",
+    "averageDays": "平均天数",
+    "totalFinished": "总完成"
+  },
+  "achievements": {
+    "title": "成就",
+    "first_book_title": "第一本书",
+    "first_book_desc": "添加第一本书。",
+    "first_finish_title": "阅读起步",
+    "first_finish_desc": "完成第一本书。",
+    "ten_finished_title": "阅读爱好者",
+    "ten_finished_desc": "完成10本书。",
+    "first_lending_title": "慷慨读者",
+    "first_lending_desc": "借出第一本书。",
+    "five_authors_title": "博览",
+    "five_authors_desc": "阅读5位不同作者。"
+  },
+  "leaderboard": {
+    "title": "排行榜",
+    "rank": "排名",
+    "name": "姓名",
+    "level": "等级",
+    "xp": "经验"
+  }
+}

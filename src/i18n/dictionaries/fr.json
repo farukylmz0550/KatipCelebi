@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "books": "Livres",
+    "people": "Personnes",
+    "lending": "Prêts",
+    "stats": "Statistiques",
+    "achievements": "Succès",
+    "leaderboard": "Classement",
+    "logout": "Déconnexion"
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "Créer un compte",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "name": "Nom",
+    "loginCta": "Se connecter",
+    "registerCta": "Créer un compte",
+    "noAccount": "Pas encore de compte ?",
+    "haveAccount": "Déjà un compte ?",
+    "invalidCredentials": "E-mail ou mot de passe invalide"
+  },
+  "books": {
+    "title": "Mes Livres",
+    "addBook": "Ajouter un livre",
+    "isbn": "ISBN",
+    "lookup": "Rechercher",
+    "bookTitle": "Titre",
+    "author": "Auteur",
+    "add": "Ajouter",
+    "import": "Import en masse",
+    "importPlaceholder": "Un ISBN par ligne",
+    "importCta": "Importer",
+    "status": {
+      "TO_READ": "À lire",
+      "READING": "En cours",
+      "FINISHED": "Terminé"
+    },
+    "markFinished": "Marquer comme terminé",
+    "delete": "Supprimer",
+    "empty": "Aucun livre — ajoutez le premier !"
+  },
+  "lending": {
+    "title": "Prêts",
+    "book": "Livre",
+    "borrower": "Emprunteur",
+    "lendCta": "Prêter",
+    "returned": "Rendu",
+    "markReturned": "Marquer comme rendu",
+    "empty": "Aucun prêt."
+  },
+  "people": {
+    "title": "Personnes",
+    "count": "Personnes",
+    "add": "Ajouter",
+    "remove": "Supprimer",
+    "namePlaceholder": "Nom de la personne",
+    "trust": "Confiance",
+    "returned": "Rendus",
+    "out": "Dehors",
+    "id": "ID",
+    "history": "Historique",
+    "historyEmpty": "Aucun historique",
+    "historyFor": "Historique de",
+    "empty": "Aucune personne",
+    "stillHasBooks": "A encore des livres dehors",
+    "alreadyExists": "Existe déjà",
+    "needsName": "Nom requis"
+  },
+  "stats": {
+    "title": "Statistiques",
+    "totalBooks": "Total livres",
+    "finished": "Terminés",
+    "reading": "En cours",
+    "level": "Niveau",
+    "xp": "XP",
+    "byMonth": "Livres terminés par mois",
+    "yearlyGoal": "Objectif annuel",
+    "monthlyGoal": "Objectif mensuel",
+    "goalTarget": "Cible",
+    "noGoal": "Pas d'objectif",
+    "reached": "Atteint !",
+    "setGoal": "Enregistrer",
+    "progress": "Progrès",
+    "averageDays": "Jours moyens",
+    "totalFinished": "Total terminés"
+  },
+  "achievements": {
+    "title": "Succès",
+    "first_book_title": "Premier Livre",
+    "first_book_desc": "Ajoutez votre premier livre.",
+    "first_finish_title": "Début de Lecteur",
+    "first_finish_desc": "Terminez votre premier livre.",
+    "ten_finished_title": "Lecteur Avide",
+    "ten_finished_desc": "Terminez 10 livres.",
+    "first_lending_title": "Lecteur Généreux",
+    "first_lending_desc": "Prêtez votre premier livre.",
+    "five_authors_title": "Bien Lu",
+    "five_authors_desc": "Lisez 5 auteurs différents."
+  },
+  "leaderboard": {
+    "title": "Classement",
+    "rank": "Rang",
+    "name": "Nom",
+    "level": "Niveau",
+    "xp": "XP"
+  }
+}

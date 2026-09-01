@@ -1,6 +1,7 @@
 {
   "nav": {
     "books": "Books",
+    "people": "People",
     "lending": "Lending",
     "stats": "Stats",
     "achievements": "Achievements",
@@ -48,6 +49,24 @@
     "markReturned": "Mark returned",
     "empty": "No lending records yet."
   },
+  "people": {
+    "title": "People",
+    "count": "People",
+    "add": "Add",
+    "remove": "Remove",
+    "namePlaceholder": "Person name",
+    "trust": "Trust",
+    "returned": "Returned",
+    "out": "Out",
+    "id": "ID",
+    "history": "History",
+    "historyEmpty": "No history",
+    "historyFor": "History for",
+    "empty": "No people yet",
+    "stillHasBooks": "Still has books out",
+    "alreadyExists": "Already exists",
+    "needsName": "Name required"
+  },
   "stats": {
     "title": "Reading stats",
     "totalBooks": "Total books",
@@ -55,7 +74,16 @@
     "reading": "Reading",
     "level": "Level",
     "xp": "XP",
-    "byMonth": "Books finished by month"
+    "byMonth": "Books finished by month",
+    "yearlyGoal": "Yearly goal",
+    "monthlyGoal": "Monthly goal",
+    "goalTarget": "Target",
+    "noGoal": "No goal",
+    "reached": "Reached!",
+    "setGoal": "Set",
+    "progress": "Progress",
+    "averageDays": "Avg days to finish",
+    "totalFinished": "Total finished"
   },
   "achievements": {
     "title": "Achievements",

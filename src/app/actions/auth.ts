@@ -3,6 +3,7 @@
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { db } from "@/lib/db";
+import { needsSetup } from "@/lib/setup";
 
 const registerSchema = z.object({
   email: z.string().email(),
@@ -11,6 +12,7 @@ const registerSchema = z.object({
 });
 
 export async function registerUser(input: { email: string; password: string; name: string }) {
+  if (await needsSetup()) return { error: "Setup admin account first at /setup" };
   const parsed = registerSchema.safeParse(input);
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? "Invalid input" };

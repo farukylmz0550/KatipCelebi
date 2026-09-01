@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "books": "Libros",
+    "people": "Personas",
+    "lending": "Préstamos",
+    "stats": "Estadísticas",
+    "achievements": "Logros",
+    "leaderboard": "Clasificación",
+    "logout": "Cerrar sesión"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "register": "Crear cuenta",
+    "email": "Correo",
+    "password": "Contraseña",
+    "name": "Nombre",
+    "loginCta": "Entrar",
+    "registerCta": "Crear cuenta",
+    "noAccount": "¿No tienes cuenta?",
+    "haveAccount": "¿Ya tienes cuenta?",
+    "invalidCredentials": "Correo o contraseña inválidos"
+  },
+  "books": {
+    "title": "Mis Libros",
+    "addBook": "Añadir libro",
+    "isbn": "ISBN",
+    "lookup": "Buscar",
+    "bookTitle": "Título",
+    "author": "Autor",
+    "add": "Añadir",
+    "import": "Importación masiva",
+    "importPlaceholder": "Un ISBN por línea",
+    "importCta": "Importar",
+    "status": {
+      "TO_READ": "Por leer",
+      "READING": "Leyendo",
+      "FINISHED": "Terminado"
+    },
+    "markFinished": "Marcar como terminado",
+    "delete": "Eliminar",
+    "empty": "Aún no hay libros — ¡añade el primero!"
+  },
+  "lending": {
+    "title": "Préstamos",
+    "book": "Libro",
+    "borrower": "Nombre del prestatario",
+    "lendCta": "Prestar",
+    "returned": "Devuelto",
+    "markReturned": "Marcar como devuelto",
+    "empty": "Aún no hay préstamos."
+  },
+  "people": {
+    "title": "Personas",
+    "count": "Personas",
+    "add": "Añadir",
+    "remove": "Eliminar",
+    "namePlaceholder": "Nombre de la persona",
+    "trust": "Confianza",
+    "returned": "Devueltos",
+    "out": "Fuera",
+    "id": "ID",
+    "history": "Historial",
+    "historyEmpty": "Sin historial",
+    "historyFor": "Historial de",
+    "empty": "Aún no hay personas",
+    "stillHasBooks": "Aún tiene libros fuera",
+    "alreadyExists": "Ya existe",
+    "needsName": "Nombre requerido"
+  },
+  "stats": {
+    "title": "Estadísticas",
+    "totalBooks": "Total libros",
+    "finished": "Terminados",
+    "reading": "Leyendo",
+    "level": "Nivel",
+    "xp": "XP",
+    "byMonth": "Libros terminados por mes",
+    "yearlyGoal": "Meta anual",
+    "monthlyGoal": "Meta mensual",
+    "goalTarget": "Objetivo",
+    "noGoal": "Sin meta",
+    "reached": "¡Alcanzado!",
+    "setGoal": "Guardar",
+    "progress": "Progreso",
+    "averageDays": "Días promedio",
+    "totalFinished": "Total terminados"
+  },
+  "achievements": {
+    "title": "Logros",
+    "first_book_title": "Primer Libro",
+    "first_book_desc": "Añade tu primer libro.",
+    "first_finish_title": "Lector Principiante",
+    "first_finish_desc": "Termina tu primer libro.",
+    "ten_finished_title": "Lector Ávido",
+    "ten_finished_desc": "Termina 10 libros.",
+    "first_lending_title": "Lector Generoso",
+    "first_lending_desc": "Presta tu primer libro.",
+    "five_authors_title": "Bien Leído",
+    "five_authors_desc": "Lee libros de 5 autores distintos."
+  },
+  "leaderboard": {
+    "title": "Clasificación",
+    "rank": "Puesto",
+    "name": "Nombre",
+    "level": "Nivel",
+    "xp": "XP"
+  }
+}

@@ -1,15 +1,13 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
 }
 
 enum BookStatus {
@@ -28,23 +26,60 @@ model User {
   createdAt    DateTime @default(now())
 
   books        Book[]
+  persons      Person[]
+  goal         Goal?
   achievements UserAchievement[]
 }
 
 model Book {
-  id         String     @id @default(cuid())
-  userId     String
-  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  isbn       String?
-  title      String
-  author     String?
-  coverUrl   String?
-  status     BookStatus @default(TO_READ)
-  addedAt    DateTime   @default(now())
-  finishedAt DateTime?
+  id             String     @id @default(cuid())
+  userId         String
+  user           User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Core (existing)
+  isbn           String?
+  title          String
+  author         String?
+  coverUrl       String?
+  coverFetchedAt DateTime?
+  status         BookStatus @default(TO_READ)
+  addedAt        DateTime   @default(now())
+  finishedAt     DateTime?
+
+  // Legacy parity — 17 fields
+  subtitle       String?
+  publishers     String?
+  publishDate    String?
+  publishPlaces  String?
+  editionName    String?
+  series         String?
+  numberOfPages  String?
+  languages      String?
+  isbn10         String?
+  isbn13         String?
+  subjects       String?
+  rating         Int        @default(0)
+  notes          String?
+  tags           String?    // csv lowercased
+  startedAt      DateTime?
+  signed         Boolean    @default(false)
+  copies         Int        @default(1)
 
   lendingRecords LendingRecord[]
 
+  @@index([userId])
+  @@index([tags])
+}
+
+model Person {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  createdAt DateTime @default(now())
+
+  loans LendingRecord[]
+
+  @@unique([userId, name])
   @@index([userId])
 }
 
@@ -52,11 +87,27 @@ model LendingRecord {
   id           String    @id @default(cuid())
   bookId       String
   book         Book      @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  // Denormalized snapshot — survives book delete via Loan logic (legacy)
+  bookTitle    String?
   borrowerName String
+  // Optional person link (new)
+  personId     String?
+  person       Person?   @relation(fields: [personId], references: [id], onDelete: SetNull)
+  personName   String?
   lentAt       DateTime  @default(now())
   returnedAt   DateTime?
 
   @@index([bookId])
+  @@index([personId])
+}
+
+model Goal {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  yearly    Int      @default(0)
+  monthly   Int      @default(0)
+  updatedAt DateTime @updatedAt
 }
 
 // Static catalog of achievements; titleKey/descriptionKey reference i18n message keys.

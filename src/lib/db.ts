@@ -1,9 +1,10 @@
-import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import { PrismaClient } from "@/generated/prisma/client";
 
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
-const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+const dbUrl = (process.env.DATABASE_URL ?? "file:/home/farukylmz/Desktop/katipcelebi/prisma/dev.db").replace(/^"|"$/g, "");
+const adapter = new PrismaBetterSqlite3({ url: dbUrl });
 
 export const db = globalForPrisma.prisma ?? new PrismaClient({ adapter });
 

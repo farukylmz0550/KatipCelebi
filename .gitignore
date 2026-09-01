@@ -62,3 +62,11 @@ Thumbs.db
 # Playwright
 /test-results/
 /blob-report/
+
+# sqlite dev db
+prisma/*.db
+prisma/*.db-journal
+
+# rust
+crates/*/target/
+
