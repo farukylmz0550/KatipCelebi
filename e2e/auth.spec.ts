@@ -7,7 +7,7 @@ test.describe("auth", () => {
   const user = { name: "Faruk", email: "faruk@katip.test", password: "password123" };
 
   test.beforeEach(async ({ page }) => {
-    await page.request.post("/api/test/reset");
+    await resetDb(page);
     await createAdminViaSetup(page, admin);
   });
 
@@ -45,7 +45,7 @@ test.describe("auth", () => {
   });
 
   test("register blocked when needsSetup", async ({ page }) => {
-    await page.request.post("/api/test/reset");
+    await resetDb(page);
     await page.goto("/register");
     // src/app/register/page.tsx:6 redirects to /setup when needsSetup
     await expect(page).toHaveURL(/\/setup/);

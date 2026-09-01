@@ -6,7 +6,7 @@ test.describe("books", () => {
   const admin = { name: "Admin", email: "admin@katip.test", password: "password123" };
 
   test.beforeEach(async ({ page }) => {
-    await page.request.post("/api/test/reset");
+    await resetDb(page);
     await createAdminViaSetup(page, admin);
     await login(page, admin.email, admin.password);
   });

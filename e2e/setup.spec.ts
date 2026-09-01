@@ -23,7 +23,7 @@ test.describe("setup / first admin", () => {
   });
 
   test("dashboard redirects to /setup when DB empty", async ({ page }) => {
-    await page.request.post("/api/test/reset");
+    await resetDb(page);
     await page.goto("/books");
     await expect(page).toHaveURL(/\/setup/);
   });
