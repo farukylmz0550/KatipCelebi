@@ -1,8 +1,11 @@
 import { test, expect } from "@playwright/test";
+import { resetDb } from "./helpers/db";
+import { createAdminViaSetup } from "./helpers/auth";
 
 test.describe("verify admin@admin.admin GUI", () => {
   test("login as existing admin and exercise core flows", async ({ page }) => {
-    // Login (src/auth.ts:12 Credentials)
+    await resetDb(page);
+    await createAdminViaSetup(page, { name: "admin", email: "admin@admin.admin", password: "password123" });
     await page.goto("/login");
     await page.getByPlaceholder("Email").fill("admin@admin.admin");
     await page.getByPlaceholder("Password").fill("password123");

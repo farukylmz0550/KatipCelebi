@@ -1,7 +1,9 @@
 import { test, expect } from "@playwright/test";
+import { resetDb } from "./helpers/db";
 
 test.describe("manual GUI", () => {
   test("full flow: setup → books → lending → people → stats → achievements → leaderboard → admin → i18n/theme", async ({ page }) => {
+    await resetDb(page);
     // 1. Setup (needsSetup true → /setup)
     await page.goto("/");
     await expect(page).toHaveURL(/\/setup/);
