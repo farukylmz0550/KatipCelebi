@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
-const PUBLIC_PATHS = ["/login", "/register", "/setup", "/api/test"];
+const PUBLIC_PATHS = ["/login", "/register", "/setup", "/api/test", "/manifest.json", "/sw.js", "/icon-192.png", "/icon-512.png"];
 
 const rateLimit = new Map<string, { count: number; lastReset: number }>();
 const RATE_LIMIT_MAX = 100;

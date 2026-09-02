@@ -7,6 +7,7 @@ import { setLocale } from "@/app/actions/locale";
 import { getTheme } from "@/lib/theme";
 import { setTheme } from "@/app/actions/theme";
 import { needsSetup } from "@/lib/setup";
+import { NotificationPerm } from "./notification-perm";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   if (await needsSetup()) redirect("/setup");
@@ -58,6 +59,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
             )}
           </nav>
           <div className="ml-auto flex items-center gap-1">
+            <NotificationPerm />
             <span className="mr-1 text-xs text-muted-foreground">{session?.user?.name}</span>
             <form
               action={async () => {

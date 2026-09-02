@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { getTheme } from "@/lib/theme";
 import { getLocale } from "@/i18n/get-dictionary";
+import { SWRegister } from "./sw-register";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,6 +16,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#3584e4" },
+    { media: "(prefers-color-scheme: dark)", color: "#3584e4" },
+  ],
+  appleMobileWebAppCapable: "yes",
+  appleMobileWebAppStatusBarStyle: "default",
+  appleMobileWebAppTitle: "KatipCelebi",
+};
+
 export const metadata: Metadata = {
   title: {
     default: "KatipCelebi",
@@ -22,6 +36,12 @@ export const metadata: Metadata = {
   },
   description: "Track your books, lending history, reading goals, and stats.",
   metadataBase: new URL(process.env.NEXTAUTH_URL ?? "http://localhost:3000"),
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "KatipCelebi",
+  },
   openGraph: {
     title: "KatipCelebi",
     description: "Track your books, lending history, reading goals, and stats.",
@@ -48,7 +68,13 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} ${theme === "dark" ? "dark" : ""} h-full antialiased`}
     >
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
+      </head>
       <body className="min-h-full flex flex-col">
+        <SWRegister />
         {children}
         <Toaster />
       </body>
