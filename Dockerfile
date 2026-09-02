@@ -8,6 +8,17 @@ COPY . .
 RUN npx prisma generate
 RUN npm run build
 
+FROM node:22-slim AS production
+WORKDIR /app
 ENV NODE_ENV=production
+
+COPY --from=build /app/package.json /app/package-lock.json ./
+RUN npm ci --omit=dev && npm cache clean --force
+
+COPY --from=build /app/.next/standalone ./
+COPY --from=build /app/.next/static ./.next/static
+COPY --from=build /app/prisma ./prisma
+COPY --from=build /app/public ./public
+
 EXPOSE 3000
-CMD ["sh", "-c", "npx prisma migrate deploy && npm run db:seed && npm start"]
+CMD ["sh", "-c", "npx prisma migrate deploy && npm run db:seed && node server.js"]

@@ -104,5 +104,18 @@
     "name": "Имя",
     "level": "Уровень",
     "xp": "XP"
+  },
+  "profile": {
+    "title": "Профиль",
+    "name": "Имя",
+    "email": "Почта",
+    "save": "Сохранить",
+    "currentPassword": "Текущий пароль",
+    "newPassword": "Новый пароль",
+    "changePassword": "Изменить пароль",
+    "passwordSuccess": "Пароль обновлён",
+    "nameSuccess": "Имя обновлено",
+    "joinDate": "Регистрация",
+    "totalXp": "Общий XP"
   }
 }

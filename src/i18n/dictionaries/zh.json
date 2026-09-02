@@ -104,5 +104,18 @@
     "name": "姓名",
     "level": "等级",
     "xp": "经验"
+  },
+  "profile": {
+    "title": "个人资料",
+    "name": "姓名",
+    "email": "邮箱",
+    "save": "保存",
+    "currentPassword": "当前密码",
+    "newPassword": "新密码",
+    "changePassword": "修改密码",
+    "passwordSuccess": "密码已更新",
+    "nameSuccess": "姓名已更新",
+    "joinDate": "注册日期",
+    "totalXp": "总经验"
   }
 }

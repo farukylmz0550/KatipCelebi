@@ -104,5 +104,18 @@
     "name": "Ad",
     "level": "Seviye",
     "xp": "XP"
+  },
+  "profile": {
+    "title": "Profil",
+    "name": "Ad",
+    "email": "E-posta",
+    "save": "Kaydet",
+    "currentPassword": "Mevcut şifre",
+    "newPassword": "Yeni şifre",
+    "changePassword": "Şifre değiştir",
+    "passwordSuccess": "Şifre başarıyla güncellendi",
+    "nameSuccess": "İsim başarıyla güncellendi",
+    "joinDate": "Katılım",
+    "totalXp": "Toplam XP"
   }
 }

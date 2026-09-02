@@ -29,6 +29,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
     { href: "/stats", label: dict.nav.stats },
     { href: "/achievements", label: dict.nav.achievements },
     { href: "/leaderboard", label: dict.nav.leaderboard },
+    { href: "/profile", label: dict.profile?.title ?? "Profile" },
     ...(isAdmin ? [{ href: "/admin/covers", label: "Admin" }] : []),
   ];
 

@@ -104,5 +104,18 @@
     "name": "Name",
     "level": "Level",
     "xp": "XP"
+  },
+  "profile": {
+    "title": "Profile",
+    "name": "Name",
+    "email": "Email",
+    "save": "Save",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "changePassword": "Change password",
+    "passwordSuccess": "Password updated successfully",
+    "nameSuccess": "Name updated successfully",
+    "joinDate": "Joined",
+    "totalXp": "Total XP"
   }
 }
