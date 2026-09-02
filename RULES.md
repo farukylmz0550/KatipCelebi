@@ -1,16 +1,15 @@
-# Çalışma Kuralları
+# Development Rules
 
 ## Git Workflow
 
-**Her mantıklı adım bitirildiğinde commit'leyip push'la.**
+**Commit and push after every logical step is completed.**
 
-- Adım tanımı: tek bir sorumluluk (SRP) tamamlandığında (örn. bir modül, bir fix, bir e2e spec, bir config değişimi)
-- Commit mesajı: kısa, Türkçe/İngilizce, conventional (`feat:`, `fix:`, `test:`, `docs:`, `chore:`)
-- Push: `git push origin main` her commit sonrası (yeni kural 2026-09-01)
-- Hariç: `*.webm`, `node_modules`, `.next`, `prisma/dev.db` (zaten .gitignore)
-- Kaynak: kullanıcı talimatı 2026-09-01
+- Step definition: a single responsibility (SRP) is completed (e.g., a module, a fix, an e2e spec, a config change)
+- Commit message: short, conventional (`feat:`, `fix:`, `test:`, `docs:`, `chore:`)
+- Push: `git push origin main` after every commit
+- Excluded: `*.webm`, `node_modules`, `.next`, `prisma/dev.db` (already in .gitignore)
 
-## İlgili Dosyalar
+## Related Files
 
-- `CLAUDE.md` ve `AGENTS.md` bu kurala referans verir
-- `e2e/` testleri, `src/app/api/test/reset` gibi dev-only yardımcılar da bu kurala tabidir
+- `CLAUDE.md` and `AGENTS.md` reference this rule
+- `e2e/` tests, `src/app/api/test/reset` and other dev-only helpers are also subject to this rule

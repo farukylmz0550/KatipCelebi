@@ -8,5 +8,5 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-## Workflow Kuralı (2026-09-01)
-Her mantıklı adım bitirildiğinde commit'leyip push'la. Detay: `RULES.md`
+## Workflow Rule (2026-09-01)
+Commit and push after every logical step is completed. Details: `RULES.md`
