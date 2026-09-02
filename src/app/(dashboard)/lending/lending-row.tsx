@@ -1,10 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import { CheckCircle2, RotateCcw } from "lucide-react";
 import { returnLending } from "@/app/actions/lending";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 
 type Lending = {
   id: string;
@@ -18,29 +15,26 @@ export function LendingRow({ record, dict }: { record: Lending; dict: { returned
   const [pending, startTransition] = useTransition();
 
   return (
-    <li className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-sm transition-colors hover:bg-accent/50">
+    <div className="flex items-center justify-between border-b border-border py-3 transition-colors hover:bg-foreground/[0.02]">
       <div className="min-w-0 flex-1">
-        <p className="font-medium truncate">{record.book.title}</p>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm font-medium truncate">{record.book.title}</p>
+        <p className="text-xs text-muted-foreground">
           {record.borrowerName} · {new Date(record.lentAt).toLocaleDateString()}
         </p>
       </div>
       {record.returnedAt ? (
-        <Badge variant="secondary">
-          <CheckCircle2 size={12} className="mr-1" />
+        <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
           {dict.returned}
-        </Badge>
+        </span>
       ) : (
-        <Button
-          variant="outline"
-          size="sm"
+        <button
           disabled={pending}
           onClick={() => startTransition(() => returnLending(record.id))}
+          className="border border-border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-foreground transition-colors hover:bg-foreground hover:text-background disabled:opacity-40"
         >
-          <RotateCcw size={14} />
           {dict.markReturned}
-        </Button>
+        </button>
       )}
-    </li>
+    </div>
   );
 }

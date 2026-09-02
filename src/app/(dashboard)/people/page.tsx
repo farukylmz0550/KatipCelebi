@@ -1,7 +1,6 @@
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { Users } from "lucide-react";
 import { PersonForm } from "./person-form";
 import Link from "next/link";
 
@@ -32,80 +31,65 @@ export default async function PeoplePage({ searchParams }: { searchParams?: Prom
     : [];
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-          <Users size={20} />
-        </div>
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight">{dict.people.title}</h1>
-          <p className="text-sm text-muted-foreground">{dict.people.count}: {personsWithStats.length}</p>
-        </div>
+    <div>
+      <div className="mb-8">
+        <p className="editorial-label mb-2">Contacts</p>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+          {dict.people.title}
+        </h1>
+        <p className="mt-2 text-sm text-muted-foreground">{personsWithStats.length} {dict.people.count}</p>
+        <div className="editorial-rule-accent mt-4" />
       </div>
 
-      <section className="rounded-xl border border-border bg-card p-5 shadow-sm">
+      <div className="mb-8">
         <PersonForm placeholder={dict.people.namePlaceholder} addLabel={dict.people.add} removeLabel={dict.people.remove} selectedId={selectedPerson?.id} />
-      </section>
+      </div>
 
       {personsWithStats.length === 0 ? (
         <p className="text-muted-foreground">{dict.people.empty}</p>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-border shadow-sm">
-          <table className="w-full text-sm">
-            <thead className="bg-muted/50">
-              <tr>
-                <th className="px-4 py-3 text-left font-medium text-muted-foreground">{dict.people.title}</th>
-                <th className="px-4 py-3 text-center font-medium text-muted-foreground">{dict.people.trust}</th>
-                <th className="px-4 py-3 text-center font-medium text-muted-foreground">{dict.people.returned}</th>
-                <th className="px-4 py-3 text-center font-medium text-muted-foreground">{dict.people.out}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {personsWithStats.map((p) => (
-                <tr key={p.id} className={`border-t border-border transition-colors ${p.id === selectedId ? "bg-accent/50" : "bg-card hover:bg-accent/50"}`}>
-                  <td className="px-4 py-3">
-                    <Link href={`/people?person=${p.id}`} className="font-medium text-primary hover:underline">
-                      {p.name}
-                    </Link>
-                  </td>
-                  <td className="px-4 py-3 text-center tabular-nums">{p.trust}</td>
-                  <td className="px-4 py-3 text-center tabular-nums">{p.returned}</td>
-                  <td className="px-4 py-3 text-center tabular-nums">{p.out}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="border-t border-border">
+          <div className="grid grid-cols-[1fr_5rem_5rem_5rem] gap-4 border-b border-border px-4 py-2">
+            <span className="editorial-label">{dict.people.title}</span>
+            <span className="editorial-label text-center">{dict.people.trust}</span>
+            <span className="editorial-label text-center">{dict.people.returned}</span>
+            <span className="editorial-label text-center">{dict.people.out}</span>
+          </div>
+          {personsWithStats.map((p) => (
+            <div key={p.id} className={`grid grid-cols-[1fr_5rem_5rem_5rem] items-center gap-4 border-b border-border px-4 py-3 transition-colors ${p.id === selectedId ? "bg-foreground/[0.04]" : ""}`}>
+              <Link href={`/people?person=${p.id}`} className="text-sm font-medium hover:underline">
+                {p.name}
+              </Link>
+              <span className="text-center text-sm tabular-nums">{p.trust}</span>
+              <span className="text-center text-sm tabular-nums text-muted-foreground">{p.returned}</span>
+              <span className="text-center text-sm tabular-nums text-muted-foreground">{p.out}</span>
+            </div>
+          ))}
         </div>
       )}
 
       {selectedPerson && (
-        <section className="space-y-3 rounded-xl border border-border bg-card p-5 shadow-sm">
-          <h2 className="font-medium">
-            {dict.people.historyFor} {selectedPerson.name}
-          </h2>
+        <div className="mt-8">
+          <p className="editorial-label mb-3">{dict.people.historyFor} {selectedPerson.name}</p>
           {history.length === 0 ? (
             <p className="text-sm text-muted-foreground">{dict.people.historyEmpty}</p>
           ) : (
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="text-left text-muted-foreground">
-                  <th className="px-2 py-1">Book</th>
-                  <th className="px-2 py-1">Lent</th>
-                  <th className="px-2 py-1">Returned</th>
-                </tr>
-              </thead>
-              <tbody>
-                {history.map((r) => (
-                  <tr key={r.id} className="border-t border-border">
-                    <td className="px-2 py-1">{r.bookTitle ?? r.book?.title ?? r.bookId}</td>
-                    <td className="px-2 py-1">{new Date(r.lentAt).toLocaleDateString()}</td>
-                    <td className="px-2 py-1">{r.returnedAt ? new Date(r.returnedAt).toLocaleDateString() : "—"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="border-t border-border">
+              <div className="grid grid-cols-[1fr_8rem_8rem] gap-4 border-b border-border px-4 py-2">
+                <span className="editorial-label">Book</span>
+                <span className="editorial-label">Lent</span>
+                <span className="editorial-label">Returned</span>
+              </div>
+              {history.map((r) => (
+                <div key={r.id} className="grid grid-cols-[1fr_8rem_8rem] gap-4 border-b border-border px-4 py-2">
+                  <span className="text-sm">{r.bookTitle ?? r.book?.title ?? r.bookId}</span>
+                  <span className="text-sm text-muted-foreground">{new Date(r.lentAt).toLocaleDateString()}</span>
+                  <span className="text-sm text-muted-foreground">{r.returnedAt ? new Date(r.returnedAt).toLocaleDateString() : "—"}</span>
+                </div>
+              ))}
+            </div>
           )}
-        </section>
+        </div>
       )}
     </div>
   );

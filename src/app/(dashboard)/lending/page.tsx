@@ -1,7 +1,6 @@
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { HandCoins } from "lucide-react";
 import { LendingForm } from "./lending-form";
 import { LendingRow } from "./lending-row";
 
@@ -18,25 +17,49 @@ export default async function LendingPage() {
     }),
   ]);
 
+  const active = records.filter((r) => !r.returnedAt);
+  const returned = records.filter((r) => r.returnedAt);
+
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-          <HandCoins size={20} />
-        </div>
-        <h1 className="text-2xl font-semibold tracking-tight">{dict.lending.title}</h1>
+    <div>
+      <div className="mb-8">
+        <p className="editorial-label mb-2">Lending</p>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+          {dict.lending.title}
+        </h1>
+        <div className="editorial-rule-accent mt-4" />
       </div>
-      <section className="rounded-xl border border-border bg-card p-5 shadow-sm">
+
+      <div className="mb-8">
         <LendingForm books={books} dict={dict.lending} />
-      </section>
-      <ul className="space-y-2">
-        {records.length === 0 && (
-          <p className="text-muted-foreground">{dict.lending.empty}</p>
-        )}
-        {records.map((record) => (
-          <LendingRow key={record.id} record={record} dict={dict.lending} />
-        ))}
-      </ul>
+      </div>
+
+      {records.length === 0 ? (
+        <p className="text-muted-foreground">{dict.lending.empty}</p>
+      ) : (
+        <div>
+          {active.length > 0 && (
+            <div className="mb-8">
+              <p className="editorial-label mb-3">Active</p>
+              <div className="space-y-px">
+                {active.map((record) => (
+                  <LendingRow key={record.id} record={record} dict={dict.lending} />
+                ))}
+              </div>
+            </div>
+          )}
+          {returned.length > 0 && (
+            <div>
+              <p className="editorial-label mb-3">Returned</p>
+              <div className="space-y-px">
+                {returned.map((record) => (
+                  <LendingRow key={record.id} record={record} dict={dict.lending} />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

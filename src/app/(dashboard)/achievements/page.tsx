@@ -1,7 +1,6 @@
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { Trophy, Lock, CheckCircle2 } from "lucide-react";
 
 export default async function AchievementsPage() {
   const userId = await requireUserId();
@@ -14,39 +13,39 @@ export default async function AchievementsPage() {
   const unlockedIds = new Set(unlocked.map((u) => u.achievementId));
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-          <Trophy size={20} />
-        </div>
-        <h1 className="text-2xl font-semibold tracking-tight">{dict.achievements.title}</h1>
+    <div>
+      <div className="mb-8">
+        <p className="editorial-label mb-2">Milestones</p>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+          {dict.achievements.title}
+        </h1>
+        <div className="editorial-rule-accent mt-4" />
       </div>
-      <ul className="grid gap-3 sm:grid-cols-2">
+
+      <div className="grid gap-4 sm:grid-cols-2">
         {all.map((achievement) => {
           const isUnlocked = unlockedIds.has(achievement.id);
           const labels = dict.achievements as Record<string, string>;
           return (
-            <li
+            <div
               key={achievement.id}
-              className={`flex items-start gap-3 rounded-xl border p-4 transition-colors ${
+              className={`relative border p-5 transition-colors ${
                 isUnlocked
-                  ? "border-primary/30 bg-primary/5"
-                  : "border-border bg-muted/50 opacity-60"
+                  ? "border-foreground/20 bg-foreground/[0.03]"
+                  : "border-border opacity-50"
               }`}
             >
-              <div className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
-                isUnlocked ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"
-              }`}>
-                {isUnlocked ? <CheckCircle2 size={18} /> : <Lock size={18} />}
-              </div>
-              <div>
-                <p className="font-medium">{labels[`${achievement.key}_title`]}</p>
-                <p className="text-sm text-muted-foreground">{labels[`${achievement.key}_desc`]}</p>
-              </div>
-            </li>
+              {isUnlocked && (
+                <div className="absolute right-3 top-3 text-[10px] font-bold uppercase tracking-widest text-primary">
+                  Unlocked
+                </div>
+              )}
+              <p className="text-lg font-bold">{labels[`${achievement.key}_title`]}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{labels[`${achievement.key}_desc`]}</p>
+            </div>
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 }

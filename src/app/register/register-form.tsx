@@ -3,11 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { BookOpen } from "lucide-react";
 import { registerUser } from "@/app/actions/auth";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -35,63 +31,61 @@ export default function RegisterForm() {
   }
 
   return (
-    <div className="flex flex-1 items-center justify-center p-6">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-sm space-y-6"
-      >
-        <div className="flex flex-col items-center gap-2 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
-            <BookOpen size={24} />
-          </div>
-          <h1 className="text-2xl font-semibold tracking-tight">Create account</h1>
-          <p className="text-sm text-muted-foreground">Start tracking your reading</p>
+    <div className="flex min-h-screen items-center justify-center px-5">
+      <div className="w-full max-w-sm">
+        <div className="mb-10">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">KatipCelebi</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Start tracking your reading</p>
         </div>
-        <div className="space-y-4 rounded-xl border border-border bg-card p-6 shadow-sm">
-          <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              name="name"
-              placeholder="Your name"
-              required
-            />
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-4">
+            <div>
+              <label className="editorial-label mb-1 block">Name</label>
+              <input
+                name="name"
+                placeholder="Your name"
+                required
+                className="w-full border-b border-border bg-transparent py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-foreground focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="editorial-label mb-1 block">Email</label>
+              <input
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                required
+                className="w-full border-b border-border bg-transparent py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-foreground focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="editorial-label mb-1 block">Password</label>
+              <input
+                name="password"
+                type="password"
+                placeholder="Min 8 characters"
+                required
+                minLength={8}
+                className="w-full border-b border-border bg-transparent py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-foreground focus:outline-none"
+              />
+            </div>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="you@example.com"
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Min 8 characters"
-              required
-              minLength={8}
-            />
-          </div>
-          {error && (
-            <p className="text-sm text-destructive">{error}</p>
-          )}
-          <Button type="submit" disabled={pending} className="w-full">
+          {error && <p className="text-sm text-destructive">{error}</p>}
+          <button
+            type="submit"
+            disabled={pending}
+            className="w-full bg-foreground py-2.5 text-xs font-semibold uppercase tracking-wider text-background transition-opacity hover:opacity-90 disabled:opacity-40"
+          >
             {pending ? "Creating..." : "Create account"}
-          </Button>
-        </div>
-        <p className="text-center text-sm text-muted-foreground">
+          </button>
+        </form>
+        <p className="mt-6 text-center text-sm text-muted-foreground">
           Already have an account?{" "}
-          <Link href="/login" className="font-medium text-primary hover:underline">
+          <Link href="/login" className="text-foreground underline underline-offset-4 hover:no-underline">
             Sign in
           </Link>
         </p>
-      </form>
+      </div>
     </div>
   );
 }

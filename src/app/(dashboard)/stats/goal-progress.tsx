@@ -15,22 +15,22 @@ export function GoalProgress({ label, target, done, noGoalLabel, reachedLabel, p
   const isReached = g ? reached(g) : false;
 
   return (
-    <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
-      <div className="mb-2 flex items-center justify-between">
-        <p className="text-sm font-medium text-card-foreground">{label}</p>
+    <div>
+      <div className="mb-3 flex items-baseline justify-between">
+        <p className="text-sm font-medium">{label}</p>
         <span className="text-xs text-muted-foreground">
-          {target === 0 ? noGoalLabel : `${done} / ${target} ${isReached ? `· ${reachedLabel}` : ""}`}
+          {target === 0 ? noGoalLabel : `${done} / ${target}`}
         </span>
       </div>
-      <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+      <div className="h-1 w-full overflow-hidden bg-muted">
         <div
-          className="h-full rounded-full bg-primary transition-all"
+          className="h-full bg-foreground transition-all"
           style={{ width: `${pct}%` }}
           aria-label={progressLabel}
         />
       </div>
-      <p className="mt-1 text-xs text-muted-foreground">
-        {target === 0 ? noGoalLabel : `${pct.toFixed(0)}% ${progressLabel}`}
+      <p className="mt-2 text-xs text-muted-foreground">
+        {target === 0 ? noGoalLabel : `${pct.toFixed(0)}% ${isReached ? `· ${reachedLabel}` : progressLabel}`}
       </p>
     </div>
   );

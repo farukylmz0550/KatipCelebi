@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { levelForXp } from "@/lib/gamification";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 
 type User = { id: string; name: string; xp: number };
 
@@ -25,61 +23,49 @@ export function LeaderboardTable({
   const slice = users.slice(start, start + PAGE_SIZE);
 
   return (
-    <div className="space-y-4">
-      <div className="overflow-hidden rounded-xl border border-border shadow-sm">
-        <table className="w-full text-sm">
-          <thead className="bg-muted/50">
-            <tr>
-              <th className="px-4 py-3 text-left font-medium text-muted-foreground">{dict.rank}</th>
-              <th className="px-4 py-3 text-left font-medium text-muted-foreground">{dict.name}</th>
-              <th className="px-4 py-3 text-center font-medium text-muted-foreground">{dict.level}</th>
-              <th className="px-4 py-3 text-right font-medium text-muted-foreground">{dict.xp}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {slice.map((user, i) => (
-              <tr
-                key={user.id}
-                className={`border-t border-border transition-colors ${
-                  user.id === currentUserId
-                    ? "bg-primary/5 font-medium"
-                    : "bg-card hover:bg-accent/50"
-                }`}
-              >
-                <td className="px-4 py-3 tabular-nums text-muted-foreground">{start + i + 1}</td>
-                <td className="px-4 py-3">{user.name}</td>
-                <td className="px-4 py-3 text-center">
-                  <Badge variant="secondary">{levelForXp(user.xp)}</Badge>
-                </td>
-                <td className="px-4 py-3 text-right tabular-nums text-muted-foreground">{user.xp}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div>
+      <div className="border-t border-border">
+        <div className="grid grid-cols-[3rem_1fr_5rem_6rem] gap-4 border-b border-border px-4 py-2">
+          <span className="editorial-label">#</span>
+          <span className="editorial-label">{dict.name}</span>
+          <span className="editorial-label text-center">{dict.level}</span>
+          <span className="editorial-label text-right">{dict.xp}</span>
+        </div>
+        {slice.map((user, i) => (
+          <div
+            key={user.id}
+            className={`grid grid-cols-[3rem_1fr_5rem_6rem] items-center gap-4 border-b border-border px-4 py-3 transition-colors ${
+              user.id === currentUserId ? "bg-foreground/[0.04] font-medium" : ""
+            }`}
+          >
+            <span className="tabular-nums text-sm text-muted-foreground">{start + i + 1}</span>
+            <span className="text-sm">{user.name}</span>
+            <span className="text-center text-sm tabular-nums">{levelForXp(user.xp)}</span>
+            <span className="text-right text-sm tabular-nums text-muted-foreground">{user.xp}</span>
+          </div>
+        ))}
       </div>
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
+        <div className="mt-4 flex items-center justify-center gap-4">
+          <button
             onClick={() => setPage((p) => Math.max(0, p - 1))}
             disabled={page === 0}
+            className="flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground disabled:opacity-40"
           >
-            <ChevronLeft size={14} />
-            Previous
-          </Button>
-          <span className="text-sm text-muted-foreground">
+            <ChevronLeft size={12} />
+            Prev
+          </button>
+          <span className="text-xs tabular-nums text-muted-foreground">
             {page + 1} / {totalPages}
           </span>
-          <Button
-            variant="outline"
-            size="sm"
+          <button
             onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
             disabled={page >= totalPages - 1}
+            className="flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground disabled:opacity-40"
           >
             Next
-            <ChevronRight size={14} />
-          </Button>
+            <ChevronRight size={12} />
+          </button>
         </div>
       )}
     </div>

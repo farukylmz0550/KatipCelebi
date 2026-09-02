@@ -1,7 +1,6 @@
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { BookOpen } from "lucide-react";
 import { AddBookForm } from "./add-book-form";
 import { ImportForm } from "./import-form";
 import { BooksGrid } from "./books-grid";
@@ -17,18 +16,25 @@ export default async function BooksPage() {
   books.forEach((b) => (lentMap[b.id] = lentSet.has(b.id)));
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-          <BookOpen size={20} />
-        </div>
-        <h1 className="text-2xl font-semibold tracking-tight">{dict.books.title}</h1>
+    <div>
+      <div className="mb-8">
+        <p className="editorial-label mb-2">Collection</p>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+          {dict.books.title}
+        </h1>
+        <div className="editorial-rule-accent mt-4" />
       </div>
-      <section className="space-y-4 rounded-xl border border-border bg-card p-5 shadow-sm">
+
+      <div className="mb-6">
         <AddBookForm dict={dict.books} />
-        <ImportForm dict={dict.books} />
-        <ExcelActions />
-      </section>
+        <div className="mt-3">
+          <ImportForm dict={dict.books} />
+        </div>
+        <div className="mt-3">
+          <ExcelActions />
+        </div>
+      </div>
+
       <BooksGrid books={books as never} lentMap={lentMap} dict={dict.books as never} />
     </div>
   );

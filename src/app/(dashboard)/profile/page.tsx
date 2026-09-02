@@ -17,8 +17,14 @@ export default async function ProfilePage() {
   if (!user) redirect("/login");
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">{dict.profile?.title ?? "Profile"}</h1>
+    <div>
+      <div className="mb-8">
+        <p className="editorial-label mb-2">Account</p>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+          {dict.profile?.title ?? "Profile"}
+        </h1>
+        <div className="editorial-rule-accent mt-4" />
+      </div>
       <ProfileForm
         user={{ name: user.name, email: user.email, xp: user.xp, createdAt: user.createdAt.toISOString() }}
         dict={{

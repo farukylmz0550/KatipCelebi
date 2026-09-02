@@ -1,7 +1,6 @@
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { Medal } from "lucide-react";
 import { LeaderboardTable } from "./leaderboard-table";
 
 export default async function LeaderboardPage() {
@@ -14,12 +13,13 @@ export default async function LeaderboardPage() {
   });
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-          <Medal size={20} />
-        </div>
-        <h1 className="text-2xl font-semibold tracking-tight">{dict.leaderboard.title}</h1>
+    <div>
+      <div className="mb-8">
+        <p className="editorial-label mb-2">Rankings</p>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+          {dict.leaderboard.title}
+        </h1>
+        <div className="editorial-rule-accent mt-4" />
       </div>
       <LeaderboardTable users={users} currentUserId={userId} dict={dict.leaderboard} />
     </div>

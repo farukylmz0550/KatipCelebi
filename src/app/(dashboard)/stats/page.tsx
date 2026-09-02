@@ -2,11 +2,9 @@ import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { getTheme } from "@/lib/theme";
-import { BarChart3, BookOpen, BookMarked, BookCheck, Star, Zap } from "lucide-react";
 import { levelProgress } from "@/lib/gamification";
 import { monthlyFinishCounts } from "@/lib/stats";
 import { finishedInMonth, finishedInYear } from "@/lib/goals";
-import { StatTile } from "./stat-tile";
 import { MonthlyChart } from "./monthly-chart";
 import { GoalProgress } from "./goal-progress";
 import { GoalForms } from "./goal-forms";
@@ -51,25 +49,43 @@ export default async function StatsPage() {
       : "—";
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-          <BarChart3 size={20} />
+    <div>
+      <div className="mb-8">
+        <p className="editorial-label mb-2">Reading</p>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+          {dict.stats.title}
+        </h1>
+        <div className="editorial-rule-accent mt-4" />
+      </div>
+
+      <div className="grid grid-cols-3 gap-8 border-b border-border pb-8 sm:grid-cols-6">
+        <div>
+          <p className="editorial-label">Total</p>
+          <p className="mt-1 text-3xl font-bold tabular-nums">{totalBooks}</p>
         </div>
-        <h1 className="text-2xl font-semibold tracking-tight">{dict.stats.title}</h1>
+        <div>
+          <p className="editorial-label">Finished</p>
+          <p className="mt-1 text-3xl font-bold tabular-nums">{finishedBooks.length}</p>
+        </div>
+        <div>
+          <p className="editorial-label">Reading</p>
+          <p className="mt-1 text-3xl font-bold tabular-nums">{reading}</p>
+        </div>
+        <div>
+          <p className="editorial-label">Level</p>
+          <p className="mt-1 text-3xl font-bold tabular-nums">{level}</p>
+        </div>
+        <div>
+          <p className="editorial-label">XP</p>
+          <p className="mt-1 text-3xl font-bold tabular-nums">{user.xp}</p>
+        </div>
+        <div>
+          <p className="editorial-label">Avg. Days</p>
+          <p className="mt-1 text-3xl font-bold tabular-nums">{avgDays}</p>
+        </div>
       </div>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
-        <StatTile label={dict.stats.totalBooks} value={totalBooks} icon={<BookOpen size={16} />} />
-        <StatTile label={dict.stats.finished} value={finishedBooks.length} icon={<BookCheck size={16} />} />
-        <StatTile label={dict.stats.reading} value={reading} icon={<BookMarked size={16} />} />
-        <StatTile label={dict.stats.level} value={level} icon={<Star size={16} />} />
-        <StatTile label={dict.stats.xp} value={user.xp} icon={<Zap size={16} />} />
-      </div>
-      <div className="grid grid-cols-2 gap-3">
-        <StatTile label={dict.stats.averageDays} value={avgDays} />
-        <StatTile label={dict.stats.totalFinished} value={finishedBooks.length} />
-      </div>
-      <div className="grid gap-3 sm:grid-cols-2">
+
+      <div className="mt-8 grid gap-6 sm:grid-cols-2">
         <GoalProgress
           label={dict.stats.yearlyGoal}
           target={yearly}
@@ -87,10 +103,16 @@ export default async function StatsPage() {
           progressLabel={dict.stats.progress}
         />
       </div>
-      <GoalForms dict={{ yearlyGoal: dict.stats.yearlyGoal, monthlyGoal: dict.stats.monthlyGoal, goalTarget: dict.stats.goalTarget, setGoal: dict.stats.setGoal }} yearly={yearly} monthly={monthly} />
-      <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
-        <h2 className="mb-3 text-sm font-medium text-muted-foreground">{dict.stats.byMonth}</h2>
-        <MonthlyChart data={chartData} label={dict.stats.finished} dark={theme === "dark"} />
+
+      <div className="mt-6">
+        <GoalForms dict={{ yearlyGoal: dict.stats.yearlyGoal, monthlyGoal: dict.stats.monthlyGoal, goalTarget: dict.stats.goalTarget, setGoal: dict.stats.setGoal }} yearly={yearly} monthly={monthly} />
+      </div>
+
+      <div className="mt-8">
+        <p className="editorial-label mb-4">{dict.stats.byMonth}</p>
+        <div className="border border-border p-4">
+          <MonthlyChart data={chartData} label={dict.stats.finished} dark={theme === "dark"} />
+        </div>
       </div>
     </div>
   );

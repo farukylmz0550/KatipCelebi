@@ -1,10 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Plus } from "lucide-react";
 import { createLending } from "@/app/actions/lending";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 type Book = { id: string; title: string };
 
@@ -22,12 +19,13 @@ export function LendingForm({ books, dict }: { books: Book[]; dict: { book: stri
   }
 
   return (
-    <div className="flex flex-wrap items-end gap-2">
+    <div className="flex flex-wrap items-end gap-4">
       <div className="flex-1 min-w-[200px]">
+        <label className="editorial-label mb-1 block">{dict.book}</label>
         <select
           value={bookId}
           onChange={(e) => setBookId(e.target.value)}
-          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          className="w-full border-b border-border bg-transparent py-1.5 text-sm text-foreground focus:border-foreground focus:outline-none"
         >
           {books.map((book) => (
             <option key={book.id} value={book.id}>
@@ -36,16 +34,22 @@ export function LendingForm({ books, dict }: { books: Book[]; dict: { book: stri
           ))}
         </select>
       </div>
-      <Input
-        value={borrowerName}
-        onChange={(e) => setBorrowerName(e.target.value)}
-        placeholder={dict.borrower}
-        className="w-48"
-      />
-      <Button size="sm" onClick={handleSubmit} disabled={pending || !bookId || !borrowerName}>
-        <Plus size={14} />
+      <div className="min-w-[160px]">
+        <label className="editorial-label mb-1 block">{dict.borrower}</label>
+        <input
+          value={borrowerName}
+          onChange={(e) => setBorrowerName(e.target.value)}
+          placeholder="Name"
+          className="w-full border-b border-border bg-transparent py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-foreground focus:outline-none"
+        />
+      </div>
+      <button
+        onClick={handleSubmit}
+        disabled={pending || !bookId || !borrowerName}
+        className="bg-foreground px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-background transition-opacity hover:opacity-90 disabled:opacity-40"
+      >
         {dict.lendCta}
-      </Button>
+      </button>
     </div>
   );
 }
