@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { canonical, display, splitTags, store, show, contains, fromSubjects, STARTER_TAGS } from "@/lib/books/tags";
+import { canonical, display, splitTags, store, show, contains, fromSubjects } from "@/lib/books/tags";
 
 describe("canonical", () => {
   it("lowercases and trims", () => {

@@ -16,7 +16,7 @@ type Book = {
   finishedAt?: Date | string | null;
 };
 
-export function BookPersonal({ book, dict }: { book: Book; dict: Record<string, unknown> }) {
+export function BookPersonal({ book }: { book: Book; dict: Record<string, unknown> }) {
   const [rating, setRating] = useState(book.rating ?? 0);
   const [signed, setSigned] = useState(!!book.signed);
   const [tags, setTags] = useState(book.tags ?? "");

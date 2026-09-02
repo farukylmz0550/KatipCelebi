@@ -1,10 +1,8 @@
 import { requireAdmin } from "@/lib/session";
-import { getDictionary } from "@/i18n/get-dictionary";
 import { getCoverStats, clearCoverCache } from "@/app/actions/covers";
 
 export default async function AdminCoversPage() {
   await requireAdmin();
-  const dict = await getDictionary();
   const { count, mb } = await getCoverStats();
 
   return (

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Filters, defaultFilters, SIGNED_ANY, LENT_ANY, SORT_TITLE, SORT_RATING, SORT_YEAR } from "@/lib/books/filters";
+import { Filters, defaultFilters, SORT_TITLE, SORT_RATING, SORT_YEAR } from "@/lib/books/filters";
 
 export function FilterBar({ onChange, tagsInUse }: { onChange: (f: Filters) => void; tagsInUse: string[] }) {
   const [filters, setFilters] = useState<Filters>(defaultFilters);

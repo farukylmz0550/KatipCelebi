@@ -15,7 +15,7 @@ export async function POST() {
       await db.goal.deleteMany({});
       await db.user.deleteMany({});
       return NextResponse.json({ ok: true });
-    } catch (e) {
+    } catch {
       if (attempt === 2) {
         // Fallback: raw better-sqlite3 with busy timeout
         try {

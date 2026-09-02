@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { BookCard } from "./book-card";
 import { FilterBar } from "./filter-bar";
-import { Filters, defaultFilters, allows, arrange } from "@/lib/books/filters";
+import { Filters, defaultFilters, arrange } from "@/lib/books/filters";
 import { BookRow } from "./book-row";
 
 type Book = {

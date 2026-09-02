@@ -1,4 +1,4 @@
-export async function resetDb(page?: any) {
+export async function resetDb(page?: { request: { post: (url: string) => Promise<{ ok: () => boolean }> } }) {
   // Wait for any pending server actions to finish (avoid busy DB)
   await new Promise((r) => setTimeout(r, 800));
   for (let attempt = 0; attempt < 3; attempt++) {

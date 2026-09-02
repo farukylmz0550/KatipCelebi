@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import { levelForXp } from "@/lib/gamification";
 
 type User = { id: string; name: string; xp: number };

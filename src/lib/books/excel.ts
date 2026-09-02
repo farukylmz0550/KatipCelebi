@@ -2,7 +2,6 @@
 // Single responsibility: Excel import/export.
 
 import ExcelJS from "exceljs";
-import { parseCopies, parseRating } from "./model";
 import { normalizeIsbn, isValidIsbn10, isValidIsbn13 } from "./model";
 
 export const TEMPLATE_DEFAULT_NAME = "isbn_list.xlsx";
@@ -44,7 +43,6 @@ export type ExportBook = {
   copies?: number | null;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function columnValue(book: ExportBook, field: string): string {
   switch (field) {
     case "isbn": return book.isbn ?? "";

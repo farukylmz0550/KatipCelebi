@@ -15,7 +15,7 @@ export async function getCoverStats() {
 }
 
 export async function clearCoverCache() {
-  const userId = await requireAdmin();
+  await requireAdmin();
   // Admin clears all covers (self-host single tenant, admin can clear globally)
   // For safety, clear only admin's books if you want per-user: change to { userId }
   await db.book.updateMany({ where: { coverUrl: { not: null } }, data: { coverUrl: null, coverFetchedAt: null } });
