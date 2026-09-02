@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { BookOpen } from "lucide-react";
 import { AddBookForm } from "./add-book-form";
 import { ImportForm } from "./import-form";
 import { BooksGrid } from "./books-grid";
@@ -17,8 +18,13 @@ export default async function BooksPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">{dict.books.title}</h1>
-      <section className="space-y-3 rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
+      <div className="flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+          <BookOpen size={20} />
+        </div>
+        <h1 className="text-2xl font-semibold tracking-tight">{dict.books.title}</h1>
+      </div>
+      <section className="space-y-4 rounded-xl border border-border bg-card p-5 shadow-sm">
         <AddBookForm dict={dict.books} />
         <ImportForm dict={dict.books} />
         <ExcelActions />

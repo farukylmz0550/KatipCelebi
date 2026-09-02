@@ -1,7 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { User, Mail, Lock, Save, Calendar, Zap } from "lucide-react";
 import { updateProfileName, changePassword } from "@/app/actions/profile";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 type User = {
   name: string;
@@ -55,75 +59,95 @@ export function ProfileForm({ user, dict }: { user: User; dict: Dict }) {
   }
 
   return (
-    <div className="space-y-8">
-      <section className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
-        <div className="mb-4 text-sm text-neutral-500 dark:text-neutral-400">
-          <p>{dict.joinDate}: {new Date(user.createdAt).toLocaleDateString()}</p>
-          <p>{dict.totalXp}: {user.xp}</p>
+    <div className="space-y-6">
+      <section className="rounded-xl border border-border bg-card p-6 shadow-sm">
+        <div className="mb-6 flex items-center gap-4">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
+            <User size={28} />
+          </div>
+          <div>
+            <p className="text-lg font-medium">{user.name}</p>
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <span className="flex items-center gap-1">
+                <Calendar size={14} />
+                {dict.joinDate}: {new Date(user.createdAt).toLocaleDateString()}
+              </span>
+              <span className="flex items-center gap-1">
+                <Zap size={14} />
+                {dict.totalXp}: {user.xp}
+              </span>
+            </div>
+          </div>
         </div>
         <form onSubmit={handleNameSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">{dict.name}</label>
-            <input
+          <div className="space-y-2">
+            <Label htmlFor="name" className="flex items-center gap-1.5">
+              <User size={14} className="text-muted-foreground" />
+              {dict.name}
+            </Label>
+            <Input
+              id="name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full rounded border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">{dict.email}</label>
-            <input
+          <div className="space-y-2">
+            <Label htmlFor="email" className="flex items-center gap-1.5">
+              <Mail size={14} className="text-muted-foreground" />
+              {dict.email}
+            </Label>
+            <Input
+              id="email"
               type="email"
               value={user.email}
               disabled
-              className="w-full rounded border border-neutral-300 bg-neutral-100 px-3 py-2 text-sm opacity-60 dark:border-neutral-700 dark:bg-neutral-800"
+              className="opacity-60"
             />
           </div>
           {nameMessage && (
             <p className="text-sm text-green-600 dark:text-green-400">{nameMessage}</p>
           )}
-          <button
-            type="submit"
-            disabled={loading}
-            className="rounded bg-neutral-900 px-4 py-2 text-sm text-white hover:bg-neutral-700 disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300"
-          >
+          <Button type="submit" disabled={loading}>
+            <Save size={14} />
             {dict.save}
-          </button>
+          </Button>
         </form>
       </section>
 
-      <section className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
-        <h2 className="mb-4 text-lg font-medium">{dict.changePassword}</h2>
+      <section className="rounded-xl border border-border bg-card p-6 shadow-sm">
+        <h2 className="mb-4 flex items-center gap-2 text-lg font-medium">
+          <Lock size={18} className="text-muted-foreground" />
+          {dict.changePassword}
+        </h2>
         <form onSubmit={handlePasswordSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">{dict.currentPassword}</label>
-            <input
+          <div className="space-y-2">
+            <Label htmlFor="currentPassword">{dict.currentPassword}</Label>
+            <Input
+              id="currentPassword"
               type="password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
-              className="w-full rounded border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800"
+              placeholder="••••••••"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">{dict.newPassword}</label>
-            <input
+          <div className="space-y-2">
+            <Label htmlFor="newPassword">{dict.newPassword}</Label>
+            <Input
+              id="newPassword"
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full rounded border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800"
+              placeholder="••••••••"
             />
           </div>
           {passwordMessage && (
             <p className="text-sm text-green-600 dark:text-green-400">{passwordMessage}</p>
           )}
-          <button
-            type="submit"
-            disabled={loading}
-            className="rounded bg-neutral-900 px-4 py-2 text-sm text-white hover:bg-neutral-700 disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300"
-          >
+          <Button type="submit" disabled={loading} variant="outline">
+            <Lock size={14} />
             {dict.changePassword}
-          </button>
+          </Button>
         </form>
       </section>
     </div>

@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { HandCoins } from "lucide-react";
 import { LendingForm } from "./lending-form";
 import { LendingRow } from "./lending-row";
 
@@ -19,12 +20,19 @@ export default async function LendingPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">{dict.lending.title}</h1>
-      <section className="rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
+      <div className="flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+          <HandCoins size={20} />
+        </div>
+        <h1 className="text-2xl font-semibold tracking-tight">{dict.lending.title}</h1>
+      </div>
+      <section className="rounded-xl border border-border bg-card p-5 shadow-sm">
         <LendingForm books={books} dict={dict.lending} />
       </section>
       <ul className="space-y-2">
-        {records.length === 0 && <p className="text-neutral-500 dark:text-neutral-400">{dict.lending.empty}</p>}
+        {records.length === 0 && (
+          <p className="text-muted-foreground">{dict.lending.empty}</p>
+        )}
         {records.map((record) => (
           <LendingRow key={record.id} record={record} dict={dict.lending} />
         ))}

@@ -2,7 +2,10 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { UserPlus, UserMinus } from "lucide-react";
 import { createPerson, removePerson } from "@/app/actions/people";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export function PersonForm({ placeholder, addLabel, removeLabel, selectedId }: { placeholder: string; addLabel: string; removeLabel: string; selectedId?: string }) {
   const [name, setName] = useState("");
@@ -36,20 +39,22 @@ export function PersonForm({ placeholder, addLabel, removeLabel, selectedId }: {
   return (
     <div className="space-y-2">
       <form onSubmit={onAdd} className="flex gap-2">
-        <input
+        <Input
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder={placeholder}
-          className="flex-1 rounded border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800"
+          className="flex-1"
         />
-        <button type="submit" disabled={pending} className="rounded bg-neutral-900 px-4 py-2 text-sm text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900">
+        <Button type="submit" size="sm" disabled={pending}>
+          <UserPlus size={14} />
           {addLabel}
-        </button>
-        <button type="button" onClick={onRemove} disabled={pending || !selectedId} className="rounded border border-neutral-300 px-4 py-2 text-sm disabled:opacity-50 dark:border-neutral-700">
+        </Button>
+        <Button type="button" variant="outline" size="sm" onClick={onRemove} disabled={pending || !selectedId}>
+          <UserMinus size={14} />
           {removeLabel}
-        </button>
+        </Button>
       </form>
-      {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
+      {error && <p className="text-sm text-destructive">{error}</p>}
     </div>
   );
 }

@@ -1,7 +1,10 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { Upload } from "lucide-react";
 import { importBooksByIsbn } from "@/app/actions/books";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 export function ImportForm({ dict }: { dict: { importPlaceholder: string; importCta: string } }) {
   const [text, setText] = useState("");
@@ -18,17 +21,19 @@ export function ImportForm({ dict }: { dict: { importPlaceholder: string; import
 
   return (
     <div className="space-y-2">
-      <textarea
+      <Textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder={dict.importPlaceholder}
         rows={3}
-        className="w-full rounded border border-neutral-300 dark:border-neutral-700 dark:bg-neutral-800 px-2 py-1"
       />
-      <button type="button" onClick={handleImport} disabled={pending || !text.trim()} className="rounded border border-neutral-300 dark:border-neutral-700 dark:bg-neutral-800 px-3 py-1 disabled:opacity-50">
+      <Button type="button" variant="outline" size="sm" onClick={handleImport} disabled={pending || !text.trim()}>
+        <Upload size={14} />
         {dict.importCta}
-      </button>
-      {result !== null && <span className="ml-2 text-sm text-neutral-600 dark:text-neutral-400">+{result}</span>}
+      </Button>
+      {result !== null && (
+        <span className="ml-2 text-sm text-muted-foreground">+{result}</span>
+      )}
     </div>
   );
 }

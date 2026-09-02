@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { levelForXp } from "@/lib/gamification";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 type User = { id: string; name: string; xp: number };
 
@@ -23,45 +26,60 @@ export function LeaderboardTable({
 
   return (
     <div className="space-y-4">
-      <table className="w-full overflow-hidden rounded-lg border border-neutral-200 bg-white text-left text-sm dark:border-neutral-800 dark:bg-neutral-900">
-        <thead className="bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300">
-          <tr>
-            <th className="px-3 py-2">{dict.rank}</th>
-            <th className="px-3 py-2">{dict.name}</th>
-            <th className="px-3 py-2">{dict.level}</th>
-            <th className="px-3 py-2">{dict.xp}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {slice.map((user, i) => (
-            <tr key={user.id} className={user.id === currentUserId ? "bg-[#cde2fb]/40 dark:bg-[#184f95]/30" : ""}>
-              <td className="px-3 py-2 tabular-nums">{start + i + 1}</td>
-              <td className="px-3 py-2">{user.name}</td>
-              <td className="px-3 py-2 tabular-nums">{levelForXp(user.xp)}</td>
-              <td className="px-3 py-2 tabular-nums">{user.xp}</td>
+      <div className="overflow-hidden rounded-xl border border-border shadow-sm">
+        <table className="w-full text-sm">
+          <thead className="bg-muted/50">
+            <tr>
+              <th className="px-4 py-3 text-left font-medium text-muted-foreground">{dict.rank}</th>
+              <th className="px-4 py-3 text-left font-medium text-muted-foreground">{dict.name}</th>
+              <th className="px-4 py-3 text-center font-medium text-muted-foreground">{dict.level}</th>
+              <th className="px-4 py-3 text-right font-medium text-muted-foreground">{dict.xp}</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {slice.map((user, i) => (
+              <tr
+                key={user.id}
+                className={`border-t border-border transition-colors ${
+                  user.id === currentUserId
+                    ? "bg-primary/5 font-medium"
+                    : "bg-card hover:bg-accent/50"
+                }`}
+              >
+                <td className="px-4 py-3 tabular-nums text-muted-foreground">{start + i + 1}</td>
+                <td className="px-4 py-3">{user.name}</td>
+                <td className="px-4 py-3 text-center">
+                  <Badge variant="secondary">{levelForXp(user.xp)}</Badge>
+                </td>
+                <td className="px-4 py-3 text-right tabular-nums text-muted-foreground">{user.xp}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2">
-          <button
+          <Button
+            variant="outline"
+            size="sm"
             onClick={() => setPage((p) => Math.max(0, p - 1))}
             disabled={page === 0}
-            className="rounded border border-neutral-300 px-3 py-1 text-sm disabled:opacity-50 dark:border-neutral-700"
           >
+            <ChevronLeft size={14} />
             Previous
-          </button>
-          <span className="text-sm text-neutral-500 dark:text-neutral-400">
+          </Button>
+          <span className="text-sm text-muted-foreground">
             {page + 1} / {totalPages}
           </span>
-          <button
+          <Button
+            variant="outline"
+            size="sm"
             onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
             disabled={page >= totalPages - 1}
-            className="rounded border border-neutral-300 px-3 py-1 text-sm disabled:opacity-50 dark:border-neutral-700"
           >
             Next
-          </button>
+            <ChevronRight size={14} />
+          </Button>
         </div>
       )}
     </div>

@@ -1,7 +1,10 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { Search, Plus } from "lucide-react";
 import { addBook, lookupIsbnAction } from "@/app/actions/books";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export function AddBookForm({ dict }: { dict: { isbn: string; lookup: string; bookTitle: string; author: string; add: string } }) {
   const [isbn, setIsbn] = useState("");
@@ -33,31 +36,35 @@ export function AddBookForm({ dict }: { dict: { isbn: string; lookup: string; bo
   }
 
   return (
-    <div className="flex flex-wrap gap-2">
-      <input
-        value={isbn}
-        onChange={(e) => setIsbn(e.target.value)}
-        placeholder={dict.isbn}
-        className="rounded border border-neutral-300 px-2 py-1 dark:border-neutral-700 dark:bg-neutral-800"
-      />
-      <button type="button" onClick={handleLookup} disabled={pending || !isbn} className="rounded border border-neutral-300 px-2 py-1 dark:border-neutral-700 dark:bg-neutral-800">
-        {dict.lookup}
-      </button>
-      <input
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder={dict.bookTitle}
-        className="rounded border border-neutral-300 px-2 py-1 dark:border-neutral-700 dark:bg-neutral-800"
-      />
-      <input
-        value={author}
-        onChange={(e) => setAuthor(e.target.value)}
-        placeholder={dict.author}
-        className="rounded border border-neutral-300 px-2 py-1 dark:border-neutral-700 dark:bg-neutral-800"
-      />
-      <button type="button" onClick={handleAdd} disabled={pending || !title} className="rounded bg-neutral-900 px-3 py-1 text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900">
-        {dict.add}
-      </button>
+    <div className="space-y-3">
+      <div className="flex flex-wrap gap-2">
+        <Input
+          value={isbn}
+          onChange={(e) => setIsbn(e.target.value)}
+          placeholder={dict.isbn}
+          className="w-40"
+        />
+        <Button type="button" variant="outline" size="sm" onClick={handleLookup} disabled={pending || !isbn}>
+          <Search size={14} />
+          {dict.lookup}
+        </Button>
+        <Input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder={dict.bookTitle}
+          className="w-48"
+        />
+        <Input
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          placeholder={dict.author}
+          className="w-36"
+        />
+        <Button type="button" size="sm" onClick={handleAdd} disabled={pending || !title}>
+          <Plus size={14} />
+          {dict.add}
+        </Button>
+      </div>
     </div>
   );
 }

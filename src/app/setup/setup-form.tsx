@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { BookOpen } from "lucide-react";
 import { createAdminUser } from "@/app/actions/setup";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function SetupForm() {
   const router = useRouter();
@@ -29,34 +33,54 @@ export default function SetupForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4 rounded-lg border border-neutral-200 bg-white p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
-      <h1 className="text-xl font-semibold">First-time setup</h1>
-      <p className="text-sm text-neutral-600 dark:text-neutral-400">Create the admin account to get started.</p>
-      <input
-        name="name"
-        placeholder="Admin name"
-        required
-        className="w-full rounded border border-neutral-300 px-3 py-2 dark:border-neutral-700 dark:bg-neutral-800"
-      />
-      <input
-        name="email"
-        type="email"
-        placeholder="Admin email"
-        required
-        className="w-full rounded border border-neutral-300 px-3 py-2 dark:border-neutral-700 dark:bg-neutral-800"
-      />
-      <input
-        name="password"
-        type="password"
-        placeholder="Admin password (min 8 chars)"
-        required
-        minLength={8}
-        className="w-full rounded border border-neutral-300 px-3 py-2 dark:border-neutral-700 dark:bg-neutral-800"
-      />
-      {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
-      <button type="submit" disabled={pending} className="w-full rounded bg-neutral-900 py-2 text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900">
-        {pending ? "…" : "Create admin account"}
-      </button>
-    </form>
+    <div className="flex flex-1 items-center justify-center p-6">
+      <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-6">
+        <div className="flex flex-col items-center gap-2 text-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <BookOpen size={24} />
+          </div>
+          <h1 className="text-2xl font-semibold tracking-tight">Welcome to KatipCelebi</h1>
+          <p className="text-sm text-muted-foreground">Create the admin account to get started.</p>
+        </div>
+        <div className="space-y-4 rounded-xl border border-border bg-card p-6 shadow-sm">
+          <div className="space-y-2">
+            <Label htmlFor="name">Admin name</Label>
+            <Input
+              id="name"
+              name="name"
+              placeholder="Your name"
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="email">Admin email</Label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">Admin password</Label>
+            <Input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Min 8 characters"
+              required
+              minLength={8}
+            />
+          </div>
+          {error && (
+            <p className="text-sm text-destructive">{error}</p>
+          )}
+          <Button type="submit" disabled={pending} className="w-full">
+            {pending ? "Setting up..." : "Create admin account"}
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 }

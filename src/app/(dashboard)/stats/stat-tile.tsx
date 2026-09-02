@@ -1,8 +1,13 @@
-export function StatTile({ label, value }: { label: string; value: string | number }) {
+import type { ReactNode } from "react";
+
+export function StatTile({ label, value, icon }: { label: string; value: string | number; icon?: ReactNode }) {
   return (
-    <div className="rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
-      <p className="text-sm text-neutral-500 dark:text-neutral-400">{label}</p>
-      <p className="text-2xl font-semibold tabular-nums text-neutral-900 dark:text-white">{value}</p>
+    <div className="rounded-xl border border-border bg-card p-4 shadow-sm transition-colors hover:bg-accent/50">
+      <div className="flex items-center gap-2">
+        {icon && <span className="text-muted-foreground">{icon}</span>}
+        <p className="text-sm text-muted-foreground">{label}</p>
+      </div>
+      <p className="mt-1 text-2xl font-semibold tabular-nums text-card-foreground">{value}</p>
     </div>
   );
 }

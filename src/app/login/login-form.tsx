@@ -4,6 +4,10 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { BookOpen } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -32,36 +36,53 @@ export default function LoginForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="w-full max-w-sm space-y-4 rounded-lg border border-neutral-200 bg-white p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-900"
-    >
-      <h1 className="text-xl font-semibold">Log in</h1>
-      <input
-        name="email"
-        type="email"
-        placeholder="Email"
-        required
-        className="w-full rounded border border-neutral-300 px-3 py-2 dark:border-neutral-700 dark:bg-neutral-800"
-      />
-      <input
-        name="password"
-        type="password"
-        placeholder="Password"
-        required
-        className="w-full rounded border border-neutral-300 px-3 py-2 dark:border-neutral-700 dark:bg-neutral-800"
-      />
-      {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
-      <button
-        type="submit"
-        disabled={pending}
-        className="w-full rounded bg-neutral-900 py-2 text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900"
+    <div className="flex flex-1 items-center justify-center p-6">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-sm space-y-6"
       >
-        {pending ? "…" : "Log in"}
-      </button>
-      <p className="text-sm text-neutral-600 dark:text-neutral-400">
-        No account yet? <Link href="/register" className="underline">Create one</Link>
-      </p>
-    </form>
+        <div className="flex flex-col items-center gap-2 text-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <BookOpen size={24} />
+          </div>
+          <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
+          <p className="text-sm text-muted-foreground">Sign in to your library</p>
+        </div>
+        <div className="space-y-4 rounded-xl border border-border bg-card p-6 shadow-sm">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+          {error && (
+            <p className="text-sm text-destructive">{error}</p>
+          )}
+          <Button type="submit" disabled={pending} className="w-full">
+            {pending ? "Signing in..." : "Sign in"}
+          </Button>
+        </div>
+        <p className="text-center text-sm text-muted-foreground">
+          No account yet?{" "}
+          <Link href="/register" className="font-medium text-primary hover:underline">
+            Create one
+          </Link>
+        </p>
+      </form>
+    </div>
   );
 }

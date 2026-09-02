@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { FileDown, FileUp, FileSpreadsheet } from "lucide-react";
 import { exportLibraryExcel, buildTemplateExcel, importExcelFile } from "@/app/actions/excel";
+import { Button } from "@/components/ui/button";
 
 function downloadBase64(base64: string, filename: string) {
   const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
@@ -50,13 +52,22 @@ export function ExcelActions() {
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <button onClick={onTemplate} disabled={pending} className="rounded border border-neutral-300 px-3 py-1.5 text-sm disabled:opacity-50 dark:border-neutral-700">Template</button>
-      <button onClick={onExport} disabled={pending} className="rounded border border-neutral-300 px-3 py-1.5 text-sm disabled:opacity-50 dark:border-neutral-700">Export</button>
-      <label className="rounded border border-neutral-300 px-3 py-1.5 text-sm dark:border-neutral-700">
-        Import Excel
-        <input type="file" accept=".xlsx,.xls" onChange={onFile} className="hidden" />
-      </label>
-      {msg && <span className="text-sm text-neutral-600 dark:text-neutral-400">{msg}</span>}
+      <Button variant="outline" size="sm" onClick={onTemplate} disabled={pending}>
+        <FileSpreadsheet size={14} />
+        Template
+      </Button>
+      <Button variant="outline" size="sm" onClick={onExport} disabled={pending}>
+        <FileDown size={14} />
+        Export
+      </Button>
+      <Button variant="outline" size="sm" asChild>
+        <label className="cursor-pointer">
+          <FileUp size={14} />
+          Import Excel
+          <input type="file" accept=".xlsx,.xls" onChange={onFile} className="hidden" />
+        </label>
+      </Button>
+      {msg && <span className="text-sm text-muted-foreground">{msg}</span>}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { getTheme } from "@/lib/theme";
+import { BarChart3, BookOpen, BookMarked, BookCheck, Star, Zap } from "lucide-react";
 import { levelProgress } from "@/lib/gamification";
 import { monthlyFinishCounts } from "@/lib/stats";
 import { finishedInMonth, finishedInYear } from "@/lib/goals";
@@ -33,7 +34,6 @@ export default async function StatsPage() {
   const { level } = levelProgress(user.xp);
   const chartData = monthlyFinishCounts(finishedDates);
 
-  // Average days to finish (from startedAt/finishedAt where available)
   const booksWithDuration = await db.book.findMany({
     where: { userId, status: "FINISHED", startedAt: { not: null }, finishedAt: { not: null } },
     select: { startedAt: true, finishedAt: true },
@@ -52,13 +52,18 @@ export default async function StatsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">{dict.stats.title}</h1>
+      <div className="flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+          <BarChart3 size={20} />
+        </div>
+        <h1 className="text-2xl font-semibold tracking-tight">{dict.stats.title}</h1>
+      </div>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
-        <StatTile label={dict.stats.totalBooks} value={totalBooks} />
-        <StatTile label={dict.stats.finished} value={finishedBooks.length} />
-        <StatTile label={dict.stats.reading} value={reading} />
-        <StatTile label={dict.stats.level} value={level} />
-        <StatTile label={dict.stats.xp} value={user.xp} />
+        <StatTile label={dict.stats.totalBooks} value={totalBooks} icon={<BookOpen size={16} />} />
+        <StatTile label={dict.stats.finished} value={finishedBooks.length} icon={<BookCheck size={16} />} />
+        <StatTile label={dict.stats.reading} value={reading} icon={<BookMarked size={16} />} />
+        <StatTile label={dict.stats.level} value={level} icon={<Star size={16} />} />
+        <StatTile label={dict.stats.xp} value={user.xp} icon={<Zap size={16} />} />
       </div>
       <div className="grid grid-cols-2 gap-3">
         <StatTile label={dict.stats.averageDays} value={avgDays} />
@@ -83,8 +88,8 @@ export default async function StatsPage() {
         />
       </div>
       <GoalForms dict={{ yearlyGoal: dict.stats.yearlyGoal, monthlyGoal: dict.stats.monthlyGoal, goalTarget: dict.stats.goalTarget, setGoal: dict.stats.setGoal }} yearly={yearly} monthly={monthly} />
-      <div>
-        <h2 className="mb-2 text-sm font-medium text-neutral-600 dark:text-neutral-400">{dict.stats.byMonth}</h2>
+      <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+        <h2 className="mb-3 text-sm font-medium text-muted-foreground">{dict.stats.byMonth}</h2>
         <MonthlyChart data={chartData} label={dict.stats.finished} dark={theme === "dark"} />
       </div>
     </div>

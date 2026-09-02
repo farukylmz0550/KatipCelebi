@@ -1,7 +1,11 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { Target } from "lucide-react";
 import { setYearlyGoal, setMonthlyGoal } from "@/app/actions/goals";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 type Dict = {
   yearlyGoal: string;
@@ -42,26 +46,24 @@ function GoalForm({
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex items-end gap-2 rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
-      <div className="flex-1">
-        <label className="mb-1 block text-sm font-medium text-neutral-700 dark:text-neutral-300">{label}</label>
-        <input
+    <form onSubmit={onSubmit} className="flex items-end gap-2 rounded-xl border border-border bg-card p-4 shadow-sm">
+      <div className="flex-1 space-y-1">
+        <Label className="flex items-center gap-1.5">
+          <Target size={14} className="text-muted-foreground" />
+          {label}
+        </Label>
+        <Input
           type="number"
           min={0}
           max={999}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder={dict.goalTarget}
-          className="w-full rounded border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800"
         />
       </div>
-      <button
-        type="submit"
-        disabled={pending}
-        className="rounded bg-neutral-900 px-4 py-2 text-sm text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900"
-      >
+      <Button type="submit" disabled={pending} size="sm">
         {dict.setGoal}
-      </button>
+      </Button>
     </form>
   );
 }
