@@ -70,3 +70,4 @@ prisma/*.db-journal
 # rust
 crates/*/target/
 
+*.webm
