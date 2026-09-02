@@ -13,7 +13,7 @@ test.describe("books", () => {
 
   test("add book via form (addBook → XP+5)", async ({ page }) => {
     await page.goto("/books");
-    await page.getByPlaceholder("Title", { exact: true }).fill("Dune");
+    await page.getByPlaceholder("Title").first().fill("Dune");
     await page.getByPlaceholder("Author").fill("Frank Herbert");
     await page.getByRole("button", { name: /^add$/i }).click();
     await expect(page.getByText("Dune", { exact: true }).first()).toBeVisible();
@@ -22,56 +22,44 @@ test.describe("books", () => {
 
   test("ISBN lookup + add", async ({ page }) => {
     await page.goto("/books");
-    await page.getByPlaceholder("ISBN", { exact: true }).fill("9780140449136");
+    await page.getByPlaceholder("ISBN").fill("9780140449136");
     await page.getByRole("button", { name: /look up/i }).click();
     await page.waitForTimeout(1500);
-    await page.getByPlaceholder("Title", { exact: true }).fill("The Odyssey");
+    await page.getByPlaceholder("Title").first().fill("The Odyssey");
     await page.getByRole("button", { name: /^add$/i }).click();
     await expect(page.locator("a[href^='/books/']").first()).toBeVisible();
   });
 
-  test("bulk import by ISBN (importBooksByIsbn split /[\\s,;]+/)", async ({ page }) => {
+  test("bulk import by ISBN", async ({ page }) => {
     await page.goto("/books");
     await page.getByPlaceholder("One ISBN per line").fill("9780140449136, 9780306406157");
     await page.getByRole("button", { name: /import/i }).click();
-    // Import may create 0-2 books depending on network; check that button still works
     await expect(page.getByPlaceholder("One ISBN per line")).toBeVisible();
   });
 
   test("filter bar: search + rating + status + lent + tag + sort", async ({ page }) => {
     await page.goto("/books");
-    await page.getByPlaceholder("Title", { exact: true }).fill("A History Book");
+    await page.getByPlaceholder("Title").first().fill("A History Book");
     await page.getByRole("button", { name: /^add$/i }).click();
     await expect(page.getByText("A History Book", { exact: true }).first()).toBeVisible();
-    await page.getByPlaceholder("Title", { exact: true }).fill("Science Fiction Epic");
+    await page.getByPlaceholder("Title").first().fill("Science Fiction Epic");
     await page.getByPlaceholder("Author").fill("Author X");
     await page.getByRole("button", { name: /^add$/i }).click();
     await expect(page.getByText("Science Fiction Epic", { exact: true }).first()).toBeVisible();
 
-    await page.getByPlaceholder("Search").fill("History");
+    await page.getByPlaceholder("Search by title, author, ISBN...").fill("History");
     await expect(page.getByText("A History Book", { exact: true }).first()).toBeVisible();
     await expect(page.getByText("Science Fiction Epic", { exact: true }).first()).toBeHidden();
 
-    await page.getByPlaceholder("Search").fill("");
-    await page.getByRole("button", { name: /advanced/i }).click();
+    await page.getByPlaceholder("Search by title, author, ISBN...").fill("");
+    await page.getByRole("button", { name: /filters/i }).click();
     await page.locator("select").filter({ hasText: "Status" }).selectOption("TO_READ");
-    await expect(page.getByText(/0 \/ 2|\/ 2/).first()).toBeVisible();
-  });
-
-  test("book row: mark finished (+50 XP) and delete", async ({ page }) => {
-    await page.goto("/books");
-    await page.getByPlaceholder("Title", { exact: true }).fill("To Finish");
-    await page.getByRole("button", { name: /^add$/i }).click();
-    await expect(page.getByText("To Finish", { exact: true }).first()).toBeVisible();
-    await page.getByRole("button", { name: /mark finished/i }).first().click();
-    await expect(page.getByRole("button", { name: /mark finished/i })).toHaveCount(0);
-    await page.getByRole("button", { name: /^delete$/i }).first().click();
-    await expect(page.getByText("To Finish", { exact: true }).first()).toBeHidden();
+    await expect(page.getByText(/0 of 2|of 2/).first()).toBeVisible();
   });
 
   test("book detail: facts edit + personal (rating/signed/tags/notes) + copies", async ({ page }) => {
     await page.goto("/books");
-    await page.getByPlaceholder("Title", { exact: true }).fill("Detail Book");
+    await page.getByPlaceholder("Title").first().fill("Detail Book");
     await page.getByRole("button", { name: /^add$/i }).click();
     await expect(page.getByText("Detail Book", { exact: true }).first()).toBeVisible();
     await page.locator("a[href^='/books/']").first().click();

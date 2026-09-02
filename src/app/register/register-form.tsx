@@ -34,7 +34,7 @@ export default function RegisterForm() {
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <h1 className="mb-8 text-center text-xl font-medium text-foreground">KatipCelebi</h1>
-        <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-border bg-card p-6">
+        <form method="POST" onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-border bg-card p-6">
           <div>
             <label className="mb-1 block text-[13px] text-muted-foreground">Name</label>
             <input
