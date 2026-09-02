@@ -13,14 +13,8 @@ export default async function LeaderboardPage() {
   });
 
   return (
-    <div>
-      <div className="mb-8">
-        <p className="editorial-label mb-2">Rankings</p>
-        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-          {dict.leaderboard.title}
-        </h1>
-        <div className="editorial-rule-accent mt-4" />
-      </div>
+    <div className="space-y-6">
+      <h1 className="text-xl font-medium text-foreground">{dict.leaderboard.title}</h1>
       <LeaderboardTable users={users} currentUserId={userId} dict={dict.leaderboard} />
     </div>
   );

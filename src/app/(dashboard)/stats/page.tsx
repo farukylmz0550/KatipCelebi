@@ -49,43 +49,24 @@ export default async function StatsPage() {
       : "—";
 
   return (
-    <div>
-      <div className="mb-8">
-        <p className="editorial-label mb-2">Reading</p>
-        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-          {dict.stats.title}
-        </h1>
-        <div className="editorial-rule-accent mt-4" />
+    <div className="space-y-6">
+      <h1 className="text-xl font-medium text-foreground">{dict.stats.title}</h1>
+      <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
+        {[
+          { label: dict.stats.totalBooks, value: totalBooks },
+          { label: dict.stats.finished, value: finishedBooks.length },
+          { label: dict.stats.reading, value: reading },
+          { label: dict.stats.level, value: level },
+          { label: dict.stats.xp, value: user.xp },
+          { label: dict.stats.averageDays, value: avgDays },
+        ].map((stat) => (
+          <div key={stat.label} className="rounded-xl border border-border bg-card p-3 text-center">
+            <p className="text-[11px] text-muted-foreground">{stat.label}</p>
+            <p className="mt-0.5 text-lg font-semibold tabular-nums text-foreground">{stat.value}</p>
+          </div>
+        ))}
       </div>
-
-      <div className="grid grid-cols-3 gap-8 border-b border-border pb-8 sm:grid-cols-6">
-        <div>
-          <p className="editorial-label">Total</p>
-          <p className="mt-1 text-3xl font-bold tabular-nums">{totalBooks}</p>
-        </div>
-        <div>
-          <p className="editorial-label">Finished</p>
-          <p className="mt-1 text-3xl font-bold tabular-nums">{finishedBooks.length}</p>
-        </div>
-        <div>
-          <p className="editorial-label">Reading</p>
-          <p className="mt-1 text-3xl font-bold tabular-nums">{reading}</p>
-        </div>
-        <div>
-          <p className="editorial-label">Level</p>
-          <p className="mt-1 text-3xl font-bold tabular-nums">{level}</p>
-        </div>
-        <div>
-          <p className="editorial-label">XP</p>
-          <p className="mt-1 text-3xl font-bold tabular-nums">{user.xp}</p>
-        </div>
-        <div>
-          <p className="editorial-label">Avg. Days</p>
-          <p className="mt-1 text-3xl font-bold tabular-nums">{avgDays}</p>
-        </div>
-      </div>
-
-      <div className="mt-8 grid gap-6 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2">
         <GoalProgress
           label={dict.stats.yearlyGoal}
           target={yearly}
@@ -103,16 +84,10 @@ export default async function StatsPage() {
           progressLabel={dict.stats.progress}
         />
       </div>
-
-      <div className="mt-6">
-        <GoalForms dict={{ yearlyGoal: dict.stats.yearlyGoal, monthlyGoal: dict.stats.monthlyGoal, goalTarget: dict.stats.goalTarget, setGoal: dict.stats.setGoal }} yearly={yearly} monthly={monthly} />
-      </div>
-
-      <div className="mt-8">
-        <p className="editorial-label mb-4">{dict.stats.byMonth}</p>
-        <div className="border border-border p-4">
-          <MonthlyChart data={chartData} label={dict.stats.finished} dark={theme === "dark"} />
-        </div>
+      <GoalForms dict={{ yearlyGoal: dict.stats.yearlyGoal, monthlyGoal: dict.stats.monthlyGoal, goalTarget: dict.stats.goalTarget, setGoal: dict.stats.setGoal }} yearly={yearly} monthly={monthly} />
+      <div className="rounded-xl border border-border bg-card p-4">
+        <p className="mb-3 text-[13px] font-medium text-foreground">{dict.stats.byMonth}</p>
+        <MonthlyChart data={chartData} label={dict.stats.finished} dark={theme === "dark"} />
       </div>
     </div>
   );

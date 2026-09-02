@@ -15,22 +15,22 @@ export function LendingRow({ record, dict }: { record: Lending; dict: { returned
   const [pending, startTransition] = useTransition();
 
   return (
-    <div className="flex items-center justify-between border-b border-border py-3 transition-colors hover:bg-foreground/[0.02]">
+    <div className="flex items-center justify-between border-b border-border last:border-b-0 px-4 py-3 transition-colors hover:bg-accent/50">
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-medium truncate">{record.book.title}</p>
+        <p className="text-sm font-medium text-foreground truncate">{record.book.title}</p>
         <p className="text-xs text-muted-foreground">
           {record.borrowerName} · {new Date(record.lentAt).toLocaleDateString()}
         </p>
       </div>
       {record.returnedAt ? (
-        <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+        <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] text-secondary-foreground">
           {dict.returned}
         </span>
       ) : (
         <button
           disabled={pending}
           onClick={() => startTransition(() => returnLending(record.id))}
-          className="border border-border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-foreground transition-colors hover:bg-foreground hover:text-background disabled:opacity-40"
+          className="rounded-lg bg-primary px-3 py-1 text-[11px] font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-40"
         >
           {dict.markReturned}
         </button>

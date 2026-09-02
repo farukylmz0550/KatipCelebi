@@ -16,28 +16,28 @@ export function FilterBar({ onChange, tagsInUse }: { onChange: (f: Filters) => v
   const hasActiveFilters = filters.minRating > 0 || filters.signed !== "any" || filters.lent !== "any" || filters.status !== "any" || filters.tag !== "any";
 
   return (
-    <div>
-      <div className="flex items-center gap-3">
+    <div className="rounded-xl border border-border bg-card p-3">
+      <div className="flex items-center gap-2">
         <input
-          placeholder="Search by title, author, ISBN..."
+          placeholder="Search..."
           value={filters.search}
           onChange={(e) => update({ search: e.target.value })}
-          className="flex-1 border-b border-border bg-transparent py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-foreground focus:outline-none"
+          className="flex-1 rounded-lg border border-border bg-background px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         />
         <button
           onClick={() => setExpanded(!expanded)}
-          className="flex items-center gap-1.5 border-b border-border py-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+          className="flex items-center gap-1 rounded-lg border border-border bg-secondary px-3 py-1.5 text-[13px] text-secondary-foreground transition-colors hover:bg-accent"
         >
-          {expanded ? "Hide" : "Filters"}
+          Filters
           {hasActiveFilters && <span className="h-1.5 w-1.5 rounded-full bg-primary" />}
         </button>
       </div>
       {expanded && (
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="mt-3 flex flex-wrap gap-2 border-t border-border pt-3">
           <select
             value={filters.searchField}
             onChange={(e) => update({ searchField: e.target.value })}
-            className="border border-border bg-transparent px-2 py-1.5 text-xs text-foreground focus:outline-none"
+            className="rounded-lg border border-border bg-background px-2 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           >
             <option value="all">All fields</option>
             <option value="title">Title</option>
@@ -48,7 +48,7 @@ export function FilterBar({ onChange, tagsInUse }: { onChange: (f: Filters) => v
           <select
             value={String(filters.minRating)}
             onChange={(e) => update({ minRating: parseInt(e.target.value, 10) })}
-            className="border border-border bg-transparent px-2 py-1.5 text-xs text-foreground focus:outline-none"
+            className="rounded-lg border border-border bg-background px-2 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           >
             <option value="0">Any rating</option>
             <option value="5">★★★★★</option>
@@ -58,7 +58,7 @@ export function FilterBar({ onChange, tagsInUse }: { onChange: (f: Filters) => v
           <select
             value={filters.status}
             onChange={(e) => update({ status: e.target.value })}
-            className="border border-border bg-transparent px-2 py-1.5 text-xs text-foreground focus:outline-none"
+            className="rounded-lg border border-border bg-background px-2 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           >
             <option value="any">Status</option>
             <option value="TO_READ">To read</option>
@@ -68,7 +68,7 @@ export function FilterBar({ onChange, tagsInUse }: { onChange: (f: Filters) => v
           <select
             value={filters.signed}
             onChange={(e) => update({ signed: e.target.value })}
-            className="border border-border bg-transparent px-2 py-1.5 text-xs text-foreground focus:outline-none"
+            className="rounded-lg border border-border bg-background px-2 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           >
             <option value="any">Signed</option>
             <option value="yes">Yes</option>
@@ -77,7 +77,7 @@ export function FilterBar({ onChange, tagsInUse }: { onChange: (f: Filters) => v
           <select
             value={filters.lent}
             onChange={(e) => update({ lent: e.target.value })}
-            className="border border-border bg-transparent px-2 py-1.5 text-xs text-foreground focus:outline-none"
+            className="rounded-lg border border-border bg-background px-2 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           >
             <option value="any">Lending</option>
             <option value="home">At home</option>
@@ -86,7 +86,7 @@ export function FilterBar({ onChange, tagsInUse }: { onChange: (f: Filters) => v
           <select
             value={filters.tag}
             onChange={(e) => update({ tag: e.target.value })}
-            className="border border-border bg-transparent px-2 py-1.5 text-xs text-foreground focus:outline-none"
+            className="rounded-lg border border-border bg-background px-2 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           >
             <option value="any">Tag</option>
             {tagsInUse.map((t) => (
@@ -96,7 +96,7 @@ export function FilterBar({ onChange, tagsInUse }: { onChange: (f: Filters) => v
           <select
             value={filters.sort}
             onChange={(e) => update({ sort: e.target.value })}
-            className="border border-border bg-transparent px-2 py-1.5 text-xs text-foreground focus:outline-none"
+            className="rounded-lg border border-border bg-background px-2 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           >
             <option value={SORT_TITLE}>Sort: title</option>
             <option value={SORT_RATING}>Sort: rating</option>
@@ -104,13 +104,13 @@ export function FilterBar({ onChange, tagsInUse }: { onChange: (f: Filters) => v
           </select>
           <button
             onClick={() => update({ asc: !filters.asc })}
-            className="border border-border px-2 py-1.5 text-xs text-foreground"
+            className="rounded-lg border border-border bg-background px-2 py-1.5 text-xs text-foreground"
           >
             {filters.asc ? "↑ A–Z" : "↓ Z–A"}
           </button>
           <button
             onClick={() => { setFilters(defaultFilters); onChange(defaultFilters); }}
-            className="border border-border px-2 py-1.5 text-xs text-muted-foreground hover:text-foreground"
+            className="rounded-lg border border-border bg-background px-2 py-1.5 text-xs text-muted-foreground hover:text-foreground"
           >
             Clear
           </button>

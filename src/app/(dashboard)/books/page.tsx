@@ -16,16 +16,9 @@ export default async function BooksPage() {
   books.forEach((b) => (lentMap[b.id] = lentSet.has(b.id)));
 
   return (
-    <div>
-      <div className="mb-8">
-        <p className="editorial-label mb-2">Collection</p>
-        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-          {dict.books.title}
-        </h1>
-        <div className="editorial-rule-accent mt-4" />
-      </div>
-
-      <div className="mb-6">
+    <div className="space-y-6">
+      <h1 className="text-xl font-medium text-foreground">{dict.books.title}</h1>
+      <div className="rounded-xl border border-border bg-card p-4">
         <AddBookForm dict={dict.books} />
         <div className="mt-3">
           <ImportForm dict={dict.books} />
@@ -34,7 +27,6 @@ export default async function BooksPage() {
           <ExcelActions />
         </div>
       </div>
-
       <BooksGrid books={books as never} lentMap={lentMap} dict={dict.books as never} />
     </div>
   );

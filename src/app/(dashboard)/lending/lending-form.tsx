@@ -19,13 +19,13 @@ export function LendingForm({ books, dict }: { books: Book[]; dict: { book: stri
   }
 
   return (
-    <div className="flex flex-wrap items-end gap-4">
+    <div className="flex flex-wrap items-end gap-3">
       <div className="flex-1 min-w-[200px]">
-        <label className="editorial-label mb-1 block">{dict.book}</label>
+        <label className="mb-1 block text-[13px] text-muted-foreground">{dict.book}</label>
         <select
           value={bookId}
           onChange={(e) => setBookId(e.target.value)}
-          className="w-full border-b border-border bg-transparent py-1.5 text-sm text-foreground focus:border-foreground focus:outline-none"
+          className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         >
           {books.map((book) => (
             <option key={book.id} value={book.id}>
@@ -35,18 +35,18 @@ export function LendingForm({ books, dict }: { books: Book[]; dict: { book: stri
         </select>
       </div>
       <div className="min-w-[160px]">
-        <label className="editorial-label mb-1 block">{dict.borrower}</label>
+        <label className="mb-1 block text-[13px] text-muted-foreground">{dict.borrower}</label>
         <input
           value={borrowerName}
           onChange={(e) => setBorrowerName(e.target.value)}
           placeholder="Name"
-          className="w-full border-b border-border bg-transparent py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-foreground focus:outline-none"
+          className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         />
       </div>
       <button
         onClick={handleSubmit}
         disabled={pending || !bookId || !borrowerName}
-        className="bg-foreground px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-background transition-opacity hover:opacity-90 disabled:opacity-40"
+        className="rounded-lg bg-primary px-4 py-1.5 text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-40"
       >
         {dict.lendCta}
       </button>

@@ -35,45 +35,45 @@ export function AddBookForm({ dict }: { dict: { isbn: string; lookup: string; bo
   return (
     <div className="flex flex-wrap items-end gap-3">
       <div className="flex-1 min-w-[140px]">
-        <label className="editorial-label mb-1 block">ISBN</label>
+        <label className="mb-1 block text-[13px] text-muted-foreground">{dict.isbn}</label>
         <input
           value={isbn}
           onChange={(e) => setIsbn(e.target.value)}
           placeholder={dict.isbn}
-          className="w-full border-b border-border bg-transparent py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-foreground focus:outline-none"
+          className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         />
       </div>
       <button
         type="button"
         onClick={handleLookup}
         disabled={pending || !isbn}
-        className="border-b border-primary px-1 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary transition-colors hover:text-primary/80 disabled:opacity-40"
+        className="rounded-lg border border-border bg-secondary px-3 py-1.5 text-[13px] text-secondary-foreground transition-colors hover:bg-accent disabled:opacity-40"
       >
         {dict.lookup}
       </button>
       <div className="flex-1 min-w-[180px]">
-        <label className="editorial-label mb-1 block">Title</label>
+        <label className="mb-1 block text-[13px] text-muted-foreground">{dict.bookTitle}</label>
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder={dict.bookTitle}
-          className="w-full border-b border-border bg-transparent py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-foreground focus:outline-none"
+          className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         />
       </div>
       <div className="min-w-[120px]">
-        <label className="editorial-label mb-1 block">Author</label>
+        <label className="mb-1 block text-[13px] text-muted-foreground">{dict.author}</label>
         <input
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
           placeholder={dict.author}
-          className="w-full border-b border-border bg-transparent py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-foreground focus:outline-none"
+          className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         />
       </div>
       <button
         type="button"
         onClick={handleAdd}
         disabled={pending || !title}
-        className="bg-foreground px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-background transition-opacity hover:opacity-90 disabled:opacity-40"
+        className="rounded-lg bg-primary px-4 py-1.5 text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-40"
       >
         {dict.add}
       </button>

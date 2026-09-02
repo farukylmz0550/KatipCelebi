@@ -38,22 +38,17 @@ export function BooksGrid({ books, lentMap, dict }: { books: Book[]; lentMap: Re
   const shown = filtered.length;
 
   return (
-    <div>
+    <div className="space-y-4">
       <FilterBar onChange={setFilters} tagsInUse={tagsInUse} />
-      <div className="mt-4 flex items-center justify-between">
-        <span className="editorial-label">
-          {shown === total ? `${total} volumes` : `${shown} of ${total}`}
-        </span>
-        {filtered.length === 0 && total > 0 && (
-          <span className="text-sm text-muted-foreground">{dict.noResults ?? "No results"}</span>
-        )}
-      </div>
+      <p className="text-xs text-muted-foreground">
+        {shown === total ? `${total} books` : `${shown} of ${total}`}
+      </p>
       {filtered.length === 0 ? (
-        <p className="mt-8 text-center text-lg text-muted-foreground">
+        <p className="py-12 text-center text-sm text-muted-foreground">
           {total === 0 ? dict.empty : (dict.noResults ?? "No results — try clearing filters")}
         </p>
       ) : (
-        <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {filtered.map((book) => (
             <BookCard key={book.id} book={book as Book} lentOut={!!lentMap[book.id]} />
           ))}
