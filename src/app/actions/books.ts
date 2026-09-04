@@ -7,6 +7,7 @@ import { lookupIsbn, lookupIsbns } from "@/lib/isbn";
 import { awardXp, XP_REWARDS, syncAchievements } from "@/lib/gamification";
 
 export async function lookupIsbnAction(isbn: string) {
+  await requireUserId();
   return lookupIsbn(isbn);
 }
 
