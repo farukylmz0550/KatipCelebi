@@ -13,6 +13,7 @@ const registerSchema = z.object({
 
 export async function registerUser(input: { email: string; password: string; name: string }) {
   if (await needsSetup()) return { error: "Setup admin account first at /setup" };
+  if (process.env.ALLOW_REGISTRATION === "false") return { error: "Registration is disabled" };
   const parsed = registerSchema.safeParse(input);
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? "Invalid input" };
