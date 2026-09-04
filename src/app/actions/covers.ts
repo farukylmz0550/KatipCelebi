@@ -8,10 +8,8 @@ export async function getCoverStats() {
   await requireAdmin();
   const count = await db.book.count({ where: { coverUrl: { not: null } } });
   const books = await db.book.findMany({ where: { coverUrl: { not: null } }, select: { coverUrl: true } });
-  // Estimate size: URLs avg ~80 chars, plus overhead
-  const estimatedBytes = books.reduce((acc, b) => acc + (b.coverUrl?.length ?? 0), 0);
-  const mb = estimatedBytes / (1024 * 1024);
-  return { count, mb };
+  const totalUrlBytes = books.reduce((acc, b) => acc + (b.coverUrl?.length ?? 0), 0);
+  return { count, totalUrlBytes };
 }
 
 export async function clearCoverCache() {
