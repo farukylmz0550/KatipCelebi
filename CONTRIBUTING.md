@@ -1,0 +1,290 @@
+# Contributing to KatipCelebi
+
+Thanks for your interest in contributing! This guide covers code style, git workflow, and PR process.
+
+---
+
+## Code Style
+
+### General Principles
+
+- **TypeScript everywhere** — no `.js` files except config
+- **Strict mode** — `any` only when truly unavoidable (with `eslint-disable` comment explaining why)
+- **Functional over class-based** — prefer pure functions for domain logic
+- **Single Responsibility** — one function/file does one thing
+- **No comments** unless the logic is genuinely non-obvious (the code should speak for itself)
+
+### Formatting
+
+This project uses [Prettier](https://prettier.io) for consistent formatting.
+
+```bash
+npm run format         # Auto-format all files
+npm run format:check   # Check without modifying (CI)
+```
+
+**Config** (`.prettierrc`):
+- Semicolons: yes
+- Quotes: double
+- Trailing commas: all
+- Print width: 120
+- Tab width: 2
+
+### Linting
+
+```bash
+npm run lint           # Must pass before commit
+```
+
+Next.js core-web-vitals + TypeScript rules. No `eslint-disable` unless justified.
+
+### Naming Conventions
+
+| What | Convention | Example |
+|------|-----------|---------|
+| Component files | PascalCase | `BookCard.tsx` |
+| Utility/logic files | camelCase | `filters.ts` |
+| Test files | `*.test.ts` | `filters.test.ts` |
+| Functions | camelCase | `allows()`, `sortKey()` |
+| React components | PascalCase | `BookCard` |
+| Types/aliases | PascalCase | `AchievementStats` |
+| Constants | UPPER_SNAKE_CASE | `XP_REWARDS` |
+| Prisma models | PascalCase | `User`, `Book` |
+| Prisma fields | camelCase | `passwordHash` |
+| CSS classes | Tailwind utility | `rounded-lg` |
+| Route folders | lowercase | `(dashboard)`, `books` |
+| Action files | camelCase | `addBook`, `createLending` |
+
+### Import Order
+
+```typescript
+// 1. Node built-ins
+import path from "path";
+
+// 2. External packages
+import { z } from "zod";
+import bcrypt from "bcryptjs";
+
+// 3. Internal (using @/ alias)
+import { db } from "@/lib/db";
+import { allows } from "@/lib/books/filters";
+```
+
+### Function Patterns
+
+**Pure functions** for domain logic (no DB, no side effects):
+
+```typescript
+export function levelForXp(xp: number): number {
+  return Math.floor(Math.sqrt(Math.max(0, xp) / 50)) + 1;
+}
+```
+
+**Server actions** for mutations (with auth check):
+
+```typescript
+"use server";
+
+export async function addBook(input: BookInput) {
+  const userId = await requireUserId();
+  // ...
+}
+```
+
+**JSDoc** on exported pure functions:
+
+```typescript
+/** Level from total XP. Pure function — level is derived, never stored. */
+export function levelForXp(xp: number): number {
+  return Math.floor(Math.sqrt(Math.max(0, xp) / 50)) + 1;
+}
+```
+
+### Type Definitions
+
+- Prefer `type` over `interface` for consistency
+- Co-locate with usage, or group in `src/types/`
+- Use `as const` for literal arrays/objects
+
+```typescript
+export const XP_REWARDS = {
+  BOOK_ADDED: 5,
+  BOOK_FINISHED: 50,
+  LENDING_CREATED: 5,
+} as const;
+```
+
+---
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── actions/        # Server actions (one per domain)
+│   ├── (dashboard)/    # Page components
+│   ├── api/            # API routes
+│   ├── login/          # Auth pages
+│   ├── register/
+│   └── setup/
+├── components/ui/      # Shared UI components (shadcn)
+├── lib/                # Pure domain logic + DB client
+│   ├── books/          # Book-specific logic
+│   └── *.ts            # Cross-cutting concerns
+├── i18n/               # Dictionaries
+└── types/              # TypeScript declarations
+```
+
+---
+
+## Git Workflow
+
+### Commit Messages
+
+Follow **Conventional Commits**:
+
+```
+type(scope): short description
+```
+
+| Type | When to use |
+|------|------------|
+| `feat` | New feature |
+| `fix` | Bug fix |
+| `docs` | Documentation only |
+| `chore` | Build, tooling, deps |
+| `refactor` | Code change that neither fixes a bug nor adds a feature |
+| `test` | Adding missing tests |
+| `style` | Formatting, no code change |
+| `perf` | Performance improvement |
+
+**Examples:**
+
+```
+feat: add book by ISBN lookup
+fix: resolve lending race condition
+docs: rewrite README from scratch
+chore: add prettier for code formatting
+refactor: extract filter logic to separate module
+test: add unit tests for tag normalization
+```
+
+**Rules:**
+- Lowercase, imperative mood ("add" not "added")
+- No period at the end
+- Max 72 characters
+- Scope is optional (e.g., `fix(books): ...`)
+
+### Branch Naming
+
+```
+feat/book-bulk-import
+fix/lending-return-bug
+chore/update-deps
+docs/contributing-guide
+```
+
+### Workflow
+
+1. Create branch from `main`
+2. Make changes
+3. Run checks before every commit:
+   ```bash
+   npm run lint && npm run format:check && npm test
+   ```
+4. Commit with conventional message
+5. Push: `git push origin main`
+6. Create release (if applicable)
+
+---
+
+## Testing
+
+### Unit Tests (Vitest)
+
+- **Location:** `src/lib/**/*.test.ts`
+- **Framework:** Vitest
+- **Run:** `npm test`
+- **Pattern:** `describe()` + `it()` blocks
+- **Target:** Pure functions only, not server actions
+
+```typescript
+import { describe, expect, it } from "vitest";
+import { levelForXp } from "@/lib/gamification";
+
+describe("levelForXp", () => {
+  it("returns 1 for 0 xp", () => {
+    expect(levelForXp(0)).toBe(1);
+  });
+
+  it("increases with more xp", () => {
+    expect(levelForXp(100)).toBeGreaterThan(1);
+  });
+});
+```
+
+**Guidelines:**
+- Test edge cases (0, negative, NaN, MAX_SAFE_INTEGER)
+- One `describe` block per function
+- Test names describe the expected behavior
+- No mocks for pure functions
+
+### E2E Tests (Playwright)
+
+- **Location:** `e2e/*.spec.ts`
+- **Framework:** Playwright
+- **Run:** `npx playwright test`
+- **Setup:** Each test resets DB via `/api/test/reset`
+
+**Guidelines:**
+- Each spec file is self-contained
+- Use `test.beforeEach` for common setup
+- Test user-visible behavior, not implementation details
+
+---
+
+## PR Process
+
+1. **Fork** or create a branch from `main`
+2. **Make changes** following the code style above
+3. **Ensure all checks pass:**
+   ```bash
+   npm run lint
+   npm run format:check
+   npm test
+   ```
+4. **Write clear commit messages** (conventional commits)
+5. **Push** your branch
+6. **Create PR** with:
+   - Clear title describing the change
+   - Description of what changed and why
+   - Link to issue if applicable
+7. **Wait for review** and address feedback
+8. **Squash merge** after approval
+
+---
+
+## Adding a New Feature
+
+1. Add domain logic in `src/lib/` as pure functions
+2. Write unit tests in `src/lib/*.test.ts`
+3. Add server action in `src/app/actions/` if it mutates data
+4. Create page component in `src/app/(dashboard)/`
+5. Add i18n keys to all 6 dictionaries (`src/i18n/dictionaries/`)
+6. Update `README.md` if it's a user-facing feature
+
+---
+
+## Adding a New Achievement
+
+1. Add rule to `ACHIEVEMENT_RULES` in `src/lib/gamification.ts`
+2. Add i18n keys to all 6 dictionaries:
+   - `{key}_title` — achievement name
+   - `{key}_desc` — achievement description
+3. Run `npm run db:seed` to register the achievement
+
+---
+
+## Questions?
+
+Open an issue or reach out to the maintainers.
