@@ -3,6 +3,9 @@ import { NextResponse } from "next/server";
 
 const PUBLIC_PATHS = ["/login", "/register", "/setup", "/manifest.json", "/sw.js", "/icon-192.png", "/icon-512.png"];
 
+// NOTE: This in-memory rate limiter only works in single-instance deployments.
+// In serverless, edge, or multi-replica setups, each instance has its own Map.
+// For production at scale, replace with Redis-backed rate limiting (e.g. @upstash/ratelimit).
 const rateLimit = new Map<string, { count: number; lastReset: number }>();
 const RATE_LIMIT_MAX = 100;
 const RATE_LIMIT_WINDOW = 60 * 1000;
