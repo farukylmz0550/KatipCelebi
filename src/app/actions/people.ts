@@ -1,14 +1,18 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { normalizeName } from "@/lib/person";
 
+const personNameSchema = z.string().min(1).max(200);
+
 export async function createPerson(name: string) {
   const userId = await requireUserId();
-  const trimmed = name.trim();
-  if (!trimmed) return { error: "Name required" };
+  const parsed = personNameSchema.safeParse(name.trim());
+  if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid name" };
+  const trimmed = parsed.data;
   const normalized = normalizeName(trimmed);
   // Dedup case-insensitive
   const existing = await db.person.findFirst({ where: { userId, name: { equals: trimmed } } });

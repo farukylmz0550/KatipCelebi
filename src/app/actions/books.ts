@@ -1,10 +1,43 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { lookupIsbn, lookupIsbns } from "@/lib/isbn";
 import { awardXp, XP_REWARDS, syncAchievements } from "@/lib/gamification";
+
+const addBookSchema = z.object({
+  isbn: z.string().max(20).optional(),
+  title: z.string().min(1).max(500),
+  author: z.string().max(500).optional(),
+  coverUrl: z.string().refine(
+    (val) => !val || /^https?:\/\/.+/.test(val),
+    "Cover URL must be a valid HTTP/HTTPS URL"
+  ).optional(),
+});
+
+const updateBookSchema = z.object({
+  title: z.string().min(1).max(500).optional(),
+  subtitle: z.string().max(500).optional(),
+  author: z.string().max(500).optional(),
+  authors: z.string().max(500).optional(),
+  publishers: z.string().max(500).optional(),
+  publishDate: z.string().max(100).optional(),
+  publishPlaces: z.string().max(500).optional(),
+  editionName: z.string().max(200).optional(),
+  series: z.string().max(200).optional(),
+  numberOfPages: z.string().max(20).optional(),
+  languages: z.string().max(200).optional(),
+  isbn10: z.string().max(20).optional(),
+  isbn13: z.string().max(20).optional(),
+  subjects: z.string().max(1000).optional(),
+  rating: z.number().int().min(0).max(5).optional(),
+  notes: z.string().max(10000).optional(),
+  tags: z.string().max(1000).optional(),
+  signed: z.boolean().optional(),
+  copies: z.number().int().min(1).max(999).optional(),
+});
 
 export async function lookupIsbnAction(isbn: string) {
   await requireUserId();
@@ -12,14 +45,17 @@ export async function lookupIsbnAction(isbn: string) {
 }
 
 export async function addBook(input: { isbn?: string; title: string; author?: string; coverUrl?: string }) {
+  const parsed = addBookSchema.safeParse(input);
+  if (!parsed.success) throw new Error(parsed.error.issues[0]?.message ?? "Invalid input");
+
   const userId = await requireUserId();
   await db.book.create({
     data: {
       userId,
-      isbn: input.isbn,
-      title: input.title,
-      author: input.author,
-      coverUrl: input.coverUrl,
+      isbn: parsed.data.isbn,
+      title: parsed.data.title,
+      author: parsed.data.author,
+      coverUrl: parsed.data.coverUrl,
     },
   });
   await awardXp(userId, XP_REWARDS.BOOK_ADDED);
@@ -84,12 +120,14 @@ export async function updateBook(bookId: string, data: Partial<{
   editionName: string; series: string; numberOfPages: string; languages: string; isbn10: string; isbn13: string;
   subjects: string; rating: number; notes: string; tags: string; signed: boolean; copies: number;
 }>) {
+  const parsed = updateBookSchema.partial().safeParse(data);
+  if (!parsed.success) throw new Error(parsed.error.issues[0]?.message ?? "Invalid input");
+
   const userId = await requireUserId();
   const book = await db.book.findFirst({ where: { id: bookId, userId } });
   if (!book) throw new Error("Not found");
-  if (data.title !== undefined && !data.title.trim()) throw new Error("Title required");
   const update: Record<string, unknown> = {};
-  for (const [k, v] of Object.entries(data)) {
+  for (const [k, v] of Object.entries(parsed.data)) {
     if (v === undefined) continue;
     if (k === "rating") update.rating = Math.max(0, Math.min(5, Math.floor(Number(v)))) ;
     else if (k === "copies") update.copies = Math.max(1, Math.min(999, Math.floor(Number(v))));

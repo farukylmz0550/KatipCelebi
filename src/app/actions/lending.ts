@@ -1,18 +1,23 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { awardXp, XP_REWARDS, syncAchievements } from "@/lib/gamification";
 import { normalizeName } from "@/lib/person";
+
+const borrowerNameSchema = z.string().min(1).max(200);
 
 export async function createLending(bookId: string, borrowerName: string) {
   const userId = await requireUserId();
   const book = await db.book.findFirst({ where: { id: bookId, userId } });
   if (!book) throw new Error("Not found");
 
-  const nameTrimmed = borrowerName.trim();
-  if (!nameTrimmed) throw new Error("Borrower name required");
+  const parsed = borrowerNameSchema.safeParse(borrowerName.trim());
+  if (!parsed.success) throw new Error(parsed.error.issues[0]?.message ?? "Invalid borrower name");
+
+  const nameTrimmed = parsed.data;
 
   // Find or create Person
   const normalized = normalizeName(nameTrimmed);
