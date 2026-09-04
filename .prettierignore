@@ -1,0 +1,13 @@
+node_modules
+.next
+out
+build
+public
+src/generated
+prisma/migrations
+package-lock.json
+*.db
+*.db-journal
+*.md
+Dockerfile
+docker-compose.yml
