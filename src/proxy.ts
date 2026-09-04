@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
-const PUBLIC_PATHS = ["/login", "/register", "/setup", "/api/test", "/manifest.json", "/sw.js", "/icon-192.png", "/icon-512.png"];
+const PUBLIC_PATHS = ["/login", "/register", "/setup", "/manifest.json", "/sw.js", "/icon-192.png", "/icon-512.png"];
 
 const rateLimit = new Map<string, { count: number; lastReset: number }>();
 const RATE_LIMIT_MAX = 100;
@@ -40,5 +40,5 @@ export default auth(async (req) => {
 });
 
 export const config = {
-  matcher: ["/((?!api/auth|api/register|api/test|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!api/auth|api/register|_next/static|_next/image|favicon.ico).*)"],
 };

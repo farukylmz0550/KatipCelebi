@@ -1,9 +1,32 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { requireAdmin } from "@/lib/session";
 
-export async function POST() {
+export async function POST(req: Request) {
   if (process.env.NODE_ENV === "production") {
     return NextResponse.json({ error: "forbidden" }, { status: 403 });
+  }
+
+  try {
+    await requireAdmin();
+  } catch {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const resetSecret = process.env.RESET_SECRET;
+  if (!resetSecret) {
+    return NextResponse.json({ error: "RESET_SECRET not configured" }, { status: 500 });
+  }
+
+  let body: { secret?: string } = {};
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
+
+  if (body.secret !== resetSecret) {
+    return NextResponse.json({ error: "Invalid secret" }, { status: 403 });
   }
   // Robust: use Prisma with retry and fallback to raw sqlite
   for (let attempt = 0; attempt < 3; attempt++) {
