@@ -8,6 +8,7 @@ export default async function LeaderboardPage() {
   const dict = await getDictionary();
 
   const users = await db.user.findMany({
+    where: { showOnLeaderboard: true },
     select: { id: true, name: true, xp: true },
     orderBy: { xp: "desc" },
   });

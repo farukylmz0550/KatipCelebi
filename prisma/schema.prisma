@@ -17,13 +17,14 @@ enum BookStatus {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  passwordHash String
-  name         String
-  isAdmin      Boolean  @default(false)
-  xp           Int      @default(0)
-  createdAt    DateTime @default(now())
+  id                 String   @id @default(cuid())
+  email              String   @unique
+  passwordHash       String
+  name               String
+  isAdmin            Boolean  @default(false)
+  xp                 Int      @default(0)
+  showOnLeaderboard  Boolean  @default(true)
+  createdAt          DateTime @default(now())
 
   books        Book[]
   persons      Person[]
