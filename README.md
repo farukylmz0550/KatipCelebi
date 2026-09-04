@@ -4,6 +4,7 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-2.2.0-green.svg)](https://github.com/farukylmz0550/KatipCelebi/releases)
+[![Docker](https://img.shields.io/badge/docker-ghcr.io%2Ffarukylmz0550%2Fkatipcelebi-blue?logo=docker)](https://ghcr.io/farukylmz0550/katipcelebi)
 [![Tests](https://img.shields.io/badge/tests-92%20unit%20%7C%2026%20e2e-brightgreen.svg)]()
 
 Track your books, lending history, reading goals, and stats — with a Duolingo-style gamification layer (XP, levels, achievements, leaderboard).
@@ -40,19 +41,44 @@ Web rewrite of the original PyQt6 desktop app ([`legacy` branch](../../tree/lega
 
 ### Docker (recommended)
 
-```bash
-# 1. Clone
-git clone https://github.com/farukylmz0550/KatipCelebi.git
-cd KatipCelebi
+**Option A — Pre-built image (easiest):**
 
-# 2. Configure
-cp .env.example .env
-# Edit .env — set NEXTAUTH_SECRET=$(openssl rand -base64 32)
+```bash
+# 1. Create docker-compose.yml
+cat > docker-compose.yml << 'EOF'
+services:
+  app:
+    image: ghcr.io/farukylmz0550/katipcelebi:latest
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: file:/data/katipcelebi.db
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    volumes:
+      - app-data:/data
+volumes:
+  app-data:
+EOF
+
+# 2. Create .env
+echo 'NEXTAUTH_SECRET=$(openssl rand -base64 32)' > .env
 
 # 3. Run
-docker compose up -d --build
+docker compose up -d
 
 # 4. Open http://localhost:3000
+```
+
+**Option B — Build from source:**
+
+```bash
+git clone https://github.com/farukylmz0550/KatipCelebi.git
+cd KatipCelebi
+cp .env.example .env
+# Edit .env: set NEXTAUTH_SECRET=$(openssl rand -base64 32)
+docker compose up -d --build
 ```
 
 ### Local Development
