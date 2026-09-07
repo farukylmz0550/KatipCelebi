@@ -5,7 +5,6 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-2.2.0-green.svg)](https://github.com/farukylmz0550/KatipCelebi/releases)
 [![Docker](https://img.shields.io/badge/docker-ghcr.io%2Ffarukylmz0550%2Fkatipcelebi-blue?logo=docker)](https://ghcr.io/farukylmz0550/katipcelebi)
-[![Tests](https://img.shields.io/badge/tests-92%20unit%20%7C%2026%20e2e-brightgreen.svg)]()
 
 Track your books, lending history, reading goals, and stats — with a Duolingo-style gamification layer (XP, levels, achievements, leaderboard).
 
@@ -26,7 +25,8 @@ Web rewrite of the original PyQt6 desktop app ([`legacy` branch](../../tree/lega
 - **i18n** — 6 languages: English, Turkish, Spanish, French, Russian, Chinese.
 - **Theme** — Light/dark mode toggle (cookie-based).
 - **Excel** — Full library export, template download, import from Excel.
-- **Admin** — Cover cache management.
+- **Admin** — User management (approve/reject registrations, promote/demote admins, delete users) and cover cache management.
+- **Registration Approval** — New users require admin approval before they can log in.
 - **Docker** — Self-host with a single command.
 
 ## Screenshots
@@ -105,7 +105,8 @@ npm run dev
 
 1. Open `/setup` — create the admin account (name, email, password)
 2. Redirected to `/login` — log in
-3. Start adding books on the Books page
+3. New registrations require admin approval at `/admin/users`
+4. Start adding books on the Books page
 
 ---
 
@@ -140,7 +141,9 @@ katipcelebi/
 │   │   │   ├── achievements/     # Achievement badges
 │   │   │   ├── leaderboard/      # XP ranking
 │   │   │   ├── profile/          # Edit name, change password
-│   │   │   └── admin/            # Cover cache management
+│   │   │   └── admin/            # Admin pages
+│   │   │       ├── users/        # User management (approve/reject/delete)
+│   │   │       └── covers/       # Cover cache management
 │   │   ├── actions/              # Server actions (data mutations)
 │   │   ├── api/                  # API routes (auth, test reset)
 │   │   ├── login/                # Login page
@@ -148,21 +151,23 @@ katipcelebi/
 │   │   └── setup/                # First-time admin setup
 │   ├── components/ui/            # shadcn/ui components
 │   ├── lib/
-│   │   ├── books/                # Book domain logic
+│   │   ├── books/                # Book domain logic + filters
 │   │   ├── db.ts                 # Prisma client singleton
-│   │   ├── gamification.ts       # XP, levels, achievements
+│   │   ├── gamification.ts       # XP, levels, achievements (DB-dependent)
+│   │   ├── gamification-pure.ts  # Pure functions (no DB, client-safe)
 │   │   ├── goals.ts              # Goal math
 │   │   ├── isbn.ts               # ISBN lookup
 │   │   ├── person.ts             # Person normalization, trust
 │   │   ├── stats.ts              # Monthly finish counts
 │   │   └── theme.ts              # Cookie-based theme
 │   ├── i18n/                     # Dictionaries (en, tr, es, fr, ru, zh)
-│   ├── auth.ts                   # NextAuth config
+│   ├── auth.ts                   # NextAuth config + approval check
 │   ├── proxy.ts                  # Proxy (auth + rate limiting)
 │   └── types/                    # TypeScript declarations
 ├── prisma/
 │   ├── schema.prisma             # Data model
-│   ├── seed.ts                   # Achievement catalog seed
+│   ├── seed.ts                   # Achievement catalog seed (dev)
+│   ├── seed.cjs                  # Achievement catalog seed (Docker)
 │   └── migrations/               # Database migrations
 ├── e2e/                          # Playwright E2E tests
 ├── public/                       # Static assets (favicon, icons)
@@ -184,7 +189,7 @@ User ──────┬── Book ──────── LendingRecord
 
 | Model | Key Fields |
 |-------|-----------|
-| **User** | email, passwordHash, name, isAdmin, xp |
+| **User** | email, passwordHash, name, isAdmin, approved, xp |
 | **Book** | isbn, title, author, coverUrl, status, rating, tags, copies, 17 legacy fields |
 | **Person** | name (unique per user), auto-created on lending |
 | **LendingRecord** | book, borrower, lentAt, returnedAt, denormalized bookTitle |
@@ -200,7 +205,7 @@ All data mutations go through server actions in `src/app/actions/`:
 
 | File | Mutations |
 |------|-----------|
-| `auth.ts` | register |
+| `auth.ts` | register (sets approved=false) |
 | `books.ts` | add, import, update, delete, set status |
 | `lending.ts` | create, return |
 | `people.ts` | create, remove |
@@ -208,6 +213,7 @@ All data mutations go through server actions in `src/app/actions/`:
 | `excel.ts` | export, template, import |
 | `profile.ts` | update name, change password |
 | `covers.ts` | clear cache (admin) |
+| `admin.ts` | approve/reject users, toggle admin, delete users |
 | `locale.ts` | switch language |
 | `theme.ts` | toggle theme |
 
