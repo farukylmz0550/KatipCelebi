@@ -18,7 +18,47 @@
     "registerCta": "Crear cuenta",
     "noAccount": "¿No tienes cuenta?",
     "haveAccount": "¿Ya tienes cuenta?",
-    "invalidCredentials": "Correo o contraseña inválidos"
+    "invalidCredentials": "Correo o contraseña inválidos",
+    "approvalPending": "Tu cuenta está pendiente de aprobación del administrador.",
+    "createOne": "Crear una",
+    "signIn": "Iniciar sesión",
+    "signingIn": "Iniciando sesión...",
+    "creating": "Creando...",
+    "minChars": "Mínimo 8 caracteres",
+    "setupTitle": "Crea la cuenta de administrador para comenzar.",
+    "adminName": "Nombre de admin",
+    "adminEmail": "Correo de admin",
+    "adminPassword": "Contraseña de admin",
+    "settingUp": "Configurando...",
+    "createAdminAccount": "Crear cuenta de administrador",
+    "registrationSuccess": "¡Registro exitoso!",
+    "approvalRequired": "Tu cuenta necesita aprobación del administrador para iniciar sesión.",
+    "goToLogin": "Ir a iniciar sesión"
+  },
+  "filter": {
+    "search": "Buscar...",
+    "filters": "Filtros",
+    "allFields": "Todos los campos",
+    "title": "Título",
+    "authors": "Autores",
+    "isbn": "ISBN",
+    "publishers": "Editoriales",
+    "anyRating": "Cualquier puntuación",
+    "status": "Estado",
+    "signed": "Firmado",
+    "yes": "Sí",
+    "no": "No",
+    "lending": "Préstamo",
+    "atHome": "En casa",
+    "onLoan": "Prestado",
+    "tag": "Etiqueta",
+    "sortByTitle": "Ordenar: título",
+    "sortByRating": "Ordenar: puntuación",
+    "sortByYear": "Ordenar: año",
+    "clear": "Limpiar",
+    "noResults": "Sin resultados — intenta limpiar los filtros",
+    "booksCount": "libros",
+    "ofTotal": "de"
   },
   "books": {
     "title": "Mis Libros",
@@ -38,7 +78,67 @@
     },
     "markFinished": "Marcar como terminado",
     "delete": "Eliminar",
-    "empty": "Aún no hay libros — ¡añade el primero!"
+    "empty": "Aún no hay libros — ¡añade el primero!",
+    "back": "← Volver",
+    "out": "prestados",
+    "signedBadge": "Firmado",
+    "copies": "copias"
+  },
+  "facts": {
+    "title": "Título *",
+    "subtitle": "Subtítulo",
+    "authors": "Autores",
+    "publishers": "Editoriales",
+    "publishDate": "Fecha de publicación",
+    "publishPlaces": "Lugares de publicación",
+    "edition": "Edición",
+    "series": "Serie",
+    "pages": "Páginas",
+    "languages": "Idiomas",
+    "isbn10": "ISBN 10",
+    "isbn13": "ISBN 13",
+    "subjects": "Temas",
+    "facts": "Datos",
+    "edit": "Editar",
+    "editFacts": "Editar datos",
+    "save": "Guardar",
+    "cancel": "Cancelar"
+  },
+  "personal": {
+    "personal": "Personal",
+    "rating": "Puntuación:",
+    "signed": "Firmado",
+    "status": "Estado:",
+    "toRead": "Por leer",
+    "reading": "Leyendo",
+    "finished": "Terminado",
+    "started": "Iniciado",
+    "finishedDate": "Terminado",
+    "days": "días",
+    "tags": "Etiquetas (separadas por coma)",
+    "tagsPlaceholder": "ej. ficción, historia",
+    "save": "Guardar",
+    "show": "Mostrar:",
+    "notes": "Notas",
+    "notesPlaceholder": "Tus notas…",
+    "saveNotes": "Guardar notas",
+    "preview": "Vista previa:"
+  },
+  "bookLending": {
+    "lending": "Préstamo",
+    "copies": "Copias:",
+    "save": "Guardar",
+    "out": "prestados",
+    "total": "total",
+    "allHere": "Todos aquí",
+    "allOut": "Todos prestados",
+    "someHere": "Algunos aquí",
+    "borrowerPlaceholder": "Nombre del prestatario",
+    "lend": "Prestar",
+    "noHistory": "Sin historial de préstamos",
+    "returned": "devuelto",
+    "outLabel": "prestado",
+    "takeBack": "Recuperar"
   },
   "lending": {
     "title": "Préstamos",
@@ -47,7 +147,10 @@
     "lendCta": "Prestar",
     "returned": "Devuelto",
     "markReturned": "Marcar como devuelto",
-    "empty": "Aún no hay préstamos."
+    "empty": "Aún no hay préstamos.",
+    "activeLoans": "Préstamos Activos",
+    "returnedSection": "Devueltos",
+    "namePlaceholder": "Nombre"
   },
   "people": {
     "title": "Personas",
@@ -65,7 +168,10 @@
     "empty": "Aún no hay personas",
     "stillHasBooks": "Aún tiene libros fuera",
     "alreadyExists": "Ya existe",
-    "needsName": "Nombre requerido"
+    "needsName": "Nombre requerido",
+    "book": "Libro",
+    "lent": "Prestado",
+    "returnedHeader": "Devuelto"
   },
   "stats": {
     "title": "Estadísticas",
@@ -96,7 +202,8 @@
     "first_lending_title": "Lector Generoso",
     "first_lending_desc": "Presta tu primer libro.",
     "five_authors_title": "Bien Leído",
-    "five_authors_desc": "Lee libros de 5 autores distintos."
+    "five_authors_desc": "Lee libros de 5 autores distintos.",
+    "unlocked": "Desbloqueado"
   },
   "leaderboard": {
     "title": "Clasificación",
@@ -117,5 +224,40 @@
     "nameSuccess": "Nombre actualizado",
     "joinDate": "Registro",
     "totalXp": "XP total"
+  },
+  "excel": {
+    "template": "Plantilla",
+    "export": "Exportar",
+    "importExcel": "Importar Excel",
+    "fileTooLarge": "Archivo demasiado grande (límite 20MB)",
+    "imported": "Importados"
+  },
+  "common": {
+    "enableNotifications": "Activar notificaciones",
+    "pageNotFound": "Página no encontrada",
+    "pageNotFoundDesc": "La página que buscas no existe.",
+    "goHome": "Ir al inicio",
+    "somethingWentWrong": "Algo salió mal",
+    "tryAgain": "Intentar de nuevo",
+    "admin": "Admin",
+    "books": "libros"
+  },
+  "admin": {
+    "coversTitle": "Caché de Portadas (Admin)",
+    "cachedCovers": "Portadas en caché:",
+    "urlMetadata": "Metadatos URL:",
+    "bytes": "bytes",
+    "clearThem": "Limpiar",
+    "clearNotice": "Las portadas limpias se volverán a obtener cuando sea necesario.",
+    "usersTitle": "Gestión de Usuarios",
+    "pendingApproval": "Pendientes de Aprobación",
+    "approvedUsers": "Usuarios Aprobados",
+    "approved": "Aprobado",
+    "pending": "Pendiente",
+    "approve": "Aprobar",
+    "reject": "Rechazar",
+    "adminLabel": "Admin",
+    "actions": "Acciones",
+    "confirmDelete": "¿Estás seguro de que quieres eliminar este usuario?"
   }
 }

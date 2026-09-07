@@ -22,7 +22,7 @@ type Book = {
   isbn?: string | null;
 };
 
-export function BookFacts({ book }: { book: Book }) {
+export function BookFacts({ book, dict }: { book: Book; dict: Record<string, string> }) {
   const [editing, setEditing] = useState(false);
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -57,27 +57,32 @@ export function BookFacts({ book }: { book: Book }) {
   }
 
   const fields: Array<[string, string]> = [
-    ["title", "Title *"],
-    ["subtitle", "Subtitle"],
-    ["author", "Authors"],
-    ["publishers", "Publishers"],
-    ["publishDate", "Publish date"],
-    ["publishPlaces", "Publish places"],
-    ["editionName", "Edition"],
-    ["series", "Series"],
-    ["numberOfPages", "Pages"],
-    ["languages", "Languages"],
-    ["isbn10", "ISBN 10"],
-    ["isbn13", "ISBN 13"],
-    ["subjects", "Subjects"],
+    ["title", dict.title],
+    ["subtitle", dict.subtitle],
+    ["author", dict.authors],
+    ["publishers", dict.publishers],
+    ["publishDate", dict.publishDate],
+    ["publishPlaces", dict.publishPlaces],
+    ["editionName", dict.edition],
+    ["series", dict.series],
+    ["numberOfPages", dict.pages],
+    ["languages", dict.languages],
+    ["isbn10", dict.isbn10],
+    ["isbn13", dict.isbn13],
+    ["subjects", dict.subjects],
   ];
 
   if (!editing) {
     return (
       <section className="rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="font-medium">Facts</h2>
-          <button onClick={() => setEditing(true)} className="rounded border border-neutral-300 px-3 py-1 text-sm dark:border-neutral-700">Edit</button>
+          <h2 className="font-medium">{dict.facts}</h2>
+          <button
+            onClick={() => setEditing(true)}
+            className="rounded border border-neutral-300 px-3 py-1 text-sm dark:border-neutral-700"
+          >
+            {dict.edit}
+          </button>
         </div>
         <dl className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
           {fields.map(([key, label]) => (
@@ -93,19 +98,34 @@ export function BookFacts({ book }: { book: Book }) {
 
   return (
     <section className="rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
-      <h2 className="mb-3 font-medium">Edit facts</h2>
+      <h2 className="mb-3 font-medium">{dict.editFacts}</h2>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {fields.map(([key, label]) => (
           <label key={key} className="space-y-1 text-sm">
             <span className="text-neutral-600 dark:text-neutral-400">{label}</span>
-            <input value={form[key] ?? ""} onChange={(e) => setForm({ ...form, [key]: e.target.value })} className="w-full rounded border border-neutral-300 px-3 py-1.5 dark:border-neutral-700 dark:bg-neutral-800" />
+            <input
+              value={form[key] ?? ""}
+              onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+              className="w-full rounded border border-neutral-300 px-3 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+            />
           </label>
         ))}
       </div>
       {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
       <div className="mt-3 flex gap-2">
-        <button onClick={onSave} disabled={pending} className="rounded bg-neutral-900 px-4 py-1.5 text-sm text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900">Save</button>
-        <button onClick={() => setEditing(false)} className="rounded border border-neutral-300 px-4 py-1.5 text-sm dark:border-neutral-700">Cancel</button>
+        <button
+          onClick={onSave}
+          disabled={pending}
+          className="rounded bg-neutral-900 px-4 py-1.5 text-sm text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900"
+        >
+          {dict.save}
+        </button>
+        <button
+          onClick={() => setEditing(false)}
+          className="rounded border border-neutral-300 px-4 py-1.5 text-sm dark:border-neutral-700"
+        >
+          {dict.cancel}
+        </button>
       </div>
     </section>
   );

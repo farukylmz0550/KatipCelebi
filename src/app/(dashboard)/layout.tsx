@@ -50,16 +50,24 @@ export default async function DashboardLayout({ children }: { children: React.Re
               </Link>
             ))}
             {isAdmin && (
-              <Link
-                href="/admin/covers"
-                className="rounded-md px-2.5 py-1 text-[13px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-              >
-                Admin
-              </Link>
+              <>
+                <Link
+                  href="/admin/users"
+                  className="rounded-md px-2.5 py-1 text-[13px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                >
+                  {dict.common.admin}
+                </Link>
+                <Link
+                  href="/admin/covers"
+                  className="rounded-md px-2.5 py-1 text-[13px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                >
+                  Covers
+                </Link>
+              </>
             )}
           </nav>
           <div className="ml-auto flex items-center gap-1">
-            <NotificationPerm />
+            <NotificationPerm dict={dict.common} />
             <span className="mr-1 text-xs text-muted-foreground">{session?.user?.name}</span>
             <form
               action={async () => {
@@ -97,7 +105,10 @@ export default async function DashboardLayout({ children }: { children: React.Re
                 await signOut({ redirectTo: "/login" });
               }}
             >
-              <button type="submit" className="rounded-md px-1.5 py-1 text-[11px] text-muted-foreground transition-colors hover:bg-accent hover:text-destructive">
+              <button
+                type="submit"
+                className="rounded-md px-1.5 py-1 text-[11px] text-muted-foreground transition-colors hover:bg-accent hover:text-destructive"
+              >
                 {dict.nav.logout}
               </button>
             </form>

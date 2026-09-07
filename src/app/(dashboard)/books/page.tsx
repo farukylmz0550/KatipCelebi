@@ -10,7 +10,10 @@ export default async function BooksPage() {
   const userId = await requireUserId();
   const dict = await getDictionary();
   const books = await db.book.findMany({ where: { userId }, orderBy: { addedAt: "desc" } });
-  const lentRecords = await db.lendingRecord.findMany({ where: { book: { userId }, returnedAt: null }, select: { bookId: true } });
+  const lentRecords = await db.lendingRecord.findMany({
+    where: { book: { userId }, returnedAt: null },
+    select: { bookId: true },
+  });
   const lentSet = new Set(lentRecords.map((r) => r.bookId));
   const lentMap: Record<string, boolean> = {};
   books.forEach((b) => (lentMap[b.id] = lentSet.has(b.id)));
@@ -24,10 +27,10 @@ export default async function BooksPage() {
           <ImportForm dict={dict.books} />
         </div>
         <div className="mt-3">
-          <ExcelActions />
+          <ExcelActions dict={dict.excel} />
         </div>
       </div>
-      <BooksGrid books={books as never} lentMap={lentMap} dict={dict.books as never} />
+      <BooksGrid books={books as never} lentMap={lentMap} dict={{ ...dict.books, filter: dict.filter } as never} />
     </div>
   );
 }

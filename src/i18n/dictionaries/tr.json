@@ -18,7 +18,47 @@
     "registerCta": "Hesap oluştur",
     "noAccount": "Hesabın yok mu?",
     "haveAccount": "Zaten hesabın var mı?",
-    "invalidCredentials": "E-posta veya şifre hatalı"
+    "invalidCredentials": "E-posta veya şifre hatalı",
+    "approvalPending": "Hesabınız admin onayı bekliyor.",
+    "createOne": "Oluştur",
+    "signIn": "Giriş yap",
+    "signingIn": "Giriş yapılıyor...",
+    "creating": "Oluşturuluyor...",
+    "minChars": "En az 8 karakter",
+    "setupTitle": "Başlamak için yönetici hesabını oluşturun.",
+    "adminName": "Yönetici adı",
+    "adminEmail": "Yönetici e-postası",
+    "adminPassword": "Yönetici şifresi",
+    "settingUp": "Kuruluyor...",
+    "createAdminAccount": "Yönetici hesabı oluştur",
+    "registrationSuccess": "Kayıt başarılı!",
+    "approvalRequired": "Hesabınıza giriş yapabilmeniz için admin onayı gerekiyor.",
+    "goToLogin": "Giriş sayfasına dön"
+  },
+  "filter": {
+    "search": "Ara...",
+    "filters": "Filtreler",
+    "allFields": "Tüm alanlar",
+    "title": "Başlık",
+    "authors": "Yazarlar",
+    "isbn": "ISBN",
+    "publishers": "Yayıncılar",
+    "anyRating": "Herhangi bir puan",
+    "status": "Durum",
+    "signed": "İmzalı",
+    "yes": "Evet",
+    "no": "Hayır",
+    "lending": "Ödünç",
+    "atHome": "Evde",
+    "onLoan": "Ödünçte",
+    "tag": "Etiket",
+    "sortByTitle": "Sırala: başlık",
+    "sortByRating": "Sırala: puan",
+    "sortByYear": "Sırala: yıl",
+    "clear": "Temizle",
+    "noResults": "Sonuç yok — filtreleri temizlemeyi deneyin",
+    "booksCount": "kitap",
+    "ofTotal": "/"
   },
   "books": {
     "title": "Kitaplarım",
@@ -38,7 +78,67 @@
     },
     "markFinished": "Bitirildi olarak işaretle",
     "delete": "Sil",
-    "empty": "Henüz kitap yok — ilk kitabını ekle!"
+    "empty": "Henüz kitap yok — ilk kitabını ekle!",
+    "back": "← Geri",
+    "out": "dışarıda",
+    "signedBadge": "İmzalı",
+    "copies": "kopya"
+  },
+  "facts": {
+    "title": "Başlık *",
+    "subtitle": "Alt başlık",
+    "authors": "Yazarlar",
+    "publishers": "Yayıncılar",
+    "publishDate": "Yayın tarihi",
+    "publishPlaces": "Yayın yerleri",
+    "edition": "Baskı",
+    "series": "Dizi",
+    "pages": "Sayfa",
+    "languages": "Diller",
+    "isbn10": "ISBN 10",
+    "isbn13": "ISBN 13",
+    "subjects": "Konular",
+    "facts": "Bilgiler",
+    "edit": "Düzenle",
+    "editFacts": "Bilgileri düzenle",
+    "save": "Kaydet",
+    "cancel": "İptal"
+  },
+  "personal": {
+    "personal": "Kişisel",
+    "rating": "Puan:",
+    "signed": "İmzalı",
+    "status": "Durum:",
+    "toRead": "Okunacak",
+    "reading": "Okunuyor",
+    "finished": "Bitti",
+    "started": "Başlangıç",
+    "finishedDate": "Bitiş",
+    "days": "gün",
+    "tags": "Etiketler (virgülle ayırın)",
+    "tagsPlaceholder": "ör.roman, tarih",
+    "save": "Kaydet",
+    "show": "Göster:",
+    "notes": "Notlar",
+    "notesPlaceholder": "Notlarınız…",
+    "saveNotes": "Notları kaydet",
+    "preview": "Önizleme:"
+  },
+  "bookLending": {
+    "lending": "Ödünç Verme",
+    "copies": "Kopya:",
+    "save": "Kaydet",
+    "out": "dışarıda",
+    "total": "toplam",
+    "allHere": "Hepsi burada",
+    "allOut": "Hepsi dışarıda",
+    "someHere": "Bazıları burada",
+    "borrowerPlaceholder": "Ödünç alan",
+    "lend": "Ödünç ver",
+    "noHistory": "Ödünç geçmişi yok",
+    "returned": "iade edildi",
+    "outLabel": "dışarıda",
+    "takeBack": "Geri al"
   },
   "lending": {
     "title": "Ödünç Verme",
@@ -47,7 +147,10 @@
     "lendCta": "Ödünç ver",
     "returned": "İade edildi",
     "markReturned": "İade edildi olarak işaretle",
-    "empty": "Henüz ödünç kaydı yok."
+    "empty": "Henüz ödünç kaydı yok.",
+    "activeLoans": "Aktif Ödünçler",
+    "returnedSection": "İade Edilenler",
+    "namePlaceholder": "Ad"
   },
   "people": {
     "title": "Kişiler",
@@ -65,7 +168,10 @@
     "empty": "Henüz kişi yok",
     "stillHasBooks": "Hala dışarıda kitabı var",
     "alreadyExists": "Zaten var",
-    "needsName": "İsim gerekli"
+    "needsName": "İsim gerekli",
+    "book": "Kitap",
+    "lent": "Verilen",
+    "returnedHeader": "İade"
   },
   "stats": {
     "title": "Okuma İstatistikleri",
@@ -96,7 +202,8 @@
     "first_lending_title": "Cömert Okuyucu",
     "first_lending_desc": "İlk kitabını birine ödünç ver.",
     "five_authors_title": "Geniş Ufuk",
-    "five_authors_desc": "5 farklı yazardan kitap oku."
+    "five_authors_desc": "5 farklı yazardan kitap oku.",
+    "unlocked": "Açıldı"
   },
   "leaderboard": {
     "title": "Liderlik Tablosu",
@@ -117,5 +224,40 @@
     "nameSuccess": "İsim başarıyla güncellendi",
     "joinDate": "Katılım",
     "totalXp": "Toplam XP"
+  },
+  "excel": {
+    "template": "Şablon",
+    "export": "Dışa aktar",
+    "importExcel": "Excel İçe Aktar",
+    "fileTooLarge": "Dosya çok büyük (20MB limit)",
+    "imported": "İçe aktarıldı"
+  },
+  "common": {
+    "enableNotifications": "Bildirimleri aç",
+    "pageNotFound": "Sayfa bulunamadı",
+    "pageNotFoundDesc": "Aradığınız sayfa mevcut değil.",
+    "goHome": "Ana sayfaya dön",
+    "somethingWentWrong": "Bir şeyler yanlış gitti",
+    "tryAgain": "Tekrar dene",
+    "admin": "Admin",
+    "books": "kitap"
+  },
+  "admin": {
+    "coversTitle": "Kapak Önbelleği (Admin)",
+    "cachedCovers": "Önbelleğe alınan kapaklar:",
+    "urlMetadata": "URL meta verisi:",
+    "bytes": "bayt",
+    "clearThem": "Temizle",
+    "clearNotice": "Temizlenen kapaklar gerektiğinde yeniden alınacak.",
+    "usersTitle": "Kullanıcı Yönetimi",
+    "pendingApproval": "Onay Bekleyenler",
+    "approvedUsers": "Onaylı Kullanıcılar",
+    "approved": "Onaylı",
+    "pending": "Beklemede",
+    "approve": "Onayla",
+    "reject": "Reddet",
+    "adminLabel": "Admin",
+    "actions": "İşlemler",
+    "confirmDelete": "Bu kullanıcıyı silmek istediğinizden emin misiniz?"
   }
 }

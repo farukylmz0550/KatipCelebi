@@ -19,7 +19,15 @@ type Book = {
   coverUrl?: string | null;
 };
 
-export function BooksGrid({ books, lentMap, dict }: { books: Book[]; lentMap: Record<string, boolean>; dict: { empty: string; noResults?: string } & Record<string, string> }) {
+export function BooksGrid({
+  books,
+  lentMap,
+  dict,
+}: {
+  books: Book[];
+  lentMap: Record<string, boolean>;
+  dict: { empty: string; noResults?: string } & Record<string, string>;
+}) {
   const [filters, setFilters] = useState<Filters>(defaultFilters);
   const tagsInUse = useMemo(() => {
     const set = new Set<string>();
@@ -39,9 +47,13 @@ export function BooksGrid({ books, lentMap, dict }: { books: Book[]; lentMap: Re
 
   return (
     <div className="space-y-4">
-      <FilterBar onChange={setFilters} tagsInUse={tagsInUse} />
+      <FilterBar
+        onChange={setFilters}
+        tagsInUse={tagsInUse}
+        dict={(dict as Record<string, unknown>).filter as Record<string, string>}
+      />
       <p className="text-xs text-muted-foreground">
-        {shown === total ? `${total} books` : `${shown} of ${total}`}
+        {shown === total ? `${total} ${dict.booksCount ?? "books"}` : `${shown} ${dict.ofTotal ?? "of"} ${total}`}
       </p>
       {filtered.length === 0 ? (
         <p className="py-12 text-center text-sm text-muted-foreground">
@@ -50,7 +62,12 @@ export function BooksGrid({ books, lentMap, dict }: { books: Book[]; lentMap: Re
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {filtered.map((book) => (
-            <BookCard key={book.id} book={book as Book} lentOut={!!lentMap[book.id]} />
+            <BookCard
+              key={book.id}
+              book={book as Book}
+              lentOut={!!lentMap[book.id]}
+              dict={(dict as Record<string, unknown>).filter as Record<string, string>}
+            />
           ))}
         </div>
       )}

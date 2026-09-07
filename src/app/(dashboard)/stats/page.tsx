@@ -18,7 +18,10 @@ export default async function StatsPage() {
     db.user.findUniqueOrThrow({ where: { id: userId }, select: { xp: true } }),
     db.book.count({ where: { userId } }),
     db.book.count({ where: { userId, status: "READING" } }),
-    db.book.findMany({ where: { userId, status: "FINISHED", finishedAt: { not: null } }, select: { finishedAt: true } }),
+    db.book.findMany({
+      where: { userId, status: "FINISHED", finishedAt: { not: null } },
+      select: { finishedAt: true },
+    }),
     db.goal.findUnique({ where: { userId } }),
   ]);
 
@@ -71,6 +74,7 @@ export default async function StatsPage() {
           label={dict.stats.yearlyGoal}
           target={yearly}
           done={doneYear}
+          period="yearly"
           noGoalLabel={dict.stats.noGoal}
           reachedLabel={dict.stats.reached}
           progressLabel={dict.stats.progress}
@@ -79,12 +83,22 @@ export default async function StatsPage() {
           label={dict.stats.monthlyGoal}
           target={monthly}
           done={doneMonth}
+          period="monthly"
           noGoalLabel={dict.stats.noGoal}
           reachedLabel={dict.stats.reached}
           progressLabel={dict.stats.progress}
         />
       </div>
-      <GoalForms dict={{ yearlyGoal: dict.stats.yearlyGoal, monthlyGoal: dict.stats.monthlyGoal, goalTarget: dict.stats.goalTarget, setGoal: dict.stats.setGoal }} yearly={yearly} monthly={monthly} />
+      <GoalForms
+        dict={{
+          yearlyGoal: dict.stats.yearlyGoal,
+          monthlyGoal: dict.stats.monthlyGoal,
+          goalTarget: dict.stats.goalTarget,
+          setGoal: dict.stats.setGoal,
+        }}
+        yearly={yearly}
+        monthly={monthly}
+      />
       <div className="rounded-xl border border-border bg-card p-4">
         <p className="mb-3 text-[13px] font-medium text-foreground">{dict.stats.byMonth}</p>
         <MonthlyChart data={chartData} label={dict.stats.finished} dark={theme === "dark"} />

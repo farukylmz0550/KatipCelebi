@@ -24,6 +24,6 @@ export async function registerUser(input: { email: string; password: string; nam
   if (existing) return { error: "Email already registered" };
 
   const passwordHash = await bcrypt.hash(password, 12);
-  await db.user.create({ data: { email, name, passwordHash } });
+  await db.user.create({ data: { email, name, passwordHash, approved: false } });
   return { ok: true };
 }

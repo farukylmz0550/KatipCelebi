@@ -10,7 +10,7 @@ type Book = {
   status?: string | null;
 };
 
-export function BookCard({ book, lentOut }: { book: Book; lentOut: boolean }) {
+export function BookCard({ book, lentOut, dict }: { book: Book; lentOut: boolean; dict?: Record<string, string> }) {
   const rating = book.rating ?? 0;
   return (
     <Link href={`/books/${book.id}`} className="group block">
@@ -29,7 +29,8 @@ export function BookCard({ book, lentOut }: { book: Book; lentOut: boolean }) {
       <div className="mt-1 flex items-center gap-1.5">
         {rating > 0 && (
           <span className="text-xs text-yellow-600 dark:text-yellow-400">
-            {"★".repeat(rating)}{"☆".repeat(5 - rating)}
+            {"★".repeat(rating)}
+            {"☆".repeat(5 - rating)}
           </span>
         )}
         {book.status && (
@@ -37,7 +38,7 @@ export function BookCard({ book, lentOut }: { book: Book; lentOut: boolean }) {
             {book.status}
           </span>
         )}
-        {lentOut && <span className="text-[10px] text-muted-foreground">on loan</span>}
+        {lentOut && <span className="text-[10px] text-muted-foreground">{dict?.onLoan ?? "on loan"}</span>}
       </div>
     </Link>
   );

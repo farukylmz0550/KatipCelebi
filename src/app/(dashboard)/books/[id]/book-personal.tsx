@@ -16,7 +16,7 @@ type Book = {
   finishedAt?: Date | string | null;
 };
 
-export function BookPersonal({ book }: { book: Book; dict: Record<string, unknown> }) {
+export function BookPersonal({ book, dict }: { book: Book; dict: Record<string, string> }) {
   const [rating, setRating] = useState(book.rating ?? 0);
   const [signed, setSigned] = useState(!!book.signed);
   const [tags, setTags] = useState(book.tags ?? "");
@@ -61,55 +61,105 @@ export function BookPersonal({ book }: { book: Book; dict: Record<string, unknow
     });
   }
 
-  const days = book.startedAt && book.finishedAt ? Math.round((new Date(book.finishedAt).getTime() - new Date(book.startedAt).getTime()) / 86400000) : null;
+  const days =
+    book.startedAt && book.finishedAt
+      ? Math.round((new Date(book.finishedAt).getTime() - new Date(book.startedAt).getTime()) / 86400000)
+      : null;
 
   return (
     <section className="space-y-4 rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
-      <h2 className="font-medium">Personal</h2>
+      <h2 className="font-medium">{dict.personal}</h2>
 
       <div className="flex items-center gap-2">
-        <span className="text-sm text-neutral-600 dark:text-neutral-400">Rating:</span>
+        <span className="text-sm text-neutral-600 dark:text-neutral-400">{dict.rating}</span>
         <div className="flex gap-1">
           {[1, 2, 3, 4, 5].map((n) => (
-            <button key={n} onClick={() => saveRating(n === rating ? 0 : n)} className={`text-lg ${n <= rating ? "text-amber-500" : "text-neutral-300"}`}>
+            <button
+              key={n}
+              onClick={() => saveRating(n === rating ? 0 : n)}
+              className={`text-lg ${n <= rating ? "text-amber-500" : "text-neutral-300"}`}
+            >
               ★
             </button>
           ))}
         </div>
         <label className="ml-4 flex items-center gap-1 text-sm">
           <input type="checkbox" checked={signed} onChange={(e) => saveSigned(e.target.checked)} />
-          Signed
+          {dict.signed}
         </label>
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-sm text-neutral-600 dark:text-neutral-400">Status:</span>
-        <select value={book.status} onChange={(e) => onStatusChange(e.target.value as never)} className="rounded border border-neutral-300 px-2 py-1 text-sm dark:border-neutral-700 dark:bg-neutral-800">
-          <option value="TO_READ">To read</option>
-          <option value="READING">Reading</option>
-          <option value="FINISHED">Finished</option>
+        <span className="text-sm text-neutral-600 dark:text-neutral-400">{dict.status}</span>
+        <select
+          value={book.status}
+          onChange={(e) => onStatusChange(e.target.value as never)}
+          className="rounded border border-neutral-300 px-2 py-1 text-sm dark:border-neutral-700 dark:bg-neutral-800"
+        >
+          <option value="TO_READ">{dict.toRead}</option>
+          <option value="READING">{dict.reading}</option>
+          <option value="FINISHED">{dict.finished}</option>
         </select>
-        {book.startedAt && <span className="text-xs text-neutral-500">Started {new Date(book.startedAt).toLocaleDateString()}</span>}
-        {book.finishedAt && <span className="text-xs text-neutral-500">Finished {new Date(book.finishedAt).toLocaleDateString()}</span>}
-        {days !== null && <span className="text-xs text-neutral-500">· {days} days</span>}
+        {book.startedAt && (
+          <span className="text-xs text-neutral-500">
+            {dict.started} {new Date(book.startedAt).toLocaleDateString()}
+          </span>
+        )}
+        {book.finishedAt && (
+          <span className="text-xs text-neutral-500">
+            {dict.finishedDate} {new Date(book.finishedAt).toLocaleDateString()}
+          </span>
+        )}
+        {days !== null && (
+          <span className="text-xs text-neutral-500">
+            · {days} {dict.days}
+          </span>
+        )}
       </div>
 
       <div className="space-y-1">
-        <label className="text-sm text-neutral-600 dark:text-neutral-400">Tags (comma separated)</label>
+        <label className="text-sm text-neutral-600 dark:text-neutral-400">{dict.tags}</label>
         <div className="flex gap-2">
-          <input value={tags} onChange={(e) => setTags(e.target.value)} placeholder="e.g. fiction, history" className="flex-1 rounded border border-neutral-300 px-3 py-1.5 text-sm dark:border-neutral-700 dark:bg-neutral-800" />
-          <button onClick={saveTags} disabled={pending} className="rounded border border-neutral-300 px-3 py-1.5 text-sm disabled:opacity-50 dark:border-neutral-700">Save</button>
+          <input
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+            placeholder={dict.tagsPlaceholder}
+            className="flex-1 rounded border border-neutral-300 px-3 py-1.5 text-sm dark:border-neutral-700 dark:bg-neutral-800"
+          />
+          <button
+            onClick={saveTags}
+            disabled={pending}
+            className="rounded border border-neutral-300 px-3 py-1.5 text-sm disabled:opacity-50 dark:border-neutral-700"
+          >
+            {dict.save}
+          </button>
         </div>
-        {tags && <p className="text-xs text-neutral-500">Show: {show(tags)}</p>}
+        {tags && (
+          <p className="text-xs text-neutral-500">
+            {dict.show} {show(tags)}
+          </p>
+        )}
       </div>
 
       <div className="space-y-1">
-        <label className="text-sm text-neutral-600 dark:text-neutral-400">Notes</label>
-        <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={4} placeholder="Your notes…" className="w-full rounded border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800" />
-        <button onClick={saveNotes} disabled={pending} className="rounded bg-neutral-900 px-3 py-1.5 text-sm text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900">Save notes</button>
+        <label className="text-sm text-neutral-600 dark:text-neutral-400">{dict.notes}</label>
+        <textarea
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          rows={4}
+          placeholder={dict.notesPlaceholder}
+          className="w-full rounded border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800"
+        />
+        <button
+          onClick={saveNotes}
+          disabled={pending}
+          className="rounded bg-neutral-900 px-3 py-1.5 text-sm text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900"
+        >
+          {dict.saveNotes}
+        </button>
         {notes && (
           <div className="rounded border border-neutral-200 bg-neutral-50 p-3 text-sm dark:border-neutral-800 dark:bg-neutral-800">
-            <p className="mb-1 text-xs text-neutral-500">Preview:</p>
+            <p className="mb-1 text-xs text-neutral-500">{dict.preview}</p>
             <p className="whitespace-pre-wrap">{notes}</p>
           </div>
         )}

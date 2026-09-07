@@ -18,7 +18,47 @@
     "registerCta": "Create account",
     "noAccount": "No account yet?",
     "haveAccount": "Already have an account?",
-    "invalidCredentials": "Invalid email or password"
+    "invalidCredentials": "Invalid email or password",
+    "approvalPending": "Your account is pending admin approval.",
+    "createOne": "Create one",
+    "signIn": "Sign in",
+    "signingIn": "Signing in...",
+    "creating": "Creating...",
+    "minChars": "Min 8 characters",
+    "setupTitle": "Create the admin account to get started.",
+    "adminName": "Admin name",
+    "adminEmail": "Admin email",
+    "adminPassword": "Admin password",
+    "settingUp": "Setting up...",
+    "createAdminAccount": "Create admin account",
+    "registrationSuccess": "Registration successful!",
+    "approvalRequired": "Your account needs admin approval before you can log in.",
+    "goToLogin": "Go to login"
+  },
+  "filter": {
+    "search": "Search...",
+    "filters": "Filters",
+    "allFields": "All fields",
+    "title": "Title",
+    "authors": "Authors",
+    "isbn": "ISBN",
+    "publishers": "Publishers",
+    "anyRating": "Any rating",
+    "status": "Status",
+    "signed": "Signed",
+    "yes": "Yes",
+    "no": "No",
+    "lending": "Lending",
+    "atHome": "At home",
+    "onLoan": "On loan",
+    "tag": "Tag",
+    "sortByTitle": "Sort: title",
+    "sortByRating": "Sort: rating",
+    "sortByYear": "Sort: year",
+    "clear": "Clear",
+    "noResults": "No results — try clearing filters",
+    "booksCount": "books",
+    "ofTotal": "of"
   },
   "books": {
     "title": "My Books",
@@ -38,7 +78,67 @@
     },
     "markFinished": "Mark finished",
     "delete": "Delete",
-    "empty": "No books yet — add your first one!"
+    "empty": "No books yet — add your first one!",
+    "back": "← Back",
+    "out": "out",
+    "signedBadge": "Signed",
+    "copies": "copies"
+  },
+  "facts": {
+    "title": "Title *",
+    "subtitle": "Subtitle",
+    "authors": "Authors",
+    "publishers": "Publishers",
+    "publishDate": "Publish date",
+    "publishPlaces": "Publish places",
+    "edition": "Edition",
+    "series": "Series",
+    "pages": "Pages",
+    "languages": "Languages",
+    "isbn10": "ISBN 10",
+    "isbn13": "ISBN 13",
+    "subjects": "Subjects",
+    "facts": "Facts",
+    "edit": "Edit",
+    "editFacts": "Edit facts",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "personal": {
+    "personal": "Personal",
+    "rating": "Rating:",
+    "signed": "Signed",
+    "status": "Status:",
+    "toRead": "To read",
+    "reading": "Reading",
+    "finished": "Finished",
+    "started": "Started",
+    "finishedDate": "Finished",
+    "days": "days",
+    "tags": "Tags (comma separated)",
+    "tagsPlaceholder": "e.g. fiction, history",
+    "save": "Save",
+    "show": "Show:",
+    "notes": "Notes",
+    "notesPlaceholder": "Your notes…",
+    "saveNotes": "Save notes",
+    "preview": "Preview:"
+  },
+  "bookLending": {
+    "lending": "Lending",
+    "copies": "Copies:",
+    "save": "Save",
+    "out": "out",
+    "total": "total",
+    "allHere": "All here",
+    "allOut": "All out",
+    "someHere": "Some here",
+    "borrowerPlaceholder": "Borrower name",
+    "lend": "Lend",
+    "noHistory": "No lending history",
+    "returned": "returned",
+    "outLabel": "out",
+    "takeBack": "Take back"
   },
   "lending": {
     "title": "Lending",
@@ -47,7 +147,10 @@
     "lendCta": "Lend",
     "returned": "Returned",
     "markReturned": "Mark returned",
-    "empty": "No lending records yet."
+    "empty": "No lending records yet.",
+    "activeLoans": "Active Loans",
+    "returnedSection": "Returned",
+    "namePlaceholder": "Name"
   },
   "people": {
     "title": "People",
@@ -65,7 +168,10 @@
     "empty": "No people yet",
     "stillHasBooks": "Still has books out",
     "alreadyExists": "Already exists",
-    "needsName": "Name required"
+    "needsName": "Name required",
+    "book": "Book",
+    "lent": "Lent",
+    "returnedHeader": "Returned"
   },
   "stats": {
     "title": "Reading stats",
@@ -96,7 +202,8 @@
     "first_lending_title": "Generous Reader",
     "first_lending_desc": "Lend your first book to someone.",
     "five_authors_title": "Well Read",
-    "five_authors_desc": "Read books from 5 different authors."
+    "five_authors_desc": "Read books from 5 different authors.",
+    "unlocked": "Unlocked"
   },
   "leaderboard": {
     "title": "Leaderboard",
@@ -117,5 +224,40 @@
     "nameSuccess": "Name updated successfully",
     "joinDate": "Joined",
     "totalXp": "Total XP"
+  },
+  "excel": {
+    "template": "Template",
+    "export": "Export",
+    "importExcel": "Import Excel",
+    "fileTooLarge": "File too large (20MB limit)",
+    "imported": "Imported"
+  },
+  "common": {
+    "enableNotifications": "Enable notifications",
+    "pageNotFound": "Page not found",
+    "pageNotFoundDesc": "The page you are looking for does not exist.",
+    "goHome": "Go home",
+    "somethingWentWrong": "Something went wrong",
+    "tryAgain": "Try again",
+    "admin": "Admin",
+    "books": "books"
+  },
+  "admin": {
+    "coversTitle": "Cover Cache (Admin)",
+    "cachedCovers": "Cached covers:",
+    "urlMetadata": "URL metadata:",
+    "bytes": "bytes",
+    "clearThem": "Clear them",
+    "clearNotice": "Cleared covers will be re-fetched when needed.",
+    "usersTitle": "User Management",
+    "pendingApproval": "Pending Approval",
+    "approvedUsers": "Approved Users",
+    "approved": "Approved",
+    "pending": "Pending",
+    "approve": "Approve",
+    "reject": "Reject",
+    "adminLabel": "Admin",
+    "actions": "Actions",
+    "confirmDelete": "Are you sure you want to delete this user?"
   }
 }

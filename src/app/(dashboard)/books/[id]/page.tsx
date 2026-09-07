@@ -20,8 +20,11 @@ export default async function BookDetailPage({ params }: { params: Promise<{ id:
 
   return (
     <div className="mx-auto max-w-[680px] space-y-6">
-      <Link href="/books" className="inline-flex items-center gap-1 text-sm text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white">
-        ← Back
+      <Link
+        href="/books"
+        className="inline-flex items-center gap-1 text-sm text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+      >
+        {dict.books.back}
       </Link>
 
       <div className="flex flex-col gap-6 sm:flex-row">
@@ -39,16 +42,26 @@ export default async function BookDetailPage({ params }: { params: Promise<{ id:
           {book.isbn && <p className="text-sm font-mono text-neutral-500">{book.isbn}</p>}
           <div className="flex gap-2 text-xs">
             {book.status && <span className="rounded bg-neutral-100 px-2 py-1 dark:bg-neutral-800">{book.status}</span>}
-            {lentOut > 0 && <span className="rounded bg-amber-100 px-2 py-1 dark:bg-amber-900">👤 {lentOut} out</span>}
-            {book.signed && <span className="rounded bg-blue-100 px-2 py-1 dark:bg-blue-900">✍️ Signed</span>}
-            {book.copies > 1 && <span className="rounded bg-neutral-100 px-2 py-1 dark:bg-neutral-800">{book.copies} copies</span>}
+            {lentOut > 0 && (
+              <span className="rounded bg-amber-100 px-2 py-1 dark:bg-amber-900">
+                👤 {lentOut} {dict.books.out}
+              </span>
+            )}
+            {book.signed && (
+              <span className="rounded bg-blue-100 px-2 py-1 dark:bg-blue-900">✍️ {dict.books.signedBadge}</span>
+            )}
+            {book.copies > 1 && (
+              <span className="rounded bg-neutral-100 px-2 py-1 dark:bg-neutral-800">
+                {book.copies} {dict.books.copies}
+              </span>
+            )}
           </div>
         </div>
       </div>
 
-      <BookFacts book={book} />
-      <BookPersonal book={book} dict={dict.books} />
-      <BookLending book={book} lendings={lendings} persons={persons} dict={dict.lending} />
+      <BookFacts book={book} dict={dict.facts} />
+      <BookPersonal book={book} dict={dict.personal} />
+      <BookLending book={book} lendings={lendings} persons={persons} dict={dict.bookLending} />
     </div>
   );
 }

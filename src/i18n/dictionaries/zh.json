@@ -18,7 +18,47 @@
     "registerCta": "注册",
     "noAccount": "还没有账户？",
     "haveAccount": "已有账户？",
-    "invalidCredentials": "邮箱或密码错误"
+    "invalidCredentials": "邮箱或密码错误",
+    "approvalPending": "您的账户正在等待管理员审批。",
+    "createOne": "创建一个",
+    "signIn": "登录",
+    "signingIn": "登录中...",
+    "creating": "创建中...",
+    "minChars": "至少8个字符",
+    "setupTitle": "创建管理员账户以开始使用。",
+    "adminName": "管理员姓名",
+    "adminEmail": "管理员邮箱",
+    "adminPassword": "管理员密码",
+    "settingUp": "设置中...",
+    "createAdminAccount": "创建管理员账户",
+    "registrationSuccess": "注册成功！",
+    "approvalRequired": "您的账户需要管理员审批才能登录。",
+    "goToLogin": "前往登录"
+  },
+  "filter": {
+    "search": "搜索...",
+    "filters": "筛选",
+    "allFields": "所有字段",
+    "title": "标题",
+    "authors": "作者",
+    "isbn": "ISBN",
+    "publishers": "出版社",
+    "anyRating": "任意评分",
+    "status": "状态",
+    "signed": "签名",
+    "yes": "是",
+    "no": "否",
+    "lending": "借阅",
+    "atHome": "在手",
+    "onLoan": "借出",
+    "tag": "标签",
+    "sortByTitle": "排序: 标题",
+    "sortByRating": "排序: 评分",
+    "sortByYear": "排序: 年份",
+    "clear": "清除",
+    "noResults": "无结果 — 尝试清除筛选",
+    "booksCount": "本书",
+    "ofTotal": "/"
   },
   "books": {
     "title": "我的书籍",
@@ -38,7 +78,67 @@
     },
     "markFinished": "标记为已读",
     "delete": "删除",
-    "empty": "还没有书籍 — 添加第一本！"
+    "empty": "还没有书籍 — 添加第一本！",
+    "back": "← 返回",
+    "out": "借出",
+    "signedBadge": "签名",
+    "copies": "本"
+  },
+  "facts": {
+    "title": "标题 *",
+    "subtitle": "副标题",
+    "authors": "作者",
+    "publishers": "出版社",
+    "publishDate": "出版日期",
+    "publishPlaces": "出版地",
+    "edition": "版本",
+    "series": "丛书",
+    "pages": "页数",
+    "languages": "语言",
+    "isbn10": "ISBN 10",
+    "isbn13": "ISBN 13",
+    "subjects": "主题",
+    "facts": "信息",
+    "edit": "编辑",
+    "editFacts": "编辑信息",
+    "save": "保存",
+    "cancel": "取消"
+  },
+  "personal": {
+    "personal": "个人",
+    "rating": "评分:",
+    "signed": "签名",
+    "status": "状态:",
+    "toRead": "待读",
+    "reading": "在读",
+    "finished": "已读",
+    "started": "开始",
+    "finishedDate": "完成",
+    "days": "天",
+    "tags": "标签（逗号分隔）",
+    "tagsPlaceholder": "例如：小说、历史",
+    "save": "保存",
+    "show": "显示:",
+    "notes": "笔记",
+    "notesPlaceholder": "你的笔记…",
+    "saveNotes": "保存笔记",
+    "preview": "预览:"
+  },
+  "bookLending": {
+    "lending": "借阅",
+    "copies": "副本:",
+    "save": "保存",
+    "out": "借出",
+    "total": "总计",
+    "allHere": "全部在手",
+    "allOut": "全部借出",
+    "someHere": "部分在手",
+    "borrowerPlaceholder": "借阅人姓名",
+    "lend": "借出",
+    "noHistory": "无借阅历史",
+    "returned": "已归还",
+    "outLabel": "借出",
+    "takeBack": "收回"
   },
   "lending": {
     "title": "借阅",
@@ -47,7 +147,10 @@
     "lendCta": "借出",
     "returned": "已归还",
     "markReturned": "标记归还",
-    "empty": "暂无借阅记录。"
+    "empty": "暂无借阅记录。",
+    "activeLoans": "活跃借阅",
+    "returnedSection": "已归还",
+    "namePlaceholder": "姓名"
   },
   "people": {
     "title": "人物",
@@ -65,7 +168,10 @@
     "empty": "暂无人物",
     "stillHasBooks": "还有书在外",
     "alreadyExists": "已存在",
-    "needsName": "需要姓名"
+    "needsName": "需要姓名",
+    "book": "书籍",
+    "lent": "借出",
+    "returnedHeader": "归还"
   },
   "stats": {
     "title": "统计",
@@ -96,7 +202,8 @@
     "first_lending_title": "慷慨读者",
     "first_lending_desc": "借出第一本书。",
     "five_authors_title": "博览",
-    "five_authors_desc": "阅读5位不同作者。"
+    "five_authors_desc": "阅读5位不同作者。",
+    "unlocked": "已解锁"
   },
   "leaderboard": {
     "title": "排行榜",
@@ -117,5 +224,40 @@
     "nameSuccess": "姓名已更新",
     "joinDate": "注册日期",
     "totalXp": "总经验"
+  },
+  "excel": {
+    "template": "模板",
+    "export": "导出",
+    "importExcel": "导入 Excel",
+    "fileTooLarge": "文件过大（限制20MB）",
+    "imported": "已导入"
+  },
+  "common": {
+    "enableNotifications": "开启通知",
+    "pageNotFound": "页面未找到",
+    "pageNotFoundDesc": "您访问的页面不存在。",
+    "goHome": "返回首页",
+    "somethingWentWrong": "出了点问题",
+    "tryAgain": "重试",
+    "admin": "管理",
+    "books": "本"
+  },
+  "admin": {
+    "coversTitle": "封面缓存（管理）",
+    "cachedCovers": "缓存封面数：",
+    "urlMetadata": "URL 元数据：",
+    "bytes": "字节",
+    "clearThem": "清除",
+    "clearNotice": "清除的封面将在需要时重新获取。",
+    "usersTitle": "用户管理",
+    "pendingApproval": "待审批",
+    "approvedUsers": "已批准用户",
+    "approved": "已批准",
+    "pending": "待审批",
+    "approve": "批准",
+    "reject": "拒绝",
+    "adminLabel": "管理",
+    "actions": "操作",
+    "confirmDelete": "确定要删除此用户吗？"
   }
 }

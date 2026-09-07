@@ -18,7 +18,47 @@
     "registerCta": "Создать",
     "noAccount": "Нет аккаунта?",
     "haveAccount": "Уже есть аккаунт?",
-    "invalidCredentials": "Неверная почта или пароль"
+    "invalidCredentials": "Неверная почта или пароль",
+    "approvalPending": "Ваш аккаунт ожидает одобрения администратора.",
+    "createOne": "Создать",
+    "signIn": "Войти",
+    "signingIn": "Вход...",
+    "creating": "Создание...",
+    "minChars": "Минимум 8 символов",
+    "setupTitle": "Создайте аккаунт администратора для начала работы.",
+    "adminName": "Имя админа",
+    "adminEmail": "Почта админа",
+    "adminPassword": "Пароль админа",
+    "settingUp": "Настройка...",
+    "createAdminAccount": "Создать аккаунт администратора",
+    "registrationSuccess": "Регистрация успешна!",
+    "approvalRequired": "Для входа необходимо одобрение администратора.",
+    "goToLogin": "Перейти ко входу"
+  },
+  "filter": {
+    "search": "Поиск...",
+    "filters": "Фильтры",
+    "allFields": "Все поля",
+    "title": "Название",
+    "authors": "Авторы",
+    "isbn": "ISBN",
+    "publishers": "Издатели",
+    "anyRating": "Любая оценка",
+    "status": "Статус",
+    "signed": "Подписано",
+    "yes": "Да",
+    "no": "Нет",
+    "lending": "Выдача",
+    "atHome": "Дома",
+    "onLoan": "На руках",
+    "tag": "Тег",
+    "sortByTitle": "Сортировка: название",
+    "sortByRating": "Сортировка: оценка",
+    "sortByYear": "Сортировка: год",
+    "clear": "Сбросить",
+    "noResults": "Нет результатов — попробуйте сбросить фильтры",
+    "booksCount": "книг",
+    "ofTotal": "из"
   },
   "books": {
     "title": "Мои Книги",
@@ -38,7 +78,67 @@
     },
     "markFinished": "Отметить как прочитано",
     "delete": "Удалить",
-    "empty": "Пока нет книг — добавьте первую!"
+    "empty": "Пока нет книг — добавьте первую!",
+    "back": "← Назад",
+    "out": "на руках",
+    "signedBadge": "Подписано",
+    "copies": "копий"
+  },
+  "facts": {
+    "title": "Название *",
+    "subtitle": "Подзаголовок",
+    "authors": "Авторы",
+    "publishers": "Издатели",
+    "publishDate": "Дата издания",
+    "publishPlaces": "Места издания",
+    "edition": "Издание",
+    "series": "Серия",
+    "pages": "Страницы",
+    "languages": "Языки",
+    "isbn10": "ISBN 10",
+    "isbn13": "ISBN 13",
+    "subjects": "Темы",
+    "facts": "Данные",
+    "edit": "Редактировать",
+    "editFacts": "Редактировать данные",
+    "save": "Сохранить",
+    "cancel": "Отмена"
+  },
+  "personal": {
+    "personal": "Личное",
+    "rating": "Оценка:",
+    "signed": "Подписано",
+    "status": "Статус:",
+    "toRead": "К прочтению",
+    "reading": "Читаю",
+    "finished": "Прочитано",
+    "started": "Начато",
+    "finishedDate": "Завершено",
+    "days": "дней",
+    "tags": "Теги (через запятую)",
+    "tagsPlaceholder": "напр. фантастика, история",
+    "save": "Сохранить",
+    "show": "Показать:",
+    "notes": "Заметки",
+    "notesPlaceholder": "Ваши заметки…",
+    "saveNotes": "Сохранить заметки",
+    "preview": "Предпросмотр:"
+  },
+  "bookLending": {
+    "lending": "Выдача",
+    "copies": "Копии:",
+    "save": "Сохранить",
+    "out": "на руках",
+    "total": "всего",
+    "allHere": "Все здесь",
+    "allOut": "Все на руках",
+    "someHere": "Некоторые здесь",
+    "borrowerPlaceholder": "Имя заёмщика",
+    "lend": "Выдать",
+    "noHistory": "Нет истории выдач",
+    "returned": "возвращено",
+    "outLabel": "на руках",
+    "takeBack": "Вернуть"
   },
   "lending": {
     "title": "Выдачи",
@@ -47,7 +147,10 @@
     "lendCta": "Выдать",
     "returned": "Возвращено",
     "markReturned": "Отметить возврат",
-    "empty": "Пока нет выдач."
+    "empty": "Пока нет выдач.",
+    "activeLoans": "Активные Выдачи",
+    "returnedSection": "Возвращённые",
+    "namePlaceholder": "Имя"
   },
   "people": {
     "title": "Люди",
@@ -65,7 +168,10 @@
     "empty": "Пока нет людей",
     "stillHasBooks": "Есть книги на руках",
     "alreadyExists": "Уже существует",
-    "needsName": "Имя обязательно"
+    "needsName": "Имя обязательно",
+    "book": "Книга",
+    "lent": "Выдано",
+    "returnedHeader": "Возвращено"
   },
   "stats": {
     "title": "Статистика",
@@ -96,7 +202,8 @@
     "first_lending_title": "Щедрый Читатель",
     "first_lending_desc": "Дайте книгу взаймы.",
     "five_authors_title": "Начитанный",
-    "five_authors_desc": "Прочитайте 5 авторов."
+    "five_authors_desc": "Прочитайте 5 авторов.",
+    "unlocked": "Открыто"
   },
   "leaderboard": {
     "title": "Рейтинг",
@@ -117,5 +224,40 @@
     "nameSuccess": "Имя обновлено",
     "joinDate": "Регистрация",
     "totalXp": "Общий XP"
+  },
+  "excel": {
+    "template": "Шаблон",
+    "export": "Экспорт",
+    "importExcel": "Импорт Excel",
+    "fileTooLarge": "Файл слишком большой (лимит 20МБ)",
+    "imported": "Импортировано"
+  },
+  "common": {
+    "enableNotifications": "Включить уведомления",
+    "pageNotFound": "Страница не найдена",
+    "pageNotFoundDesc": "Запрашиваемая страница не существует.",
+    "goHome": "На главную",
+    "somethingWentWrong": "Что-то пошло не так",
+    "tryAgain": "Попробовать снова",
+    "admin": "Админ",
+    "books": "книг"
+  },
+  "admin": {
+    "coversTitle": "Кэш Обложек (Админ)",
+    "cachedCovers": "Обложек в кэше:",
+    "urlMetadata": "URL метаданные:",
+    "bytes": "байт",
+    "clearThem": "Очистить",
+    "clearNotice": "Очищенные обложки будут загружены повторно при необходимости.",
+    "usersTitle": "Управление Пользователями",
+    "pendingApproval": "Ожидают Одобрения",
+    "approvedUsers": "Одобренные Пользователи",
+    "approved": "Одобрено",
+    "pending": "Ожидание",
+    "approve": "Одобрить",
+    "reject": "Отклонить",
+    "adminLabel": "Админ",
+    "actions": "Действия",
+    "confirmDelete": "Вы уверены, что хотите удалить этого пользователя?"
   }
 }

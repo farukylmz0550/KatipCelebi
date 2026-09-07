@@ -29,6 +29,7 @@ export async function createAdminUser(input: { name: string; email: string; pass
         email,
         passwordHash,
         isAdmin: true,
+        approved: true,
       },
     });
   });

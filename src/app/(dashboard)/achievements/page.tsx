@@ -23,16 +23,14 @@ export default async function AchievementsPage() {
             <div
               key={achievement.id}
               className={`rounded-xl border p-4 transition-colors ${
-                isUnlocked
-                  ? "border-primary/30 bg-primary/5"
-                  : "border-border bg-card opacity-60"
+                isUnlocked ? "border-primary/30 bg-primary/5" : "border-border bg-card opacity-60"
               }`}
             >
               <div className="flex items-center justify-between">
                 <p className="text-[13px] font-medium text-foreground">{labels[`${achievement.key}_title`]}</p>
                 {isUnlocked && (
                   <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
-                    Unlocked
+                    {dict.achievements.unlocked}
                   </span>
                 )}
               </div>

@@ -18,7 +18,7 @@ export default async function PeoplePage({ searchParams }: { searchParams?: Prom
         db.lendingRecord.count({ where: { personId: p.id, returnedAt: { not: null } } }),
       ]);
       return { ...p, out, returned, trust: returned - out };
-    })
+    }),
   );
 
   const selectedPerson = selectedId ? personsWithStats.find((p) => p.id === selectedId) : null;
@@ -34,10 +34,17 @@ export default async function PeoplePage({ searchParams }: { searchParams?: Prom
     <div className="space-y-6">
       <div>
         <h1 className="text-xl font-medium text-foreground">{dict.people.title}</h1>
-        <p className="text-xs text-muted-foreground">{dict.people.count}: {personsWithStats.length}</p>
+        <p className="text-xs text-muted-foreground">
+          {dict.people.count}: {personsWithStats.length}
+        </p>
       </div>
       <div className="rounded-xl border border-border bg-card p-4">
-        <PersonForm placeholder={dict.people.namePlaceholder} addLabel={dict.people.add} removeLabel={dict.people.remove} selectedId={selectedPerson?.id} />
+        <PersonForm
+          placeholder={dict.people.namePlaceholder}
+          addLabel={dict.people.add}
+          removeLabel={dict.people.remove}
+          selectedId={selectedPerson?.id}
+        />
       </div>
       {personsWithStats.length === 0 ? (
         <p className="py-8 text-center text-sm text-muted-foreground">{dict.people.empty}</p>
@@ -50,7 +57,10 @@ export default async function PeoplePage({ searchParams }: { searchParams?: Prom
             <span className="text-[11px] text-center text-muted-foreground">{dict.people.out}</span>
           </div>
           {personsWithStats.map((p) => (
-            <div key={p.id} className={`grid grid-cols-[1fr_5rem_5rem_5rem] items-center gap-4 border-b border-border last:border-b-0 px-4 py-2.5 transition-colors ${p.id === selectedId ? "bg-primary/5" : ""}`}>
+            <div
+              key={p.id}
+              className={`grid grid-cols-[1fr_5rem_5rem_5rem] items-center gap-4 border-b border-border last:border-b-0 px-4 py-2.5 transition-colors ${p.id === selectedId ? "bg-primary/5" : ""}`}
+            >
               <Link href={`/people?person=${p.id}`} className="text-sm font-medium text-primary hover:underline">
                 {p.name}
               </Link>
@@ -64,22 +74,29 @@ export default async function PeoplePage({ searchParams }: { searchParams?: Prom
       {selectedPerson && (
         <div className="rounded-xl border border-border bg-card overflow-hidden">
           <div className="border-b border-border bg-muted/50 px-4 py-2">
-            <p className="text-[11px] text-muted-foreground">{dict.people.historyFor} {selectedPerson.name}</p>
+            <p className="text-[11px] text-muted-foreground">
+              {dict.people.historyFor} {selectedPerson.name}
+            </p>
           </div>
           {history.length === 0 ? (
             <p className="px-4 py-4 text-sm text-muted-foreground">{dict.people.historyEmpty}</p>
           ) : (
             <div>
               <div className="grid grid-cols-[1fr_8rem_8rem] gap-4 border-b border-border bg-muted/30 px-4 py-2">
-                <span className="text-[11px] text-muted-foreground">Book</span>
-                <span className="text-[11px] text-muted-foreground">Lent</span>
-                <span className="text-[11px] text-muted-foreground">Returned</span>
+                <span className="text-[11px] text-muted-foreground">{dict.people.book}</span>
+                <span className="text-[11px] text-muted-foreground">{dict.people.lent}</span>
+                <span className="text-[11px] text-muted-foreground">{dict.people.returnedHeader}</span>
               </div>
               {history.map((r) => (
-                <div key={r.id} className="grid grid-cols-[1fr_8rem_8rem] gap-4 border-b border-border last:border-b-0 px-4 py-2">
+                <div
+                  key={r.id}
+                  className="grid grid-cols-[1fr_8rem_8rem] gap-4 border-b border-border last:border-b-0 px-4 py-2"
+                >
                   <span className="text-sm text-foreground">{r.bookTitle ?? r.book?.title ?? r.bookId}</span>
                   <span className="text-sm text-muted-foreground">{new Date(r.lentAt).toLocaleDateString()}</span>
-                  <span className="text-sm text-muted-foreground">{r.returnedAt ? new Date(r.returnedAt).toLocaleDateString() : "—"}</span>
+                  <span className="text-sm text-muted-foreground">
+                    {r.returnedAt ? new Date(r.returnedAt).toLocaleDateString() : "—"}
+                  </span>
                 </div>
               ))}
             </div>

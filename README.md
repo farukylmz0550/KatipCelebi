@@ -158,7 +158,7 @@ katipcelebi/
 │   │   └── theme.ts              # Cookie-based theme
 │   ├── i18n/                     # Dictionaries (en, tr, es, fr, ru, zh)
 │   ├── auth.ts                   # NextAuth config
-│   ├── proxy.ts                  # Middleware (auth + rate limiting)
+│   ├── proxy.ts                  # Proxy (auth + rate limiting)
 │   └── types/                    # TypeScript declarations
 ├── prisma/
 │   ├── schema.prisma             # Data model
@@ -223,6 +223,8 @@ Every action that modifies data also runs `awardXp()` + `syncAchievements()`.
 | `NEXTAUTH_SECRET` | Yes | — | Secret for JWT signing |
 | `NEXTAUTH_URL` | No | `http://localhost:3000` | Application URL |
 | `APP_PORT` | No | `3000` | Port (used by Docker) |
+| `RESET_SECRET` | No | — | Secret for `/api/test/reset` endpoint |
+| `ALLOW_REGISTRATION` | No | `true` | Set to `false` to disable public registration |
 
 ---
 

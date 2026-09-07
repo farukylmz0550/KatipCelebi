@@ -13,7 +13,7 @@ function subscribePermission(callback: () => void) {
   return () => document.removeEventListener("visibilitychange", callback);
 }
 
-export function NotificationPerm() {
+export function NotificationPerm({ dict }: { dict: Record<string, string> }) {
   const permission = useSyncExternalStore(subscribePermission, getPermission, () => "default" as const);
 
   async function request() {
@@ -31,7 +31,7 @@ export function NotificationPerm() {
       onClick={request}
       className="rounded-lg border border-border bg-secondary px-3 py-1.5 text-[13px] text-secondary-foreground transition-colors hover:bg-accent"
     >
-      Enable notifications
+      {dict.enableNotifications}
     </button>
   );
 }

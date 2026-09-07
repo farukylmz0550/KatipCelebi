@@ -33,7 +33,7 @@ export default async function LendingPage() {
           {active.length > 0 && (
             <div className="rounded-xl border border-border bg-card overflow-hidden">
               <div className="border-b border-border bg-muted/50 px-4 py-2">
-                <p className="text-[11px] text-muted-foreground">Active Loans</p>
+                <p className="text-[11px] text-muted-foreground">{dict.lending.activeLoans}</p>
               </div>
               {active.map((record) => (
                 <LendingRow key={record.id} record={record} dict={dict.lending} />
@@ -43,7 +43,7 @@ export default async function LendingPage() {
           {returned.length > 0 && (
             <div className="rounded-xl border border-border bg-card overflow-hidden">
               <div className="border-b border-border bg-muted/50 px-4 py-2">
-                <p className="text-[11px] text-muted-foreground">Returned</p>
+                <p className="text-[11px] text-muted-foreground">{dict.lending.returnedSection}</p>
               </div>
               {returned.map((record) => (
                 <LendingRow key={record.id} record={record} dict={dict.lending} />

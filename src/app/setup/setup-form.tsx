@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createAdminUser } from "@/app/actions/setup";
 
-export default function SetupForm() {
+export default function SetupForm({ dict }: { dict: Record<string, string> }) {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
@@ -32,19 +32,19 @@ export default function SetupForm() {
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <h1 className="mb-2 text-center text-xl font-medium text-foreground">KatipCelebi</h1>
-        <p className="mb-8 text-center text-[13px] text-muted-foreground">Create the admin account to get started.</p>
+        <p className="mb-8 text-center text-[13px] text-muted-foreground">{dict.setupTitle}</p>
         <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-border bg-card p-6">
           <div>
-            <label className="mb-1 block text-[13px] text-muted-foreground">Admin name</label>
+            <label className="mb-1 block text-[13px] text-muted-foreground">{dict.adminName}</label>
             <input
               name="name"
-              placeholder="Your name"
+              placeholder={dict.name}
               required
               className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             />
           </div>
           <div>
-            <label className="mb-1 block text-[13px] text-muted-foreground">Admin email</label>
+            <label className="mb-1 block text-[13px] text-muted-foreground">{dict.adminEmail}</label>
             <input
               name="email"
               type="email"
@@ -54,11 +54,11 @@ export default function SetupForm() {
             />
           </div>
           <div>
-            <label className="mb-1 block text-[13px] text-muted-foreground">Admin password</label>
+            <label className="mb-1 block text-[13px] text-muted-foreground">{dict.adminPassword}</label>
             <input
               name="password"
               type="password"
-              placeholder="Min 8 characters"
+              placeholder={dict.minChars}
               required
               minLength={8}
               className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
@@ -70,7 +70,7 @@ export default function SetupForm() {
             disabled={pending}
             className="w-full rounded-lg bg-primary py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-40"
           >
-            {pending ? "Setting up..." : "Create admin account"}
+            {pending ? dict.settingUp : dict.createAdminAccount}
           </button>
         </form>
       </div>

@@ -5,7 +5,13 @@ import { createLending } from "@/app/actions/lending";
 
 type Book = { id: string; title: string };
 
-export function LendingForm({ books, dict }: { books: Book[]; dict: { book: string; borrower: string; lendCta: string } }) {
+export function LendingForm({
+  books,
+  dict,
+}: {
+  books: Book[];
+  dict: { book: string; borrower: string; lendCta: string };
+}) {
   const [bookId, setBookId] = useState(books[0]?.id ?? "");
   const [borrowerName, setBorrowerName] = useState("");
   const [pending, startTransition] = useTransition();
@@ -39,7 +45,7 @@ export function LendingForm({ books, dict }: { books: Book[]; dict: { book: stri
         <input
           value={borrowerName}
           onChange={(e) => setBorrowerName(e.target.value)}
-          placeholder="Name"
+          placeholder={dict.namePlaceholder}
           className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         />
       </div>

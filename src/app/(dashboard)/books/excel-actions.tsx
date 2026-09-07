@@ -16,7 +16,7 @@ function downloadBase64(base64: string, filename: string) {
   URL.revokeObjectURL(url);
 }
 
-export function ExcelActions() {
+export function ExcelActions({ dict }: { dict: Record<string, string> }) {
   const [pending, startTransition] = useTransition();
   const [msg, setMsg] = useState<string | null>(null);
 
@@ -36,7 +36,7 @@ export function ExcelActions() {
     const file = e.target.files?.[0];
     if (!file) return;
     if (file.size > 20 * 1024 * 1024) {
-      setMsg("File too large (20MB limit)");
+      setMsg(dict.fileTooLarge);
       return;
     }
     const reader = new FileReader();
@@ -44,7 +44,7 @@ export function ExcelActions() {
       const base64 = (reader.result as string).split(",")[1];
       startTransition(async () => {
         const res = await importExcelFile(base64);
-        setMsg(res.error ?? `Imported ${res.imported} books`);
+        setMsg(res.error ?? `${dict.imported} ${res.imported} books`);
       });
     };
     reader.readAsDataURL(file);
@@ -54,16 +54,16 @@ export function ExcelActions() {
     <div className="flex flex-wrap items-center gap-2">
       <Button variant="outline" size="sm" onClick={onTemplate} disabled={pending}>
         <FileSpreadsheet size={14} />
-        Template
+        {dict.template}
       </Button>
       <Button variant="outline" size="sm" onClick={onExport} disabled={pending}>
         <FileDown size={14} />
-        Export
+        {dict.export}
       </Button>
       <Button variant="outline" size="sm" asChild>
         <label className="cursor-pointer">
           <FileUp size={14} />
-          Import Excel
+          {dict.importExcel}
           <input type="file" accept=".xlsx,.xls" onChange={onFile} className="hidden" />
         </label>
       </Button>
