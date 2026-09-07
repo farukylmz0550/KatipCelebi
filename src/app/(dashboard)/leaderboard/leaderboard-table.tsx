@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { levelForXp } from "@/lib/gamification";
+import { levelForXp } from "@/lib/gamification-pure";
 
 type User = { id: string; name: string; xp: number };
 

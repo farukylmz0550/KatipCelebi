@@ -10,7 +10,7 @@ export function LendingForm({
   dict,
 }: {
   books: Book[];
-  dict: { book: string; borrower: string; lendCta: string };
+  dict: { book: string; borrower: string; lendCta: string; namePlaceholder: string };
 }) {
   const [bookId, setBookId] = useState(books[0]?.id ?? "");
   const [borrowerName, setBorrowerName] = useState("");

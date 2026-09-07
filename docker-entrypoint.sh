@@ -2,7 +2,7 @@
 set -e
 
 echo "Running database migrations..."
-npx prisma migrate deploy
+DATABASE_URL="${DATABASE_URL:-file:./prisma/dev.db}" npx prisma migrate deploy
 
 echo "Checking if seed is needed..."
 SEED_NEEDED=$(node -e "
@@ -17,7 +17,7 @@ db.close();
 
 if [ "$SEED_NEEDED" = "yes" ]; then
   echo "Seeding achievements..."
-  npm run db:seed
+  node prisma/seed.cjs
 else
   echo "Achievements already seeded, skipping."
 fi

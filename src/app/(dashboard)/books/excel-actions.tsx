@@ -60,13 +60,11 @@ export function ExcelActions({ dict }: { dict: Record<string, string> }) {
         <FileDown size={14} />
         {dict.export}
       </Button>
-      <Button variant="outline" size="sm" asChild>
-        <label className="cursor-pointer">
-          <FileUp size={14} />
-          {dict.importExcel}
-          <input type="file" accept=".xlsx,.xls" onChange={onFile} className="hidden" />
-        </label>
-      </Button>
+      <label className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer">
+        <FileUp size={14} />
+        {dict.importExcel}
+        <input type="file" accept=".xlsx,.xls" onChange={onFile} className="hidden" />
+      </label>
       {msg && <span className="text-sm text-muted-foreground">{msg}</span>}
     </div>
   );

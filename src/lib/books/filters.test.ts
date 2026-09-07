@@ -31,7 +31,7 @@ describe("allows", () => {
 
   it("filters by signed", () => {
     expect(allows(book, false, { ...f, signed: "yes" })).toBe(false);
-    expect({ ...book, signed: true }, false, { ...f, signed: "yes" });
+    expect(allows({ ...book, signed: true }, false, { ...f, signed: "yes" })).toBe(true);
   });
 
   it("filters by status", () => {

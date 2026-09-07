@@ -24,9 +24,6 @@ export const viewport: Viewport = {
     { media: "(prefers-color-scheme: light)", color: "#3584e4" },
     { media: "(prefers-color-scheme: dark)", color: "#3584e4" },
   ],
-  appleMobileWebAppCapable: "yes",
-  appleMobileWebAppStatusBarStyle: "default",
-  appleMobileWebAppTitle: "KatipCelebi",
 };
 
 export const metadata: Metadata = {
