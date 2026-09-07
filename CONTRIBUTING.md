@@ -186,6 +186,8 @@ docs/contributing-guide
 
 ### Workflow
 
+**Commit and push after every logical step is completed.** A "step" means a single responsibility is fulfilled (e.g., a module, a fix, an e2e spec, a config change).
+
 1. Create branch from `main`
 2. Make changes
 3. Run checks before every commit:
@@ -194,7 +196,8 @@ docs/contributing-guide
    ```
 4. Commit with conventional message
 5. Push: `git push origin main`
-6. Create release (if applicable)
+6. Repeat for each logical step
+7. Create release (if applicable)
 
 ---
 
