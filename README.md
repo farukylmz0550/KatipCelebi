@@ -3,7 +3,7 @@
 > Self-hosted personal library manager with gamification.
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.2.0-green.svg)](https://github.com/farukylmz0550/KatipCelebi/releases)
+[![Version](https://img.shields.io/badge/version-2.2.1-green.svg)](https://github.com/farukylmz0550/KatipCelebi/releases)
 [![Docker](https://img.shields.io/badge/docker-ghcr.io%2Ffarukylmz0550%2Fkatipcelebi-blue?logo=docker)](https://ghcr.io/farukylmz0550/katipcelebi)
 
 Track your books, lending history, reading goals, and stats — with a Duolingo-style gamification layer (XP, levels, achievements, leaderboard).
