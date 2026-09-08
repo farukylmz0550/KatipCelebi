@@ -9,10 +9,10 @@ const MONTHS = ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl",
 
 function getIntensityClass(count: number): string {
   if (count === 0) return "bg-muted/50";
-  if (count === 1) return "bg-green-200 dark:bg-green-900";
-  if (count === 2) return "bg-green-300 dark:bg-green-800";
-  if (count <= 4) return "bg-green-400 dark:bg-green-700";
-  return "bg-green-500 dark:bg-green-600";
+  if (count === 1) return "bg-green-300/60 dark:bg-green-900/60";
+  if (count === 2) return "bg-green-400/70 dark:bg-green-800/70";
+  if (count <= 4) return "bg-green-500/80 dark:bg-green-700/80";
+  return "bg-green-600 dark:bg-green-600";
 }
 
 function formatDate(date: Date): string {
@@ -24,13 +24,11 @@ function buildGrid(activities: { date: string; count: number }[]) {
 
   const today = new Date();
   const endDate = new Date(today);
-  endDate.setDate(endDate.getDate() + (6 - endDate.getDay())); // End of current week (Sunday)
+  endDate.setDate(endDate.getDate() + (6 - endDate.getDay()));
 
-  // Go back 52 weeks + current partial week
   const startDate = new Date(endDate);
   startDate.setDate(startDate.getDate() - 52 * 7);
 
-  // Adjust to start on Monday
   const dayOfWeek = startDate.getDay();
   const daysToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
   startDate.setDate(startDate.getDate() - daysToMonday);
@@ -78,7 +76,7 @@ export function ActivityHeatmap({ activities }: ActivityHeatmapProps) {
   const totalActivities = activities.reduce((sum, a) => sum + a.count, 0);
 
   return (
-    <div className="rounded-xl border border-border bg-card p-4">
+    <div className="gnome-card p-4">
       <div className="mb-3 flex items-center justify-between">
         <p className="text-[13px] font-medium text-foreground">
           Yıllık Aktivite
@@ -88,7 +86,6 @@ export function ActivityHeatmap({ activities }: ActivityHeatmapProps) {
         </p>
       </div>
 
-      {/* Month labels */}
       <div className="mb-1 flex pl-8">
         {monthLabels.map((label, i) => (
           <div
@@ -105,9 +102,7 @@ export function ActivityHeatmap({ activities }: ActivityHeatmapProps) {
         ))}
       </div>
 
-      {/* Grid */}
       <div className="flex gap-0.5">
-        {/* Day labels */}
         <div className="flex flex-col gap-0.5 pr-1">
           {WEEK_DAYS.map((day, i) => (
             <div key={i} className="h-[10px] w-6 text-[9px] leading-[10px] text-muted-foreground">
@@ -116,7 +111,6 @@ export function ActivityHeatmap({ activities }: ActivityHeatmapProps) {
           ))}
         </div>
 
-        {/* Weeks */}
         <div className="flex gap-0.5">
           {weeks.map((week, wi) => (
             <div key={wi} className="flex flex-col gap-0.5">
@@ -132,7 +126,6 @@ export function ActivityHeatmap({ activities }: ActivityHeatmapProps) {
         </div>
       </div>
 
-      {/* Legend */}
       <div className="mt-2 flex items-center justify-end gap-1">
         <span className="text-[9px] text-muted-foreground">Az</span>
         {[0, 1, 2, 3, 5].map((n) => (

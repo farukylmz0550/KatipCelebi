@@ -56,11 +56,15 @@ export function BooksGrid({
         {shown === total ? `${total} ${dict.booksCount ?? "books"}` : `${shown} ${dict.ofTotal ?? "of"} ${total}`}
       </p>
       {filtered.length === 0 ? (
-        <p className="py-12 text-center text-sm text-muted-foreground">
-          {total === 0 ? dict.empty : (dict.noResults ?? "No results — try clearing filters")}
-        </p>
+        <div className="flex flex-col items-center py-16">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/icon-192.png" alt="" className="mb-4 h-16 w-16 rounded-2xl opacity-40" />
+          <p className="text-sm text-muted-foreground">
+            {total === 0 ? dict.empty : (dict.noResults ?? "No results — try clearing filters")}
+          </p>
+        </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 md:grid-cols-4">
           {filtered.map((book) => (
             <BookCard
               key={book.id}

@@ -34,14 +34,14 @@ export function BottomNav({ dict }: BottomNavProps) {
             <Link
               key={tab.href}
               href={tab.href}
-              className={`flex flex-col items-center gap-0.5 rounded-md px-3 py-1 text-[10px] transition-colors ${
+              title={dict[tab.key]}
+              className={`flex h-10 w-10 items-center justify-center rounded-xl transition-colors ${
                 isActive
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-foreground"
+                  ? "bg-primary/12 text-primary"
+                  : "text-muted-foreground"
               }`}
             >
-              <Icon size={20} strokeWidth={isActive ? 2.5 : 1.5} />
-              <span className="font-medium">{dict[tab.key]}</span>
+              <Icon size={22} strokeWidth={isActive ? 2 : 1.5} />
             </Link>
           );
         })}

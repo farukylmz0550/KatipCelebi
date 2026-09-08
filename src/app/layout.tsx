@@ -1,18 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { getTheme } from "@/lib/theme";
 import { getLocale } from "@/i18n/get-dictionary";
 import { SWRegister } from "./sw-register";
 import "./globals.css";
 
-const geistSans = Geist({
+const inter = Inter({
   variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
@@ -64,16 +59,12 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable} ${
+      className={`${inter.variable} ${
         theme === "dark"
           ? "dark"
-          : theme === "light-contrast"
-            ? "light-contrast"
-            : theme === "dark-contrast"
-              ? "dark-contrast"
-              : theme === "amoled"
-                ? "amoled"
-                : ""
+          : theme === "high-contrast"
+            ? "high-contrast"
+            : ""
       } h-full antialiased`}
     >
       <head>

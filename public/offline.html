@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>KatipCelebi — Offline</title>
+  <title>KatipCelebi — Çevrimdışı</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      background: #000;
-      color: #e5e5e5;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #f6f5f4;
+      color: #241f31;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -18,46 +19,63 @@
       padding-top: env(safe-area-inset-top);
       padding-bottom: env(safe-area-inset-bottom);
     }
+    @media (prefers-color-scheme: dark) {
+      body { background: #241f31; color: #ffffff; }
+      .card { background: #3d3846; border-color: #5e5c64; }
+      .btn { background: #62a0ea; color: #241f31; }
+    }
     .container {
       text-align: center;
       max-width: 320px;
     }
-    .icon {
-      font-size: 4rem;
-      margin-bottom: 1rem;
+    .logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      margin-bottom: 1.25rem;
+      image-rendering: -webkit-optimize-contrast;
     }
     h1 {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       font-weight: 600;
       margin-bottom: 0.5rem;
     }
     p {
-      font-size: 0.875rem;
-      color: #a3a3a3;
+      font-size: 0.8125rem;
+      color: #77767b;
       line-height: 1.5;
     }
-    .retry {
+    .card {
+      background: #ffffff;
+      border: 1px solid #deddda;
+      border-radius: 1rem;
+      padding: 2rem;
+    }
+    .btn {
       margin-top: 1.5rem;
       display: inline-block;
       padding: 0.625rem 1.5rem;
       background: #3584e4;
       color: white;
       border: none;
-      border-radius: 0.5rem;
-      font-size: 0.875rem;
+      border-radius: 0.75rem;
+      font-family: inherit;
+      font-size: 0.8125rem;
       font-weight: 500;
       cursor: pointer;
       transition: opacity 0.2s;
     }
-    .retry:hover { opacity: 0.9; }
+    .btn:hover { opacity: 0.9; }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="icon">📚</div>
-    <h1>İnternet Bağlantısı Yok</h1>
-    <p>Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.</p>
-    <button class="retry" onclick="window.location.reload()">Tekrar Dene</button>
+    <div class="card">
+      <img src="/icon-192.png" alt="KatipCelebi" class="logo" />
+      <h1>İnternet Bağlantısı Yok</h1>
+      <p>Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.</p>
+      <button class="btn" onclick="window.location.reload()">Tekrar Dene</button>
+    </div>
   </div>
 </body>
 </html>

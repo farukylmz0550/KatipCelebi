@@ -24,52 +24,21 @@ export default async function DashboardLayout({ children }: { children: React.Re
     isAdmin = !!u?.isAdmin;
   }
 
-  const links = [
-    { href: "/books", label: dict.nav.books },
-    { href: "/people", label: dict.nav.people },
-    { href: "/lending", label: dict.nav.lending },
-    { href: "/stats", label: dict.nav.stats },
-    { href: "/achievements", label: dict.nav.achievements },
-    { href: "/leaderboard", label: dict.nav.leaderboard },
-  ];
-
   return (
     <div className="min-h-full">
-      <header className="sticky top-0 z-50 border-b border-border bg-card safe-top">
-        <div className="mx-auto flex h-12 max-w-3xl items-center px-4">
-          <Link href="/books" className="mr-6 text-sm font-semibold text-foreground">
-            KatipCelebi
+      {/* GNOME Header Bar */}
+      <header className="sticky top-0 z-50 gnome-header safe-top">
+        <div className="mx-auto flex h-12 max-w-3xl items-center px-3">
+          {/* Left: Logo + Title */}
+          <Link href="/books" className="flex items-center gap-2">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/icon-192.png" alt="" className="h-6 w-6 rounded-md" />
+            <span className="text-[13px] font-semibold text-foreground">KatipCelebi</span>
           </Link>
-          <nav className="hidden items-center gap-1 md:flex">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="rounded-md px-2.5 py-1 text-[13px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-              >
-                {link.label}
-              </Link>
-            ))}
-            {isAdmin && (
-              <>
-                <Link
-                  href="/admin/users"
-                  className="rounded-md px-2.5 py-1 text-[13px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-                >
-                  {dict.common.admin}
-                </Link>
-                <Link
-                  href="/admin/covers"
-                  className="rounded-md px-2.5 py-1 text-[13px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-                >
-                  Covers
-                </Link>
-              </>
-            )}
-          </nav>
-          <div className="ml-auto flex items-center gap-1">
+
+          {/* Right: Actions */}
+          <div className="ml-auto flex items-center gap-0.5">
             <NotificationPerm dict={dict.common} />
-            <span className="mr-1 text-xs text-muted-foreground">{session?.user?.name}</span>
             <ThemeDropdown currentTheme={theme} />
             <form
               action={async () => {
@@ -81,7 +50,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
             >
               <button
                 type="submit"
-                className="rounded-md px-1.5 py-1 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                className="flex h-8 w-8 items-center justify-center rounded-lg text-[11px] font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
                 title={locale}
               >
                 {locale.toUpperCase()}
@@ -95,16 +64,37 @@ export default async function DashboardLayout({ children }: { children: React.Re
             >
               <button
                 type="submit"
-                className="rounded-md px-1.5 py-1 text-[11px] text-muted-foreground transition-colors hover:bg-accent hover:text-destructive"
+                className="flex h-8 w-8 items-center justify-center rounded-lg text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-destructive"
+                title={dict.nav.logout}
               >
-                {dict.nav.logout}
+                ⏻
               </button>
             </form>
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-3xl px-4 py-6 pb-20 md:pb-6">{children}</main>
-      <footer className="border-t border-border py-4 text-center safe-bottom">
+
+      {/* Desktop Navigation */}
+      <nav className="hidden border-b border-border bg-card md:block">
+        <div className="mx-auto flex max-w-3xl items-center gap-0.5 px-3 py-1">
+          <NavLink href="/books">{dict.nav.books}</NavLink>
+          <NavLink href="/lending">{dict.nav.lending}</NavLink>
+          <NavLink href="/stats">{dict.nav.stats}</NavLink>
+          <NavLink href="/achievements">{dict.nav.achievements}</NavLink>
+          <NavLink href="/leaderboard">{dict.nav.leaderboard}</NavLink>
+          {isAdmin && (
+            <>
+              <NavLink href="/admin/users">{dict.common.admin}</NavLink>
+              <NavLink href="/admin/covers">Covers</NavLink>
+            </>
+          )}
+          <div className="ml-auto text-xs text-muted-foreground">{session?.user?.name}</div>
+        </div>
+      </nav>
+
+      <main className="mx-auto max-w-3xl px-4 py-6 pb-24 md:pb-6">{children}</main>
+
+      <footer className="border-t border-border py-3 text-center safe-bottom">
         <Link
           href="/licenses"
           className="text-xs text-muted-foreground transition-colors hover:text-foreground"
@@ -112,8 +102,20 @@ export default async function DashboardLayout({ children }: { children: React.Re
           {dict.licenses.nav}
         </Link>
       </footer>
+
       <BottomNav dict={{ books: dict.nav.books, lending: dict.nav.lending, stats: dict.nav.stats, more: dict.nav.more }} />
       <InstallPrompt />
     </div>
+  );
+}
+
+function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className="rounded-lg px-3 py-1.5 text-[13px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+    >
+      {children}
+    </Link>
   );
 }

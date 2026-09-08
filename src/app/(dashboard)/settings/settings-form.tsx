@@ -11,12 +11,10 @@ interface SettingsFormProps {
   currentTheme: Theme;
 }
 
-const THEMES: { value: Theme; label: string }[] = [
-  { value: "light", label: "☀️ Light" },
-  { value: "dark", label: "🌙 Dark" },
-  { value: "light-contrast", label: "🔲 Light Contrast" },
-  { value: "dark-contrast", label: "🔳 Dark Contrast" },
-  { value: "amoled", label: "⬛ AMOLED" },
+const THEMES: { value: Theme; label: string; icon: string }[] = [
+  { value: "light", label: "Light", icon: "☀️" },
+  { value: "dark", label: "Dark", icon: "🌙" },
+  { value: "high-contrast", label: "High Contrast", icon: "◐" },
 ];
 
 export function SettingsForm({ settings, currentTheme }: SettingsFormProps) {
@@ -37,9 +35,11 @@ export function SettingsForm({ settings, currentTheme }: SettingsFormProps) {
   return (
     <div className="space-y-6">
       {/* Notifications */}
-      <section className="space-y-3">
-        <h2 className="text-sm font-medium text-muted-foreground">Bildirimler</h2>
-        <div className="space-y-2">
+      <section>
+        <h2 className="mb-2 px-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          Bildirimler
+        </h2>
+        <div className="gnome-boxed-list">
           <ToggleRow
             label="Bildirimleri etkinleştir"
             checked={settings.notificationsEnabled}
@@ -62,21 +62,26 @@ export function SettingsForm({ settings, currentTheme }: SettingsFormProps) {
       </section>
 
       {/* Theme */}
-      <section className="space-y-3">
-        <h2 className="text-sm font-medium text-muted-foreground">Tema</h2>
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+      <section>
+        <h2 className="mb-2 px-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          Tema
+        </h2>
+        <div className="gnome-boxed-list">
           {THEMES.map((t) => (
             <button
               key={t.value}
+              type="button"
               onClick={() => handleThemeChange(t.value)}
               disabled={isPending}
-              className={`rounded-lg border px-4 py-3 text-left text-sm transition-colors ${
-                currentTheme === t.value
-                  ? "border-primary bg-primary/10 text-primary"
-                  : "border-border bg-card text-foreground hover:bg-accent"
-              }`}
+              className="gnome-boxed-list-item w-full text-left disabled:opacity-50"
             >
-              {t.label}
+              <div className="flex items-center gap-3">
+                <span className="text-base">{t.icon}</span>
+                <span className="text-sm text-foreground">{t.label}</span>
+              </div>
+              {currentTheme === t.value && (
+                <div className="h-2.5 w-2.5 rounded-full bg-primary" />
+              )}
             </button>
           ))}
         </div>
@@ -101,11 +106,11 @@ function ToggleRow({
       type="button"
       onClick={onChange}
       disabled={disabled}
-      className="flex w-full items-center justify-between rounded-lg border border-border bg-card px-4 py-3 text-sm transition-colors hover:bg-accent disabled:opacity-50"
+      className="gnome-boxed-list-item w-full text-left disabled:opacity-50"
     >
-      <span>{label}</span>
+      <span className="text-sm text-foreground">{label}</span>
       <div
-        className={`relative h-5 w-9 rounded-full transition-colors ${
+        className={`relative h-5 w-9 shrink-0 rounded-full transition-colors ${
           checked ? "bg-primary" : "bg-muted"
         }`}
       >

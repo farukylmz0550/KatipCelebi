@@ -31,6 +31,12 @@ function getPrevStatus(current: string): string {
   return STATUS_ORDER[(idx - 1 + STATUS_ORDER.length) % STATUS_ORDER.length];
 }
 
+const STATUS_LABELS: Record<string, string> = {
+  TO_READ: "Okunacak",
+  READING: "Okunuyor",
+  FINISHED: "Tamamlandı",
+};
+
 export function BookCard({ book, lentOut, dict }: { book: Book; lentOut: boolean; dict?: Record<string, string> }) {
   const rating = book.rating ?? 0;
   const status = book.status ?? "TO_READ";
@@ -59,13 +65,19 @@ export function BookCard({ book, lentOut, dict }: { book: Book; lentOut: boolean
 
   return (
     <Link href={`/books/${book.id}`} className="group block" {...swipeHandlers}>
-      <div className="relative mb-2 aspect-[3/4] overflow-hidden rounded-xl bg-muted transition-shadow group-hover:shadow-md">
+      <div className="relative mb-2.5 aspect-[3/4] overflow-hidden rounded-xl bg-muted transition-all group-hover:shadow-md">
         {book.coverUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={book.coverUrl} alt={book.title} className="h-full w-full object-cover" />
         ) : (
-          <div className="flex h-full items-center justify-center">
-            <span className="text-3xl opacity-20">📖</span>
+          <div className="flex h-full items-center justify-center bg-secondary">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/icon-192.png" alt="" className="h-12 w-12 opacity-20" />
+          </div>
+        )}
+        {lentOut && (
+          <div className="absolute right-1.5 top-1.5 rounded-md bg-primary px-1.5 py-0.5 text-[9px] font-medium text-primary-foreground">
+            Ödünç
           </div>
         )}
       </div>
@@ -79,11 +91,10 @@ export function BookCard({ book, lentOut, dict }: { book: Book; lentOut: boolean
           </span>
         )}
         {book.status && (
-          <span className="rounded-full bg-secondary px-1.5 py-0.5 text-[10px] text-secondary-foreground">
-            {pending ? "..." : book.status}
+          <span className="rounded-md bg-secondary px-1.5 py-0.5 text-[10px] text-secondary-foreground">
+            {pending ? "..." : STATUS_LABELS[book.status] ?? book.status}
           </span>
         )}
-        {lentOut && <span className="text-[10px] text-muted-foreground">{dict?.onLoan ?? "on loan"}</span>}
       </div>
     </Link>
   );
