@@ -15,6 +15,9 @@ const ACHIEVEMENTS = [
   { key: "ten_finished", titleKey: "ten_finished_title", descriptionKey: "ten_finished_desc", iconKey: "ten_finished" },
   { key: "first_lending", titleKey: "first_lending_title", descriptionKey: "first_lending_desc", iconKey: "first_lending" },
   { key: "five_authors", titleKey: "five_authors_title", descriptionKey: "five_authors_desc", iconKey: "five_authors" },
+  { key: "week_streak", titleKey: "week_streak_title", descriptionKey: "week_streak_desc", iconKey: "week_streak" },
+  { key: "month_streak", titleKey: "month_streak_title", descriptionKey: "month_streak_desc", iconKey: "month_streak" },
+  { key: "streak_shield", titleKey: "streak_shield_title", descriptionKey: "streak_shield_desc", iconKey: "streak_shield" },
 ];
 
 const dbUrl = (process.env.DATABASE_URL || 'file:./prisma/dev.db').replace(/^file:/, '').replace(/^"|"$/g, '');
