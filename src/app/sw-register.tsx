@@ -23,6 +23,13 @@ export function SWRegister() {
             reg.active?.postMessage("schedule-notifications");
           }
         }, 12 * 60 * 60 * 1000);
+
+        // Check streak every hour
+        setInterval(() => {
+          if (Notification.permission === "granted") {
+            reg.active?.postMessage("check-streak");
+          }
+        }, 60 * 60 * 1000);
       });
     }
   }, []);

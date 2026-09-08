@@ -6,6 +6,7 @@ import { getDictionary } from "@/i18n/get-dictionary";
 import { BookFacts } from "./book-facts";
 import { BookPersonal } from "./book-personal";
 import { BookLending } from "./book-lending";
+import { ShareButton } from "@/components/share-button";
 
 export default async function BookDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -37,7 +38,10 @@ export default async function BookDetailPage({ params }: { params: Promise<{ id:
           )}
         </div>
         <div className="flex-1 space-y-4">
-          <h1 className="text-2xl font-semibold">{book.title}</h1>
+          <div className="flex items-start gap-2">
+            <h1 className="text-2xl font-semibold flex-1">{book.title}</h1>
+            <ShareButton title={book.title} author={book.author ?? undefined} />
+          </div>
           {book.author && <p className="text-neutral-600 dark:text-neutral-400">{book.author}</p>}
           {book.isbn && <p className="text-sm font-mono text-neutral-500">{book.isbn}</p>}
           <div className="flex gap-2 text-xs">

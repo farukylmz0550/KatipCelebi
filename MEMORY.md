@@ -217,4 +217,29 @@ GPLv3 lisansı altında her iki proje de devam eder.
 
 ---
 
+## 12. Mobil Uygulama İçin Yapılacaklar (PWA İyileştirmeleri)
+
+### Yüksek Öncelik
+- [ ] **Kamera ile ISBN barkod tarama** — `html5-qrcode` ile telefon kamerasından barkod okuma
+- [ ] **Safe area insets** — iPhone çentik/alt bar arkasında kalan içeriği düzelt (`env(safe-area-inset-*)`)
+- [ ] **viewport-fit=cover** — Edge-to-edge ekran desteği (layout.tsx viewport meta)
+- [ ] **Alt navigasyon barı** — Mobilde üst nav taşması yerine底部 tab bar (Books, Lending, Stats, More)
+
+### Orta Öncelik
+- [ ] **Offline precaching** — App shell'i (HTML/CSS/JS) SW install'ta önceden cache'le
+- [ ] **Offline fallback sayfası** — İnternet yokken boş sayfa yerine bilgilendirme sayfası
+- [ ] **Web Share API** — Kitap detayını WhatsApp/e-posta ile paylaş
+- [ ] **True push notification** — Sunucudan gerçek push (şu an sadece timer tabanlı)
+- [ ] **SW güncelleme bildirimi** — Yeni versiyon geldiğinde toast göster
+- [ ] **Özel kurulum butonu** — `BeforeInstallPrompt` API ile özel "Yükle" butonu
+
+### Düşük Öncelik
+- [ ] **Background sync** — Çevrimdışı form gönderimi, online olunca senkronize
+- [ ] **Manifest shortcuts** — Ana ekrandan hızlı erişim (kitap ekle, ödünçler)
+- [ ] **Manifest screenshots** — Zengin kurulum banner'ı için ekran görüntüleri
+- [ ] **Touch gesture'lar** — Swipe, long-press (kitap durumu değiştirme vb.)
+- [ ] **Haptic feedback** — Titreşim bildirimleri (Vibration API)
+
+---
+
 *Bu dosya AI asistanları için proje bağlamı sağlar. Düzenli olarak güncellenmelidir.*

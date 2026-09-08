@@ -11,10 +11,11 @@ const addBookSchema = z.object({
   isbn: z.string().max(20).optional(),
   title: z.string().min(1).max(500),
   author: z.string().max(500).optional(),
-  coverUrl: z.string().refine(
-    (val) => !val || /^https?:\/\/.+/.test(val),
-    "Cover URL must be a valid HTTP/HTTPS URL"
-  ).optional(),
+  coverUrl: z
+    .string()
+    .refine((val) => !val || /^https?:\/\/.+/.test(val), "Cover URL must be a valid HTTP/HTTPS URL")
+    .optional(),
+  numberOfPages: z.string().max(20).optional(),
 });
 
 const updateBookSchema = z.object({
@@ -37,6 +38,7 @@ const updateBookSchema = z.object({
   tags: z.string().max(1000).optional(),
   signed: z.boolean().optional(),
   copies: z.number().int().min(1).max(999).optional(),
+  currentPage: z.number().int().min(0).optional(),
 });
 
 export async function lookupIsbnAction(isbn: string) {
@@ -44,7 +46,13 @@ export async function lookupIsbnAction(isbn: string) {
   return lookupIsbn(isbn);
 }
 
-export async function addBook(input: { isbn?: string; title: string; author?: string; coverUrl?: string }) {
+export async function addBook(input: {
+  isbn?: string;
+  title: string;
+  author?: string;
+  coverUrl?: string;
+  numberOfPages?: string;
+}) {
   const parsed = addBookSchema.safeParse(input);
   if (!parsed.success) throw new Error(parsed.error.issues[0]?.message ?? "Invalid input");
 
@@ -56,6 +64,7 @@ export async function addBook(input: { isbn?: string; title: string; author?: st
       title: parsed.data.title,
       author: parsed.data.author,
       coverUrl: parsed.data.coverUrl,
+      numberOfPages: parsed.data.numberOfPages,
     },
   });
   await awardXp(userId, XP_REWARDS.BOOK_ADDED);
@@ -80,6 +89,7 @@ export async function importBooksByIsbn(rawIsbns: string) {
       title: b.title,
       author: b.author,
       coverUrl: b.coverUrl,
+      numberOfPages: b.numberOfPages,
     })),
   });
   await awardXp(userId, found.length * XP_REWARDS.BOOK_ADDED);
@@ -107,19 +117,40 @@ export async function setBookStatus(bookId: string, status: "TO_READ" | "READING
   await db.book.update({ where: { id: bookId }, data });
 
   if (status === "FINISHED" && book.status !== "FINISHED") {
-    await awardXp(userId, XP_REWARDS.BOOK_FINISHED);
-    await syncAchievements(userId);
+    const { finishBookWithXp } = await import("./streak");
+    const pages = book.numberOfPages ? parseInt(book.numberOfPages, 10) : null;
+    await finishBookWithXp(bookId, isNaN(pages!) ? null : pages);
   }
   revalidatePath("/books");
   revalidatePath("/stats");
   revalidatePath(`/books/${bookId}`);
 }
 
-export async function updateBook(bookId: string, data: Partial<{
-  title: string; subtitle: string; author: string; authors: string; publishers: string; publishDate: string; publishPlaces: string;
-  editionName: string; series: string; numberOfPages: string; languages: string; isbn10: string; isbn13: string;
-  subjects: string; rating: number; notes: string; tags: string; signed: boolean; copies: number;
-}>) {
+export async function updateBook(
+  bookId: string,
+  data: Partial<{
+    title: string;
+    subtitle: string;
+    author: string;
+    authors: string;
+    publishers: string;
+    publishDate: string;
+    publishPlaces: string;
+    editionName: string;
+    series: string;
+    numberOfPages: string;
+    languages: string;
+    isbn10: string;
+    isbn13: string;
+    subjects: string;
+    rating: number;
+    notes: string;
+    tags: string;
+    signed: boolean;
+    copies: number;
+    currentPage: number;
+  }>
+) {
   const parsed = updateBookSchema.partial().safeParse(data);
   if (!parsed.success) throw new Error(parsed.error.issues[0]?.message ?? "Invalid input");
 
@@ -129,10 +160,11 @@ export async function updateBook(bookId: string, data: Partial<{
   const update: Record<string, unknown> = {};
   for (const [k, v] of Object.entries(parsed.data)) {
     if (v === undefined) continue;
-    if (k === "rating") update.rating = Math.max(0, Math.min(5, Math.floor(Number(v)))) ;
+    if (k === "rating") update.rating = Math.max(0, Math.min(5, Math.floor(Number(v))));
     else if (k === "copies") update.copies = Math.max(1, Math.min(999, Math.floor(Number(v))));
     else if (k === "signed") update.signed = !!v;
     else if (k === "authors") update.author = typeof v === "string" ? v.trim() : v;
+    else if (k === "currentPage") update.currentPage = Math.max(0, Math.floor(Number(v)));
     else update[k] = typeof v === "string" ? v.trim() : v;
   }
   await db.book.update({ where: { id: bookId }, data: update });

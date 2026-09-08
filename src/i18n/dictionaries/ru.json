@@ -6,7 +6,16 @@
     "stats": "Статистика",
     "achievements": "Достижения",
     "leaderboard": "Рейтинг",
+    "more": "Ещё",
+    "settings": "Настройки",
     "logout": "Выйти"
+  },
+  "theme": {
+    "light": "Светлая",
+    "dark": "Тёмная",
+    "lightContrast": "Светлая Высокий Контраст",
+    "darkContrast": "Тёмная Высокий Контраст",
+    "amoled": "AMOLED"
   },
   "auth": {
     "login": "Вход",
@@ -82,7 +91,10 @@
     "back": "← Назад",
     "out": "на руках",
     "signedBadge": "Подписано",
-    "copies": "копий"
+    "copies": "копий",
+    "pages": "Страницы",
+    "scan": "Сканировать",
+    "currentPage": "Текущая Страница"
   },
   "facts": {
     "title": "Название *",
@@ -189,7 +201,10 @@
     "setGoal": "Сохранить",
     "progress": "Прогресс",
     "averageDays": "Ср. дней",
-    "totalFinished": "Всего завершено"
+    "totalFinished": "Всего завершено",
+    "streak": "Серия",
+    "longestStreak": "Самая Длинная Серия",
+    "todayActive": "Активен Сегодня"
   },
   "achievements": {
     "title": "Достижения",
@@ -203,6 +218,12 @@
     "first_lending_desc": "Дайте книгу взаймы.",
     "five_authors_title": "Начитанный",
     "five_authors_desc": "Прочитайте 5 авторов.",
+    "week_streak_title": "Недельный Воин",
+    "week_streak_desc": "Поддерживай серию чтения 7 дней",
+    "month_streak_title": "Месячный Мастер",
+    "month_streak_desc": "Поддерживай серию чтения 30 дней",
+    "century_streak_title": "Вековой Читатель",
+    "century_streak_desc": "Достигни серии чтения в 100 дней",
     "unlocked": "Открыто"
   },
   "leaderboard": {
@@ -259,5 +280,11 @@
     "adminLabel": "Админ",
     "actions": "Действия",
     "confirmDelete": "Вы уверены, что хотите удалить этого пользователя?"
+  },
+  "licenses": {
+    "title": "Лицензии и Атрибуции",
+    "description": "Этот проект использует следующие открытые технологии:",
+    "nav": "Лицензии",
+    "projectLicense": "KatipCelebi распространяется под лицензией GNU General Public License v3.0."
   }
 }

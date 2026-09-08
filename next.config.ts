@@ -3,6 +3,14 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "standalone",
   serverExternalPackages: ["better-sqlite3", "@prisma/adapter-better-sqlite3"],
+  async rewrites() {
+    return [
+      {
+        source: "/.well-known/assetlinks.json",
+        destination: "/api/.well-known/assetlinks",
+      },
+    ];
+  },
   headers: async () => [
     {
       source: "/(.*)",

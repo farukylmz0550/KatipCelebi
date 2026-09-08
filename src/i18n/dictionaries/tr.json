@@ -6,7 +6,16 @@
     "stats": "İstatistikler",
     "achievements": "Başarımlar",
     "leaderboard": "Liderlik Tablosu",
+    "more": "Daha Fazla",
+    "settings": "Ayarlar",
     "logout": "Çıkış yap"
+  },
+  "theme": {
+    "light": "Aydınlık",
+    "dark": "Karanlık",
+    "lightContrast": "Aydınlık Kontrast",
+    "darkContrast": "Karanlık Kontrast",
+    "amoled": "AMOLED"
   },
   "auth": {
     "login": "Giriş yap",
@@ -82,7 +91,10 @@
     "back": "← Geri",
     "out": "dışarıda",
     "signedBadge": "İmzalı",
-    "copies": "kopya"
+    "copies": "kopya",
+    "pages": "Sayfa",
+    "scan": "Tara",
+    "currentPage": "Mevcut Sayfa"
   },
   "facts": {
     "title": "Başlık *",
@@ -189,7 +201,10 @@
     "setGoal": "Kaydet",
     "progress": "İlerleme",
     "averageDays": "Bitirme ort. gün",
-    "totalFinished": "Toplam bitirilen"
+    "totalFinished": "Toplam bitirilen",
+    "streak": "Seri",
+    "longestStreak": "En Uzun Seri",
+    "todayActive": "Bugün Aktif"
   },
   "achievements": {
     "title": "Başarımlar",
@@ -203,6 +218,12 @@
     "first_lending_desc": "İlk kitabını birine ödünç ver.",
     "five_authors_title": "Geniş Ufuk",
     "five_authors_desc": "5 farklı yazardan kitap oku.",
+    "week_streak_title": "Haftalık Savaşçı",
+    "week_streak_desc": "7 günlük okuma serisi koru",
+    "month_streak_title": "Aylık Usta",
+    "month_streak_desc": "30 günlük okuma serisi koru",
+    "century_streak_title": "Yüzlük Okuyucu",
+    "century_streak_desc": "100 günlük okuma serisine ulaş",
     "unlocked": "Açıldı"
   },
   "leaderboard": {
@@ -259,5 +280,11 @@
     "adminLabel": "Admin",
     "actions": "İşlemler",
     "confirmDelete": "Bu kullanıcıyı silmek istediğinizden emin misiniz?"
+  },
+  "licenses": {
+    "title": "Lisanslar & Atıflar",
+    "description": "Bu proje aşağıdaki açık kaynak teknolojileri kullanmaktadır:",
+    "nav": "Lisanslar",
+    "projectLicense": "KatipCelebi, GNU Genel Kamu Lisansı v3.0 altında lisanslanmıştır."
   }
 }

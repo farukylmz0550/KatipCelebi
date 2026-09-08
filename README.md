@@ -55,7 +55,7 @@ services:
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
       NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
     ports:
-      - "${APP_PORT:-3000}:3000"
+      - "${APP_PORT:-1024}:3000"
     volumes:
       - app-data:/data
 volumes:
@@ -68,7 +68,7 @@ echo 'NEXTAUTH_SECRET=$(openssl rand -base64 32)' > .env
 # 3. Run
 docker compose up -d
 
-# 4. Open http://localhost:3000
+# 4. Open http://localhost:1024
 ```
 
 **Option B — Build from source:**

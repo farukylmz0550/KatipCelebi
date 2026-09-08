@@ -20,6 +20,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#3584e4" },
     { media: "(prefers-color-scheme: dark)", color: "#3584e4" },
@@ -63,7 +64,17 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable} ${theme === "dark" ? "dark" : ""} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${
+        theme === "dark"
+          ? "dark"
+          : theme === "light-contrast"
+            ? "light-contrast"
+            : theme === "dark-contrast"
+              ? "dark-contrast"
+              : theme === "amoled"
+                ? "amoled"
+                : ""
+      } h-full antialiased`}
     >
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />

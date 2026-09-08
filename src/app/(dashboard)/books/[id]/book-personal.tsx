@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { updateBook, setBookStatus } from "@/app/actions/books";
 import { show } from "@/lib/books/tags";
+import { hapticFeedback } from "@/lib/haptic";
 
 type Book = {
   id: string;
@@ -12,6 +13,8 @@ type Book = {
   tags?: string | null;
   notes?: string | null;
   status: string;
+  numberOfPages?: string | null;
+  currentPage?: number | null;
   startedAt?: Date | string | null;
   finishedAt?: Date | string | null;
 };
@@ -21,11 +24,13 @@ export function BookPersonal({ book, dict }: { book: Book; dict: Record<string, 
   const [signed, setSigned] = useState(!!book.signed);
   const [tags, setTags] = useState(book.tags ?? "");
   const [notes, setNotes] = useState(book.notes ?? "");
+  const [currentPage, setCurrentPage] = useState(book.currentPage?.toString() ?? "");
   const [pending, startTransition] = useTransition();
   const router = useRouter();
 
   function saveRating(next: number) {
     setRating(next);
+    hapticFeedback("light");
     startTransition(async () => {
       await updateBook(book.id, { rating: next });
       router.refresh();
@@ -54,7 +59,17 @@ export function BookPersonal({ book, dict }: { book: Book; dict: Record<string, 
     });
   }
 
+  function saveCurrentPage() {
+    const page = parseInt(currentPage, 10);
+    if (isNaN(page) || page < 0) return;
+    startTransition(async () => {
+      await updateBook(book.id, { currentPage: page });
+      router.refresh();
+    });
+  }
+
   function onStatusChange(status: "TO_READ" | "READING" | "FINISHED") {
+    if (status === "FINISHED") hapticFeedback("medium");
     startTransition(async () => {
       await setBookStatus(book.id, status);
       router.refresh();
@@ -116,6 +131,25 @@ export function BookPersonal({ book, dict }: { book: Book; dict: Record<string, 
           </span>
         )}
       </div>
+
+      {book.status === "READING" && (
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-neutral-600 dark:text-neutral-400">{dict.currentPage}</span>
+          <input
+            type="number"
+            min={0}
+            max={book.numberOfPages ? parseInt(book.numberOfPages) : undefined}
+            value={currentPage}
+            onChange={(e) => setCurrentPage(e.target.value)}
+            onBlur={saveCurrentPage}
+            placeholder="0"
+            className="w-20 rounded border border-neutral-300 px-2 py-1 text-sm dark:border-neutral-700 dark:bg-neutral-800"
+          />
+          {book.numberOfPages && (
+            <span className="text-xs text-neutral-500">/ {book.numberOfPages}</span>
+          )}
+        </div>
+      )}
 
       <div className="space-y-1">
         <label className="text-sm text-neutral-600 dark:text-neutral-400">{dict.tags}</label>

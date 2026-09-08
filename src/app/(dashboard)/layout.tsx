@@ -1,13 +1,14 @@
 import Link from "next/link";
-import { Moon, Sun } from "lucide-react";
 import { redirect } from "next/navigation";
 import { auth, signOut } from "@/auth";
 import { getDictionary, getLocale, LOCALES } from "@/i18n/get-dictionary";
 import { setLocale } from "@/app/actions/locale";
 import { getTheme } from "@/lib/theme";
-import { setTheme } from "@/app/actions/theme";
 import { needsSetup } from "@/lib/setup";
 import { NotificationPerm } from "./notification-perm";
+import { BottomNav } from "@/components/bottom-nav";
+import { ThemeDropdown } from "@/components/theme-dropdown";
+import { InstallPrompt } from "@/components/install-prompt";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   if (await needsSetup()) redirect("/setup");
@@ -34,12 +35,12 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   return (
     <div className="min-h-full">
-      <header className="sticky top-0 z-50 border-b border-border bg-card">
+      <header className="sticky top-0 z-50 border-b border-border bg-card safe-top">
         <div className="mx-auto flex h-12 max-w-3xl items-center px-4">
           <Link href="/books" className="mr-6 text-sm font-semibold text-foreground">
             KatipCelebi
           </Link>
-          <nav className="flex items-center gap-1">
+          <nav className="hidden items-center gap-1 md:flex">
             {links.map((link) => (
               <Link
                 key={link.href}
@@ -69,20 +70,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
           <div className="ml-auto flex items-center gap-1">
             <NotificationPerm dict={dict.common} />
             <span className="mr-1 text-xs text-muted-foreground">{session?.user?.name}</span>
-            <form
-              action={async () => {
-                "use server";
-                await setTheme(theme === "dark" ? "light" : "dark");
-              }}
-            >
-              <button
-                type="submit"
-                aria-label="Toggle theme"
-                className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-              >
-                {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
-              </button>
-            </form>
+            <ThemeDropdown currentTheme={theme} />
             <form
               action={async () => {
                 "use server";
@@ -115,7 +103,17 @@ export default async function DashboardLayout({ children }: { children: React.Re
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-3xl px-4 py-6">{children}</main>
+      <main className="mx-auto max-w-3xl px-4 py-6 pb-20 md:pb-6">{children}</main>
+      <footer className="border-t border-border py-4 text-center safe-bottom">
+        <Link
+          href="/licenses"
+          className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+        >
+          {dict.licenses.nav}
+        </Link>
+      </footer>
+      <BottomNav dict={{ books: dict.nav.books, lending: dict.nav.lending, stats: dict.nav.stats, more: dict.nav.more }} />
+      <InstallPrompt />
     </div>
   );
 }

@@ -1,10 +1,13 @@
 {
+  "id": "/",
+  "scope": "/",
   "name": "KatipCelebi",
   "short_name": "KatipCelebi",
-  "description": "Track your books, lending history, reading goals, and stats.",
+  "description": "Track your books, lending history, reading goals, and stats with gamification. Self-hosted personal library manager.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#fafafa",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "background_color": "#000000",
   "theme_color": "#3584e4",
   "orientation": "any",
   "categories": ["books", "education", "productivity"],
@@ -20,6 +23,41 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Kitap Ekle",
+      "short_name": "Kitap",
+      "url": "/books",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Ödünçlerim",
+      "short_name": "Ödünç",
+      "url": "/lending",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "İstatistikler",
+      "short_name": "Stats",
+      "url": "/stats",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ],
   "screenshots": [],

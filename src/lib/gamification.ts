@@ -1,6 +1,16 @@
 import { db } from "@/lib/db";
 
-export { XP_REWARDS, levelForXp, levelProgress, evaluateAchievements, ACHIEVEMENT_RULES } from "./gamification-pure";
+export {
+  XP_REWARDS,
+  levelForXp,
+  levelProgress,
+  evaluateAchievements,
+  ACHIEVEMENT_RULES,
+  streakMultiplier,
+  calculateFinishXp,
+  shieldCost,
+  xpForNextLevel,
+} from "./gamification-pure";
 
 export async function awardXp(userId: string, amount: number) {
   return db.user.update({
@@ -10,13 +20,21 @@ export async function awardXp(userId: string, amount: number) {
 }
 
 async function collectAchievementStats(userId: string) {
-  const [booksAdded, booksFinished, lendingsCreated, authors] = await Promise.all([
+  const [booksAdded, booksFinished, lendingsCreated, authors, user] = await Promise.all([
     db.book.count({ where: { userId } }),
     db.book.count({ where: { userId, status: "FINISHED" } }),
     db.lendingRecord.count({ where: { book: { userId } } }),
     db.book.findMany({ where: { userId, author: { not: null } }, select: { author: true }, distinct: ["author"] }),
+    db.user.findUnique({ where: { id: userId }, select: { currentStreak: true, longestStreak: true } }),
   ]);
-  return { booksAdded, booksFinished, lendingsCreated, distinctAuthors: authors.length };
+  return {
+    booksAdded,
+    booksFinished,
+    lendingsCreated,
+    distinctAuthors: authors.length,
+    currentStreak: user?.currentStreak ?? 0,
+    longestStreak: user?.longestStreak ?? 0,
+  };
 }
 
 /** Recomputes achievement stats for a user and persists any newly unlocked ones. */

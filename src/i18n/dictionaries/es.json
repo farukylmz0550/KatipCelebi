@@ -6,7 +6,16 @@
     "stats": "Estadísticas",
     "achievements": "Logros",
     "leaderboard": "Clasificación",
+    "more": "Más",
+    "settings": "Ajustes",
     "logout": "Cerrar sesión"
+  },
+  "theme": {
+    "light": "Claro",
+    "dark": "Oscuro",
+    "lightContrast": "Alto Contraste Claro",
+    "darkContrast": "Alto Contraste Oscuro",
+    "amoled": "AMOLED"
   },
   "auth": {
     "login": "Iniciar sesión",
@@ -82,7 +91,10 @@
     "back": "← Volver",
     "out": "prestados",
     "signedBadge": "Firmado",
-    "copies": "copias"
+    "copies": "copias",
+    "pages": "Páginas",
+    "scan": "Escanear",
+    "currentPage": "Página Actual"
   },
   "facts": {
     "title": "Título *",
@@ -189,7 +201,10 @@
     "setGoal": "Guardar",
     "progress": "Progreso",
     "averageDays": "Días promedio",
-    "totalFinished": "Total terminados"
+    "totalFinished": "Total terminados",
+    "streak": "Racha",
+    "longestStreak": "Racha más larga",
+    "todayActive": "Activo hoy"
   },
   "achievements": {
     "title": "Logros",
@@ -203,6 +218,12 @@
     "first_lending_desc": "Presta tu primer libro.",
     "five_authors_title": "Bien Leído",
     "five_authors_desc": "Lee libros de 5 autores distintos.",
+    "week_streak_title": "Guerrero Semanal",
+    "week_streak_desc": "Mantén una racha de lectura de 7 días",
+    "month_streak_title": "Maestro Mensual",
+    "month_streak_desc": "Mantén una racha de lectura de 30 días",
+    "century_streak_title": "Lector del Siglo",
+    "century_streak_desc": "Alcanza una racha de lectura de 100 días",
     "unlocked": "Desbloqueado"
   },
   "leaderboard": {
@@ -259,5 +280,11 @@
     "adminLabel": "Admin",
     "actions": "Acciones",
     "confirmDelete": "¿Estás seguro de que quieres eliminar este usuario?"
+  },
+  "licenses": {
+    "title": "Licencias y Atribuciones",
+    "description": "Este proyecto utiliza las siguientes tecnologías de código abierto:",
+    "nav": "Licencias",
+    "projectLicense": "KatipCelebi está licenciado bajo la GNU General Public License v3.0."
   }
 }

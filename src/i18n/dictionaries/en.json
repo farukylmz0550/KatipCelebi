@@ -6,7 +6,16 @@
     "stats": "Stats",
     "achievements": "Achievements",
     "leaderboard": "Leaderboard",
+    "more": "More",
+    "settings": "Settings",
     "logout": "Log out"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "lightContrast": "Light Contrast",
+    "darkContrast": "Dark Contrast",
+    "amoled": "AMOLED"
   },
   "auth": {
     "login": "Log in",
@@ -82,7 +91,10 @@
     "back": "← Back",
     "out": "out",
     "signedBadge": "Signed",
-    "copies": "copies"
+    "copies": "copies",
+    "pages": "Pages",
+    "scan": "Scan",
+    "currentPage": "Current Page"
   },
   "facts": {
     "title": "Title *",
@@ -189,7 +201,10 @@
     "setGoal": "Set",
     "progress": "Progress",
     "averageDays": "Avg days to finish",
-    "totalFinished": "Total finished"
+    "totalFinished": "Total finished",
+    "streak": "Streak",
+    "longestStreak": "Longest Streak",
+    "todayActive": "Active Today"
   },
   "achievements": {
     "title": "Achievements",
@@ -203,6 +218,12 @@
     "first_lending_desc": "Lend your first book to someone.",
     "five_authors_title": "Well Read",
     "five_authors_desc": "Read books from 5 different authors.",
+    "week_streak_title": "Week Warrior",
+    "week_streak_desc": "Maintain a 7-day reading streak",
+    "month_streak_title": "Monthly Master",
+    "month_streak_desc": "Maintain a 30-day reading streak",
+    "century_streak_title": "Century Reader",
+    "century_streak_desc": "Achieve a 100-day reading streak",
     "unlocked": "Unlocked"
   },
   "leaderboard": {
@@ -259,5 +280,11 @@
     "adminLabel": "Admin",
     "actions": "Actions",
     "confirmDelete": "Are you sure you want to delete this user?"
+  },
+  "licenses": {
+    "title": "Licenses & Attributions",
+    "description": "This project uses the following open-source technologies:",
+    "nav": "Licenses",
+    "projectLicense": "KatipCelebi is licensed under the GNU General Public License v3.0."
   }
 }

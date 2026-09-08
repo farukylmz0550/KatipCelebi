@@ -6,7 +6,16 @@
     "stats": "Statistiques",
     "achievements": "Succès",
     "leaderboard": "Classement",
+    "more": "Plus",
+    "settings": "Paramètres",
     "logout": "Déconnexion"
+  },
+  "theme": {
+    "light": "Clair",
+    "dark": "Sombre",
+    "lightContrast": "Contraste Élevé Clair",
+    "darkContrast": "Contraste Élevé Sombre",
+    "amoled": "AMOLED"
   },
   "auth": {
     "login": "Connexion",
@@ -82,7 +91,10 @@
     "back": "← Retour",
     "out": "empruntés",
     "signedBadge": "Signé",
-    "copies": "exemplaires"
+    "copies": "exemplaires",
+    "pages": "Pages",
+    "scan": "Scanner",
+    "currentPage": "Page Actuelle"
   },
   "facts": {
     "title": "Titre *",
@@ -189,7 +201,10 @@
     "setGoal": "Enregistrer",
     "progress": "Progrès",
     "averageDays": "Jours moyens",
-    "totalFinished": "Total terminés"
+    "totalFinished": "Total terminés",
+    "streak": "Série",
+    "longestStreak": "Plus Longue Série",
+    "todayActive": "Actif Aujourd'hui"
   },
   "achievements": {
     "title": "Succès",
@@ -203,6 +218,12 @@
     "first_lending_desc": "Prêtez votre premier livre.",
     "five_authors_title": "Bien Lu",
     "five_authors_desc": "Lisez 5 auteurs différents.",
+    "week_streak_title": "Guerrier Hebdomadaire",
+    "week_streak_desc": "Maintiens une série de lecture de 7 jours",
+    "month_streak_title": "Maître Mensuel",
+    "month_streak_desc": "Maintiens une série de lecture de 30 jours",
+    "century_streak_title": "Lecteur du Siècle",
+    "century_streak_desc": "Atteins une série de lecture de 100 jours",
     "unlocked": "Débloqué"
   },
   "leaderboard": {
@@ -259,5 +280,11 @@
     "adminLabel": "Admin",
     "actions": "Actions",
     "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?"
+  },
+  "licenses": {
+    "title": "Licences et Attributions",
+    "description": "Ce projet utilise les technologies open source suivantes :",
+    "nav": "Licences",
+    "projectLicense": "KatipCelebi est sous licence GNU General Public License v3.0."
   }
 }

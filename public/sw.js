@@ -1,4 +1,4 @@
-const CACHE_NAME = "katipcelebi-v1";
+const CACHE_NAME = "katipcelebi-v2";
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();
@@ -36,7 +36,43 @@ self.addEventListener("fetch", (event) => {
   );
 });
 
-// ── Notifications ──
+// ── Push Notifications ──
+
+self.addEventListener("push", (event) => {
+  if (!event.data) return;
+
+  let data;
+  try {
+    data = event.data.json();
+  } catch {
+    data = { title: "KatipCelebi", body: event.data.text() };
+  }
+
+  event.waitUntil(
+    self.registration.showNotification(data.title || "KatipCelebi", {
+      body: data.body || "New notification",
+      icon: "/icon-192.png",
+      badge: "/icon-192.png",
+      tag: data.tag || "katipcelebi-push",
+      renotify: true,
+      data: data.url || "/books",
+    })
+  );
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const url = event.notification.data || "/books";
+  event.waitUntil(
+    self.clients.matchAll({ type: "window" }).then((clients) => {
+      const existing = clients.find((c) => c.visibilityState === "visible");
+      if (existing) return existing.focus();
+      return self.clients.openWindow(url);
+    })
+  );
+});
+
+// ── Streak Reminder Notifications (timer-based fallback) ──
 
 const MESSAGES = [
   { title: "Time to read!", body: "Open a book and continue your reading journey." },
@@ -90,15 +126,39 @@ self.addEventListener("message", (event) => {
       tag: "test",
     });
   }
+  if (event.data === "check-streak") {
+    checkStreak();
+  }
 });
 
-self.addEventListener("notificationclick", (event) => {
-  event.notification.close();
-  event.waitUntil(
-    self.clients.matchAll({ type: "window" }).then((clients) => {
-      const existing = clients.find((c) => c.visibilityState === "visible");
-      if (existing) return existing.focus();
-      return self.clients.openWindow("/books");
-    })
-  );
-});
+// ── Streak Check ──
+
+async function checkStreak() {
+  try {
+    const clients = await self.clients.matchAll();
+    if (clients.length === 0) return;
+
+    const client = clients[0];
+    const response = await client.fetch("/api/streak/status");
+    if (!response.ok) return;
+
+    const data = await response.json();
+    if (!data.isTodayActive && data.currentStreak > 0) {
+      self.registration.showNotification("Streak'in kırılmak üzere! 🔥", {
+        body: `Bugün henüz okumadın. ${data.currentStreak} günlük streak'ini kaybetme!`,
+        icon: "/icon-192.png",
+        badge: "/icon-192.png",
+        tag: "streak-warning",
+        renotify: true,
+        data: "/books",
+      });
+    }
+  } catch {
+    // Offline or error — skip silently
+  }
+}
+
+// Check streak every hour if notifications are enabled
+setInterval(() => {
+  checkStreak();
+}, 60 * 60 * 1000);

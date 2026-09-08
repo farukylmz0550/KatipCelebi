@@ -6,7 +6,16 @@
     "stats": "统计",
     "achievements": "成就",
     "leaderboard": "排行榜",
+    "more": "更多",
+    "settings": "设置",
     "logout": "退出"
+  },
+  "theme": {
+    "light": "浅色",
+    "dark": "深色",
+    "lightContrast": "浅色高对比度",
+    "darkContrast": "深色高对比度",
+    "amoled": "AMOLED"
   },
   "auth": {
     "login": "登录",
@@ -82,7 +91,10 @@
     "back": "← 返回",
     "out": "借出",
     "signedBadge": "签名",
-    "copies": "本"
+    "copies": "本",
+    "pages": "页数",
+    "scan": "扫描",
+    "currentPage": "当前页"
   },
   "facts": {
     "title": "标题 *",
@@ -189,7 +201,10 @@
     "setGoal": "设置",
     "progress": "进度",
     "averageDays": "平均天数",
-    "totalFinished": "总完成"
+    "totalFinished": "总完成",
+    "streak": "连续",
+    "longestStreak": "最长连续",
+    "todayActive": "今日活跃"
   },
   "achievements": {
     "title": "成就",
@@ -203,6 +218,12 @@
     "first_lending_desc": "借出第一本书。",
     "five_authors_title": "博览",
     "five_authors_desc": "阅读5位不同作者。",
+    "week_streak_title": "周战士",
+    "week_streak_desc": "保持7天阅读连续",
+    "month_streak_title": "月度大师",
+    "month_streak_desc": "保持30天阅读连续",
+    "century_streak_title": "百日读者",
+    "century_streak_desc": "达成100天阅读连续",
     "unlocked": "已解锁"
   },
   "leaderboard": {
@@ -259,5 +280,11 @@
     "adminLabel": "管理",
     "actions": "操作",
     "confirmDelete": "确定要删除此用户吗？"
+  },
+  "licenses": {
+    "title": "许可证与致谢",
+    "description": "本项目使用以下开源技术：",
+    "nav": "许可证",
+    "projectLicense": "KatipCelebi 基于 GNU 通用公共许可证 v3.0 授权。"
   }
 }

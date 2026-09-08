@@ -119,6 +119,114 @@
   --sidebar-ring: oklch(0.55 0.16 255);
 }
 
+/* High Contrast Light — WBWC.org standardı */
+.light-contrast {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0 0 0);
+  --primary: oklch(0.40 0.20 255);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.95 0 0);
+  --secondary-foreground: oklch(0 0 0);
+  --muted: oklch(0.95 0 0);
+  --muted-foreground: oklch(0.20 0 0);
+  --accent: oklch(0.90 0 0);
+  --accent-foreground: oklch(0 0 0);
+  --destructive: oklch(0.45 0.25 25);
+  --border: oklch(0 0 0);
+  --input: oklch(0.95 0 0);
+  --ring: oklch(0.40 0.20 255);
+  --chart-1: oklch(0.40 0.20 255);
+  --chart-2: oklch(0.35 0.18 160);
+  --chart-3: oklch(0.45 0.20 30);
+  --chart-4: oklch(0.38 0.15 280);
+  --chart-5: oklch(0.35 0.12 340);
+  --radius: 0.5rem;
+  --sidebar: oklch(0.95 0 0);
+  --sidebar-foreground: oklch(0 0 0);
+  --sidebar-primary: oklch(0.40 0.20 255);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.90 0 0);
+  --sidebar-accent-foreground: oklch(0 0 0);
+  --sidebar-border: oklch(0 0 0);
+  --sidebar-ring: oklch(0.40 0.20 255);
+}
+
+/* High Contrast Dark */
+.dark-contrast {
+  --background: oklch(0 0 0);
+  --foreground: oklch(1 0 0);
+  --card: oklch(0.10 0 0);
+  --card-foreground: oklch(1 0 0);
+  --popover: oklch(0.10 0 0);
+  --popover-foreground: oklch(1 0 0);
+  --primary: oklch(0.70 0.20 255);
+  --primary-foreground: oklch(0 0 0);
+  --secondary: oklch(0.15 0 0);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.15 0 0);
+  --muted-foreground: oklch(0.85 0 0);
+  --accent: oklch(0.20 0 0);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.65 0.25 25);
+  --border: oklch(1 0 0);
+  --input: oklch(0.15 0 0);
+  --ring: oklch(0.70 0.20 255);
+  --chart-1: oklch(0.70 0.20 255);
+  --chart-2: oklch(0.65 0.18 160);
+  --chart-3: oklch(0.75 0.20 30);
+  --chart-4: oklch(0.60 0.15 280);
+  --chart-5: oklch(0.55 0.12 340);
+  --radius: 0.5rem;
+  --sidebar: oklch(0.08 0 0);
+  --sidebar-foreground: oklch(1 0 0);
+  --sidebar-primary: oklch(0.70 0.20 255);
+  --sidebar-primary-foreground: oklch(0 0 0);
+  --sidebar-accent: oklch(0.15 0 0);
+  --sidebar-accent-foreground: oklch(1 0 0);
+  --sidebar-border: oklch(1 0 0);
+  --sidebar-ring: oklch(0.70 0.20 255);
+}
+
+/* AMOLED Black — OLED pil tasarrufu */
+.amoled {
+  --background: oklch(0 0 0);
+  --foreground: oklch(0.95 0 0);
+  --card: oklch(0.08 0 0);
+  --card-foreground: oklch(0.95 0 0);
+  --popover: oklch(0.08 0 0);
+  --popover-foreground: oklch(0.95 0 0);
+  --primary: oklch(0.65 0.18 255);
+  --primary-foreground: oklch(0 0 0);
+  --secondary: oklch(0.12 0 0);
+  --secondary-foreground: oklch(0.90 0 0);
+  --muted: oklch(0.12 0 0);
+  --muted-foreground: oklch(0.60 0 0);
+  --accent: oklch(0.15 0 0);
+  --accent-foreground: oklch(0.95 0 0);
+  --destructive: oklch(0.60 0.22 25);
+  --border: oklch(0.20 0 0);
+  --input: oklch(0.12 0 0);
+  --ring: oklch(0.65 0.18 255);
+  --chart-1: oklch(0.65 0.18 255);
+  --chart-2: oklch(0.60 0.16 160);
+  --chart-3: oklch(0.68 0.17 30);
+  --chart-4: oklch(0.55 0.13 280);
+  --chart-5: oklch(0.50 0.11 340);
+  --radius: 0.75rem;
+  --sidebar: oklch(0.05 0 0);
+  --sidebar-foreground: oklch(0.95 0 0);
+  --sidebar-primary: oklch(0.65 0.18 255);
+  --sidebar-primary-foreground: oklch(0 0 0);
+  --sidebar-accent: oklch(0.12 0 0);
+  --sidebar-accent-foreground: oklch(0.95 0 0);
+  --sidebar-border: oklch(0.20 0 0);
+  --sidebar-ring: oklch(0.65 0.18 255);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -128,5 +236,20 @@
   }
   html {
     @apply scroll-smooth;
+  }
+}
+
+@layer utilities {
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .safe-left {
+    padding-left: env(safe-area-inset-left);
+  }
+  .safe-right {
+    padding-right: env(safe-area-inset-right);
   }
 }

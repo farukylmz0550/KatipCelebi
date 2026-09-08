@@ -5,16 +5,19 @@ import { getTheme } from "@/lib/theme";
 import { levelProgress } from "@/lib/gamification";
 import { monthlyFinishCounts } from "@/lib/stats";
 import { finishedInMonth, finishedInYear } from "@/lib/goals";
+import { getStreakInfo } from "@/lib/streak";
 import { MonthlyChart } from "./monthly-chart";
 import { GoalProgress } from "./goal-progress";
 import { GoalForms } from "./goal-forms";
+import { StreakWidget } from "@/components/streak-widget";
+import { ActivityHeatmap } from "@/components/activity-heatmap";
 
 export default async function StatsPage() {
   const userId = await requireUserId();
   const dict = await getDictionary();
   const theme = await getTheme();
 
-  const [user, totalBooks, reading, finishedBooks, goal] = await Promise.all([
+  const [user, totalBooks, reading, finishedBooks, goal, streakInfo, dailyActivities] = await Promise.all([
     db.user.findUniqueOrThrow({ where: { id: userId }, select: { xp: true } }),
     db.book.count({ where: { userId } }),
     db.book.count({ where: { userId, status: "READING" } }),
@@ -23,6 +26,12 @@ export default async function StatsPage() {
       select: { finishedAt: true },
     }),
     db.goal.findUnique({ where: { userId } }),
+    getStreakInfo(userId),
+    db.dailyActivity.findMany({
+      where: { userId },
+      select: { date: true, count: true, pagesRead: true },
+      orderBy: { date: "asc" },
+    }),
   ]);
 
   const yearly = goal?.yearly ?? 0;
@@ -54,6 +63,17 @@ export default async function StatsPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-xl font-medium text-foreground">{dict.stats.title}</h1>
+
+      {streakInfo && (
+        <StreakWidget
+          currentStreak={streakInfo.currentStreak}
+          longestStreak={streakInfo.longestStreak}
+          isTodayActive={streakInfo.isTodayActive}
+          shieldCost={streakInfo.shieldCost}
+          canUseShield={streakInfo.canUseShield}
+        />
+      )}
+
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
         {[
           { label: dict.stats.totalBooks, value: totalBooks },
@@ -103,6 +123,14 @@ export default async function StatsPage() {
         <p className="mb-3 text-[13px] font-medium text-foreground">{dict.stats.byMonth}</p>
         <MonthlyChart data={chartData} label={dict.stats.finished} dark={theme === "dark"} />
       </div>
+
+      <ActivityHeatmap
+        activities={dailyActivities.map((a) => ({
+          date: a.date.toISOString().split("T")[0],
+          count: a.count,
+          pagesRead: a.pagesRead,
+        }))}
+      />
     </div>
   );
 }
