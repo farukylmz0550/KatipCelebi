@@ -6,6 +6,7 @@ services:
       DATABASE_URL: file:/data/katipcelebi.db
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
       NEXTAUTH_URL: ${NEXTAUTH_URL}
+      AUTH_TRUST_HOST: "true"
       ANDROID_SHA256_FINGERPRINT: ${ANDROID_SHA256_FINGERPRINT:-}
     ports:
       - "${APP_PORT:-1024}:3000"
