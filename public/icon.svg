@@ -1,65 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   KatipCelebi — GNOME HIG App Icon
-  Squircle shape (superellipse), GNOME Adwaita Blue palette
-  512x512 canvas
+  Based on original logo.svg color palette (Ottoman warm browns)
+  Squircle shape, 512x512 canvas
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <!-- GNOME squircle clip -->
-    <clipPath id="squircle">
-      <path d="M256 48C141.6 48 48 141.6 48 256s93.6 208 208 208 208-93.6 208-208S370.4 48 256 48z
-               M256 464C141.3 464 48 370.7 48 256S141.3 48 256 48c70.4 0 132.6 30.2 176.2 78.4
-               C417 148.8 424 175.2 424 204c0 39.2-20 73.6-50.4 94.4C345.2 320 312.4 336 276 336
-               H252c-56 0-104-32-128-80-12-24-20-52-20-80 0-36 12-68 32-96
-               C152 60 200 48 256 48z"/>
-    </clipPath>
-    <!-- Subtle shadow gradient -->
     <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#4a9eef"/>
-      <stop offset="100%" stop-color="#1a5fb4"/>
+      <stop offset="0%" stop-color="#3d3846"/>
+      <stop offset="100%" stop-color="#241f31"/>
+    </linearGradient>
+    <linearGradient id="bookGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f4dec1"/>
+      <stop offset="100%" stop-color="#eee8db"/>
+    </linearGradient>
+    <linearGradient id="spineGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#864f25"/>
+      <stop offset="50%" stop-color="#9d612e"/>
+      <stop offset="100%" stop-color="#864f25"/>
     </linearGradient>
   </defs>
 
-  <!-- Background: GNOME Blue squircle -->
+  <!-- GNOME Squircle background — dark Ottoman tone -->
   <rect width="512" height="512" rx="102" ry="102" fill="url(#bgGrad)"/>
+  <rect width="512" height="512" rx="102" ry="102" fill="none" stroke="#0f181f" stroke-width="2" stroke-opacity="0.2"/>
 
-  <!-- Subtle border/shadow for depth -->
-  <rect width="512" height="512" rx="102" ry="102" fill="none" stroke="#0d47a1" stroke-width="2" stroke-opacity="0.15"/>
-
-  <!-- Open Book -->
-  <g transform="translate(256, 260)">
-    <!-- Book spine shadow -->
-    <rect x="-2" y="-90" width="4" height="130" rx="2" fill="#0d47a1" fill-opacity="0.15"/>
-
+  <!-- Open Book — warm parchment pages -->
+  <g transform="translate(256, 240)">
     <!-- Left page -->
-    <path d="M0,-80 Q-80,-75 -120,-60 L-120,55 Q-80,45 0,55 Z"
-          fill="#ffffff" fill-opacity="0.95"/>
-    <!-- Left page lines -->
-    <line x1="-100" y1="-40" x2="-20" y2="-44" stroke="#deddda" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="-100" y1="-20" x2="-20" y2="-24" stroke="#deddda" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="-100" y1="0" x2="-20" y2="-4" stroke="#deddda" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="-100" y1="20" x2="-20" y2="16" stroke="#deddda" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="-80" y1="40" x2="-20" y2="36" stroke="#deddda" stroke-width="1.5" stroke-linecap="round"/>
-
+    <path d="M-8,-100 Q-100,-90 -150,-70 L-150,70 Q-100,58 -8,70 Z"
+          fill="url(#bookGrad)" stroke="#837e74" stroke-width="0.5" stroke-opacity="0.3"/>
     <!-- Right page -->
-    <path d="M0,-80 Q80,-75 120,-60 L120,55 Q80,45 0,55 Z"
-          fill="#ffffff" fill-opacity="0.85"/>
-    <!-- Right page lines -->
-    <line x1="20" y1="-44" x2="100" y2="-40" stroke="#deddda" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="20" y1="-24" x2="100" y2="-20" stroke="#deddda" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="20" y1="-4" x2="100" y2="0" stroke="#deddda" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="20" y1="16" x2="100" y2="20" stroke="#deddda" stroke-width="1.5" stroke-linecap="round"/>
-    <line x1="20" y1="36" x2="80" y2="40" stroke="#deddda" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M8,-100 Q100,-90 150,-70 L150,70 Q100,58 8,70 Z"
+          fill="#f0e8da" stroke="#837e74" stroke-width="0.5" stroke-opacity="0.3"/>
 
-    <!-- Center spine highlight -->
-    <line x1="0" y1="-80" x2="0" y2="55" stroke="#ffffff" stroke-width="2" stroke-opacity="0.5" stroke-linecap="round"/>
+    <!-- Page texture lines (left) -->
+    <line x1="-120" y1="-50" x2="-30" y2="-54" stroke="#d4c9b5" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="-120" y1="-30" x2="-30" y2="-34" stroke="#d4c9b5" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="-120" y1="-10" x2="-30" y2="-14" stroke="#d4c9b5" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="-120" y1="10" x2="-30" y2="6" stroke="#d4c9b5" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="-120" y1="30" x2="-30" y2="26" stroke="#d4c9b5" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="-100" y1="50" x2="-30" y2="46" stroke="#d4c9b5" stroke-width="1.2" stroke-linecap="round"/>
 
-    <!-- Bookmark ribbon (GNOME green accent) -->
-    <path d="M40,-80 L40,-100 L50,-90 L60,-100 L60,-80 L50,-70 Z"
-          fill="#33d17a"/>
+    <!-- Page texture lines (right) -->
+    <line x1="30" y1="-54" x2="120" y2="-50" stroke="#d4c9b5" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="30" y1="-34" x2="120" y2="-30" stroke="#d4c9b5" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="30" y1="-14" x2="120" y2="-10" stroke="#d4c9b5" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="30" y1="6" x2="120" y2="10" stroke="#d4c9b5" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="30" y1="26" x2="120" y2="30" stroke="#d4c9b5" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="30" y1="46" x2="100" y2="50" stroke="#d4c9b5" stroke-width="1.2" stroke-linecap="round"/>
+
+    <!-- Spine -->
+    <rect x="-8" y="-100" width="16" height="170" rx="3" fill="url(#spineGrad)"/>
+    <line x1="0" y1="-100" x2="0" y2="70" stroke="#f0e8da" stroke-width="1" stroke-opacity="0.4"/>
+
+    <!-- Ottoman decorative motif on left page (simplified tulip) -->
+    <g transform="translate(-70, -20) scale(0.6)" opacity="0.5">
+      <path d="M0,-30 C-8,-20 -12,-5 -8,10 C-4,22 0,30 0,30 C0,30 4,22 8,10 C12,-5 8,-20 0,-30Z"
+            fill="#864f25" fill-opacity="0.6"/>
+      <line x1="0" y1="30" x2="0" y2="50" stroke="#5b574f" stroke-width="1.5"/>
+      <path d="M-6,42 Q0,38 6,42" fill="none" stroke="#5b574f" stroke-width="1"/>
+    </g>
+
+    <!-- Ottoman decorative motif on right page (simplified tulip) -->
+    <g transform="translate(70, -20) scale(0.6)" opacity="0.5">
+      <path d="M0,-30 C-8,-20 -12,-5 -8,10 C-4,22 0,30 0,30 C0,30 4,22 8,10 C12,-5 8,-20 0,-30Z"
+            fill="#864f25" fill-opacity="0.6"/>
+      <line x1="0" y1="30" x2="0" y2="50" stroke="#5b574f" stroke-width="1.5"/>
+      <path d="M-6,42 Q0,38 6,42" fill="none" stroke="#5b574f" stroke-width="1"/>
+    </g>
+
+    <!-- Bookmark ribbon — Ottoman red -->
+    <path d="M55,-100 L55,-125 L65,-112 L75,-125 L75,-100 L65,-90 Z"
+          fill="#580a09"/>
   </g>
 
-  <!-- Small decorative dot (GNOME style subtle accent) -->
-  <circle cx="380" cy="120" r="8" fill="#ffffff" fill-opacity="0.2"/>
+  <!-- Subtle accent dots — GNOME style -->
+  <circle cx="400" cy="110" r="6" fill="#864f25" fill-opacity="0.15"/>
+  <circle cx="112" cy="400" r="6" fill="#864f25" fill-opacity="0.15"/>
 </svg>
