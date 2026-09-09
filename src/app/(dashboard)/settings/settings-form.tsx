@@ -56,23 +56,23 @@ export function SettingsForm({ settings, currentTheme, currentLocale }: Settings
       {/* Notifications */}
       <section>
         <h2 className="mb-2 px-1 font-[var(--font-sans)] text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          Bildirimler
+          Notifications
         </h2>
         <div className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] overflow-hidden">
           <ToggleRow
-            label="Bildirimleri etkinleştir"
+            label="Enable notifications"
             checked={settings.notificationsEnabled}
             onChange={() => handleToggle("notificationsEnabled")}
             disabled={isPending}
           />
           <ToggleRow
-            label="Streak hatırlatıcıları"
+            label="Streak reminders"
             checked={settings.streakReminders}
             onChange={() => handleToggle("streakReminders")}
             disabled={isPending}
           />
           <ToggleRow
-            label="Haftalık özet"
+            label="Weekly digest"
             checked={settings.weeklyDigest}
             onChange={() => handleToggle("weeklyDigest")}
             disabled={isPending}
@@ -83,7 +83,7 @@ export function SettingsForm({ settings, currentTheme, currentLocale }: Settings
       {/* Theme — only here, not in sidebar/header */}
       <section>
         <h2 className="mb-2 px-1 font-[var(--font-sans)] text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          Tema
+          Theme
         </h2>
         <div className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] overflow-hidden">
           {THEMES.map((t) => {
@@ -110,7 +110,7 @@ export function SettingsForm({ settings, currentTheme, currentLocale }: Settings
       {/* Language — only here */}
       <section>
         <h2 className="mb-2 px-1 font-[var(--font-sans)] text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          Dil / Language
+          Language
         </h2>
         <div className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] overflow-hidden">
           {LOCALES.map((l) => (
@@ -135,7 +135,7 @@ export function SettingsForm({ settings, currentTheme, currentLocale }: Settings
       {/* Licenses — link to /licenses */}
       <section>
         <h2 className="mb-2 px-1 font-[var(--font-sans)] text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          Hakkında
+          About
         </h2>
         <Link
           href="/licenses"

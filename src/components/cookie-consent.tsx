@@ -30,25 +30,24 @@ type CookieDict = {
 export function CookieConsent({ dict }: { dict?: CookieDict }) {
   const t: CookieDict = dict ?? {
     title: "Çerezler",
-    subtitle: "Kişisel kütüphaneniz için",
-    desc: "KatipCelebi, deneyiminizi kişiselleştirmek için çerezleri kullanır — tema, dil, yan çubuk durumu ve görünüm modu gibi tercihlerinizi hatırlamak için. Zorunlu çerezler oturum güvenliği için gereklidir.",
+    subtitle: "For your personal library",
+    desc: "KatipCelebi uses cookies to personalize your experience — to remember preferences like theme, language, sidebar state and view mode. Essential cookies are required for session security.",
     descMuted:
-      "Tercih çerezlerini reddederseniz, tercihleriniz yalnızca bu cihazda saklanır ve oturumlar arası korunmaz.",
-    mobileDesc:
-      "Tercihlerinizi (tema, dil, yan çubuk) hatırlamak için çerezleri kullanıyoruz. Yasal olarak onayınızı almamız gerekiyor.",
+      "If you reject preference cookies, preferences are stored only on this device and not persisted across sessions.",
+    mobileDesc: "We use cookies to remember preferences (theme, language, sidebar). Legally we need your consent.",
     essentialTitle: "Zorunlu",
-    essentialDesc: "Oturum, güvenlik, giriş. Kapatılamaz.",
+    essentialDesc: "Session, security, login. Cannot be disabled.",
     preferencesTitle: "Tercihler",
-    preferencesDesc: "Tema, dil, yan çubuk, kart/liste görünümü.",
+    preferencesDesc: "Theme, language, sidebar, card/list view.",
     analyticsTitle: "Analitik",
-    analyticsDesc: "Anonim kullanım istatistikleri (şu an pasif).",
+    analyticsDesc: "Anonymous usage statistics (currently inactive).",
     accept: "Kabul Et",
     reject: "Reddet",
     preferencesBtn: "Tercihler",
     save: "Kaydet",
     back: "Geri",
     close: "Kapat",
-    licensesLink: "Ayrıntılar için Lisanslar sayfasına bakın.",
+    licensesLink: "See Licenses page for details.",
   };
   const [visible, setVisible] = useState(false);
   const [view, setView] = useState<View>("banner");

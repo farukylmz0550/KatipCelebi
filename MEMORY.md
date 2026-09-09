@@ -1,7 +1,7 @@
 # KatipCelebi — Memory Bank
 
 > Last updated: 2026-09-09
-> Version: 2.3.1
+> Version: 2.3.2
 > Branch: main
 
 ---
@@ -190,6 +190,7 @@ npm run format:check  # prettier
 
 | Date | Commit | Description |
 |-------|--------|----------|
+| 2026-09-09 | `2.3.2` | English-only (hardcoded Turkish → English, i18n synced, locale native names kept), releases titled as "{version}" without v |
 | 2026-09-09 | `2.3.1` | Settings-only theme/locale (sidebar/mobile header removed), licenses link in Settings, docs Turkish → English, book card 60/40 readable (h-[380px] object-contain) |
 | 2026-09-09 | `2.3.0` | UI Design Language 60/40 card, Noto, Terracotta/Ink-Copper, collapsible sidebar, cookie consent (C), ISBN one-click + detailed form, bulk import removed, high-contrast removed, Sun/Moon SVG |
 | 2026-09-08 | `768d827` | GitHub Actions removed, README updated |

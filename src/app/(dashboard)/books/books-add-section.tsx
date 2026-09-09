@@ -34,9 +34,9 @@ export function BooksAddSection({ dict, excel }: { dict: Dict; excel: React.Reac
           className="inline-flex items-center gap-1.5 rounded-[8px] px-2 py-1.5 font-[var(--font-sans)] text-xs font-medium text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
         >
           {showDetailed ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-          Detaylı ekle
+          Detailed add
         </button>
-        <span className="font-[var(--font-sans)] text-xs text-muted-foreground">veya tüm alanlarla</span>
+        <span className="font-[var(--font-sans)] text-xs text-muted-foreground">or with all fields</span>
       </div>
       {showDetailed && (
         <div className="mt-4 animate-in fade-in">
@@ -77,8 +77,8 @@ function DetailedAddForm({ dict, onDone }: { dict: Dict; onDone?: () => void }) 
   function handleAdd() {
     const title = form.title.trim();
     if (!title) {
-      setError(dict.required ?? "Başlık gerekli");
-      toast.error(dict.required ?? "Başlık gerekli");
+      setError(dict.required ?? "Title is required");
+      toast.error(dict.required ?? "Title is required");
       return;
     }
     startTransition(async () => {
@@ -134,10 +134,10 @@ function DetailedAddForm({ dict, onDone }: { dict: Dict; onDone?: () => void }) 
 
   return (
     <div className="space-y-3 rounded-[8px] border border-[var(--border)] bg-[var(--surface-elevated)] p-3">
-      <p className="font-[var(--font-serif)] text-sm font-semibold text-foreground">Detaylı kitap ekle</p>
+      <p className="font-[var(--font-serif)] text-sm font-semibold text-foreground">Add detailed book</p>
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="sm:col-span-2">
-          <label className={labelCls}>Başlık *</label>
+          <label className={labelCls}>Title *</label>
           <input
             value={form.title}
             onChange={(e) => update("title", e.target.value)}
@@ -146,11 +146,11 @@ function DetailedAddForm({ dict, onDone }: { dict: Dict; onDone?: () => void }) 
           />
         </div>
         <div>
-          <label className={labelCls}>Alt başlık</label>
+          <label className={labelCls}>Subtitle</label>
           <input
             value={form.subtitle}
             onChange={(e) => update("subtitle", e.target.value)}
-            placeholder="Alt başlık"
+            placeholder="Subtitle"
             className={inputCls}
           />
         </div>
@@ -191,16 +191,16 @@ function DetailedAddForm({ dict, onDone }: { dict: Dict; onDone?: () => void }) 
           />
         </div>
         <div>
-          <label className={labelCls}>Yayıncı</label>
+          <label className={labelCls}>Publisher</label>
           <input
             value={form.publishers}
             onChange={(e) => update("publishers", e.target.value)}
-            placeholder="Yayıncı"
+            placeholder="Publisher"
             className={inputCls}
           />
         </div>
         <div>
-          <label className={labelCls}>Yayın tarihi</label>
+          <label className={labelCls}>Publish date</label>
           <input
             value={form.publishDate}
             onChange={(e) => update("publishDate", e.target.value)}
@@ -209,34 +209,34 @@ function DetailedAddForm({ dict, onDone }: { dict: Dict; onDone?: () => void }) 
           />
         </div>
         <div>
-          <label className={labelCls}>Yayın yeri</label>
+          <label className={labelCls}>Publish place</label>
           <input
             value={form.publishPlaces}
             onChange={(e) => update("publishPlaces", e.target.value)}
-            placeholder="İstanbul"
+            placeholder="Istanbul"
             className={inputCls}
           />
         </div>
         <div>
-          <label className={labelCls}>Baskı</label>
+          <label className={labelCls}>Edition</label>
           <input
             value={form.editionName}
             onChange={(e) => update("editionName", e.target.value)}
-            placeholder="1. Baskı"
+            placeholder="1. Edition"
             className={inputCls}
           />
         </div>
         <div>
-          <label className={labelCls}>Dizi</label>
+          <label className={labelCls}>Series</label>
           <input
             value={form.series}
             onChange={(e) => update("series", e.target.value)}
-            placeholder="Dizi"
+            placeholder="Series"
             className={inputCls}
           />
         </div>
         <div>
-          <label className={labelCls}>Sayfa</label>
+          <label className={labelCls}>Pages</label>
           <input
             value={form.numberOfPages}
             onChange={(e) => update("numberOfPages", e.target.value)}
@@ -245,7 +245,7 @@ function DetailedAddForm({ dict, onDone }: { dict: Dict; onDone?: () => void }) 
           />
         </div>
         <div>
-          <label className={labelCls}>Diller</label>
+          <label className={labelCls}>Languages</label>
           <input
             value={form.languages}
             onChange={(e) => update("languages", e.target.value)}
@@ -254,16 +254,16 @@ function DetailedAddForm({ dict, onDone }: { dict: Dict; onDone?: () => void }) 
           />
         </div>
         <div className="sm:col-span-2">
-          <label className={labelCls}>Konular</label>
+          <label className={labelCls}>Subjects</label>
           <input
             value={form.subjects}
             onChange={(e) => update("subjects", e.target.value)}
-            placeholder="roman, tarih"
+            placeholder="fiction, history"
             className={inputCls}
           />
         </div>
         <div className="sm:col-span-2">
-          <label className={labelCls}>Kapak URL</label>
+          <label className={labelCls}>Cover URL</label>
           <input
             value={form.coverUrl}
             onChange={(e) => update("coverUrl", e.target.value)}

@@ -29,7 +29,7 @@ export default function SetupServerPage() {
       // Redirect to the server's login page
       window.location.href = `${parsed.origin}/login`;
     } catch {
-      setError("Geçersiz URL");
+      setError("Invalid URL");
     }
   }
 
@@ -67,7 +67,7 @@ export default function SetupServerPage() {
         </form>
 
         <p className="text-center text-xs text-muted-foreground">
-          {"Kendi sunucunuzu mu çalıştırıyorsunuz? "}
+          {"Running your own server? "}
           <a
             href="https://github.com/farukylmz0550/KatipCelebi"
             className="text-primary hover:underline"

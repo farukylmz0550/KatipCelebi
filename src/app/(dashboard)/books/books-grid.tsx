@@ -196,7 +196,7 @@ export function BooksGrid({
                 </p>
                 {lentMap[book.id] && (
                   <span className="mt-1 inline-block rounded-[4px] bg-[var(--accent)] px-1.5 py-0.5 font-[var(--font-sans)] text-[10px] text-white sm:hidden">
-                    Ödünç
+                    On Loan
                   </span>
                 )}
               </div>

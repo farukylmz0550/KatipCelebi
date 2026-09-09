@@ -32,9 +32,9 @@ function getPrevStatus(current: string): string {
 }
 
 const STATUS_LABELS: Record<string, string> = {
-  TO_READ: "Okunacak",
-  READING: "Okunuyor",
-  FINISHED: "Tamamlandı",
+  TO_READ: "To Read",
+  READING: "Reading",
+  FINISHED: "Finished",
 };
 
 export function BookCard({ book, lentOut }: { book: Book; lentOut: boolean; dict?: Record<string, string> }) {
@@ -69,7 +69,7 @@ export function BookCard({ book, lentOut }: { book: Book; lentOut: boolean; dict
       className="group flex h-[380px] flex-col overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--surface)] transition-colors hover:border-[var(--border-strong)] hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]"
       {...swipeHandlers}
     >
-      {/* Fixed cover area — 60% — kapak tam sığar */}
+      {/* Fixed cover area — 60% — cover fits fully */}
       <div className="relative h-[60%] shrink-0 overflow-hidden bg-[var(--surface-elevated)] p-2">
         {book.coverUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -82,12 +82,12 @@ export function BookCard({ book, lentOut }: { book: Book; lentOut: boolean; dict
         )}
         {lentOut && (
           <div className="absolute right-2 top-2 rounded-[4px] bg-[var(--accent)] px-2 py-0.5 font-[var(--font-sans)] text-[10px] font-medium text-white shadow-sm">
-            Ödünç
+            On Loan
           </div>
         )}
         {book.signed && (
           <div className="absolute left-2 top-2 rounded-[4px] bg-[var(--warning-soft)] px-1.5 py-0.5 font-[var(--font-sans)] text-[9px] font-medium text-[var(--warning-text)]">
-            İmzalı
+            Signed
           </div>
         )}
       </div>

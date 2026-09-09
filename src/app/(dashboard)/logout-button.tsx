@@ -13,7 +13,7 @@ export function LogoutButton({ label }: { label: string }) {
       <button
         type="submit"
         onClick={(e) => {
-          if (!confirm("Çıkmak istediğinizden emin misiniz?")) {
+          if (!confirm("Are you sure you want to log out?")) {
             e.preventDefault();
           }
         }}

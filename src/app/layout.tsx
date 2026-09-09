@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     template: "%s | KatipCelebi",
   },
   description:
-    "Kişisel dijital kütüphane deneyimi — Kitaplarınızı, ödünç geçmişini, okuma hedeflerinizi ve istatistiklerinizi, sıcak, sakin, zamanın ötesinde bir arayüzde takip edin. Noto Serif/Sans tipografisi, Terracotta/Dusty Rose ve Ink & Copper paleti, eşit boyutlu fiziksel kitap kartları ve duyarlı kabuk ile.",
+    "Personal digital library experience — Track your books, lending history, reading goals and stats in a warm, calm, timeless interface. Noto Serif/Sans typography, Terracotta/Dusty Rose & Ink & Copper palette, equal-sized physical book cards and responsive shell.",
   metadataBase: new URL(process.env.NEXTAUTH_URL ?? "http://localhost:3000"),
   manifest: "/manifest.json",
   appleWebApp: {
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "KatipCelebi",
     description:
-      "Kişisel dijital kütüphane — sıcak, sakin, zamanın ötesinde. Noto tipografisi ve Terracotta/Ink-Copper paleti ile kitap kartları.",
+      "Personal digital library — warm, calm, timeless. Noto typography and Terracotta/Ink-Copper palette with book cards.",
     type: "website",
     locale: "en_US",
     siteName: "KatipCelebi",
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
     title: "KatipCelebi",
-    description: "Kişisel dijital kütüphane — sıcak, sakin, zamanın ötesinde.",
+    description: "Personal digital library — warm, calm, timeless.",
   },
   robots: {
     index: true,

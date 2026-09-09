@@ -39,7 +39,7 @@ export function BarcodeScanner({ onDetected }: BarcodeScannerProps) {
               onDetected(cleaned);
               setIsOpen(false);
             } else {
-              setError(`Geçersiz barkod: ${decodedText}`);
+              setError(`Invalid barcode: ${decodedText}`);
             }
           },
           () => {},
@@ -48,7 +48,7 @@ export function BarcodeScanner({ onDetected }: BarcodeScannerProps) {
         scannerRef.current = scanner;
       })
       .catch(() => {
-        if (!cancelled) setError("Barkod tarayıcı yüklenemedi");
+        if (!cancelled) setError("Barcode scanner failed to load");
       });
 
     return () => {

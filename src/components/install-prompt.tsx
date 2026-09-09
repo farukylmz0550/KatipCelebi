@@ -53,14 +53,14 @@ export function InstallPrompt() {
           <Download size={18} className="text-primary" />
         </div>
         <div className="flex-1">
-          <p className="text-sm font-medium">{"KatipCelebi'yi Yükle"}</p>
-          <p className="text-xs text-muted-foreground">Ana ekrana ekle, cevrimdisi kullan</p>
+          <p className="text-sm font-medium">{"Install KatipCelebi"}</p>
+          <p className="text-xs text-muted-foreground">Add to home screen, use offline</p>
         </div>
         <button
           onClick={handleInstall}
           className="rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground transition-opacity hover:opacity-90"
         >
-          Yükle
+          Install
         </button>
         <button onClick={handleDismiss} className="rounded-md p-1 text-muted-foreground hover:bg-accent">
           <X size={14} />

@@ -22,7 +22,7 @@ export function StreakWidget({
   const [isPending, startTransition] = useTransition();
 
   const handleUseShield = useCallback(() => {
-    if (!confirm("Streak koruması kullanılsın mı?")) return;
+    if (!confirm("Use streak protection?")) return;
     hapticFeedback("heavy");
     startTransition(async () => {
       const mod = await import("@/app/actions/streak");
@@ -51,7 +51,7 @@ export function StreakWidget({
           </div>
           <div>
             <div className="text-2xl font-bold">{currentStreak}</div>
-            <div className="text-xs text-muted-foreground">gün streak</div>
+            <div className="text-xs text-muted-foreground">day streak</div>
           </div>
         </div>
         {longestStreak > 0 && (
@@ -83,9 +83,9 @@ export function StreakWidget({
 
       <div className="mt-3 text-center text-xs">
         {isTodayActive ? (
-          <span className="font-medium text-green-600 dark:text-green-400">Bugün okundu!</span>
+          <span className="font-medium text-green-600 dark:text-green-400">Read today!</span>
         ) : (
-          <span className="text-orange-500">Bugün henüz okunmadı</span>
+          <span className="text-orange-500">Not read today</span>
         )}
       </div>
 

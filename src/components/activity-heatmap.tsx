@@ -5,7 +5,7 @@ interface ActivityHeatmapProps {
 }
 
 const WEEK_DAYS = ["Pzt", "", "Çar", "", "Cum", "", "Paz"];
-const MONTHS = ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"];
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function getIntensityClass(count: number): string {
   if (count === 0) return "bg-muted/50";
@@ -78,7 +78,7 @@ export function ActivityHeatmap({ activities }: ActivityHeatmapProps) {
   return (
     <div className="gnome-card p-4">
       <div className="mb-3 flex items-center justify-between">
-        <p className="text-[13px] font-medium text-foreground">Yıllık Aktivite</p>
+        <p className="text-[13px] font-medium text-foreground">Yearly Activity</p>
         <p className="text-xs text-muted-foreground">{totalActivities} etkinlik</p>
       </div>
 

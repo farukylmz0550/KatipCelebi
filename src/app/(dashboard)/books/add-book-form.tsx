@@ -38,7 +38,7 @@ export function AddBookForm({
   function handleLookup() {
     const cleaned = isbn.replace(/[^0-9Xx]/g, "");
     if (!cleaned) {
-      setLookupError(dict.required ?? "ISBN gerekli");
+      setLookupError(dict.required ?? "ISBN is required");
       return;
     }
     setLookupError(null);
@@ -47,7 +47,7 @@ export function AddBookForm({
       const res = await lookupIsbnAction(isbn);
       if (res.ok && res.data) {
         const data = res.data;
-        // Direkt ekle — tüm detaylarla, tek adım
+        // Direct add — with all details, one step
         const result = await addBook({
           isbn: data.isbn || cleaned,
           title: data.title,
@@ -74,21 +74,21 @@ export function AddBookForm({
           const msg = result.error || (dict.addFailed ?? "Kitap eklenemedi");
           setAddError(msg);
           toast.error(msg);
-          // Fallback: bilgileri forma doldur ki manuel düzeltilebilsin
+          // Fallback: fill form so manual correction is possible
           setTitle(data.title);
           setAuthor(data.author ?? "");
           setCoverUrl(data.coverUrl);
           if (data.numberOfPages) setNumberOfPages(data.numberOfPages);
         }
       } else if (res.ok) {
-        const msg = dict.notFound ?? "ISBN bulunamadı — bilgileri manuel girin.";
+        const msg = dict.notFound ?? "ISBN not found — enter manually.";
         setLookupError(msg);
         toast.error(msg);
       } else {
         const msg =
           res.error === "NOT_FOUND"
-            ? (dict.notFound ?? "ISBN bulunamadı — bilgileri manuel girin.")
-            : (dict.lookupFailed ?? "Arama başarısız. Tekrar deneyin.");
+            ? (dict.notFound ?? "ISBN not found — enter manually.")
+            : (dict.lookupFailed ?? "Lookup failed. Try again.");
         setLookupError(msg);
         toast.error(msg);
       }
@@ -98,8 +98,8 @@ export function AddBookForm({
   function handleAdd() {
     const trimmedTitle = title.trim();
     if (!trimmedTitle) {
-      setAddError(dict.required ?? "Başlık gerekli");
-      toast.error(dict.required ?? "Başlık gerekli");
+      setAddError(dict.required ?? "Title is required");
+      toast.error(dict.required ?? "Title is required");
       return;
     }
     setAddError(null);
@@ -128,7 +128,7 @@ export function AddBookForm({
   }
 
   function handleScan() {
-    toast.info("Barkod tarama yakında eklenecek!");
+    toast.info("Barcode scanning coming soon!");
   }
 
   return (

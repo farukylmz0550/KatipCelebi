@@ -130,7 +130,7 @@ export function Sidebar({ dict, isAdmin, userName, initialCollapsed }: SidebarPr
           <div className="space-y-0.5 px-2">
             {!collapsed && (
               <p className="px-2 py-1 font-[var(--font-sans)] text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-                Kitaplık
+                Library
               </p>
             )}
             {MAIN_NAV.map((item) => (
@@ -141,7 +141,7 @@ export function Sidebar({ dict, isAdmin, userName, initialCollapsed }: SidebarPr
           <div className="space-y-0.5 px-2">
             {!collapsed && (
               <p className="px-2 py-1 font-[var(--font-sans)] text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-                Keşif
+                Discover
               </p>
             )}
             {MORE_NAV.map((item) => (
@@ -153,7 +153,7 @@ export function Sidebar({ dict, isAdmin, userName, initialCollapsed }: SidebarPr
             <div className="space-y-0.5 px-2">
               {!collapsed ? (
                 <p className="px-2 py-1 font-[var(--font-sans)] text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-                  Yönetim
+                  Admin
                 </p>
               ) : (
                 <div className="mx-2 my-2 h-px bg-[var(--border)]" />
@@ -177,11 +177,11 @@ export function Sidebar({ dict, isAdmin, userName, initialCollapsed }: SidebarPr
           type="button"
           disabled={pending}
           onClick={() => startTransition(() => logoutAction())}
-          title={dict.logout ?? "Çıkış"}
+          title={dict.logout ?? "Logout"}
           className="flex h-8 w-full items-center justify-center gap-2 rounded-[8px] text-muted-foreground hover:bg-accent hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] disabled:opacity-50"
         >
           <LogOut size={14} />
-          {!collapsed && <span className="font-[var(--font-sans)] text-xs">{dict.logout ?? "Çıkış"}</span>}
+          {!collapsed && <span className="font-[var(--font-sans)] text-xs">{dict.logout ?? "Logout"}</span>}
         </button>
       </div>
     </aside>
