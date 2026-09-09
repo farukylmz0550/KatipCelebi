@@ -259,7 +259,11 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) — TypeScript strict, Prettier 120 wid
 
 ## 📄 License
 
-**GPLv3** — same as original PyQt6 app. See [LICENSE](LICENSE).
+**GPLv3** — Only source code is licensed under the GPLV3 license
+
+**CC-BY-NC-ND** — The KatipCelebi logo, brand assets, and all materials contained within the brand set directory are licensed under the CC BY-NC-ND 4.0 license.
+
+**** — 
 
 <div align="center">
 
