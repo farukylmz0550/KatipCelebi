@@ -17,12 +17,8 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   LogOut,
-  Palette,
-  Globe,
 } from "lucide-react";
 import { clientHasConsent } from "@/lib/cookies-client";
-import { setLocale } from "@/app/actions/locale";
-import { setTheme } from "@/app/actions/theme";
 import { logoutAction } from "@/app/actions/logout";
 
 type SidebarProps = {
@@ -30,11 +26,6 @@ type SidebarProps = {
   isAdmin: boolean;
   userName?: string | null;
   initialCollapsed: boolean;
-  locale: string;
-  currentTheme: string;
-  onThemeToggle?: () => void;
-  onLocaleToggle?: () => void;
-  onLogout?: () => void;
 };
 
 type NavItem = {
@@ -86,13 +77,10 @@ function setSidebarCookie(collapsed: boolean) {
   }
 }
 
-export function Sidebar({ dict, isAdmin, userName, initialCollapsed, locale, currentTheme }: SidebarProps) {
+export function Sidebar({ dict, isAdmin, userName, initialCollapsed }: SidebarProps) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(initialCollapsed);
   const [pending, startTransition] = useTransition();
-  const locales = ["en", "tr", "es", "fr", "ru", "zh"] as const;
-  const nextLocale = locales[(locales.indexOf(locale as never) + 1) % locales.length];
-  const nextTheme = currentTheme === "dark" ? "light" : "dark";
 
   useEffect(() => {
     try {
@@ -178,44 +166,23 @@ export function Sidebar({ dict, isAdmin, userName, initialCollapsed, locale, cur
         </div>
       </nav>
 
-      {/* Footer */}
+      {/* Footer — only logout, theme/locale via Settings */}
       <div className="border-t border-[var(--border)] p-2 space-y-1">
         {!collapsed && userName && (
           <p className="px-2 py-1 font-[var(--font-sans)] text-xs text-muted-foreground truncate" title={userName}>
             {userName}
           </p>
         )}
-        <div className={`flex ${collapsed ? "flex-col" : "flex-row"} gap-1`}>
-          <button
-            type="button"
-            disabled={pending}
-            onClick={() => startTransition(() => setLocale(nextLocale as never))}
-            title={locale}
-            className="flex h-8 flex-1 items-center justify-center gap-1 rounded-[8px] text-xs font-medium text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] disabled:opacity-50"
-          >
-            <Globe size={14} />
-            {!collapsed && <span>{locale.toUpperCase()}</span>}
-          </button>
-          <button
-            type="button"
-            disabled={pending}
-            onClick={() => startTransition(() => setTheme(nextTheme as never))}
-            title={currentTheme}
-            className="flex h-8 flex-1 items-center justify-center rounded-[8px] text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] disabled:opacity-50"
-          >
-            <Palette size={14} />
-            {!collapsed && <span className="ml-1 text-xs">{currentTheme === "dark" ? "Dark" : "Light"}</span>}
-          </button>
-          <button
-            type="button"
-            disabled={pending}
-            onClick={() => startTransition(() => logoutAction())}
-            title={dict.logout ?? "Çıkış"}
-            className="flex h-8 flex-1 items-center justify-center rounded-[8px] text-muted-foreground hover:bg-accent hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] disabled:opacity-50"
-          >
-            <LogOut size={14} />
-          </button>
-        </div>
+        <button
+          type="button"
+          disabled={pending}
+          onClick={() => startTransition(() => logoutAction())}
+          title={dict.logout ?? "Çıkış"}
+          className="flex h-8 w-full items-center justify-center gap-2 rounded-[8px] text-muted-foreground hover:bg-accent hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] disabled:opacity-50"
+        >
+          <LogOut size={14} />
+          {!collapsed && <span className="font-[var(--font-sans)] text-xs">{dict.logout ?? "Çıkış"}</span>}
+        </button>
       </div>
     </aside>
   );

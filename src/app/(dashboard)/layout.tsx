@@ -2,21 +2,17 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { auth, signOut } from "@/auth";
-import { getDictionary, getLocale } from "@/i18n/get-dictionary";
-import { getTheme } from "@/lib/theme";
+import { getDictionary } from "@/i18n/get-dictionary";
 import { needsSetup } from "@/lib/setup";
 import { Sidebar } from "@/components/sidebar";
 import { BottomNav } from "@/components/bottom-nav";
 import { InstallPrompt } from "@/components/install-prompt";
 import { NotificationPerm } from "./notification-perm";
-import { ThemeDropdown } from "@/components/theme-dropdown";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   if (await needsSetup()) redirect("/setup");
   const session = await auth();
   const dict = await getDictionary();
-  const locale = await getLocale();
-  const theme = await getTheme();
 
   let isAdmin = false;
   if (session?.user?.id) {
@@ -43,14 +39,12 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   return (
     <div className="flex min-h-screen bg-[var(--background)]">
-      {/* Desktop Sidebar — Responsive Hybrid Shell §6 */}
+      {/* Desktop Sidebar — Responsive Hybrid Shell §6 — theme/locale only via Settings */}
       <Sidebar
         dict={sidebarDict}
         isAdmin={isAdmin}
         userName={session?.user?.name ?? null}
         initialCollapsed={sidebarCollapsed}
-        locale={locale}
-        currentTheme={theme}
       />
 
       <div className="flex min-w-0 flex-1 flex-col">
@@ -65,25 +59,6 @@ export default async function DashboardLayout({ children }: { children: React.Re
           </Link>
           <div className="ml-auto flex items-center gap-0.5">
             <NotificationPerm dict={dict.common} />
-            <ThemeDropdown currentTheme={theme} />
-            <form
-              action={async () => {
-                "use server";
-                const { setLocale } = await import("@/app/actions/locale");
-                const locales = ["en", "tr", "es", "fr", "ru", "zh"] as const;
-                const idx = locales.indexOf(locale as never);
-                const next = locales[(idx + 1) % locales.length];
-                await setLocale(next);
-              }}
-            >
-              <button
-                type="submit"
-                className="flex h-8 w-8 items-center justify-center rounded-[8px] text-[11px] font-medium text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
-                title={locale}
-              >
-                {locale.toUpperCase()}
-              </button>
-            </form>
             <form
               action={async () => {
                 "use server";

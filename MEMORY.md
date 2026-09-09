@@ -1,16 +1,16 @@
 # KatipCelebi — Memory Bank
 
-> Son güncelleme: 2026-09-09
-> Versiyon: 2.3.0
+> Last updated: 2026-09-09
+> Version: 2.3.1
 > Branch: main
 
 ---
 
-## 1. Proje Tanımı
+## 1. Project Definition
 
-Kişisel kütüphane yönetim uygulaması. Kitap ekleme, ödünç verme takibi, okuma istatistikleri ve Duolingo tarzı gamification (XP, seviye, başarımlar, liderlik tablosu).
+Personal library management application. Book adding, lending tracking, reading statistics and Duolingo-style gamification (XP, levels, achievements, leaderboard).
 
-Orijinal PyQt6 masaüstü uygulamasının web yeniden yazımı (`legacy` branch).
+Web rewrite of the original PyQt6 desktop app (`legacy` branch).
 
 **Repo:** https://github.com/farukylmz0550/KatipCelebi
 
@@ -18,49 +18,49 @@ Orijinal PyQt6 masaüstü uygulamasının web yeniden yazımı (`legacy` branch)
 
 ## 2. Tech Stack
 
-| Katman | Teknoloji |
+| Layer | Technology |
 |--------|-----------|
 | Framework | Next.js 16 (App Router) + TypeScript |
 | UI | Tailwind CSS 4, shadcn/ui, lucide-react, Recharts, Noto Serif/Sans/Mono |
-| Tema | Terracotta × Dusty Rose (light) / Ink & Copper (dark) — CSS vars `UI_Design_Language.md` |
-| Veritabanı | SQLite via Prisma 7 (`better-sqlite3`) |
+| Theme | Terracotta × Dusty Rose (light) / Ink & Copper (dark) — CSS vars `UI_Design_Language.md` |
+| Database | SQLite via Prisma 7 (`better-sqlite3`) |
 | Auth | NextAuth v5 (Credentials, JWT, bcrypt) |
-| Doğrulama | Zod |
-| Biçimlendirme | Prettier + ESLint |
+| Validation | Zod |
+| Formatting | Prettier + ESLint |
 | Test | Vitest (unit), Playwright (e2e) |
-| i18n | Cookie tabanlı locale, 6 sözlük |
+| i18n | Cookie-based locale, 6 dictionaries |
 | PWA | `public/sw.js` + `manifest.json` + `src/app/sw-register.tsx` |
 | Consent | GDPR cookie banner `src/components/cookie-consent.tsx` (Essential/Preferences/Analytics) |
 | Deploy | Docker (multi-stage), Docker Compose, GHCR |
 
 ---
 
-## 3. Dosya Yapısı
+## 3. File Structure
 
 ```
 katipcelebi/
 ├── src/
 │   ├── app/
 │   │   ├── (dashboard)/
-│   │   │   ├── books/            # Kitap listesi (Card/List), ekleme (ISBN tek tık + detaylı), filtreler, Excel
-│   │   │   │   ├── books-add-section.tsx  # Ok → detaylı form (60/40 kart)
-│   │   │   │   ├── book-card.tsx          # Eşit kart h-[380px] 60/40 object-contain
+│   │   │   ├── books/            # Book list (Card/List), add (ISBN one-click + detailed), filters, Excel
+│   │   │   │   ├── books-add-section.tsx  # Arrow → detailed form (60/40 card)
+│   │   │   │   ├── book-card.tsx          # Equal cards h-[380px] 60/40 object-contain
 │   │   │   │   ├── books-grid.tsx         # 2→3→4 cols + view-mode cookie
-│   │   │   │   └── [id]/                  # Kitap detay, düzenleme, ödünç, kişisel
-│   │   │   ├── lending/          # Ödünç listesi ve formu
-│   │   │   ├── people/           # Kişi rehberi ve geçmişi
-│   │   │   ├── stats/            # İstatistikler, hedefler, grafikler, streak, heatmap
-│   │   │   ├── achievements/     # Başarım rozetleri (grid)
-│   │   │   ├── leaderboard/      # XP sıralaması
-│   │   │   ├── profile/          # İsim düzenleme, şifre değiştirme
-│   │   │   ├── settings/         # Bildirim + tema (Sun/Moon SVG)
+│   │   │   │   └── [id]/                  # Book detail, edit, lending, personal
+│   │   │   ├── lending/          # Lending list and form
+│   │   │   ├── people/           # People directory and history
+│   │   │   ├── stats/            # Statistics, goals, charts, streak, heatmap
+│   │   │   ├── achievements/     # Achievement badges (grid)
+│   │   │   ├── leaderboard/      # XP ranking
+│   │   │   ├── profile/          # Edit name, change password
+│   │   │   ├── settings/         # Notifications + theme (Sun/Moon SVG) + language + licenses link
 │   │   │   ├── more/             # Bottom-nav overflow
-│   │   │   └── admin/            # Admin (users, covers) — sidebar en altta
+│   │   │   └── admin/            # Admin (users, covers) — bottom of sidebar
 │   │   ├── actions/              # Server actions (books, lending, people, goals, excel, profile, covers, admin, locale, theme, logout, settings)
-│   │   ├── api/                  # API route'ları (auth, test reset, streak, well-known)
-│   │   ├── login/                # Giriş sayfası
-│   │   ├── register/             # Kayıt sayfası
-│   │   └── setup/                # İlk kurulum (admin hesabı)
+│   │   ├── api/                  # API routes (auth, test reset, streak, well-known)
+│   │   ├── login/                # Login page
+│   │   ├── register/             # Registration page
+│   │   └── setup/                # First-time admin setup
 │   ├── components/
 │   │   ├── ui/                   # shadcn/ui (token-aware)
 │   │   ├── sidebar.tsx           # Collapsible sidebar (desktop, cookie sidebar-collapsed)
@@ -69,39 +69,39 @@ katipcelebi/
 │   │   ├── theme-dropdown.tsx    # Sun/Moon SVG (Lucide ISC)
 │   │   └── install-prompt.tsx    # PWA install
 │   ├── lib/
-│   │   ├── books/                # Kitap alan mantığı + filters + openlibrary
+│   │   ├── books/                # Book domain logic + filters + openlibrary
 │   │   ├── cookies.ts / cookies-client.ts / cookies-shared.ts # Consent helpers
 │   │   ├── db.ts                 # Prisma client singleton
-│   │   ├── gamification.ts       # XP, seviye, başarımlar (DB)
-│   │   ├── gamification-pure.ts  # Saf fonksiyonlar (Fibonacci, streak)
-│   │   ├── goals.ts              # Hedef matematiği
-│   │   ├── isbn.ts               # ISBN arama (full metadata)
-│   │   ├── person.ts             # Kişi normalizasyonu, güven
-│   │   ├── stats.ts              # Aylık bitiş sayıları
-│   │   ├── streak.ts             # Streak hesaplama
-│   │   └── theme.ts              # Cookie tema (light/dark, Sun/Moon)
-│   ├── i18n/                     # Sözlükler (en, tr, es, fr, ru, zh)
-│   ├── auth.ts                   # NextAuth yapılandırması + onay kontrolü
+│   │   ├── gamification.ts       # XP, levels, achievements (DB)
+│   │   ├── gamification-pure.ts  # Pure functions (Fibonacci, streak)
+│   │   ├── goals.ts              # Goal math
+│   │   ├── isbn.ts               # ISBN lookup (full metadata)
+│   │   ├── person.ts             # Person normalization, trust
+│   │   ├── stats.ts              # Monthly finish counts
+│   │   ├── streak.ts             # Streak calculation
+│   │   └── theme.ts              # Cookie theme (light/dark, Sun/Moon)
+│   ├── i18n/                     # Dictionaries (en, tr, es, fr, ru, zh)
+│   ├── auth.ts                   # NextAuth config + approval check
 │   ├── proxy.ts                  # Proxy (auth + rate limiting)
-│   └── types/                    # TypeScript bildirimleri
+│   └── types/                    # TypeScript declarations
 ├── prisma/
-│   ├── schema.prisma             # Veri modeli
-│   ├── seed.ts                   # Başarım kataloğu tohumu (dev)
-│   ├── seed.cjs                  # Başarım kataloğu tohumu (Docker)
-│   └── migrations/               # Veritabanı migrasyonları
-├── e2e/                          # Playwright E2E testleri
-├── public/                       # Statik dosyalar, sw.js, manifest.json
+│   ├── schema.prisma             # Data model
+│   ├── seed.ts                   # Achievement catalog seed (dev)
+│   ├── seed.cjs                  # Achievement catalog seed (Docker)
+│   └── migrations/               # Database migrations
+├── e2e/                          # Playwright E2E tests
+├── public/                       # Static files, sw.js, manifest.json
 ├── UI_Design_Language.md         # Visual language source of truth
 ├── Architecture_Principles.md    # Architectural boundaries
 ├── Project_Rules.md              # Project-level rules
-├── Dockerfile                    # Çok katmanlı Docker build
-├── docker-compose.yml            # Self-hosting kurulumu
-└── vitest.config.ts              # Unit test yapılandırması
+├── Dockerfile                    # Multi-stage Docker build
+├── docker-compose.yml            # Self-hosting setup
+└── vitest.config.ts              # Unit test config
 ```
 
 ---
 
-## 4. Veri Modeli
+## 4. Data Model
 
 ```
 User ──────┬── Book ──────── LendingRecord
@@ -110,22 +110,22 @@ User ──────┬── Book ──────── LendingRecord
            └── UserAchievement ── Achievement
 ```
 
-| Model | Ana Alanlar |
+| Model | Key Fields |
 |-------|------------|
 | **User** | email, passwordHash, name, isAdmin, approved, xp, currentStreak, longestStreak, lastActiveDate, streakShieldCount |
-| **Book** | isbn, title, author, coverUrl, status, rating, tags, copies, subtitle, publishers, publishDate, publishPlaces, numberOfPages, languages, isbn10/13, subjects, 17 legacy alan |
-| **Person** | name (kullanıcı başına benzersiz), ödünçte otomatik oluşturulur |
+| **Book** | isbn, title, author, coverUrl, status, rating, tags, copies, subtitle, publishers, publishDate, publishPlaces, numberOfPages, languages, isbn10/13, subjects, 17 legacy fields |
+| **Person** | name (unique per user), auto-created on lending |
 | **LendingRecord** | book, borrower, lentAt, returnedAt, denormalized bookTitle, personId |
-| **Goal** | kullanıcı başına yıllık/aylık hedefler |
-| **Achievement** | key, titleKey, descriptionKey, iconKey (i18n) — 8 adet (week/month/century streak dahil) |
-| **UserAchievement** | kullanıcı + başarım bağlantısı + kilidi açma tarihi |
-| **DailyActivity / StreakShield / UserSettings / PushSubscription** | streak & bildirim takibi |
+| **Goal** | yearly, monthly targets per user |
+| **Achievement** | key, titleKey, descriptionKey, iconKey (i18n) — 8 achievements (week/month/century streak incl.) |
+| **UserAchievement** | user + achievement link with unlock date |
+| **DailyActivity / StreakShield / UserSettings / PushSubscription** | streak & notification tracking |
 
 ---
 
 ## 5. Server Actions
 
-| Dosya | Mutasyonlar |
+| File | Mutations |
 |-------|------------|
 | `auth.ts` | register (approved=false) |
 | `books.ts` | add (full metadata, one-click ISBN), update, delete, set status, lookupIsbn |
@@ -142,130 +142,131 @@ User ──────┬── Book ──────── LendingRecord
 | `settings.ts` | update notifications/streak/weeklyDigest |
 | `cookies.ts` | setConsentCookie, hasConsent |
 
-Her veri değişikliği yapan action `awardXp()` + `syncAchievements()` çalıştırır. ISBN tek tıkla eklemede `lookupIsbnAction` → `addBook` zinciri, tüm Open Library alanları kaydedilir.
+Every data-modifying action runs `awardXp()` + `syncAchievements()`. ISBN one-click flow chains `lookupIsbnAction` → `addBook` with all Open Library fields.
 
 ---
 
-## 6. Ortam Değişkenleri
+## 6. Environment Variables
 
-| Değişken | Gerekli | Varsayılan | Açıklama |
+| Variable | Required | Default | Description |
 |----------|---------|------------|----------|
-| `DATABASE_URL` | Evet | `file:./prisma/dev.db` | SQLite veritabanı yolu |
-| `NEXTAUTH_SECRET` | Evet | — | JWT imzalama sırrı |
-| `NEXTAUTH_URL` | Hayır | `http://localhost:3000` | Uygulama URL'i |
-| `APP_PORT` | Hayır | `3000` | Port (Docker tarafından kullanılır) |
-| `RESET_SECRET` | Hayır | — | `/api/test/reset` endpoint sırrı |
-| `ALLOW_REGISTRATION` | Hayır | `true` | `false` yaparak herkese açık kaydı devre dışı bırak |
+| `DATABASE_URL` | Yes | `file:./prisma/dev.db` | SQLite database path |
+| `NEXTAUTH_SECRET` | Yes | — | Secret for JWT signing |
+| `NEXTAUTH_URL` | No | `http://localhost:3000` | Application URL |
+| `APP_PORT` | No | `3000` | Port (used by Docker) |
+| `RESET_SECRET` | No | — | Secret for `/api/test/reset` endpoint |
+| `ALLOW_REGISTRATION` | No | `true` | Set to `false` to disable public registration |
 
 ---
 
-## 7. Docker Kurulumu
+## 7. Docker Setup
 
 ```bash
 # Pre-built image
 docker compose up -d
 
-# Kaynaktan build
+# Build from source
 docker compose up -d --build
 ```
 
-- Build tools (python3, make, g++) production stage'de de kurulu
-- `seed.cjs` Docker'da tsx olmadan çalışır
-- Prisma migrasyonları entrypoint tarafından otomatik çalıştırılır
+- Build tools (python3, make, g++) are installed in production stage
+- `seed.cjs` runs without tsx in Docker
+- Prisma migrations are automatically run by entrypoint
 
 ---
 
-## 8. Test
+## 8. Testing
 
 ```bash
-npm test              # 92 unit test (vitest)
-npx playwright test   # 26 e2e test (playwright)
+npm test              # 97 unit tests (vitest)
+npx playwright test   # 25 e2e tests (playwright)
 npm run lint          # eslint
 npm run format:check  # prettier
 ```
 
 ---
 
-## 9. Önemli Commit Özeti (Web Yeniden Yazımı)
+## 9. Important Commit History (Web Rewrite)
 
-| Tarih | Commit | Açıklama |
+| Date | Commit | Description |
 |-------|--------|----------|
-| 2026-09-09 | `2.3.0` | UI Design Language 60/40 kart, Noto, Terracotta/Ink-Copper, collapsible sidebar, cookie consent (C), ISBN tek tık + detaylı form, bulk import kaldırıldı, high-contrast kaldırıldı, Sun/Moon SVG |
-| 2026-09-08 | `768d827` | GitHub Actions silindi, README güncellendi |
-| 2026-09-08 | `62ca415` | Docker build + Turbopack uyumluluk + TS hataları düzeltildi |
-| 2026-09-07 | `d08b72e` | i18n düzeltmeleri, CI/CD, admin onay sistemi |
-| 2026-09-07 | `d294650` | showOnLeaderboard opt-out eklendi |
-| 2026-09-07 | `92b4070` | Güvenlik: .env.example'dan tehlikeli NEXTAUTH_SECRET kaldırıldı |
-| 2026-09-07 | `df14474` | Güvenlik: Security header'ları eklendi |
-| 2026-09-07 | `fba642f` | Güvenlik: Koşullu seeding (entrypoint) |
-| 2026-09-07 | `8f6a3e6` | Güvenlik: Cookie httpOnly/secure/sameSite |
-| 2026-09-07 | `a95cb3e` | Güvenlik: Zod string uzunluk limitleri + coverUrl doğrulama |
-| 2026-09-07 | `c76e074` | Güvenlik: lookupIsbnAction için auth zorunlu |
-| 2026-09-07 | `0b16703` | Güvenlik: Admin kurulumu için Zod + transaction guard |
-| 2026-09-07 | `2684f4b` | Güvenlik: ALLOW_REGISTRATION env var |
-| 2026-09-07 | `a9dd777` | Güvenlik: Test reset admin + token ile korundu |
-| 2026-09-04 | `3b530eb` | Docker build workflow (GHCR) eklendi |
-| 2026-09-04 | `c44a25d` | README ve CONTRIBUTING.md yeniden yazıldı |
-| 2026-09-04 | `282eef1` | Prettier eklendi |
-| 2026-09-04 | `3ce6d8a` | Cover cache istatistik doğruluğu iyileştirildi |
-| 2026-09-04 | `59d2d6f` | Dockerignore PNG sorunu düzeltildi |
-| 2026-09-04 | `4d675a5` | Yetim Rust crate kaldırıldı |
-| 2026-09-04 | `f314a85` | Kullanılmayan bileşenler ve ölü kod kaldırıldı |
-| 2026-09-04 | `c2303bf` | Sabit veritabanı yolları taşınabilirlik için düzeltildi |
-| 2026-09-02 | `9d85a8a` | PWA/TWA desteği + bildirimler |
-| 2026-09-02 | `a5f0c2c` | GNOME Adwaita tasarım dili |
-| 2026-09-02 | `a35f651` | Editöryel yeniden tasarım — AI şablon hissi kaldırıldı |
-| 2026-09-01 | `f127944` | Sıcak & Edebi UI yeniden tasarımı + shadcn/ui |
-| 2026-09-01 | `e247fe7` | Favicon, hata/yükleme durumları, profil sayfası, sayfalama, SEO, rate limiting, unit testler |
-| 2026-08-31 | `cce9700` | Playwright e2e test paketi + vitest exclude |
-| 2026-08-31 | `6e88849` | SQLite + rust core + legacy eşdeğer (kitaplar, kişiler, hedefler, excel, openlibrary, i18n) |
+| 2026-09-09 | `2.3.1` | Settings-only theme/locale (sidebar/mobile header removed), licenses link in Settings, docs Turkish → English, book card 60/40 readable (h-[380px] object-contain) |
+| 2026-09-09 | `2.3.0` | UI Design Language 60/40 card, Noto, Terracotta/Ink-Copper, collapsible sidebar, cookie consent (C), ISBN one-click + detailed form, bulk import removed, high-contrast removed, Sun/Moon SVG |
+| 2026-09-08 | `768d827` | GitHub Actions removed, README updated |
+| 2026-09-08 | `62ca415` | Docker build + Turbopack compatibility + TS errors fixed |
+| 2026-09-07 | `d08b72e` | i18n fixes, CI/CD, admin approval system |
+| 2026-09-07 | `d294650` | showOnLeaderboard opt-out added |
+| 2026-09-07 | `92b4070` | Security: dangerous NEXTAUTH_SECRET removed from .env.example |
+| 2026-09-07 | `df14474` | Security: Security headers added |
+| 2026-09-07 | `fba642f` | Security: Conditional seeding (entrypoint) |
+| 2026-09-07 | `8f6a3e6` | Security: Cookie httpOnly/secure/sameSite |
+| 2026-09-07 | `a95cb3e` | Security: Zod string length limits + coverUrl validation |
+| 2026-09-07 | `c76e074` | Security: auth required for lookupIsbnAction |
+| 2026-09-07 | `0b16703` | Security: Zod + transaction guard for admin setup |
+| 2026-09-07 | `2684f4b` | Security: ALLOW_REGISTRATION env var |
+| 2026-09-07 | `a9dd777` | Security: Test reset protected with admin + token |
+| 2026-09-04 | `3b530eb` | Docker build workflow (GHCR) added |
+| 2026-09-04 | `c44a25d` | README and CONTRIBUTING.md rewritten |
+| 2026-09-04 | `282eef1` | Prettier added |
+| 2026-09-04 | `3ce6d8a` | Cover cache stats accuracy improved |
+| 2026-09-04 | `59d2d6f` | Dockerignore PNG issue fixed |
+| 2026-09-04 | `4d675a5` | Orphan Rust crate removed |
+| 2026-09-04 | `f314a85` | Unused components and dead code removed |
+| 2026-09-04 | `c2303bf` | Hardcoded database paths fixed for portability |
+| 2026-09-02 | `9d85a8a` | PWA/TWA support + notifications |
+| 2026-09-02 | `a5f0c2c` | GNOME Adwaita design language |
+| 2026-09-02 | `a35f651` | Editorial redesign — AI template feel removed |
+| 2026-09-01 | `f127944` | Warm & Literary UI redesign + shadcn/ui |
+| 2026-09-01 | `e247fe7` | Favicon, error/loading states, profile page, pagination, SEO, rate limiting, unit tests |
+| 2026-08-31 | `cce9700` | Playwright e2e test suite + vitest exclude |
+| 2026-08-31 | `6e88849` | SQLite + rust core + legacy equiv (books, people, goals, excel, openlibrary, i18n) |
 
 ---
 
-## 10. Bilinen Sorunlar ve Notlar
+## 10. Known Issues and Notes
 
-- **Turbopack + better-sqlite3:** Turbopack client component'leribetter-sqlite3'ü bundle eder → `fs` hatası. Çözüm: `gamification-pure.ts` ile saf fonksiyonlar ayrıldı.
-- **Docker production stage:** better-sqlite3 node-gyp ile derlenir, production stage'de python3/make/g++ gerekir.
-- **prisma7.config.ts:** `dotenv/config` devDependency olarak production'da mevcut değil → kaldırıldı, env var doğrudan kullanılır.
-- **seed.cjs:** TypeScript tohum dosyası (`tsx` devDependency) production'da çalışmaz → plain JS alternatif eklendi (`CONTRIBUTING.md` istisna: `public/sw.js` + `prisma/seed.cjs`).
-- **Proxy (middleware.ts):** Next.js 16'da `middleware.ts` deprecated → `proxy.ts` doğru convention.
-- **Sidebar server actions:** Client Component içinde `setLocale.bind`/`setTheme.bind` → React #441 hatası. Çözüm: `useTransition` + doğrudan `setLocale()`/`setTheme()` çağrısı, `logoutAction` ayrı server action.
-- **High Contrast:** `UI_Design_Language.md` ile uyumsuz olduğu için kaldırıldı (GNOME kalıntısı). Tema sadece `light`/`dark` (Sun/Moon SVG, Lucide ISC).
-- **Book Card 60/40:** `h-[380px]` `h-[60%]` cover `object-contain p-2` + `h-[40%]` metadata `gap-1 px-3 py-3`, `text-[15px] serif` okunabilir. Bulk import (`importBooksByIsbn`) kaldırıldı.
-- **Cookie Consent:** `src/lib/cookies-shared.ts` ile server/client ayrımı; `next/headers` sadece server'da.
-
----
-
-## 11. Orijinal Proje (Legacy)
-
-Masaüstü uygulaması PyQt6 ile yazılmıştır. `legacy` branch'inde bulunur.
-GPLv3 lisansı altında her iki proje de devam eder.
+- **Turbopack + better-sqlite3:** Turbopack bundles better-sqlite3 in client components → `fs` error. Fix: `gamification-pure.ts` with pure functions separated.
+- **Docker production stage:** better-sqlite3 compiles with node-gyp, requires python3/make/g++ in production stage.
+- **prisma7.config.ts:** `dotenv/config` is devDependency, not available in production → removed, env var used directly.
+- **seed.cjs:** TypeScript seed file (`tsx` devDependency) doesn't run in production → plain JS alternative added (`CONTRIBUTING.md` exception: `public/sw.js` + `prisma/seed.cjs`).
+- **Proxy (middleware.ts):** In Next.js 16 `middleware.ts` is deprecated → `proxy.ts` is correct convention.
+- **Sidebar server actions:** `setLocale.bind`/`setTheme.bind` in Client Component → React #441. Fix: `useTransition` + direct `setLocale()`/`setTheme()` calls, `logoutAction` as separate server action.
+- **High Contrast:** Removed as incompatible with `UI_Design_Language.md` (GNOME residue). Theme is now only `light`/`dark` (Sun/Moon SVG, Lucide ISC).
+- **Book Card 60/40:** `h-[380px]` `h-[60%]` cover `object-contain p-2` + `h-[40%]` metadata `gap-1 px-3 py-3`, `text-[15px] serif` readable. Bulk import (`importBooksByIsbn`) removed.
+- **Cookie Consent:** Server/client split via `src/lib/cookies-shared.ts`; `next/headers` only on server.
 
 ---
 
-## 12. Mobil Uygulama İçin Yapılacaklar (PWA İyileştirmeleri)
+## 11. Original Project (Legacy)
 
-### Yüksek Öncelik
-- [ ] **Kamera ile ISBN barkod tarama** — `html5-qrcode` ile telefon kamerasından barkod okuma
+Desktop app written with PyQt6. Located in `legacy` branch.
+Both projects continue under GPLv3.
+
+---
+
+## 12. PWA Improvements TODO
+
+### High Priority
+- [ ] **Camera ISBN barcode scan** — `html5-qrcode` with phone camera
 - [x] **Safe area insets** — `env(safe-area-inset-*)` + `safe-bottom`/`safe-top` (layout, bottom-nav)
 - [x] **viewport-fit=cover** — `layout.tsx:27` `viewportFit: "cover"`
-- [x] **Alt navigasyon barı** — `src/components/bottom-nav.tsx` + `src/components/sidebar.tsx` (Responsive Hybrid Shell)
+- [x] **Bottom navigation bar** — `src/components/bottom-nav.tsx` + `src/components/sidebar.tsx` (Responsive Hybrid Shell)
 
-### Orta Öncelik
-- [ ] **Offline precaching** — App shell'i (HTML/CSS/JS) SW install'ta önceden cache'le
-- [ ] **Offline fallback sayfası** — İnternet yokken boş sayfa yerine bilgilendirme sayfası
-- [ ] **Web Share API** — Kitap detayını WhatsApp/e-posta ile paylaş
-- [ ] **True push notification** — Sunucudan gerçek push (şu an sadece timer tabanlı)
-- [ ] **SW güncelleme bildirimi** — Yeni versiyon geldiğinde toast göster
-- [ ] **Özel kurulum butonu** — `BeforeInstallPrompt` API ile özel "Yükle" butonu
+### Medium Priority
+- [ ] **Offline precaching** — Pre-cache app shell (HTML/CSS/JS) on SW install
+- [ ] **Offline fallback page** — Show info page when offline instead of blank
+- [ ] **Web Share API** — Share book detail via WhatsApp/email
+- [ ] **True push notification** — Real push from server (currently timer-based)
+- [ ] **SW update notification** — Show toast when new version arrives
+- [ ] **Custom install button** — `BeforeInstallPrompt` API with custom "Install" button
 
-### Düşük Öncelik
-- [ ] **Background sync** — Çevrimdışı form gönderimi, online olunca senkronize
-- [ ] **Manifest shortcuts** — Ana ekrandan hızlı erişim (kitap ekle, ödünçler)
-- [ ] **Manifest screenshots** — Zengin kurulum banner'ı için ekran görüntüleri
-- [ ] **Touch gesture'lar** — Swipe, long-press (kitap durumu değiştirme vb.)
-- [ ] **Haptic feedback** — Titreşim bildirimleri (Vibration API)
+### Low Priority
+- [ ] **Background sync** — Offline form submission, sync when online
+- [ ] **Manifest shortcuts** — Quick access from home screen (add book, lending)
+- [ ] **Manifest screenshots** — Screenshots for rich install banner
+- [ ] **Touch gestures** — Swipe, long-press (book status change, etc.)
+- [ ] **Haptic feedback** — Vibration (Vibration API)
 
 ---
 
-*Bu dosya AI asistanları için proje bağlamı sağlar. Düzenli olarak güncellenmelidir.*
+*This file provides project context for AI assistants. Should be updated regularly.*
