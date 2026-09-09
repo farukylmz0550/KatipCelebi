@@ -2,7 +2,9 @@ import { test, expect } from "@playwright/test";
 import { resetDb } from "./helpers/db";
 
 test.describe("manual GUI", () => {
-  test("full flow: setup → books → lending → people → stats → achievements → leaderboard → admin → i18n/theme", async ({ page }) => {
+  test("full flow: setup → books → lending → people → stats → achievements → leaderboard → admin → i18n/theme", async ({
+    page,
+  }) => {
     await resetDb(page);
     await page.goto("/");
     await expect(page).toHaveURL(/\/setup/);
@@ -40,7 +42,10 @@ test.describe("manual GUI", () => {
     await expect(page.getByRole("heading", { name: /facts/i })).toBeVisible();
     await page.getByRole("button", { name: /^edit$/i }).click();
     await page.getByLabel("Subtitle").fill("A Brief History");
-    await page.getByRole("button", { name: /^save$/i }).first().click();
+    await page
+      .getByRole("button", { name: /^save$/i })
+      .first()
+      .click();
     await expect(page.getByText("A Brief History")).toBeVisible();
     await page.screenshot({ path: "e2e/screenshots/05-book-detail.png", fullPage: true });
 

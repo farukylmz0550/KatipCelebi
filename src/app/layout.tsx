@@ -1,14 +1,28 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Noto_Serif, Noto_Sans, Noto_Sans_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { getTheme } from "@/lib/theme";
-import { getLocale } from "@/i18n/get-dictionary";
+import { getDictionary, getLocale } from "@/i18n/get-dictionary";
 import { SWRegister } from "./sw-register";
+import { CookieConsent } from "@/components/cookie-consent";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-geist-sans",
+const notoSerif = Noto_Serif({
+  variable: "--font-noto-serif",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const notoSans = Noto_Sans({
+  variable: "--font-noto-sans",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const notoMono = Noto_Sans_Mono({
+  variable: "--font-noto-mono",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const viewport: Viewport = {
@@ -17,8 +31,8 @@ export const viewport: Viewport = {
   maximumScale: 5,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#3584e4" },
-    { media: "(prefers-color-scheme: dark)", color: "#3584e4" },
+    { media: "(prefers-color-scheme: light)", color: "#A25F4C" },
+    { media: "(prefers-color-scheme: dark)", color: "#C17A5E" },
   ],
 };
 
@@ -27,7 +41,8 @@ export const metadata: Metadata = {
     default: "KatipCelebi",
     template: "%s | KatipCelebi",
   },
-  description: "Track your books, lending history, reading goals, and stats.",
+  description:
+    "Kişisel dijital kütüphane deneyimi — Kitaplarınızı, ödünç geçmişini, okuma hedeflerinizi ve istatistiklerinizi, sıcak, sakin, zamanın ötesinde bir arayüzde takip edin. Noto Serif/Sans tipografisi, Terracotta/Dusty Rose ve Ink & Copper paleti, eşit boyutlu fiziksel kitap kartları ve duyarlı kabuk ile.",
   metadataBase: new URL(process.env.NEXTAUTH_URL ?? "http://localhost:3000"),
   manifest: "/manifest.json",
   appleWebApp: {
@@ -37,7 +52,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "KatipCelebi",
-    description: "Track your books, lending history, reading goals, and stats.",
+    description:
+      "Kişisel dijital kütüphane — sıcak, sakin, zamanın ötesinde. Noto tipografisi ve Terracotta/Ink-Copper paleti ile kitap kartları.",
     type: "website",
     locale: "en_US",
     siteName: "KatipCelebi",
@@ -45,7 +61,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
     title: "KatipCelebi",
-    description: "Track your books, lending history, reading goals, and stats.",
+    description: "Kişisel dijital kütüphane — sıcak, sakin, zamanın ötesinde.",
   },
   robots: {
     index: true,
@@ -56,16 +72,11 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const theme = await getTheme();
   const locale = await getLocale();
+  const dict = await getDictionary();
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${
-        theme === "dark"
-          ? "dark"
-          : theme === "high-contrast"
-            ? "high-contrast"
-            : ""
-      } h-full antialiased`}
+      className={`${notoSerif.variable} ${notoSans.variable} ${notoMono.variable} ${theme === "dark" ? "dark" : ""} h-full antialiased`}
     >
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -76,6 +87,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <SWRegister />
         {children}
+        <CookieConsent dict={dict.cookieConsent as never} />
         <Toaster />
       </body>
     </html>

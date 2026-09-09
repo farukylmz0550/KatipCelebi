@@ -8,7 +8,9 @@ Thanks for your interest in contributing! This guide covers code style, git work
 
 ### General Principles
 
-- **TypeScript everywhere** — no `.js` files except config
+- **TypeScript everywhere** — no `.js`/`.cjs`/`.mjs` files except config (`*.config.*`, `postcss.config.*`) and two documented runtime exceptions:
+  - `public/sw.js` — Service Worker runtime (must be served as ` /sw.js` at origin root; browser ServiceWorker scope cannot import TS directly)
+  - `prisma/seed.cjs` — Docker production fallback ( `tsx` is dev-only per `MEMORY.md`; `seed.ts` is the TS source of truth, `seed.cjs` is the plain-JS equivalent for `node` without `tsx`)
 - **Strict mode** — `any` only when truly unavoidable (with `eslint-disable` comment explaining why)
 - **Functional over class-based** — prefer pure functions for domain logic
 - **Single Responsibility** — one function/file does one thing

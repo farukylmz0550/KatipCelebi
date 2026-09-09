@@ -38,16 +38,20 @@ export default async function MorePage() {
 
   return (
     <div className="space-y-6">
+      <header className="space-y-1">
+        <h1 className="font-[var(--font-serif)] text-2xl font-semibold tracking-tight text-foreground">
+          {dict.nav.more}
+        </h1>
+        <p className="font-[var(--font-sans)] text-sm text-muted-foreground">
+          {dict.nav.achievements} · {dict.nav.leaderboard}
+        </p>
+      </header>
       {sections.map((section, si) => (
         <div key={si} className="gnome-boxed-list">
           {section.items.map((item) => {
             const Icon = item.icon;
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="gnome-boxed-list-item group"
-              >
+              <Link key={item.href} href={item.href} className="gnome-boxed-list-item group">
                 <div className="flex items-center gap-3">
                   <Icon size={18} className="text-muted-foreground" />
                   <span className="text-sm text-foreground">{item.label}</span>

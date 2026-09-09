@@ -3,7 +3,10 @@ export function monthlyFinishCounts(finishedAt: Date[], now = new Date()): { mon
   const months: { key: string; month: string }[] = [];
   for (let i = 5; i >= 0; i--) {
     const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-    months.push({ key: `${d.getFullYear()}-${d.getMonth()}`, month: d.toLocaleDateString(undefined, { month: "short" }) });
+    months.push({
+      key: `${d.getFullYear()}-${d.getMonth()}`,
+      month: d.toLocaleDateString(undefined, { month: "short" }),
+    });
   }
 
   const counts = new Map(months.map((m) => [m.key, 0]));

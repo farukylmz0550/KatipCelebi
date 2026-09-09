@@ -49,7 +49,25 @@ describe("contains", () => {
 
 describe("fromSubjects", () => {
   it("filters noise words and limits to MAX_SUBJECT_TAGS", () => {
-    const subjects = ["Fiction", "Translations", "In Library", "Poetry", "History", "Science", "Art", "Travel", "Religion", "Textbooks", "Reference", "Fantasy", "Biography", "Philosophy", "Juvenile Fiction", "Detective", "Short Stories"];
+    const subjects = [
+      "Fiction",
+      "Translations",
+      "In Library",
+      "Poetry",
+      "History",
+      "Science",
+      "Art",
+      "Travel",
+      "Religion",
+      "Textbooks",
+      "Reference",
+      "Fantasy",
+      "Biography",
+      "Philosophy",
+      "Juvenile Fiction",
+      "Detective",
+      "Short Stories",
+    ];
     const result = fromSubjects(subjects);
     expect(result).not.toContain("translations");
     expect(result).not.toContain("in library");

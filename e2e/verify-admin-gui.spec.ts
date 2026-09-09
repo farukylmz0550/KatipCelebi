@@ -24,11 +24,17 @@ test.describe("verify admin@admin.admin GUI", () => {
     await expect(page.getByRole("heading", { name: /facts/i })).toBeVisible();
     await page.getByRole("button", { name: /^edit$/i }).click();
     await page.getByLabel("Subtitle").fill("Verify Sub");
-    await page.getByRole("button", { name: /^save$/i }).first().click();
+    await page
+      .getByRole("button", { name: /^save$/i })
+      .first()
+      .click();
     await expect(page.getByText("Verify Sub")).toBeVisible();
 
     await page.goto("/books");
-    await page.getByRole("button", { name: /mark finished/i }).first().click();
+    await page
+      .getByRole("button", { name: /mark finished/i })
+      .first()
+      .click();
     await expect(page.getByRole("button", { name: /mark finished/i })).toHaveCount(0);
     await page.screenshot({ path: "e2e/screenshots/verify-03-finished.png", fullPage: true });
 

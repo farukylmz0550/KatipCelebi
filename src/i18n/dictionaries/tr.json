@@ -94,7 +94,12 @@
     "copies": "kopya",
     "pages": "Sayfa",
     "scan": "Tara",
-    "currentPage": "Mevcut Sayfa"
+    "currentPage": "Mevcut Sayfa",
+    "notFound": "ISBN bulunamadı — bilgileri manuel girin.",
+    "lookupFailed": "Arama başarısız. Tekrar deneyin.",
+    "addSuccess": "Kitap eklendi",
+    "addFailed": "Kitap eklenemedi",
+    "required": "Bu alan gerekli"
   },
   "facts": {
     "title": "Başlık *",
@@ -286,5 +291,25 @@
     "description": "Bu proje aşağıdaki açık kaynak teknolojileri kullanmaktadır:",
     "nav": "Lisanslar",
     "projectLicense": "KatipCelebi, GNU Genel Kamu Lisansı v3.0 altında lisanslanmıştır."
+  },
+  "cookieConsent": {
+    "title": "Çerezler",
+    "subtitle": "Kişisel kütüphaneniz için",
+    "desc": "KatipCelebi, deneyiminizi kişiselleştirmek için çerezleri kullanır — tema, dil, yan çubuk durumu ve görünüm modu gibi tercihlerinizi hatırlamak için. Zorunlu çerezler oturum güvenliği için gereklidir.",
+    "descMuted": "Tercih çerezlerini reddederseniz, tercihleriniz yalnızca bu cihazda saklanır ve oturumlar arası korunmaz.",
+    "mobileDesc": "Tercihlerinizi (tema, dil, yan çubuk) hatırlamak için çerezleri kullanıyoruz. Yasal olarak onayınızı almamız gerekiyor.",
+    "essentialTitle": "Zorunlu",
+    "essentialDesc": "Oturum, güvenlik, giriş. Kapatılamaz.",
+    "preferencesTitle": "Tercihler",
+    "preferencesDesc": "Tema, dil, yan çubuk, kart/liste görünümü.",
+    "analyticsTitle": "Analitik",
+    "analyticsDesc": "Anonim kullanım istatistikleri (şu an pasif).",
+    "accept": "Kabul Et",
+    "reject": "Reddet",
+    "preferencesBtn": "Tercihler",
+    "save": "Kaydet",
+    "back": "Geri",
+    "close": "Kapat",
+    "licensesLink": "Ayrıntılar için Lisanslar sayfasına bakın."
   }
 }

@@ -24,7 +24,10 @@ test.describe("lending + people", () => {
     await page.getByPlaceholder("Name").fill("Ayşe Yılmaz");
     await page.getByRole("button", { name: /^lend$/i }).click();
     await expect(page.getByText("Ayşe Yılmaz")).toBeVisible();
-    await page.getByRole("button", { name: /mark returned/i }).first().click();
+    await page
+      .getByRole("button", { name: /mark returned/i })
+      .first()
+      .click();
     await expect(page.getByText("Returned")).toBeVisible();
   });
 
@@ -66,7 +69,10 @@ test.describe("lending + people", () => {
     await expect(page.getByText(/still has books out/i)).toBeVisible();
 
     await page.goto("/lending");
-    await page.getByRole("button", { name: /mark returned/i }).first().click();
+    await page
+      .getByRole("button", { name: /mark returned/i })
+      .first()
+      .click();
     await page.goto("/people");
     await page.getByRole("link", { name: "Mehmet" }).click();
     await page.getByRole("button", { name: /remove/i }).click();

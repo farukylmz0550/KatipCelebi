@@ -1,7 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
-  statusOf, normalizeWebStatus, parseStamp, readingDays, formatDuration,
-  NOT_READ, WANT_TO_READ, READING, READ,
+  statusOf,
+  normalizeWebStatus,
+  parseStamp,
+  readingDays,
+  formatDuration,
+  NOT_READ,
+  WANT_TO_READ,
+  READING,
+  READ,
 } from "@/lib/books/reading";
 
 describe("statusOf", () => {

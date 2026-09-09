@@ -30,11 +30,10 @@ test.describe("books", () => {
     await expect(page.locator("a[href^='/books/']").first()).toBeVisible();
   });
 
-  test("bulk import by ISBN", async ({ page }) => {
+  test("bulk import removed — no ISBN list", async ({ page }) => {
     await page.goto("/books");
-    await page.getByPlaceholder("One ISBN per line").fill("9780140449136, 9780306406157");
-    await page.getByRole("button", { name: /import/i }).click();
-    await expect(page.getByPlaceholder("One ISBN per line")).toBeVisible();
+    await expect(page.getByPlaceholder("One ISBN per line")).toHaveCount(0);
+    await expect(page.getByText("One ISBN per line")).toHaveCount(0);
   });
 
   test("filter bar: search + rating + status + lent + tag + sort", async ({ page }) => {
@@ -67,7 +66,10 @@ test.describe("books", () => {
 
     await page.getByRole("button", { name: /^edit$/i }).click();
     await page.getByLabel("Subtitle").fill("Sub");
-    await page.getByRole("button", { name: /^save$/i }).first().click();
+    await page
+      .getByRole("button", { name: /^save$/i })
+      .first()
+      .click();
     await expect(page.getByText("Sub", { exact: true }).first()).toBeVisible();
 
     await page.locator("button:has-text('★')").nth(2).click();
@@ -75,11 +77,17 @@ test.describe("books", () => {
     await expect(page.getByLabel("Signed")).toBeChecked();
 
     await page.getByPlaceholder("e.g. fiction, history").fill("fiction, history");
-    await page.getByRole("button", { name: /^save$/i }).first().click();
+    await page
+      .getByRole("button", { name: /^save$/i })
+      .first()
+      .click();
     await expect(page.getByText(/Fiction, History/)).toBeVisible();
 
     await page.locator('input[type="number"]').fill("3");
-    await page.getByRole("button", { name: /^save$/i }).last().click();
+    await page
+      .getByRole("button", { name: /^save$/i })
+      .last()
+      .click();
     await expect(page.getByText(/3 copies/)).toBeVisible();
   });
 });

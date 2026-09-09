@@ -10,7 +10,12 @@ export default async function SettingsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-lg font-semibold">{dict.nav.settings}</h1>
+      <header className="space-y-1">
+        <h1 className="font-[var(--font-serif)] text-2xl font-semibold tracking-tight text-foreground">
+          {dict.nav.settings}
+        </h1>
+        <p className="font-[var(--font-sans)] text-sm text-muted-foreground">{dict.nav.settings}</p>
+      </header>
       <SettingsForm settings={settings} currentTheme={theme} />
     </div>
   );

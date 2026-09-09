@@ -4,8 +4,14 @@ export async function resetDb(page?: { request: { post: (url: string) => Promise
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const { execSync } = await import("node:child_process");
-      execSync("python3 -c \"import sqlite3; conn=sqlite3.connect('prisma/dev.db'); conn.execute('PRAGMA busy_timeout=5000'); conn.executescript('DELETE FROM UserAchievement; DELETE FROM LendingRecord; DELETE FROM Book; DELETE FROM Person; DELETE FROM Goal; DELETE FROM User;'); conn.commit(); conn.close()\"", { stdio: "ignore" });
-      const out = execSync("python3 -c \"import sqlite3; print(list(sqlite3.connect('prisma/dev.db').execute('SELECT count(*) FROM User'))[0][0])\"", { encoding: "utf-8" });
+      execSync(
+        "python3 -c \"import sqlite3; conn=sqlite3.connect('prisma/dev.db'); conn.execute('PRAGMA busy_timeout=5000'); conn.executescript('DELETE FROM UserAchievement; DELETE FROM LendingRecord; DELETE FROM Book; DELETE FROM Person; DELETE FROM Goal; DELETE FROM User;'); conn.commit(); conn.close()\"",
+        { stdio: "ignore" },
+      );
+      const out = execSync(
+        "python3 -c \"import sqlite3; print(list(sqlite3.connect('prisma/dev.db').execute('SELECT count(*) FROM User'))[0][0])\"",
+        { encoding: "utf-8" },
+      );
       if (out.trim() === "0") return;
     } catch {}
     // Fallback API

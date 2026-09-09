@@ -43,7 +43,18 @@ export function isSigned(signed: boolean, filter: string): boolean {
   return true;
 }
 
-export function haystack(book: { title: string; author?: string | null; isbn?: string | null; publishers?: string | null; tags?: string | null; signed?: boolean; status?: string }, lentOut: boolean): string {
+export function haystack(
+  book: {
+    title: string;
+    author?: string | null;
+    isbn?: string | null;
+    publishers?: string | null;
+    tags?: string | null;
+    signed?: boolean;
+    status?: string;
+  },
+  lentOut: boolean,
+): string {
   const parts = [
     book.title ?? "",
     book.author ?? "",
@@ -57,7 +68,20 @@ export function haystack(book: { title: string; author?: string | null; isbn?: s
   return parts.join(" ").toLowerCase();
 }
 
-export function allows(book: { rating?: number | null; signed?: boolean; status?: string; tags?: string | null; title?: string; author?: string | null; isbn?: string | null; publishers?: string | null }, lentOut: boolean, f: Filters): boolean {
+export function allows(
+  book: {
+    rating?: number | null;
+    signed?: boolean;
+    status?: string;
+    tags?: string | null;
+    title?: string;
+    author?: string | null;
+    isbn?: string | null;
+    publishers?: string | null;
+  },
+  lentOut: boolean,
+  f: Filters,
+): boolean {
   if (f.minRating > 0 && (book.rating ?? 0) < f.minRating) return false;
   if (!isSigned(!!book.signed, f.signed)) return false;
   if (f.lent !== LENT_ANY) {
@@ -78,7 +102,10 @@ export function allows(book: { rating?: number | null; signed?: boolean; status?
   return true;
 }
 
-export function sortKey(book: { title?: string; rating?: number | null; publishDate?: string | null }, sort: string): string | number {
+export function sortKey(
+  book: { title?: string; rating?: number | null; publishDate?: string | null },
+  sort: string,
+): string | number {
   if (sort === SORT_RATING) return -(book.rating ?? 0);
   if (sort === SORT_YEAR) {
     const m = book.publishDate?.match(/(?<!\d)(\d{4})(?!\d)/);
@@ -87,7 +114,11 @@ export function sortKey(book: { title?: string; rating?: number | null; publishD
   return (book.title ?? "").toLowerCase();
 }
 
-export function arrange<T extends { title?: string; id: string }>(books: T[], filters: Filters, lentMap: Map<string, boolean>): T[] {
+export function arrange<T extends { title?: string; id: string }>(
+  books: T[],
+  filters: Filters,
+  lentMap: Map<string, boolean>,
+): T[] {
   const filtered = books.filter((b) => allows(b as never, lentMap.get(b.id) ?? false, filters));
   const sorted = [...filtered].sort((a, b) => {
     const ka = sortKey(a as never, filters.sort);

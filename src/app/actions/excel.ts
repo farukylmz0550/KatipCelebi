@@ -9,7 +9,10 @@ import { awardXp, XP_REWARDS, syncAchievements } from "@/lib/gamification";
 export async function exportLibraryExcel(): Promise<{ base64: string; filename: string }> {
   const userId = await requireUserId();
   const books = await db.book.findMany({ where: { userId } });
-  const lends = await db.lendingRecord.findMany({ where: { book: { userId }, returnedAt: null }, select: { bookId: true, borrowerName: true, personName: true } });
+  const lends = await db.lendingRecord.findMany({
+    where: { book: { userId }, returnedAt: null },
+    select: { bookId: true, borrowerName: true, personName: true },
+  });
   const map = new Map<string, string[]>();
   for (const r of lends) {
     const arr = map.get(r.bookId) ?? [];
@@ -33,7 +36,9 @@ export async function importExcelFile(base64: string): Promise<{ imported: numbe
   const userId = await requireUserId();
   try {
     const buffer = Buffer.from(base64, "base64");
-    const isbns = await readIsbnsFromBuffer(buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength) as ArrayBuffer);
+    const isbns = await readIsbnsFromBuffer(
+      buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength) as ArrayBuffer,
+    );
     if (isbns.length === 0) return { imported: 0 };
     const found = await lookupIsbns(isbns);
     if (found.length === 0) return { imported: 0 };

@@ -38,9 +38,11 @@ export function StreakWidget({
     <div className="gnome-card p-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${
-            currentStreak > 0 ? "bg-orange-500/12" : "bg-muted"
-          }`}>
+          <div
+            className={`flex h-10 w-10 items-center justify-center rounded-xl ${
+              currentStreak > 0 ? "bg-orange-500/12" : "bg-muted"
+            }`}
+          >
             <Flame
               size={22}
               className={currentStreak > 0 ? "text-orange-500" : "text-muted-foreground"}
@@ -68,9 +70,9 @@ export function StreakWidget({
                   ? isTodayActive
                     ? "bg-orange-500 text-white"
                     : "border border-orange-500 text-orange-500"
-                    : i < todayIndex
-                      ? "bg-muted text-muted-foreground"
-                        : "bg-transparent text-muted-foreground/40"
+                  : i < todayIndex
+                    ? "bg-muted text-muted-foreground"
+                    : "bg-transparent text-muted-foreground/40"
               }`}
             >
               {day[0]}

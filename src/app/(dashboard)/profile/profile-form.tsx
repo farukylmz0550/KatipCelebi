@@ -85,29 +85,16 @@ export function ProfileForm({ user, dict }: { user: User; dict: Dict }) {
               <User size={14} className="text-muted-foreground" />
               {dict.name}
             </Label>
-            <Input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+            <Input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="email" className="flex items-center gap-1.5">
               <Mail size={14} className="text-muted-foreground" />
               {dict.email}
             </Label>
-            <Input
-              id="email"
-              type="email"
-              value={user.email}
-              disabled
-              className="opacity-60"
-            />
+            <Input id="email" type="email" value={user.email} disabled className="opacity-60" />
           </div>
-          {nameMessage && (
-            <p className="text-sm text-green-600 dark:text-green-400">{nameMessage}</p>
-          )}
+          {nameMessage && <p className="text-sm text-green-600 dark:text-green-400">{nameMessage}</p>}
           <Button type="submit" disabled={loading}>
             <Save size={14} />
             {dict.save}
@@ -141,9 +128,7 @@ export function ProfileForm({ user, dict }: { user: User; dict: Dict }) {
               placeholder="••••••••"
             />
           </div>
-          {passwordMessage && (
-            <p className="text-sm text-green-600 dark:text-green-400">{passwordMessage}</p>
-          )}
+          {passwordMessage && <p className="text-sm text-green-600 dark:text-green-400">{passwordMessage}</p>}
           <Button type="submit" disabled={loading} variant="outline">
             <Lock size={14} />
             {dict.changePassword}

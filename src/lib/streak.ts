@@ -2,9 +2,7 @@ import { db } from "@/lib/db";
 import { shieldCost as calcShieldCost } from "./gamification-pure";
 
 /** Calculate current and longest streak from daily activities. */
-export function calculateStreak(
-  activities: { date: Date; count: number }[]
-): { current: number; longest: number } {
+export function calculateStreak(activities: { date: Date; count: number }[]): { current: number; longest: number } {
   if (activities.length === 0) return { current: 0, longest: 0 };
 
   const sorted = [...activities].sort((a, b) => b.date.getTime() - a.date.getTime());

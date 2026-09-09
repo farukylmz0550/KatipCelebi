@@ -52,7 +52,9 @@ export function LeaderboardTable({
           >
             <ChevronLeft size={16} />
           </button>
-          <span className="text-xs text-muted-foreground">{page + 1} / {totalPages}</span>
+          <span className="text-xs text-muted-foreground">
+            {page + 1} / {totalPages}
+          </span>
           <button
             onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
             disabled={page >= totalPages - 1}

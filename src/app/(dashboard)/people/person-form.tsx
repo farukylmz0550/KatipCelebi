@@ -7,7 +7,17 @@ import { createPerson, removePerson } from "@/app/actions/people";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-export function PersonForm({ placeholder, addLabel, removeLabel, selectedId }: { placeholder: string; addLabel: string; removeLabel: string; selectedId?: string }) {
+export function PersonForm({
+  placeholder,
+  addLabel,
+  removeLabel,
+  selectedId,
+}: {
+  placeholder: string;
+  addLabel: string;
+  removeLabel: string;
+  selectedId?: string;
+}) {
   const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
@@ -37,24 +47,40 @@ export function PersonForm({ placeholder, addLabel, removeLabel, selectedId }: {
   }
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <form onSubmit={onAdd} className="flex gap-2">
         <Input
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder={placeholder}
-          className="flex-1"
+          className="flex-1 rounded-[8px] border-[var(--border)] bg-[var(--surface-elevated)] font-[var(--font-sans)] focus-visible:ring-[var(--ring)]"
         />
-        <Button type="submit" size="sm" disabled={pending}>
+        <Button
+          type="submit"
+          size="sm"
+          disabled={pending}
+          className="rounded-[8px] bg-[var(--accent)] font-[var(--font-sans)] text-white hover:bg-[var(--accent-hover)]"
+        >
           <UserPlus size={14} />
           {addLabel}
         </Button>
-        <Button type="button" variant="outline" size="sm" onClick={onRemove} disabled={pending || !selectedId}>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={onRemove}
+          disabled={pending || !selectedId}
+          className="rounded-[8px] border-[var(--border)] font-[var(--font-sans)]"
+        >
           <UserMinus size={14} />
           {removeLabel}
         </Button>
       </form>
-      {error && <p className="text-sm text-destructive">{error}</p>}
+      {error && (
+        <div className="flex items-center gap-2 rounded-[8px] border border-[var(--border)] bg-[var(--error-soft)] px-3 py-2 text-sm text-[var(--error-text)]">
+          <span className="font-[var(--font-sans)]">{error}</span>
+        </div>
+      )}
     </div>
   );
 }

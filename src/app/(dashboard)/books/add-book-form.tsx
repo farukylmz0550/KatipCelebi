@@ -1,117 +1,251 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Camera } from "lucide-react";
+import { Camera, Search, AlertCircle, Check } from "lucide-react";
+import { toast } from "sonner";
 import { addBook, lookupIsbnAction } from "@/app/actions/books";
 
 export function AddBookForm({
   dict,
 }: {
-  dict: { isbn: string; lookup: string; bookTitle: string; author: string; add: string; pages: string; scan: string };
+  dict: {
+    isbn: string;
+    lookup: string;
+    bookTitle: string;
+    author: string;
+    add: string;
+    pages: string;
+    scan: string;
+    notFound?: string;
+    lookupFailed?: string;
+    addSuccess?: string;
+    addFailed?: string;
+    required?: string;
+  };
 }) {
   const [isbn, setIsbn] = useState("");
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [coverUrl, setCoverUrl] = useState<string | undefined>();
   const [numberOfPages, setNumberOfPages] = useState("");
-  const [pending, startTransition] = useTransition();
+  const [lookupError, setLookupError] = useState<string | null>(null);
+  const [addError, setAddError] = useState<string | null>(null);
+  const [lookupPending, startLookup] = useTransition();
+  const [addPending, startAdd] = useTransition();
+
+  const pending = lookupPending || addPending;
 
   function handleLookup() {
-    startTransition(async () => {
-      const result = await lookupIsbnAction(isbn);
-      if (result) {
-        setTitle(result.title);
-        setAuthor(result.author ?? "");
-        setCoverUrl(result.coverUrl);
-        if (result.numberOfPages) setNumberOfPages(result.numberOfPages);
+    const cleaned = isbn.replace(/[^0-9Xx]/g, "");
+    if (!cleaned) {
+      setLookupError(dict.required ?? "ISBN gerekli");
+      return;
+    }
+    setLookupError(null);
+    setAddError(null);
+    startLookup(async () => {
+      const res = await lookupIsbnAction(isbn);
+      if (res.ok && res.data) {
+        const data = res.data;
+        // Direkt ekle — tüm detaylarla, tek adım
+        const result = await addBook({
+          isbn: data.isbn || cleaned,
+          title: data.title,
+          author: data.author ?? undefined,
+          coverUrl: data.coverUrl,
+          numberOfPages: data.numberOfPages,
+          publishers: data.publishers,
+          publishDate: data.publishDate,
+          publishPlaces: data.publishPlaces,
+          languages: data.languages,
+          subjects: data.subjects,
+          isbn10: data.isbn10,
+          isbn13: data.isbn13,
+        });
+        if (result.ok) {
+          toast.success(dict.addSuccess ?? "Kitap eklendi", { description: data.title, icon: <Check size={16} /> });
+          setIsbn("");
+          setTitle("");
+          setAuthor("");
+          setCoverUrl(undefined);
+          setNumberOfPages("");
+          setLookupError(null);
+        } else {
+          const msg = result.error || (dict.addFailed ?? "Kitap eklenemedi");
+          setAddError(msg);
+          toast.error(msg);
+          // Fallback: bilgileri forma doldur ki manuel düzeltilebilsin
+          setTitle(data.title);
+          setAuthor(data.author ?? "");
+          setCoverUrl(data.coverUrl);
+          if (data.numberOfPages) setNumberOfPages(data.numberOfPages);
+        }
+      } else if (res.ok) {
+        const msg = dict.notFound ?? "ISBN bulunamadı — bilgileri manuel girin.";
+        setLookupError(msg);
+        toast.error(msg);
+      } else {
+        const msg =
+          res.error === "NOT_FOUND"
+            ? (dict.notFound ?? "ISBN bulunamadı — bilgileri manuel girin.")
+            : (dict.lookupFailed ?? "Arama başarısız. Tekrar deneyin.");
+        setLookupError(msg);
+        toast.error(msg);
       }
     });
   }
 
   function handleAdd() {
-    if (!title) return;
-    startTransition(async () => {
-      await addBook({
+    const trimmedTitle = title.trim();
+    if (!trimmedTitle) {
+      setAddError(dict.required ?? "Başlık gerekli");
+      toast.error(dict.required ?? "Başlık gerekli");
+      return;
+    }
+    setAddError(null);
+    startAdd(async () => {
+      const result = await addBook({
         isbn: isbn || undefined,
-        title,
-        author: author || undefined,
+        title: trimmedTitle,
+        author: author.trim() || undefined,
         coverUrl,
         numberOfPages: numberOfPages || undefined,
       });
+      if (!result.ok) {
+        const msg = result.error || (dict.addFailed ?? "Kitap eklenemedi");
+        setAddError(msg);
+        toast.error(msg);
+        return;
+      }
+      toast.success(dict.addSuccess ?? "Kitap eklendi", { icon: <Check size={16} /> });
       setIsbn("");
       setTitle("");
       setAuthor("");
       setCoverUrl(undefined);
       setNumberOfPages("");
+      setLookupError(null);
     });
   }
 
   function handleScan() {
-    // Barcode scanner integration — opens camera modal
-    // Will be implemented with html5-qrcode
-    alert("Barkod tarama yakında eklenecek!");
+    toast.info("Barkod tarama yakında eklenecek!");
   }
 
   return (
     <div className="space-y-3">
+      {/* Header — Where am I? → What can I do? per UI_Design_Language:482 */}
+      <div className="flex items-baseline justify-between">
+        <h2 className="font-[var(--font-serif)] text-[15px] font-semibold tracking-tight text-foreground">
+          {dict.bookTitle} — {dict.add}
+        </h2>
+        <span className="text-xs text-muted-foreground">
+          {dict.pages && numberOfPages ? `${dict.pages}: ${numberOfPages}` : ""}
+        </span>
+      </div>
+
       <div className="flex flex-wrap items-end gap-3">
-        <div className="flex-1 min-w-[140px]">
-          <label className="mb-1 block text-[13px] text-muted-foreground">{dict.isbn}</label>
+        <div className="min-w-[140px] flex-1">
+          <label className="mb-1 block font-[var(--font-sans)] text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
+            {dict.isbn}
+          </label>
           <div className="flex gap-1">
             <input
               value={isbn}
-              onChange={(e) => setIsbn(e.target.value)}
+              onChange={(e) => {
+                setIsbn(e.target.value);
+                if (lookupError) setLookupError(null);
+              }}
               placeholder={dict.isbn}
-              className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              aria-invalid={!!lookupError}
+              className={`w-full rounded-[8px] border bg-[var(--surface-elevated)] px-3 py-2 font-[var(--font-sans)] text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ring)] ${
+                lookupError ? "border-[var(--destructive)] bg-[var(--error-soft)]" : "border-border"
+              }`}
             />
             <button
               type="button"
               onClick={handleScan}
-              className="flex-shrink-0 rounded-lg border border-border bg-secondary px-2 py-1.5 text-muted-foreground transition-colors hover:bg-accent md:hidden"
+              className="flex-shrink-0 rounded-[8px] border border-border bg-secondary px-2.5 py-2 text-muted-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:hidden"
               title={dict.scan}
+              aria-label={dict.scan}
             >
               <Camera size={16} />
             </button>
           </div>
         </div>
+
         <button
           type="button"
           onClick={handleLookup}
-          disabled={pending || !isbn}
-          className="rounded-lg border border-border bg-secondary px-3 py-1.5 text-[13px] text-secondary-foreground transition-colors hover:bg-accent disabled:opacity-40"
+          disabled={lookupPending || !isbn.trim()}
+          className="inline-flex items-center gap-1.5 rounded-[8px] border border-border bg-secondary px-3.5 py-2 font-[var(--font-sans)] text-[13px] font-medium text-secondary-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          {dict.lookup}
+          <Search size={14} />
+          {lookupPending ? "..." : dict.lookup}
         </button>
-        <div className="flex-1 min-w-[180px]">
-          <label className="mb-1 block text-[13px] text-muted-foreground">{dict.bookTitle}</label>
+
+        <div className="min-w-[180px] flex-1">
+          <label className="mb-1 block font-[var(--font-sans)] text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
+            {dict.bookTitle} <span className="text-[var(--destructive)]">*</span>
+          </label>
           <input
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              if (addError) setAddError(null);
+            }}
             placeholder={dict.bookTitle}
-            className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+            aria-invalid={!!addError}
+            className={`w-full rounded-[8px] border bg-[var(--surface-elevated)] px-3 py-2 font-[var(--font-serif)] text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ring)] ${
+              addError ? "border-[var(--destructive)] bg-[var(--error-soft)]" : "border-border"
+            }`}
           />
         </div>
+
         <div className="min-w-[120px]">
-          <label className="mb-1 block text-[13px] text-muted-foreground">{dict.author}</label>
+          <label className="mb-1 block font-[var(--font-sans)] text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
+            {dict.author}
+          </label>
           <input
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
             placeholder={dict.author}
-            className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+            className="w-full rounded-[8px] border border-border bg-[var(--surface-elevated)] px-3 py-2 font-[var(--font-sans)] text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
           />
         </div>
+
         <button
           type="button"
           onClick={handleAdd}
-          disabled={pending || !title}
-          className="rounded-lg bg-primary px-4 py-1.5 text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-40"
+          disabled={addPending || !title.trim()}
+          className="rounded-[8px] bg-[var(--accent)] px-5 py-2 font-[var(--font-sans)] text-[13px] font-medium text-white shadow-sm transition-colors hover:bg-[var(--accent-hover)] active:bg-[var(--accent-active)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          {dict.add}
+          {addPending ? "..." : dict.add}
         </button>
       </div>
-      {numberOfPages && (
-        <div className="text-xs text-muted-foreground">
-          {dict.pages}: {numberOfPages}
+
+      {/* States — distinguishable without color alone per UI_Design_Language:532 */}
+      {lookupError && (
+        <div
+          role="alert"
+          className="flex items-center gap-2 rounded-[8px] border border-[var(--border-strong)] bg-[var(--error-soft)] px-3 py-2 text-sm text-[var(--error-text)]"
+        >
+          <AlertCircle size={14} className="shrink-0" />
+          <span>{lookupError}</span>
+        </div>
+      )}
+      {addError && (
+        <div
+          role="alert"
+          className="flex items-center gap-2 rounded-[8px] border border-[var(--border-strong)] bg-[var(--error-soft)] px-3 py-2 text-sm text-[var(--error-text)]"
+        >
+          <AlertCircle size={14} className="shrink-0" />
+          <span>{addError}</span>
+        </div>
+      )}
+
+      {pending && (
+        <div className="text-xs text-muted-foreground" aria-live="polite">
+          ...
         </div>
       )}
     </div>

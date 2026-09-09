@@ -94,7 +94,12 @@
     "copies": "本",
     "pages": "页数",
     "scan": "扫描",
-    "currentPage": "当前页"
+    "currentPage": "当前页",
+    "notFound": "未找到 ISBN — 请手动输入。",
+    "lookupFailed": "查询失败，请重试。",
+    "addSuccess": "已添加图书",
+    "addFailed": "添加失败",
+    "required": "必填"
   },
   "facts": {
     "title": "标题 *",
@@ -286,5 +291,25 @@
     "description": "本项目使用以下开源技术：",
     "nav": "许可证",
     "projectLicense": "KatipCelebi 基于 GNU 通用公共许可证 v3.0 授权。"
+  },
+  "cookieConsent": {
+    "title": "Cookies",
+    "subtitle": "用于您的私人图书馆",
+    "desc": "KatipCelebi 使用 cookies 个性化体验。",
+    "descMuted": "如果拒绝，偏好仅存储在此设备上。",
+    "mobileDesc": "我们使用 cookies 记住偏好。",
+    "essentialTitle": "必要",
+    "essentialDesc": "会话、安全。",
+    "preferencesTitle": "偏好",
+    "preferencesDesc": "主题、语言、侧边栏。",
+    "analyticsTitle": "分析",
+    "analyticsDesc": "匿名统计（当前未激活）。",
+    "accept": "接受",
+    "reject": "拒绝",
+    "preferencesBtn": "偏好设置",
+    "save": "保存",
+    "back": "返回",
+    "close": "关闭",
+    "licensesLink": "查看许可证。"
   }
 }

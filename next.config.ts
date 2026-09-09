@@ -30,9 +30,7 @@ const nextConfig: NextConfig = {
     },
     {
       source: "/manifest.json",
-      headers: [
-        { key: "Cache-Control", value: "public, max-age=0, must-revalidate" },
-      ],
+      headers: [{ key: "Cache-Control", value: "public, max-age=0, must-revalidate" }],
     },
   ],
 };

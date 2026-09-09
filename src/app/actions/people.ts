@@ -50,7 +50,7 @@ export async function getPeopleWithStats() {
         db.lendingRecord.count({ where: { personId: p.id, returnedAt: { not: null } } }),
       ]);
       return { ...p, out, returned, trust: returned - out };
-    })
+    }),
   );
   return stats;
 }

@@ -25,7 +25,10 @@ test.describe("stats / gamification / achievements / leaderboard / excel / i18n 
     await expect(page.getByPlaceholder("Target").first()).toHaveValue("10");
 
     await page.goto("/books");
-    await page.getByRole("button", { name: /mark finished/i }).first().click();
+    await page
+      .getByRole("button", { name: /mark finished/i })
+      .first()
+      .click();
     await page.goto("/stats");
     await expect(page.getByText("Finished")).toBeVisible();
   });
@@ -42,7 +45,10 @@ test.describe("stats / gamification / achievements / leaderboard / excel / i18n 
     await expect(page.getByText("First Book").first()).toBeVisible();
 
     await page.goto("/books");
-    await page.getByRole("button", { name: /mark finished/i }).first().click();
+    await page
+      .getByRole("button", { name: /mark finished/i })
+      .first()
+      .click();
     await page.goto("/achievements");
     await expect(page.getByText("Bookworm Beginnings")).toBeVisible();
 

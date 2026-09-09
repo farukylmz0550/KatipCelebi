@@ -67,11 +67,7 @@ export default function LoginForm({ dict }: { dict: Record<string, string> }) {
                 className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />
             </div>
-            {error && (
-              <div className="rounded-xl bg-destructive/10 px-3 py-2 text-sm text-destructive">
-                {error}
-              </div>
-            )}
+            {error && <div className="rounded-xl bg-destructive/10 px-3 py-2 text-sm text-destructive">{error}</div>}
             <button
               type="submit"
               disabled={pending}

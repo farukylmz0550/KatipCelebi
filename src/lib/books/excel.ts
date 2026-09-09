@@ -9,10 +9,28 @@ export const EXPORT_DEFAULT_NAME = "my_library.xlsx";
 export const MAX_IMPORT_BYTES = 20 * 1024 * 1024; // 20 MiB
 
 const EXPORTED_FIELDS = [
-  "isbn", "title", "subtitle", "authors", "publishers", "publish_date", "publish_places",
-  "edition_name", "series", "number_of_pages", "languages", "isbn_10", "isbn_13",
-  "subjects", "rating", "notes", "status", "tags", "started_date", "finished_date",
-  "signed", "copies",
+  "isbn",
+  "title",
+  "subtitle",
+  "authors",
+  "publishers",
+  "publish_date",
+  "publish_places",
+  "edition_name",
+  "series",
+  "number_of_pages",
+  "languages",
+  "isbn_10",
+  "isbn_13",
+  "subjects",
+  "rating",
+  "notes",
+  "status",
+  "tags",
+  "started_date",
+  "finished_date",
+  "signed",
+  "copies",
 ] as const;
 
 const DATE_FIELDS = new Set(["started_date", "finished_date"]);
@@ -45,29 +63,52 @@ export type ExportBook = {
 
 function columnValue(book: ExportBook, field: string): string {
   switch (field) {
-    case "isbn": return book.isbn ?? "";
-    case "title": return book.title;
-    case "subtitle": return book.subtitle ?? "";
-    case "authors": return book.author ?? "";
-    case "publishers": return book.publishers ?? "";
-    case "publish_date": return book.publishDate ?? "";
-    case "publish_places": return book.publishPlaces ?? "";
-    case "edition_name": return book.editionName ?? "";
-    case "series": return book.series ?? "";
-    case "number_of_pages": return book.numberOfPages ?? "";
-    case "languages": return book.languages ?? "";
-    case "isbn_10": return book.isbn10 ?? "";
-    case "isbn_13": return book.isbn13 ?? "";
-    case "subjects": return book.subjects ?? "";
-    case "rating": return String(book.rating ?? 0);
-    case "notes": return book.notes ?? "";
-    case "status": return book.status;
-    case "tags": return book.tags ?? "";
-    case "started_date": return book.startedAt ? new Date(book.startedAt).toISOString().slice(0, 10) : "";
-    case "finished_date": return book.finishedAt ? new Date(book.finishedAt).toISOString().slice(0, 10) : "";
-    case "signed": return book.signed ? "yes" : "no";
-    case "copies": return String(book.copies ?? 1);
-    default: return "";
+    case "isbn":
+      return book.isbn ?? "";
+    case "title":
+      return book.title;
+    case "subtitle":
+      return book.subtitle ?? "";
+    case "authors":
+      return book.author ?? "";
+    case "publishers":
+      return book.publishers ?? "";
+    case "publish_date":
+      return book.publishDate ?? "";
+    case "publish_places":
+      return book.publishPlaces ?? "";
+    case "edition_name":
+      return book.editionName ?? "";
+    case "series":
+      return book.series ?? "";
+    case "number_of_pages":
+      return book.numberOfPages ?? "";
+    case "languages":
+      return book.languages ?? "";
+    case "isbn_10":
+      return book.isbn10 ?? "";
+    case "isbn_13":
+      return book.isbn13 ?? "";
+    case "subjects":
+      return book.subjects ?? "";
+    case "rating":
+      return String(book.rating ?? 0);
+    case "notes":
+      return book.notes ?? "";
+    case "status":
+      return book.status;
+    case "tags":
+      return book.tags ?? "";
+    case "started_date":
+      return book.startedAt ? new Date(book.startedAt).toISOString().slice(0, 10) : "";
+    case "finished_date":
+      return book.finishedAt ? new Date(book.finishedAt).toISOString().slice(0, 10) : "";
+    case "signed":
+      return book.signed ? "yes" : "no";
+    case "copies":
+      return String(book.copies ?? 1);
+    default:
+      return "";
   }
 }
 
@@ -79,7 +120,10 @@ function readingDays(started?: Date | string | null, finished?: Date | string | 
   return ((f.getTime() - s.getTime()) / 86400000).toFixed(2);
 }
 
-export async function buildExportWorkbook(books: ExportBook[], lendingMap: Map<string, string[]>): Promise<ExcelJS.Workbook> {
+export async function buildExportWorkbook(
+  books: ExportBook[],
+  lendingMap: Map<string, string[]>,
+): Promise<ExcelJS.Workbook> {
   const wb = new ExcelJS.Workbook();
   const ws = wb.addWorksheet("Library", { properties: { defaultColWidth: 14 } });
 
@@ -144,7 +188,12 @@ export function parseIsbnsFromWorkbook(wb: ExcelJS.Workbook): string[] {
       row.eachCell((cell) => {
         let raw: string;
         if (typeof cell.value === "number") raw = String(cell.value);
-        else if (cell.value && typeof cell.value === "object" && "text" in (cell.value as unknown as Record<string, unknown>)) raw = String((cell.value as unknown as { text: string }).text);
+        else if (
+          cell.value &&
+          typeof cell.value === "object" &&
+          "text" in (cell.value as unknown as Record<string, unknown>)
+        )
+          raw = String((cell.value as unknown as { text: string }).text);
         else raw = String(cell.value ?? "");
         const isbn = normalizeIsbn(raw.trim());
         if (!isbn) return;

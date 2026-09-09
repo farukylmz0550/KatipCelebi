@@ -10,7 +10,10 @@ export async function createAdminViaSetup(page: Page, admin: { name: string; ema
       await page.request.post("/api/test/reset").catch(() => {});
       try {
         const { execSync } = await import("node:child_process");
-        execSync("python3 -c \"import sqlite3; conn=sqlite3.connect('prisma/dev.db'); conn.execute('PRAGMA busy_timeout=5000'); conn.executescript('DELETE FROM UserAchievement; DELETE FROM LendingRecord; DELETE FROM Book; DELETE FROM Person; DELETE FROM Goal; DELETE FROM User;'); conn.commit(); conn.close()\"", { stdio: "ignore" });
+        execSync(
+          "python3 -c \"import sqlite3; conn=sqlite3.connect('prisma/dev.db'); conn.execute('PRAGMA busy_timeout=5000'); conn.executescript('DELETE FROM UserAchievement; DELETE FROM LendingRecord; DELETE FROM Book; DELETE FROM Person; DELETE FROM Goal; DELETE FROM User;'); conn.commit(); conn.close()\"",
+          { stdio: "ignore" },
+        );
       } catch {}
       await new Promise((r) => setTimeout(r, 700));
       if (attempt === 2) throw new Error("setup form not visible after reset");

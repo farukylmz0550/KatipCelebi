@@ -13,7 +13,14 @@ export default async function AdminUsersPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">{dict.admin.usersTitle}</h1>
+      <header className="space-y-1">
+        <h1 className="font-[var(--font-serif)] text-2xl font-semibold tracking-tight text-foreground">
+          {dict.admin.usersTitle}
+        </h1>
+        <p className="font-[var(--font-sans)] text-sm text-muted-foreground">
+          {users.length} {dict.common.books}
+        </p>
+      </header>
 
       {pending.length > 0 && (
         <div className="space-y-3">

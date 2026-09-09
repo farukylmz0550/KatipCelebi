@@ -27,11 +27,13 @@ export function LendingForm({
   return (
     <div className="flex flex-wrap items-end gap-3">
       <div className="flex-1 min-w-[200px]">
-        <label className="mb-1 block text-[13px] text-muted-foreground">{dict.book}</label>
+        <label className="mb-1 block font-[var(--font-sans)] text-[11px] font-medium uppercase tracking-widest text-muted-foreground">
+          {dict.book}
+        </label>
         <select
           value={bookId}
           onChange={(e) => setBookId(e.target.value)}
-          className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+          className="w-full rounded-[8px] border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-2 font-[var(--font-sans)] text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
         >
           {books.map((book) => (
             <option key={book.id} value={book.id}>
@@ -41,18 +43,20 @@ export function LendingForm({
         </select>
       </div>
       <div className="min-w-[160px]">
-        <label className="mb-1 block text-[13px] text-muted-foreground">{dict.borrower}</label>
+        <label className="mb-1 block font-[var(--font-sans)] text-[11px] font-medium uppercase tracking-widest text-muted-foreground">
+          {dict.borrower}
+        </label>
         <input
           value={borrowerName}
           onChange={(e) => setBorrowerName(e.target.value)}
           placeholder={dict.namePlaceholder}
-          className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+          className="w-full rounded-[8px] border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-2 font-[var(--font-sans)] text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
         />
       </div>
       <button
         onClick={handleSubmit}
         disabled={pending || !bookId || !borrowerName}
-        className="rounded-lg bg-primary px-4 py-1.5 text-[13px] font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-40"
+        className="rounded-[8px] bg-[var(--accent)] px-5 py-2 font-[var(--font-sans)] text-[13px] font-medium text-white shadow-sm transition-colors hover:bg-[var(--accent-hover)] active:bg-[var(--accent-active)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] disabled:opacity-40 disabled:cursor-not-allowed"
       >
         {dict.lendCta}
       </button>

@@ -46,7 +46,9 @@ export async function POST(req: Request) {
           const path = (process.env.DATABASE_URL ?? "file:./prisma/dev.db").replace(/^file:/, "").replace(/^"|"$/g, "");
           const raw = new Database(path);
           raw.pragma("busy_timeout = 5000");
-          raw.exec("DELETE FROM UserAchievement; DELETE FROM LendingRecord; DELETE FROM Book; DELETE FROM Person; DELETE FROM Goal; DELETE FROM User;");
+          raw.exec(
+            "DELETE FROM UserAchievement; DELETE FROM LendingRecord; DELETE FROM Book; DELETE FROM Person; DELETE FROM Goal; DELETE FROM User;",
+          );
           raw.close();
           return NextResponse.json({ ok: true, fallback: true });
         } catch (e2) {

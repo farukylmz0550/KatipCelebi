@@ -62,7 +62,14 @@ export default async function StatsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-medium text-foreground">{dict.stats.title}</h1>
+      <header className="space-y-1">
+        <h1 className="font-[var(--font-serif)] text-2xl font-semibold tracking-tight text-foreground">
+          {dict.stats.title}
+        </h1>
+        <p className="font-[var(--font-sans)] text-sm text-muted-foreground">
+          {dict.stats.totalBooks} · {dict.stats.level} {level}
+        </p>
+      </header>
 
       {streakInfo && (
         <StreakWidget
@@ -83,7 +90,10 @@ export default async function StatsPage() {
           { label: dict.stats.xp, value: user.xp },
           { label: dict.stats.averageDays, value: avgDays },
         ].map((stat) => (
-          <div key={stat.label} className="rounded-xl border border-border bg-card p-3 text-center">
+          <div
+            key={stat.label}
+            className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] p-3 text-center"
+          >
             <p className="text-[11px] text-muted-foreground">{stat.label}</p>
             <p className="mt-0.5 text-lg font-semibold tabular-nums text-foreground">{stat.value}</p>
           </div>
@@ -119,7 +129,7 @@ export default async function StatsPage() {
         yearly={yearly}
         monthly={monthly}
       />
-      <div className="rounded-xl border border-border bg-card p-4">
+      <div className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] p-4">
         <p className="mb-3 text-[13px] font-medium text-foreground">{dict.stats.byMonth}</p>
         <MonthlyChart data={chartData} label={dict.stats.finished} dark={theme === "dark"} />
       </div>

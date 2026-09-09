@@ -1,6 +1,12 @@
+// @ts-check
+// Documented exception to CONTRIBUTING.md "TypeScript everywhere" — see CONTRIBUTING.md
+// This file MUST be served as /sw.js (ServiceWorkerGlobalScope). It is intentionally plain JS.
+// Keep logic in sync with src/app/sw-register.tsx which posts "schedule-notifications"/"check-streak".
+
+/** @type {string} */
 const CACHE_NAME = "katipcelebi-v2";
 
-self.addEventListener("install", (event) => {
+self.addEventListener("install", () => {
   self.skipWaiting();
 });
 

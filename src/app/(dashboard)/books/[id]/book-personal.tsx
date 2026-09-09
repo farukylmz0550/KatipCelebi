@@ -145,9 +145,7 @@ export function BookPersonal({ book, dict }: { book: Book; dict: Record<string, 
             placeholder="0"
             className="w-20 rounded border border-neutral-300 px-2 py-1 text-sm dark:border-neutral-700 dark:bg-neutral-800"
           />
-          {book.numberOfPages && (
-            <span className="text-xs text-neutral-500">/ {book.numberOfPages}</span>
-          )}
+          {book.numberOfPages && <span className="text-xs text-neutral-500">/ {book.numberOfPages}</span>}
         </div>
       )}
 

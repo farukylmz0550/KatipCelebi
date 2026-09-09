@@ -40,7 +40,7 @@ export function useSwipe({ onSwipeLeft, onSwipeRight, onSwipeUp, onSwipeDown, th
 
       touchStart.current = null;
     },
-    [onSwipeLeft, onSwipeRight, onSwipeUp, onSwipeDown, threshold]
+    [onSwipeLeft, onSwipeRight, onSwipeUp, onSwipeDown, threshold],
   );
 
   return { onTouchStart, onTouchEnd };

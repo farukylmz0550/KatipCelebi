@@ -2,9 +2,22 @@
 
 export const MAX_SUBJECT_TAGS = 6;
 export const STARTER_TAGS = [
-  "fiction", "short stories", "poetry", "history", "biography", "philosophy",
-  "science", "science fiction", "fantasy", "detective and mystery stories",
-  "juvenile fiction", "textbooks", "reference", "religion", "art", "travel",
+  "fiction",
+  "short stories",
+  "poetry",
+  "history",
+  "biography",
+  "philosophy",
+  "science",
+  "science fiction",
+  "fantasy",
+  "detective and mystery stories",
+  "juvenile fiction",
+  "textbooks",
+  "reference",
+  "religion",
+  "art",
+  "travel",
 ] as const;
 
 export function canonical(s: string): string {
@@ -43,7 +56,16 @@ export function suggestions(existing: string[], mine: string[]): string[] {
   return result.slice(0, 8);
 }
 
-const NOISE_WORDS = ["translations", "fictional works", "accessible book", "protected daisy", "in library", "overdrive", "large type", "reading group guide"];
+const NOISE_WORDS = [
+  "translations",
+  "fictional works",
+  "accessible book",
+  "protected daisy",
+  "in library",
+  "overdrive",
+  "large type",
+  "reading group guide",
+];
 
 export function fromSubjects(subjects: string[]): string[] {
   return subjects

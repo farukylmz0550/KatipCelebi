@@ -1,7 +1,15 @@
 import { describe, expect, it } from "vitest";
 import {
-  normalizeIsbn, checkIsbn, isValidIsbn10, isValidIsbn13,
-  parseCopies, parseRating, isLocalKey, newLocalKey, displayIsbn, MAX_COPIES,
+  normalizeIsbn,
+  checkIsbn,
+  isValidIsbn10,
+  isValidIsbn13,
+  parseCopies,
+  parseRating,
+  isLocalKey,
+  newLocalKey,
+  displayIsbn,
+  MAX_COPIES,
 } from "@/lib/books/model";
 
 describe("normalizeIsbn", () => {

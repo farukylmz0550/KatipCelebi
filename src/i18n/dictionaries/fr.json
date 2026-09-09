@@ -94,7 +94,12 @@
     "copies": "exemplaires",
     "pages": "Pages",
     "scan": "Scanner",
-    "currentPage": "Page Actuelle"
+    "currentPage": "Page Actuelle",
+    "notFound": "ISBN introuvable — saisissez manuellement.",
+    "lookupFailed": "Recherche échouée. Réessayez.",
+    "addSuccess": "Livre ajouté",
+    "addFailed": "Échec de l ajout",
+    "required": "Ce champ est requis"
   },
   "facts": {
     "title": "Titre *",
@@ -286,5 +291,25 @@
     "description": "Ce projet utilise les technologies open source suivantes :",
     "nav": "Licences",
     "projectLicense": "KatipCelebi est sous licence GNU General Public License v3.0."
+  },
+  "cookieConsent": {
+    "title": "Cookies",
+    "subtitle": "Pour votre bibliothèque",
+    "desc": "KatipCelebi utilise des cookies pour personnaliser votre expérience.",
+    "descMuted": "Si vous refusez, les préférences ne sont stockées que sur cet appareil.",
+    "mobileDesc": "Nous utilisons des cookies pour mémoriser les préférences.",
+    "essentialTitle": "Essentiel",
+    "essentialDesc": "Session, sécurité.",
+    "preferencesTitle": "Préférences",
+    "preferencesDesc": "Thème, langue, barre latérale.",
+    "analyticsTitle": "Analytique",
+    "analyticsDesc": "Stats anonymes (inactive).",
+    "accept": "Accepter",
+    "reject": "Refuser",
+    "preferencesBtn": "Préférences",
+    "save": "Enregistrer",
+    "back": "Retour",
+    "close": "Fermer",
+    "licensesLink": "Voir Licences."
   }
 }

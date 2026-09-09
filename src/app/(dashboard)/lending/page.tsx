@@ -22,8 +22,15 @@ export default async function LendingPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-medium text-foreground">{dict.lending.title}</h1>
-      <div className="rounded-xl border border-border bg-card p-4">
+      <header className="space-y-1">
+        <h1 className="font-[var(--font-serif)] text-2xl font-semibold tracking-tight text-foreground">
+          {dict.lending.title}
+        </h1>
+        <p className="font-[var(--font-sans)] text-sm text-muted-foreground">
+          {records.length} · {active.length} {dict.lending.activeLoans}
+        </p>
+      </header>
+      <div className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] p-4">
         <LendingForm books={books} dict={dict.lending} />
       </div>
       {records.length === 0 ? (
@@ -31,8 +38,8 @@ export default async function LendingPage() {
       ) : (
         <div className="space-y-4">
           {active.length > 0 && (
-            <div className="rounded-xl border border-border bg-card overflow-hidden">
-              <div className="border-b border-border bg-muted/50 px-4 py-2">
+            <div className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] overflow-hidden">
+              <div className="border-b border-border bg-[var(--surface-elevated)] px-4 py-2">
                 <p className="text-[11px] text-muted-foreground">{dict.lending.activeLoans}</p>
               </div>
               {active.map((record) => (
@@ -41,8 +48,8 @@ export default async function LendingPage() {
             </div>
           )}
           {returned.length > 0 && (
-            <div className="rounded-xl border border-border bg-card overflow-hidden">
-              <div className="border-b border-border bg-muted/50 px-4 py-2">
+            <div className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] overflow-hidden">
+              <div className="border-b border-border bg-[var(--surface-elevated)] px-4 py-2">
                 <p className="text-[11px] text-muted-foreground">{dict.lending.returnedSection}</p>
               </div>
               {returned.map((record) => (

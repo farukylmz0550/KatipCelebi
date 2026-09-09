@@ -1,7 +1,7 @@
 # KatipCelebi — Memory Bank
 
-> Son güncelleme: 2026-09-08
-> Versiyon: 2.2.0
+> Son güncelleme: 2026-09-09
+> Versiyon: 2.3.0
 > Branch: main
 
 ---
@@ -21,14 +21,17 @@ Orijinal PyQt6 masaüstü uygulamasının web yeniden yazımı (`legacy` branch)
 | Katman | Teknoloji |
 |--------|-----------|
 | Framework | Next.js 16 (App Router) + TypeScript |
-| UI | Tailwind CSS 4, shadcn/ui, lucide-react, Recharts |
+| UI | Tailwind CSS 4, shadcn/ui, lucide-react, Recharts, Noto Serif/Sans/Mono |
+| Tema | Terracotta × Dusty Rose (light) / Ink & Copper (dark) — CSS vars `UI_Design_Language.md` |
 | Veritabanı | SQLite via Prisma 7 (`better-sqlite3`) |
 | Auth | NextAuth v5 (Credentials, JWT, bcrypt) |
 | Doğrulama | Zod |
 | Biçimlendirme | Prettier + ESLint |
 | Test | Vitest (unit), Playwright (e2e) |
 | i18n | Cookie tabanlı locale, 6 sözlük |
-| Deploy | Docker, Docker Compose |
+| PWA | `public/sw.js` + `manifest.json` + `src/app/sw-register.tsx` |
+| Consent | GDPR cookie banner `src/components/cookie-consent.tsx` (Essential/Preferences/Analytics) |
+| Deploy | Docker (multi-stage), Docker Compose, GHCR |
 
 ---
 
@@ -39,33 +42,44 @@ katipcelebi/
 ├── src/
 │   ├── app/
 │   │   ├── (dashboard)/
-│   │   │   ├── books/            # Kitap listesi, ekleme, içe aktarma, filtreler
-│   │   │   │   └── [id]/         # Kitap detay, düzenleme, ödünç, kişisel
+│   │   │   ├── books/            # Kitap listesi (Card/List), ekleme (ISBN tek tık + detaylı), filtreler, Excel
+│   │   │   │   ├── books-add-section.tsx  # Ok → detaylı form (60/40 kart)
+│   │   │   │   ├── book-card.tsx          # Eşit kart h-[380px] 60/40 object-contain
+│   │   │   │   ├── books-grid.tsx         # 2→3→4 cols + view-mode cookie
+│   │   │   │   └── [id]/                  # Kitap detay, düzenleme, ödünç, kişisel
 │   │   │   ├── lending/          # Ödünç listesi ve formu
 │   │   │   ├── people/           # Kişi rehberi ve geçmişi
-│   │   │   ├── stats/            # İstatistikler, hedefler, grafikler
-│   │   │   ├── achievements/     # Başarım rozetleri
+│   │   │   ├── stats/            # İstatistikler, hedefler, grafikler, streak, heatmap
+│   │   │   ├── achievements/     # Başarım rozetleri (grid)
 │   │   │   ├── leaderboard/      # XP sıralaması
 │   │   │   ├── profile/          # İsim düzenleme, şifre değiştirme
-│   │   │   └── admin/
-│   │   │       ├── users/        # Kullanıcı yönetimi (onayla/reddet/sil)
-│   │   │       └── covers/       # Cover önbellek yönetimi
-│   │   ├── actions/              # Server actions (veri değişiklikleri)
-│   │   ├── api/                  # API route'ları (auth, test reset)
+│   │   │   ├── settings/         # Bildirim + tema (Sun/Moon SVG)
+│   │   │   ├── more/             # Bottom-nav overflow
+│   │   │   └── admin/            # Admin (users, covers) — sidebar en altta
+│   │   ├── actions/              # Server actions (books, lending, people, goals, excel, profile, covers, admin, locale, theme, logout, settings)
+│   │   ├── api/                  # API route'ları (auth, test reset, streak, well-known)
 │   │   ├── login/                # Giriş sayfası
 │   │   ├── register/             # Kayıt sayfası
 │   │   └── setup/                # İlk kurulum (admin hesabı)
-│   ├── components/ui/            # shadcn/ui bileşenleri
+│   ├── components/
+│   │   ├── ui/                   # shadcn/ui (token-aware)
+│   │   ├── sidebar.tsx           # Collapsible sidebar (desktop, cookie sidebar-collapsed)
+│   │   ├── bottom-nav.tsx        # Bottom nav (mobile, safe-area)
+│   │   ├── cookie-consent.tsx    # GDPR banner (desktop modal / mobile bar)
+│   │   ├── theme-dropdown.tsx    # Sun/Moon SVG (Lucide ISC)
+│   │   └── install-prompt.tsx    # PWA install
 │   ├── lib/
-│   │   ├── books/                # Kitap alan mantığı + filtreler
+│   │   ├── books/                # Kitap alan mantığı + filters + openlibrary
+│   │   ├── cookies.ts / cookies-client.ts / cookies-shared.ts # Consent helpers
 │   │   ├── db.ts                 # Prisma client singleton
-│   │   ├── gamification.ts       # XP, seviye, başarımlar (DB bağımlı)
-│   │   ├── gamification-pure.ts  # Saf fonksiyonlar (DB yok, client-safe)
+│   │   ├── gamification.ts       # XP, seviye, başarımlar (DB)
+│   │   ├── gamification-pure.ts  # Saf fonksiyonlar (Fibonacci, streak)
 │   │   ├── goals.ts              # Hedef matematiği
-│   │   ├── isbn.ts               # ISBN arama
+│   │   ├── isbn.ts               # ISBN arama (full metadata)
 │   │   ├── person.ts             # Kişi normalizasyonu, güven
 │   │   ├── stats.ts              # Aylık bitiş sayıları
-│   │   └── theme.ts              # Cookie tabanlı tema
+│   │   ├── streak.ts             # Streak hesaplama
+│   │   └── theme.ts              # Cookie tema (light/dark, Sun/Moon)
 │   ├── i18n/                     # Sözlükler (en, tr, es, fr, ru, zh)
 │   ├── auth.ts                   # NextAuth yapılandırması + onay kontrolü
 │   ├── proxy.ts                  # Proxy (auth + rate limiting)
@@ -76,7 +90,10 @@ katipcelebi/
 │   ├── seed.cjs                  # Başarım kataloğu tohumu (Docker)
 │   └── migrations/               # Veritabanı migrasyonları
 ├── e2e/                          # Playwright E2E testleri
-├── public/                       # Statik dosyalar (favicon, ikonlar)
+├── public/                       # Statik dosyalar, sw.js, manifest.json
+├── UI_Design_Language.md         # Visual language source of truth
+├── Architecture_Principles.md    # Architectural boundaries
+├── Project_Rules.md              # Project-level rules
 ├── Dockerfile                    # Çok katmanlı Docker build
 ├── docker-compose.yml            # Self-hosting kurulumu
 └── vitest.config.ts              # Unit test yapılandırması
@@ -95,13 +112,14 @@ User ──────┬── Book ──────── LendingRecord
 
 | Model | Ana Alanlar |
 |-------|------------|
-| **User** | email, passwordHash, name, isAdmin, approved, xp |
-| **Book** | isbn, title, author, coverUrl, status, rating, tags, copies, 17 legacy alan |
+| **User** | email, passwordHash, name, isAdmin, approved, xp, currentStreak, longestStreak, lastActiveDate, streakShieldCount |
+| **Book** | isbn, title, author, coverUrl, status, rating, tags, copies, subtitle, publishers, publishDate, publishPlaces, numberOfPages, languages, isbn10/13, subjects, 17 legacy alan |
 | **Person** | name (kullanıcı başına benzersiz), ödünçte otomatik oluşturulur |
-| **LendingRecord** | book, borrower, lentAt, returnedAt, denormalized bookTitle |
+| **LendingRecord** | book, borrower, lentAt, returnedAt, denormalized bookTitle, personId |
 | **Goal** | kullanıcı başına yıllık/aylık hedefler |
-| **Achievement** | key, titleKey, descriptionKey, iconKey (i18n) |
+| **Achievement** | key, titleKey, descriptionKey, iconKey (i18n) — 8 adet (week/month/century streak dahil) |
 | **UserAchievement** | kullanıcı + başarım bağlantısı + kilidi açma tarihi |
+| **DailyActivity / StreakShield / UserSettings / PushSubscription** | streak & bildirim takibi |
 
 ---
 
@@ -109,8 +127,8 @@ User ──────┬── Book ──────── LendingRecord
 
 | Dosya | Mutasyonlar |
 |-------|------------|
-| `auth.ts` | register (approved=false ayarlar) |
-| `books.ts` | add, import, update, delete, set status |
+| `auth.ts` | register (approved=false) |
+| `books.ts` | add (full metadata, one-click ISBN), update, delete, set status, lookupIsbn |
 | `lending.ts` | create, return |
 | `people.ts` | create, remove |
 | `goals.ts` | set yearly/monthly |
@@ -118,10 +136,13 @@ User ──────┬── Book ──────── LendingRecord
 | `profile.ts` | update name, change password |
 | `covers.ts` | clear cache (admin) |
 | `admin.ts` | approve/reject users, toggle admin, delete users |
-| `locale.ts` | switch language |
-| `theme.ts` | toggle theme |
+| `locale.ts` | switch language (consent-gated) |
+| `theme.ts` | toggle theme Sun/Moon SVG (light/dark, consent-gated) |
+| `logout.ts` | signOut |
+| `settings.ts` | update notifications/streak/weeklyDigest |
+| `cookies.ts` | setConsentCookie, hasConsent |
 
-Her veri değişikliği yapan action `awardXp()` + `syncAchievements()` çalıştırır.
+Her veri değişikliği yapan action `awardXp()` + `syncAchievements()` çalıştırır. ISBN tek tıkla eklemede `lookupIsbnAction` → `addBook` zinciri, tüm Open Library alanları kaydedilir.
 
 ---
 
@@ -169,6 +190,7 @@ npm run format:check  # prettier
 
 | Tarih | Commit | Açıklama |
 |-------|--------|----------|
+| 2026-09-09 | `2.3.0` | UI Design Language 60/40 kart, Noto, Terracotta/Ink-Copper, collapsible sidebar, cookie consent (C), ISBN tek tık + detaylı form, bulk import kaldırıldı, high-contrast kaldırıldı, Sun/Moon SVG |
 | 2026-09-08 | `768d827` | GitHub Actions silindi, README güncellendi |
 | 2026-09-08 | `62ca415` | Docker build + Turbopack uyumluluk + TS hataları düzeltildi |
 | 2026-09-07 | `d08b72e` | i18n düzeltmeleri, CI/CD, admin onay sistemi |
@@ -205,8 +227,12 @@ npm run format:check  # prettier
 - **Turbopack + better-sqlite3:** Turbopack client component'leribetter-sqlite3'ü bundle eder → `fs` hatası. Çözüm: `gamification-pure.ts` ile saf fonksiyonlar ayrıldı.
 - **Docker production stage:** better-sqlite3 node-gyp ile derlenir, production stage'de python3/make/g++ gerekir.
 - **prisma7.config.ts:** `dotenv/config` devDependency olarak production'da mevcut değil → kaldırıldı, env var doğrudan kullanılır.
-- **seed.cjs:** TypeScript tohum dosyası (`tsx` devDependency) production'da çalışmaz → plain JS alternatif eklendi.
+- **seed.cjs:** TypeScript tohum dosyası (`tsx` devDependency) production'da çalışmaz → plain JS alternatif eklendi (`CONTRIBUTING.md` istisna: `public/sw.js` + `prisma/seed.cjs`).
 - **Proxy (middleware.ts):** Next.js 16'da `middleware.ts` deprecated → `proxy.ts` doğru convention.
+- **Sidebar server actions:** Client Component içinde `setLocale.bind`/`setTheme.bind` → React #441 hatası. Çözüm: `useTransition` + doğrudan `setLocale()`/`setTheme()` çağrısı, `logoutAction` ayrı server action.
+- **High Contrast:** `UI_Design_Language.md` ile uyumsuz olduğu için kaldırıldı (GNOME kalıntısı). Tema sadece `light`/`dark` (Sun/Moon SVG, Lucide ISC).
+- **Book Card 60/40:** `h-[380px]` `h-[60%]` cover `object-contain p-2` + `h-[40%]` metadata `gap-1 px-3 py-3`, `text-[15px] serif` okunabilir. Bulk import (`importBooksByIsbn`) kaldırıldı.
+- **Cookie Consent:** `src/lib/cookies-shared.ts` ile server/client ayrımı; `next/headers` sadece server'da.
 
 ---
 
@@ -221,9 +247,9 @@ GPLv3 lisansı altında her iki proje de devam eder.
 
 ### Yüksek Öncelik
 - [ ] **Kamera ile ISBN barkod tarama** — `html5-qrcode` ile telefon kamerasından barkod okuma
-- [ ] **Safe area insets** — iPhone çentik/alt bar arkasında kalan içeriği düzelt (`env(safe-area-inset-*)`)
-- [ ] **viewport-fit=cover** — Edge-to-edge ekran desteği (layout.tsx viewport meta)
-- [ ] **Alt navigasyon barı** — Mobilde üst nav taşması yerine底部 tab bar (Books, Lending, Stats, More)
+- [x] **Safe area insets** — `env(safe-area-inset-*)` + `safe-bottom`/`safe-top` (layout, bottom-nav)
+- [x] **viewport-fit=cover** — `layout.tsx:27` `viewportFit: "cover"`
+- [x] **Alt navigasyon barı** — `src/components/bottom-nav.tsx` + `src/components/sidebar.tsx` (Responsive Hybrid Shell)
 
 ### Orta Öncelik
 - [ ] **Offline precaching** — App shell'i (HTML/CSS/JS) SW install'ta önceden cache'le

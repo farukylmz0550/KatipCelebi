@@ -32,13 +32,15 @@ export default async function PeoplePage({ searchParams }: { searchParams?: Prom
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-xl font-medium text-foreground">{dict.people.title}</h1>
-        <p className="text-xs text-muted-foreground">
+      <header className="space-y-1">
+        <h1 className="font-[var(--font-serif)] text-2xl font-semibold tracking-tight text-foreground">
+          {dict.people.title}
+        </h1>
+        <p className="font-[var(--font-sans)] text-sm text-muted-foreground">
           {dict.people.count}: {personsWithStats.length}
         </p>
-      </div>
-      <div className="rounded-xl border border-border bg-card p-4">
+      </header>
+      <div className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] p-4">
         <PersonForm
           placeholder={dict.people.namePlaceholder}
           addLabel={dict.people.add}
@@ -49,8 +51,8 @@ export default async function PeoplePage({ searchParams }: { searchParams?: Prom
       {personsWithStats.length === 0 ? (
         <p className="py-8 text-center text-sm text-muted-foreground">{dict.people.empty}</p>
       ) : (
-        <div className="rounded-xl border border-border bg-card overflow-hidden">
-          <div className="grid grid-cols-[1fr_5rem_5rem_5rem] gap-4 border-b border-border bg-muted/50 px-4 py-2">
+        <div className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] overflow-hidden">
+          <div className="grid grid-cols-[1fr_5rem_5rem_5rem] gap-4 border-b border-border bg-[var(--surface-elevated)] px-4 py-2">
             <span className="text-[11px] text-muted-foreground">{dict.people.title}</span>
             <span className="text-[11px] text-center text-muted-foreground">{dict.people.trust}</span>
             <span className="text-[11px] text-center text-muted-foreground">{dict.people.returned}</span>
@@ -72,8 +74,8 @@ export default async function PeoplePage({ searchParams }: { searchParams?: Prom
         </div>
       )}
       {selectedPerson && (
-        <div className="rounded-xl border border-border bg-card overflow-hidden">
-          <div className="border-b border-border bg-muted/50 px-4 py-2">
+        <div className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] overflow-hidden">
+          <div className="border-b border-border bg-[var(--surface-elevated)] px-4 py-2">
             <p className="text-[11px] text-muted-foreground">
               {dict.people.historyFor} {selectedPerson.name}
             </p>
@@ -82,7 +84,7 @@ export default async function PeoplePage({ searchParams }: { searchParams?: Prom
             <p className="px-4 py-4 text-sm text-muted-foreground">{dict.people.historyEmpty}</p>
           ) : (
             <div>
-              <div className="grid grid-cols-[1fr_8rem_8rem] gap-4 border-b border-border bg-muted/30 px-4 py-2">
+              <div className="grid grid-cols-[1fr_8rem_8rem] gap-4 border-b border-border bg-[var(--surface)] px-4 py-2">
                 <span className="text-[11px] text-muted-foreground">{dict.people.book}</span>
                 <span className="text-[11px] text-muted-foreground">{dict.people.lent}</span>
                 <span className="text-[11px] text-muted-foreground">{dict.people.returnedHeader}</span>

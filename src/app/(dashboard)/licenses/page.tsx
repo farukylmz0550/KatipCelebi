@@ -166,8 +166,12 @@ export default async function LicensesPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-medium text-foreground">{dict.licenses.title}</h1>
-      <p className="text-sm text-muted-foreground">{dict.licenses.description}</p>
+      <header className="space-y-1">
+        <h1 className="font-[var(--font-serif)] text-2xl font-semibold tracking-tight text-foreground">
+          {dict.licenses.title}
+        </h1>
+        <p className="font-[var(--font-sans)] text-sm text-muted-foreground">{dict.licenses.description}</p>
+      </header>
       <div className="grid gap-2 sm:grid-cols-2">
         {LICENSES.map((lib) => (
           <div

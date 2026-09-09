@@ -35,29 +35,71 @@ describe("levelProgress", () => {
 describe("evaluateAchievements", () => {
   it("unlocks nothing for a user with no activity", () => {
     expect(
-      evaluateAchievements({ booksAdded: 0, booksFinished: 0, lendingsCreated: 0, distinctAuthors: 0, currentStreak: 0, longestStreak: 0 })
+      evaluateAchievements({
+        booksAdded: 0,
+        booksFinished: 0,
+        lendingsCreated: 0,
+        distinctAuthors: 0,
+        currentStreak: 0,
+        longestStreak: 0,
+      }),
     ).toEqual([]);
   });
 
   it("unlocks first_book once a book is added", () => {
-    const keys = evaluateAchievements({ booksAdded: 1, booksFinished: 0, lendingsCreated: 0, distinctAuthors: 1, currentStreak: 0, longestStreak: 0 });
+    const keys = evaluateAchievements({
+      booksAdded: 1,
+      booksFinished: 0,
+      lendingsCreated: 0,
+      distinctAuthors: 1,
+      currentStreak: 0,
+      longestStreak: 0,
+    });
     expect(keys).toContain("first_book");
   });
 
   it("unlocks ten_finished only at ten finished books", () => {
-    const under = evaluateAchievements({ booksAdded: 9, booksFinished: 9, lendingsCreated: 0, distinctAuthors: 9, currentStreak: 0, longestStreak: 0 });
-    const at = evaluateAchievements({ booksAdded: 10, booksFinished: 10, lendingsCreated: 0, distinctAuthors: 10, currentStreak: 0, longestStreak: 0 });
+    const under = evaluateAchievements({
+      booksAdded: 9,
+      booksFinished: 9,
+      lendingsCreated: 0,
+      distinctAuthors: 9,
+      currentStreak: 0,
+      longestStreak: 0,
+    });
+    const at = evaluateAchievements({
+      booksAdded: 10,
+      booksFinished: 10,
+      lendingsCreated: 0,
+      distinctAuthors: 10,
+      currentStreak: 0,
+      longestStreak: 0,
+    });
     expect(under).not.toContain("ten_finished");
     expect(at).toContain("ten_finished");
   });
 
   it("unlocks week_streak at 7 days", () => {
-    const keys = evaluateAchievements({ booksAdded: 0, booksFinished: 0, lendingsCreated: 0, distinctAuthors: 0, currentStreak: 7, longestStreak: 0 });
+    const keys = evaluateAchievements({
+      booksAdded: 0,
+      booksFinished: 0,
+      lendingsCreated: 0,
+      distinctAuthors: 0,
+      currentStreak: 7,
+      longestStreak: 0,
+    });
     expect(keys).toContain("week_streak");
   });
 
   it("unlocks month_streak via longestStreak", () => {
-    const keys = evaluateAchievements({ booksAdded: 0, booksFinished: 0, lendingsCreated: 0, distinctAuthors: 0, currentStreak: 0, longestStreak: 30 });
+    const keys = evaluateAchievements({
+      booksAdded: 0,
+      booksFinished: 0,
+      lendingsCreated: 0,
+      distinctAuthors: 0,
+      currentStreak: 0,
+      longestStreak: 30,
+    });
     expect(keys).toContain("month_streak");
   });
 });

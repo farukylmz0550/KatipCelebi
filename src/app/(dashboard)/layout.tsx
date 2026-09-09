@@ -1,14 +1,15 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { auth, signOut } from "@/auth";
-import { getDictionary, getLocale, LOCALES } from "@/i18n/get-dictionary";
-import { setLocale } from "@/app/actions/locale";
+import { getDictionary, getLocale } from "@/i18n/get-dictionary";
 import { getTheme } from "@/lib/theme";
 import { needsSetup } from "@/lib/setup";
-import { NotificationPerm } from "./notification-perm";
+import { Sidebar } from "@/components/sidebar";
 import { BottomNav } from "@/components/bottom-nav";
-import { ThemeDropdown } from "@/components/theme-dropdown";
 import { InstallPrompt } from "@/components/install-prompt";
+import { NotificationPerm } from "./notification-perm";
+import { ThemeDropdown } from "@/components/theme-dropdown";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   if (await needsSetup()) redirect("/setup");
@@ -24,33 +25,60 @@ export default async function DashboardLayout({ children }: { children: React.Re
     isAdmin = !!u?.isAdmin;
   }
 
+  const sidebarCollapsed = (await cookies()).get("sidebar-collapsed")?.value === "1";
+
+  const sidebarDict: Record<string, string> = {
+    books: dict.nav.books,
+    lending: dict.nav.lending,
+    stats: dict.nav.stats,
+    achievements: dict.nav.achievements,
+    leaderboard: dict.nav.leaderboard,
+    people: dict.nav.people,
+    profile: (dict as unknown as { profile: { title: string } }).profile?.title ?? "Profile",
+    settings: dict.nav.settings,
+    adminUsers: dict.admin.usersTitle,
+    adminCovers: dict.admin.coversTitle,
+    logout: dict.nav.logout,
+  };
+
   return (
-    <div className="min-h-full">
-      {/* GNOME Header Bar */}
-      <header className="sticky top-0 z-50 gnome-header safe-top">
-        <div className="mx-auto flex h-12 max-w-3xl items-center px-3">
-          {/* Left: Logo + Title */}
+    <div className="flex min-h-screen bg-[var(--background)]">
+      {/* Desktop Sidebar — Responsive Hybrid Shell §6 */}
+      <Sidebar
+        dict={sidebarDict}
+        isAdmin={isAdmin}
+        userName={session?.user?.name ?? null}
+        initialCollapsed={sidebarCollapsed}
+        locale={locale}
+        currentTheme={theme}
+      />
+
+      <div className="flex min-w-0 flex-1 flex-col">
+        {/* Mobile header — visible only on <md, respects safe-top */}
+        <header className="sticky top-0 z-30 flex h-12 items-center gap-2 border-b border-[var(--border)] bg-[var(--surface)] px-3 safe-top md:hidden">
           <Link href="/books" className="flex items-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/icon-192.png" alt="" className="h-6 w-6 rounded-md" />
-            <span className="text-[13px] font-semibold text-foreground">KatipCelebi</span>
+            <img src="/icon-192.png" alt="" className="h-6 w-6 rounded-[8px]" />
+            <span className="font-[var(--font-serif)] text-sm font-semibold tracking-tight text-foreground">
+              KatipCelebi
+            </span>
           </Link>
-
-          {/* Right: Actions */}
           <div className="ml-auto flex items-center gap-0.5">
             <NotificationPerm dict={dict.common} />
             <ThemeDropdown currentTheme={theme} />
             <form
               action={async () => {
                 "use server";
-                const idx = LOCALES.indexOf(locale);
-                const next = LOCALES[(idx + 1) % LOCALES.length];
+                const { setLocale } = await import("@/app/actions/locale");
+                const locales = ["en", "tr", "es", "fr", "ru", "zh"] as const;
+                const idx = locales.indexOf(locale as never);
+                const next = locales[(idx + 1) % locales.length];
                 await setLocale(next);
               }}
             >
               <button
                 type="submit"
-                className="flex h-8 w-8 items-center justify-center rounded-lg text-[11px] font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                className="flex h-8 w-8 items-center justify-center rounded-[8px] text-[11px] font-medium text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                 title={locale}
               >
                 {locale.toUpperCase()}
@@ -64,58 +92,31 @@ export default async function DashboardLayout({ children }: { children: React.Re
             >
               <button
                 type="submit"
-                className="flex h-8 w-8 items-center justify-center rounded-lg text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-destructive"
+                className="flex h-8 w-8 items-center justify-center rounded-[8px] text-muted-foreground hover:bg-accent hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                 title={dict.nav.logout}
               >
                 ⏻
               </button>
             </form>
           </div>
-        </div>
-      </header>
+        </header>
 
-      {/* Desktop Navigation */}
-      <nav className="hidden border-b border-border bg-card md:block">
-        <div className="mx-auto flex max-w-3xl items-center gap-0.5 px-3 py-1">
-          <NavLink href="/books">{dict.nav.books}</NavLink>
-          <NavLink href="/lending">{dict.nav.lending}</NavLink>
-          <NavLink href="/stats">{dict.nav.stats}</NavLink>
-          <NavLink href="/achievements">{dict.nav.achievements}</NavLink>
-          <NavLink href="/leaderboard">{dict.nav.leaderboard}</NavLink>
-          {isAdmin && (
-            <>
-              <NavLink href="/admin/users">{dict.common.admin}</NavLink>
-              <NavLink href="/admin/covers">Covers</NavLink>
-            </>
-          )}
-          <div className="ml-auto text-xs text-muted-foreground">{session?.user?.name}</div>
-        </div>
-      </nav>
+        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 pb-24 md:px-6 md:pb-6 lg:px-8">{children}</main>
 
-      <main className="mx-auto max-w-3xl px-4 py-6 pb-24 md:pb-6">{children}</main>
+        <footer className="border-t border-[var(--border)] bg-[var(--surface)] py-3 text-center safe-bottom">
+          <Link
+            href="/licenses"
+            className="font-[var(--font-sans)] text-xs text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {dict.licenses.nav}
+          </Link>
+        </footer>
+      </div>
 
-      <footer className="border-t border-border py-3 text-center safe-bottom">
-        <Link
-          href="/licenses"
-          className="text-xs text-muted-foreground transition-colors hover:text-foreground"
-        >
-          {dict.licenses.nav}
-        </Link>
-      </footer>
-
-      <BottomNav dict={{ books: dict.nav.books, lending: dict.nav.lending, stats: dict.nav.stats, more: dict.nav.more }} />
+      <BottomNav
+        dict={{ books: dict.nav.books, lending: dict.nav.lending, stats: dict.nav.stats, more: dict.nav.more }}
+      />
       <InstallPrompt />
     </div>
-  );
-}
-
-function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <Link
-      href={href}
-      className="rounded-lg px-3 py-1.5 text-[13px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-    >
-      {children}
-    </Link>
   );
 }

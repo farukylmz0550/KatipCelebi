@@ -8,11 +8,7 @@ describe("monthlyFinishCounts", () => {
   });
 
   it("counts finished books per month", () => {
-    const dates = [
-      new Date("2024-04-10"),
-      new Date("2024-04-20"),
-      new Date("2024-05-05"),
-    ];
+    const dates = [new Date("2024-04-10"), new Date("2024-04-20"), new Date("2024-05-05")];
     const result = monthlyFinishCounts(dates, new Date("2024-06-01"));
     const april = result.find((r) => r.month === "Apr");
     const may = result.find((r) => r.month === "May");

@@ -54,11 +54,7 @@ describe("yearlyGoal / monthlyGoal", () => {
 
 describe("finishedInYear", () => {
   it("counts finished books in a year", () => {
-    const dates = [
-      new Date("2024-03-15"),
-      new Date("2024-07-20"),
-      new Date("2025-01-10"),
-    ];
+    const dates = [new Date("2024-03-15"), new Date("2024-07-20"), new Date("2025-01-10")];
     expect(finishedInYear(dates, 2024)).toBe(2);
     expect(finishedInYear(dates, 2025)).toBe(1);
   });
@@ -66,11 +62,7 @@ describe("finishedInYear", () => {
 
 describe("finishedInMonth", () => {
   it("counts finished books in a specific month", () => {
-    const dates = [
-      new Date("2024-03-15"),
-      new Date("2024-03-20"),
-      new Date("2024-04-10"),
-    ];
+    const dates = [new Date("2024-03-15"), new Date("2024-03-20"), new Date("2024-04-10")];
     expect(finishedInMonth(dates, 2024, 2)).toBe(2); // March = index 2
     expect(finishedInMonth(dates, 2024, 3)).toBe(1); // April = index 3
   });

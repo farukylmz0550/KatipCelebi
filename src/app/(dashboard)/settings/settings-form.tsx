@@ -1,6 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
+import { Sun, Moon } from "lucide-react";
 import { updateSettings } from "@/app/actions/settings";
 import { setTheme } from "@/app/actions/theme";
 import type { Theme } from "@/lib/theme";
@@ -11,10 +12,9 @@ interface SettingsFormProps {
   currentTheme: Theme;
 }
 
-const THEMES: { value: Theme; label: string; icon: string }[] = [
-  { value: "light", label: "Light", icon: "☀️" },
-  { value: "dark", label: "Dark", icon: "🌙" },
-  { value: "high-contrast", label: "High Contrast", icon: "◐" },
+const THEMES: { value: Theme; label: string; Icon: React.ElementType }[] = [
+  { value: "light", label: "Light", Icon: Sun },
+  { value: "dark", label: "Dark", Icon: Moon },
 ];
 
 export function SettingsForm({ settings, currentTheme }: SettingsFormProps) {
@@ -36,10 +36,10 @@ export function SettingsForm({ settings, currentTheme }: SettingsFormProps) {
     <div className="space-y-6">
       {/* Notifications */}
       <section>
-        <h2 className="mb-2 px-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <h2 className="mb-2 px-1 font-[var(--font-sans)] text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           Bildirimler
         </h2>
-        <div className="gnome-boxed-list">
+        <div className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] overflow-hidden">
           <ToggleRow
             label="Bildirimleri etkinleştir"
             checked={settings.notificationsEnabled}
@@ -63,27 +63,28 @@ export function SettingsForm({ settings, currentTheme }: SettingsFormProps) {
 
       {/* Theme */}
       <section>
-        <h2 className="mb-2 px-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <h2 className="mb-2 px-1 font-[var(--font-sans)] text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           Tema
         </h2>
-        <div className="gnome-boxed-list">
-          {THEMES.map((t) => (
-            <button
-              key={t.value}
-              type="button"
-              onClick={() => handleThemeChange(t.value)}
-              disabled={isPending}
-              className="gnome-boxed-list-item w-full text-left disabled:opacity-50"
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-base">{t.icon}</span>
-                <span className="text-sm text-foreground">{t.label}</span>
-              </div>
-              {currentTheme === t.value && (
-                <div className="h-2.5 w-2.5 rounded-full bg-primary" />
-              )}
-            </button>
-          ))}
+        <div className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] overflow-hidden">
+          {THEMES.map((t) => {
+            const Icon = t.Icon;
+            return (
+              <button
+                key={t.value}
+                type="button"
+                onClick={() => handleThemeChange(t.value)}
+                disabled={isPending}
+                className="flex w-full items-center justify-between border-b border-[var(--border)] last:border-b-0 px-4 py-3 text-left hover:bg-[var(--surface-elevated)] disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
+              >
+                <div className="flex items-center gap-3">
+                  <Icon size={16} className="text-muted-foreground" />
+                  <span className="font-[var(--font-sans)] text-sm text-foreground">{t.label}</span>
+                </div>
+                {currentTheme === t.value && <div className="h-2.5 w-2.5 rounded-full bg-[var(--accent)]" />}
+              </button>
+            );
+          })}
         </div>
       </section>
     </div>
@@ -106,18 +107,14 @@ function ToggleRow({
       type="button"
       onClick={onChange}
       disabled={disabled}
-      className="gnome-boxed-list-item w-full text-left disabled:opacity-50"
+      className="flex w-full items-center justify-between border-b border-[var(--border)] last:border-b-0 px-4 py-3 text-left hover:bg-[var(--surface-elevated)] disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
     >
-      <span className="text-sm text-foreground">{label}</span>
+      <span className="font-[var(--font-sans)] text-sm text-foreground">{label}</span>
       <div
-        className={`relative h-5 w-9 shrink-0 rounded-full transition-colors ${
-          checked ? "bg-primary" : "bg-muted"
-        }`}
+        className={`relative h-5 w-9 shrink-0 rounded-full transition-colors ${checked ? "bg-[var(--accent)]" : "bg-[var(--border)]"}`}
       >
         <div
-          className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition-transform ${
-            checked ? "translate-x-4" : "translate-x-0.5"
-          }`}
+          className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-transform ${checked ? "translate-x-4" : "translate-x-0.5"}`}
         />
       </div>
     </button>

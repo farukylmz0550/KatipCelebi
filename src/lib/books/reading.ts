@@ -7,7 +7,7 @@ export const READ = "read";
 export const STATUSES = [NOT_READ, WANT_TO_READ, READING, READ] as const;
 export const STATUS_ANY = "any";
 
-export type ReadingStatus = typeof STATUSES[number];
+export type ReadingStatus = (typeof STATUSES)[number];
 
 export function statusOf(s: string): string {
   const t = s.trim();
@@ -16,10 +16,14 @@ export function statusOf(s: string): string {
 
 export function normalizeWebStatus(web: string): string {
   switch (web) {
-    case "TO_READ": return WANT_TO_READ;
-    case "READING": return READING;
-    case "FINISHED": return READ;
-    default: return statusOf(web);
+    case "TO_READ":
+      return WANT_TO_READ;
+    case "READING":
+      return READING;
+    case "FINISHED":
+      return READ;
+    default:
+      return statusOf(web);
   }
 }
 

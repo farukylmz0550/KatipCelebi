@@ -78,12 +78,8 @@ export function ActivityHeatmap({ activities }: ActivityHeatmapProps) {
   return (
     <div className="gnome-card p-4">
       <div className="mb-3 flex items-center justify-between">
-        <p className="text-[13px] font-medium text-foreground">
-          Yıllık Aktivite
-        </p>
-        <p className="text-xs text-muted-foreground">
-          {totalActivities} etkinlik
-        </p>
+        <p className="text-[13px] font-medium text-foreground">Yıllık Aktivite</p>
+        <p className="text-xs text-muted-foreground">{totalActivities} etkinlik</p>
       </div>
 
       <div className="mb-1 flex pl-8">
@@ -129,10 +125,7 @@ export function ActivityHeatmap({ activities }: ActivityHeatmapProps) {
       <div className="mt-2 flex items-center justify-end gap-1">
         <span className="text-[9px] text-muted-foreground">Az</span>
         {[0, 1, 2, 3, 5].map((n) => (
-          <div
-            key={n}
-            className={`h-[10px] w-[10px] rounded-sm ${getIntensityClass(n)}`}
-          />
+          <div key={n} className={`h-[10px] w-[10px] rounded-sm ${getIntensityClass(n)}`} />
         ))}
         <span className="text-[9px] text-muted-foreground">Çok</span>
       </div>

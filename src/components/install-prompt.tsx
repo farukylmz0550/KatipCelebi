@@ -62,10 +62,7 @@ export function InstallPrompt() {
         >
           Yükle
         </button>
-        <button
-          onClick={handleDismiss}
-          className="rounded-md p-1 text-muted-foreground hover:bg-accent"
-        >
+        <button onClick={handleDismiss} className="rounded-md p-1 text-muted-foreground hover:bg-accent">
           <X size={14} />
         </button>
       </div>

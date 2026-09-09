@@ -17,7 +17,16 @@ describe("isSigned", () => {
 });
 
 describe("allows", () => {
-  const book = { title: "Test", rating: 3, signed: false, status: "TO_READ", tags: "fiction, sci-fi", author: "Author", isbn: "123", publishers: "Pub" };
+  const book = {
+    title: "Test",
+    rating: 3,
+    signed: false,
+    status: "TO_READ",
+    tags: "fiction, sci-fi",
+    author: "Author",
+    isbn: "123",
+    publishers: "Pub",
+  };
   const f: Filters = { ...defaultFilters };
 
   it("allows all when no filters active", () => {

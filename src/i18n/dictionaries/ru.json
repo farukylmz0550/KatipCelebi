@@ -94,7 +94,12 @@
     "copies": "копий",
     "pages": "Страницы",
     "scan": "Сканировать",
-    "currentPage": "Текущая Страница"
+    "currentPage": "Текущая Страница",
+    "notFound": "ISBN не найден — введите вручную.",
+    "lookupFailed": "Ошибка поиска. Попробуйте снова.",
+    "addSuccess": "Книга добавлена",
+    "addFailed": "Не удалось добавить",
+    "required": "Обязательное поле"
   },
   "facts": {
     "title": "Название *",
@@ -286,5 +291,25 @@
     "description": "Этот проект использует следующие открытые технологии:",
     "nav": "Лицензии",
     "projectLicense": "KatipCelebi распространяется под лицензией GNU General Public License v3.0."
+  },
+  "cookieConsent": {
+    "title": "Cookies",
+    "subtitle": "Для вашей библиотеки",
+    "desc": "KatipCelebi использует cookies для персонализации.",
+    "descMuted": "При отказе предпочтения хранятся только на этом устройстве.",
+    "mobileDesc": "Мы используем cookies для запоминания предпочтений.",
+    "essentialTitle": "Обязательные",
+    "essentialDesc": "Сессия, безопасность.",
+    "preferencesTitle": "Предпочтения",
+    "preferencesDesc": "Тема, язык, боковая панель.",
+    "analyticsTitle": "Аналитика",
+    "analyticsDesc": "Анонимная статистика (неактивна).",
+    "accept": "Принять",
+    "reject": "Отклонить",
+    "preferencesBtn": "Настройки",
+    "save": "Сохранить",
+    "back": "Назад",
+    "close": "Закрыть",
+    "licensesLink": "См. Лицензии."
   }
 }

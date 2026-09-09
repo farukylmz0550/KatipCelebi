@@ -4,6 +4,13 @@ export type IsbnLookupResult = {
   author?: string;
   coverUrl?: string;
   numberOfPages?: string;
+  publishers?: string;
+  publishDate?: string;
+  publishPlaces?: string;
+  languages?: string;
+  subjects?: string;
+  isbn10?: string;
+  isbn13?: string;
 };
 
 /** Looks up a single ISBN via the Open Library API. Returns null if not found. */
@@ -18,6 +25,13 @@ export async function lookupIsbn(isbn: string): Promise<IsbnLookupResult | null>
     author: book.authors,
     coverUrl: book.coverUrl,
     numberOfPages: book.numberOfPages,
+    publishers: book.publishers,
+    publishDate: book.publishDate,
+    publishPlaces: book.publishPlaces,
+    languages: book.languages,
+    subjects: book.subjects,
+    isbn10: book.isbn10,
+    isbn13: book.isbn13,
   };
 }
 
@@ -33,6 +47,13 @@ export async function lookupIsbns(isbns: string[]): Promise<IsbnLookupResult[]> 
         author: b.authors,
         coverUrl: b.coverUrl,
         numberOfPages: b.numberOfPages,
+        publishers: b.publishers,
+        publishDate: b.publishDate,
+        publishPlaces: b.publishPlaces,
+        languages: b.languages,
+        subjects: b.subjects,
+        isbn10: b.isbn10,
+        isbn13: b.isbn13,
       }))
       .filter((r) => !!r.title);
   }

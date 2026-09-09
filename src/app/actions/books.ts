@@ -4,18 +4,95 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
-import { lookupIsbn, lookupIsbns } from "@/lib/isbn";
+import { lookupIsbn } from "@/lib/isbn";
 import { awardXp, XP_REWARDS, syncAchievements } from "@/lib/gamification";
 
 const addBookSchema = z.object({
-  isbn: z.string().max(20).optional(),
-  title: z.string().min(1).max(500),
-  author: z.string().max(500).optional(),
+  isbn: z
+    .string()
+    .max(20)
+    .optional()
+    .transform((v) => (v ? v.replace(/[^0-9Xx]/g, "") || undefined : undefined)),
+  title: z.string().trim().min(1, "Title is required").max(500),
+  author: z
+    .string()
+    .trim()
+    .max(500)
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
   coverUrl: z
     .string()
+    .trim()
+    .max(2000)
     .refine((val) => !val || /^https?:\/\/.+/.test(val), "Cover URL must be a valid HTTP/HTTPS URL")
-    .optional(),
-  numberOfPages: z.string().max(20).optional(),
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+  numberOfPages: z
+    .string()
+    .trim()
+    .max(20)
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+  publishers: z
+    .string()
+    .trim()
+    .max(500)
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+  publishDate: z
+    .string()
+    .trim()
+    .max(100)
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+  publishPlaces: z
+    .string()
+    .trim()
+    .max(500)
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+  languages: z
+    .string()
+    .trim()
+    .max(200)
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+  subjects: z
+    .string()
+    .trim()
+    .max(1000)
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+  isbn10: z
+    .string()
+    .trim()
+    .max(20)
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+  isbn13: z
+    .string()
+    .trim()
+    .max(20)
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+  subtitle: z
+    .string()
+    .trim()
+    .max(500)
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+  editionName: z
+    .string()
+    .trim()
+    .max(200)
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+  series: z
+    .string()
+    .trim()
+    .max(200)
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
 });
 
 const updateBookSchema = z.object({
@@ -41,9 +118,19 @@ const updateBookSchema = z.object({
   currentPage: z.number().int().min(0).optional(),
 });
 
-export async function lookupIsbnAction(isbn: string) {
+export async function lookupIsbnAction(
+  isbn: string,
+): Promise<{ ok: true; data: Awaited<ReturnType<typeof lookupIsbn>> } | { ok: false; error: string }> {
   await requireUserId();
-  return lookupIsbn(isbn);
+  const cleaned = isbn.replace(/[^0-9Xx]/g, "");
+  if (!cleaned) return { ok: false, error: "ISBN is required" };
+  try {
+    const result = await lookupIsbn(cleaned);
+    if (!result) return { ok: false, error: "NOT_FOUND" };
+    return { ok: true, data: result };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "Lookup failed" };
+  }
 }
 
 export async function addBook(input: {
@@ -52,50 +139,54 @@ export async function addBook(input: {
   author?: string;
   coverUrl?: string;
   numberOfPages?: string;
-}) {
+  publishers?: string;
+  publishDate?: string;
+  publishPlaces?: string;
+  languages?: string;
+  subjects?: string;
+  isbn10?: string;
+  isbn13?: string;
+  subtitle?: string;
+  editionName?: string;
+  series?: string;
+}): Promise<{ ok: true } | { ok: false; error: string }> {
   const parsed = addBookSchema.safeParse(input);
-  if (!parsed.success) throw new Error(parsed.error.issues[0]?.message ?? "Invalid input");
+  if (!parsed.success) return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
 
   const userId = await requireUserId();
-  await db.book.create({
-    data: {
-      userId,
-      isbn: parsed.data.isbn,
-      title: parsed.data.title,
-      author: parsed.data.author,
-      coverUrl: parsed.data.coverUrl,
-      numberOfPages: parsed.data.numberOfPages,
-    },
-  });
-  await awardXp(userId, XP_REWARDS.BOOK_ADDED);
-  await syncAchievements(userId);
+  try {
+    await db.book.create({
+      data: {
+        userId,
+        isbn: parsed.data.isbn,
+        title: parsed.data.title,
+        author: parsed.data.author,
+        coverUrl: parsed.data.coverUrl,
+        numberOfPages: parsed.data.numberOfPages,
+        publishers: parsed.data.publishers,
+        publishDate: parsed.data.publishDate,
+        publishPlaces: parsed.data.publishPlaces,
+        languages: parsed.data.languages,
+        subjects: parsed.data.subjects,
+        isbn10: parsed.data.isbn10,
+        isbn13: parsed.data.isbn13,
+        subtitle: parsed.data.subtitle,
+        editionName: parsed.data.editionName,
+        series: parsed.data.series,
+      },
+    });
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "Failed to create book" };
+  }
+  // XP/achievements are non-blocking — book creation already succeeded
+  try {
+    await awardXp(userId, XP_REWARDS.BOOK_ADDED);
+  } catch {}
+  try {
+    await syncAchievements(userId);
+  } catch {}
   revalidatePath("/books");
-}
-
-export async function importBooksByIsbn(rawIsbns: string) {
-  const userId = await requireUserId();
-  const isbns = rawIsbns
-    .split(/[\s,;]+/)
-    .map((s) => s.trim())
-    .filter(Boolean);
-
-  const found = await lookupIsbns(isbns);
-  if (found.length === 0) return { imported: 0 };
-
-  await db.book.createMany({
-    data: found.map((b) => ({
-      userId,
-      isbn: b.isbn,
-      title: b.title,
-      author: b.author,
-      coverUrl: b.coverUrl,
-      numberOfPages: b.numberOfPages,
-    })),
-  });
-  await awardXp(userId, found.length * XP_REWARDS.BOOK_ADDED);
-  await syncAchievements(userId);
-  revalidatePath("/books");
-  return { imported: found.length };
+  return { ok: true };
 }
 
 export async function setBookStatus(bookId: string, status: "TO_READ" | "READING" | "FINISHED") {
@@ -149,7 +240,7 @@ export async function updateBook(
     signed: boolean;
     copies: number;
     currentPage: number;
-  }>
+  }>,
 ) {
   const parsed = updateBookSchema.partial().safeParse(data);
   if (!parsed.success) throw new Error(parsed.error.issues[0]?.message ?? "Invalid input");

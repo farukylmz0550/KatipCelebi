@@ -14,7 +14,14 @@ export default async function AchievementsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-medium text-foreground">{dict.achievements.title}</h1>
+      <header className="space-y-1">
+        <h1 className="font-[var(--font-serif)] text-2xl font-semibold tracking-tight text-foreground">
+          {dict.achievements.title}
+        </h1>
+        <p className="font-[var(--font-sans)] text-sm text-muted-foreground">
+          {all.length} · {unlocked.length} {dict.achievements.unlocked}
+        </p>
+      </header>
       <div className="grid gap-3 sm:grid-cols-2">
         {all.map((achievement) => {
           const isUnlocked = unlockedIds.has(achievement.id);
@@ -22,19 +29,25 @@ export default async function AchievementsPage() {
           return (
             <div
               key={achievement.id}
-              className={`rounded-xl border p-4 transition-colors ${
-                isUnlocked ? "border-primary/30 bg-primary/5" : "border-border bg-card opacity-60"
+              className={`rounded-[12px] border p-4 transition-colors ${
+                isUnlocked
+                  ? "border-[var(--border-strong)] bg-[var(--accent-soft)]"
+                  : "border-[var(--border)] bg-[var(--surface)] opacity-60"
               }`}
             >
               <div className="flex items-center justify-between">
-                <p className="text-[13px] font-medium text-foreground">{labels[`${achievement.key}_title`]}</p>
+                <p className="font-[var(--font-serif)] text-[13px] font-medium text-foreground">
+                  {labels[`${achievement.key}_title`]}
+                </p>
                 {isUnlocked && (
-                  <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
+                  <span className="rounded-full bg-[var(--accent)] px-2 py-0.5 font-[var(--font-sans)] text-[10px] font-medium text-white">
                     {dict.achievements.unlocked}
                   </span>
                 )}
               </div>
-              <p className="mt-1 text-xs text-muted-foreground">{labels[`${achievement.key}_desc`]}</p>
+              <p className="mt-1 font-[var(--font-sans)] text-xs text-muted-foreground">
+                {labels[`${achievement.key}_desc`]}
+              </p>
             </div>
           );
         })}

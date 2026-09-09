@@ -18,7 +18,14 @@ export default async function ProfilePage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-medium text-foreground">{dict.profile?.title ?? "Profile"}</h1>
+      <header className="space-y-1">
+        <h1 className="font-[var(--font-serif)] text-2xl font-semibold tracking-tight text-foreground">
+          {dict.profile?.title ?? "Profile"}
+        </h1>
+        <p className="font-[var(--font-sans)] text-sm text-muted-foreground">
+          {user.email} · {dict.profile?.joinDate ?? "Joined"} {new Date(user.createdAt).toLocaleDateString()}
+        </p>
+      </header>
       <ProfileForm
         user={{ name: user.name, email: user.email, xp: user.xp, createdAt: user.createdAt.toISOString() }}
         dict={{

@@ -41,9 +41,7 @@ export default function SetupServerPage() {
             <Globe size={32} className="text-primary" />
           </div>
           <h1 className="text-xl font-semibold">KatipCelebi</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Sunucu adresinizi girin
-          </p>
+          <p className="mt-1 text-sm text-muted-foreground">Sunucu adresinizi girin</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-3">
@@ -57,9 +55,7 @@ export default function SetupServerPage() {
               autoFocus
               autoComplete="url"
             />
-            {error && (
-              <p className="mt-1 text-xs text-destructive">{error}</p>
-            )}
+            {error && <p className="mt-1 text-xs text-destructive">{error}</p>}
           </div>
           <button
             type="submit"
@@ -72,7 +68,12 @@ export default function SetupServerPage() {
 
         <p className="text-center text-xs text-muted-foreground">
           {"Kendi sunucunuzu mu çalıştırıyorsunuz? "}
-          <a href="https://github.com/farukylmz0550/KatipCelebi" className="text-primary hover:underline" target="_blank" rel="noopener">
+          <a
+            href="https://github.com/farukylmz0550/KatipCelebi"
+            className="text-primary hover:underline"
+            target="_blank"
+            rel="noopener"
+          >
             {"GitHub'dan kurun"}
           </a>
         </p>
