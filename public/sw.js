@@ -78,6 +78,42 @@ function broadcastToClients(message) {
 
 // ── Push Notifications ──
 
+// VAPID public key is passed via the registration URL query (?vapid=...)
+const VAPID_PUBLIC_KEY = new URLSearchParams(self.location.search).get("vapid");
+
+function urlBase64ToUint8Array(base64String) {
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+  const raw = atob(base64);
+  const output = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i += 1) {
+    output[i] = raw.charCodeAt(i);
+  }
+  return output;
+}
+
+self.addEventListener("pushsubscriptionchange", (event) => {
+  event.waitUntil(
+    (async () => {
+      if (!VAPID_PUBLIC_KEY) return;
+      try {
+        const subscription = await self.registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+        });
+        await fetch("/api/push/subscribe", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(subscription.toJSON()),
+        });
+      } catch {
+        // Resubscription is best-effort
+      }
+    })(),
+  );
+});
+
 self.addEventListener("push", (event) => {
   if (!event.data) return;
 

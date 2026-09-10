@@ -8,10 +8,36 @@ services:
       NEXTAUTH_URL: ${NEXTAUTH_URL}
       AUTH_TRUST_HOST: "true"
       ANDROID_SHA256_FINGERPRINT: ${ANDROID_SHA256_FINGERPRINT:-}
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      VAPID_SUBJECT: ${VAPID_SUBJECT:-}
+      CRON_SECRET: ${CRON_SECRET:-}
     ports:
       - "${APP_PORT:-1024}:3000"
     volumes:
       - app-data:/data
+
+  # Daily streak push reminders — requires CRON_SECRET + VAPID keys.
+  # Uses the same image; node fetch loop (no extra tooling needed).
+  cron:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - app
+    entrypoint: ["node", "-e"]
+    command: >
+      "const url = 'http://app:3000/api/push/streak-remind';
+       const auth = 'Bearer ' + process.env.CRON_SECRET;
+       async function tick() {
+         try {
+           const res = await fetch(url, { method: 'POST', headers: { Authorization: auth } });
+           console.log('[cron] streak-remind:', res.status);
+         } catch (err) { console.log('[cron] failed:', err.message); }
+       }
+       (async () => { await tick(); })();
+       setInterval(tick, 24 * 60 * 60 * 1000);"
+    environment:
+      CRON_SECRET: ${CRON_SECRET:-}
 
 volumes:
   app-data:

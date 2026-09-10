@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
+import { sendPushToUser } from "@/lib/push";
 
 export type UserSettingsData = {
   notificationsEnabled: boolean;
@@ -42,4 +43,22 @@ export async function updateSettings(data: Partial<UserSettingsData>) {
     },
   });
   revalidatePath("/settings");
+}
+
+export async function sendTestPush(): Promise<{ ok: boolean; error?: string }> {
+  const userId = await requireUserId();
+  try {
+    const count = await sendPushToUser(userId, {
+      title: "Bookshelf",
+      body: "Test push — it works! 🎉",
+      url: "/books",
+      tag: "test-push",
+    });
+    if (count === 0) {
+      return { ok: false, error: "No push subscription found" };
+    }
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, error: (error as Error).message };
+  }
 }

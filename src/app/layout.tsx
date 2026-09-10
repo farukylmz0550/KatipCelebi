@@ -85,7 +85,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body className="min-h-full flex flex-col">
-        <SWRegister />
+        <SWRegister vapidPublicKey={process.env.VAPID_PUBLIC_KEY} />
         {children}
         <CookieConsent dict={dict.cookieConsent as never} />
         <Toaster />

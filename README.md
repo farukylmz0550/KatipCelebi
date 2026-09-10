@@ -93,16 +93,41 @@ services:
     environment:
       DATABASE_URL: file:/data/bookshelf.db
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
-      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      VAPID_SUBJECT: ${VAPID_SUBJECT:-}
+      CRON_SECRET: ${CRON_SECRET:-}
     ports:
       - "${APP_PORT:-1024}:3000"
     volumes:
       - app-data:/data
+
+  cron:
+    image: ghcr.io/farukylmz0550/bookshelf:latest
+    restart: unless-stopped
+    depends_on:
+      - app
+    entrypoint: ["node", "-e"]
+    command: >
+      "const url = 'http://app:3000/api/push/streak-remind';
+       const auth = 'Bearer ' + process.env.CRON_SECRET;
+       async function tick() {
+         try {
+           const res = await fetch(url, { method: 'POST', headers: { Authorization: auth } });
+           console.log('[cron] streak-remind:', res.status);
+         } catch (err) { console.log('[cron] failed:', err.message); }
+       }
+       (async () => { await tick(); })();
+       setInterval(tick, 24 * 60 * 60 * 1000);"
+    environment:
+      CRON_SECRET: ${CRON_SECRET:-}
 volumes:
   app-data:
 EOF
 
 echo "NEXTAUTH_SECRET=$(openssl rand -base64 32)" > .env
+echo "CRON_SECRET=$(openssl rand -base64 32)" >> .env
 docker compose up -d
 # → http://localhost:1024
 ```
@@ -236,6 +261,9 @@ All mutations via `src/app/actions/` — `awardXp()` + `syncAchievements()` afte
 | `APP_PORT` | No | `3000` | Docker port |
 | `RESET_SECRET` | No | — | `/api/test/reset` |
 | `ALLOW_REGISTRATION` | No | `true` | `false` to disable public sign-up |
+| `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` | No | — | Web Push — `npx web-push generate-vapid-keys` |
+| `VAPID_SUBJECT` | No | `mailto:…` | Push contact URL |
+| `CRON_SECRET` | No | — | Bearer token for the cron service (`/api/push/streak-remind`) |
 
 ---
 

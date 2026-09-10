@@ -3,10 +3,43 @@
 import { useEffect } from "react";
 import { toast } from "sonner";
 
-export function SWRegister() {
+function urlBase64ToUint8Array(base64String: string): BufferSource {
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+  const raw = window.atob(base64);
+  const output = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i += 1) {
+    output[i] = raw.charCodeAt(i);
+  }
+  return output.buffer;
+}
+
+async function subscribeToPush(reg: ServiceWorkerRegistration, vapidPublicKey: string): Promise<void> {
+  try {
+    const existing = await reg.pushManager.getSubscription();
+    const subscription =
+      existing ??
+      (await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(vapidPublicKey),
+      }));
+
+    await fetch("/api/push/subscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(subscription.toJSON()),
+    });
+  } catch {
+    // Subscription is optional — local fallback notifications keep working
+  }
+}
+
+export function SWRegister({ vapidPublicKey }: { vapidPublicKey?: string }) {
   useEffect(() => {
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/sw.js").then((reg) => {
+      const swUrl = vapidPublicKey ? `/sw.js?vapid=${encodeURIComponent(vapidPublicKey)}` : "/sw.js";
+
+      navigator.serviceWorker.register(swUrl).then((reg) => {
         // Notify when a new service worker version is installed & waiting
         reg.addEventListener("updatefound", () => {
           const installing = reg.installing;
@@ -26,10 +59,12 @@ export function SWRegister() {
           Notification.requestPermission().then((perm) => {
             if (perm === "granted") {
               reg.active?.postMessage("schedule-notifications");
+              if (vapidPublicKey) void subscribeToPush(reg, vapidPublicKey);
             }
           });
         } else if (Notification.permission === "granted") {
           reg.active?.postMessage("schedule-notifications");
+          if (vapidPublicKey) void subscribeToPush(reg, vapidPublicKey);
         }
 
         // Re-schedule every 12 hours
@@ -53,7 +88,7 @@ export function SWRegister() {
         );
       });
     }
-  }, []);
+  }, [vapidPublicKey]);
 
   return null;
 }
