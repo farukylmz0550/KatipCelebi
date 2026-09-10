@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { Search, AlertCircle, Check } from "lucide-react";
 import { toast } from "sonner";
 import { addBook, lookupIsbnAction } from "@/app/actions/books";
 import { BarcodeScanner } from "@/components/barcode-scanner";
+import { enqueuePendingBook, setupPendingBookSync } from "@/lib/offline-queue";
 
 export function AddBookForm({
   dict,
@@ -35,6 +36,8 @@ export function AddBookForm({
   const [addPending, startAdd] = useTransition();
 
   const pending = lookupPending || addPending;
+
+  useEffect(() => setupPendingBookSync(), []);
 
   function handleLookup(scannedIsbn?: string) {
     const raw = scannedIsbn ?? isbn;
@@ -106,18 +109,45 @@ export function AddBookForm({
     }
     setAddError(null);
     startAdd(async () => {
-      const result = await addBook({
+      const bookInput = {
         isbn: isbn || undefined,
         title: trimmedTitle,
         author: author.trim() || undefined,
         coverUrl,
         numberOfPages: numberOfPages || undefined,
-      });
-      if (!result.ok) {
-        const msg = result.error || (dict.addFailed ?? "Kitap eklenemedi");
-        setAddError(msg);
-        toast.error(msg);
-        return;
+      };
+      try {
+        const result = await addBook(bookInput);
+        if (!result.ok) {
+          const msg = result.error || (dict.addFailed ?? "Kitap eklenemedi");
+          setAddError(msg);
+          toast.error(msg);
+          return;
+        }
+      } catch (error) {
+        // Network/server unreachable — queue for background sync when offline
+        if (!navigator.onLine) {
+          enqueuePendingBook(bookInput);
+          toast.info("Offline — kitap kaydedildi, bağlantı gelince eklenecek");
+          setIsbn("");
+          setTitle("");
+          setAuthor("");
+          setCoverUrl(undefined);
+          setNumberOfPages("");
+          setLookupError(null);
+          if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.ready
+              .then((reg) => {
+                // Background Sync is not yet in the default TS DOM lib
+                const sync = (reg as ServiceWorkerRegistration & { sync?: { register(tag: string): Promise<void> } })
+                  .sync;
+                return sync?.register("bookshelf-sync-books");
+              })
+              .catch(() => {});
+          }
+          return;
+        }
+        throw error;
       }
       toast.success(dict.addSuccess ?? "Kitap eklendi", { icon: <Check size={16} /> });
       setIsbn("");

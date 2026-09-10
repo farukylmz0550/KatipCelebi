@@ -4,9 +4,13 @@
 // Keep logic in sync with src/app/sw-register.tsx which posts "schedule-notifications"/"check-streak".
 
 /** @type {string} */
-const CACHE_NAME = "bookshelf-v2";
+const CACHE_NAME = "bookshelf-v3";
 
-self.addEventListener("install", () => {
+/** @type {string[]} */
+const PRECACHE_URLS = ["/offline.html", "/manifest.json", "/icon-192.png", "/icon-512.png", "/icon.svg"];
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS)));
   self.skipWaiting();
 });
 
@@ -29,6 +33,22 @@ self.addEventListener("fetch", (event) => {
 
   if (isNextInternal || isApi) return;
 
+  // Navigations — network-first, offline fallback to precached offline.html
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response.ok && response.type === "basic") {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request).then((cached) => cached || caches.match("/offline.html")))
+    );
+    return;
+  }
+
   event.respondWith(
     fetch(event.request)
       .then((response) => {
@@ -41,6 +61,20 @@ self.addEventListener("fetch", (event) => {
       .catch(() => caches.match(event.request))
   );
 });
+
+// ── Background Sync ──
+
+self.addEventListener("sync", (event) => {
+  if (event.tag === "bookshelf-sync-books") {
+    event.waitUntil(broadcastToClients("sync-books"));
+  }
+});
+
+function broadcastToClients(message) {
+  return self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
+    clients.forEach((client) => client.postMessage(message));
+  });
+}
 
 // ── Push Notifications ──
 
@@ -136,7 +170,6 @@ self.addEventListener("message", (event) => {
     checkStreak();
   }
 });
-
 // ── Streak Check ──
 
 async function checkStreak() {
