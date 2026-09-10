@@ -13,6 +13,11 @@ FROM node:22-slim AS production
 WORKDIR /app
 ENV NODE_ENV=production
 
+LABEL org.opencontainers.image.source="https://github.com/farukylmz0550/bookshelf-web" \
+      org.opencontainers.image.title="Bookshelf" \
+      org.opencontainers.image.description="Self-hosted personal library manager" \
+      org.opencontainers.image.licenses="GPL-3.0"
+
 RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /app/package.json /app/package-lock.json ./
