@@ -5,9 +5,10 @@ import { X, Camera } from "lucide-react";
 
 interface BarcodeScannerProps {
   onDetected: (isbn: string) => void;
+  title?: string;
 }
 
-export function BarcodeScanner({ onDetected }: BarcodeScannerProps) {
+export function BarcodeScanner({ onDetected, title = "Scan" }: BarcodeScannerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -70,8 +71,9 @@ export function BarcodeScanner({ onDetected }: BarcodeScannerProps) {
           setIsOpen(true);
           setError(null);
         }}
-        className="flex-shrink-0 rounded-lg border border-border bg-secondary px-2 py-1.5 text-muted-foreground transition-colors hover:bg-accent md:hidden"
-        title="Barkod Tara"
+        className="flex-shrink-0 rounded-[8px] border border-border bg-secondary px-2.5 py-2 text-muted-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] md:hidden"
+        title={title}
+        aria-label={title}
       >
         <Camera size={16} />
       </button>
@@ -85,7 +87,7 @@ export function BarcodeScanner({ onDetected }: BarcodeScannerProps) {
             >
               <X size={18} />
             </button>
-            <h3 className="mb-3 text-sm font-medium">Barkod Tara</h3>
+            <h3 className="mb-3 text-sm font-medium">{title}</h3>
             {error && <p className="mb-2 text-xs text-destructive">{error}</p>}
             <div ref={containerRef} id="barcode-reader" className="overflow-hidden rounded-lg" />
           </div>

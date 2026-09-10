@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Camera, Search, AlertCircle, Check } from "lucide-react";
+import { Search, AlertCircle, Check } from "lucide-react";
 import { toast } from "sonner";
 import { addBook, lookupIsbnAction } from "@/app/actions/books";
+import { BarcodeScanner } from "@/components/barcode-scanner";
 
 export function AddBookForm({
   dict,
@@ -35,8 +36,9 @@ export function AddBookForm({
 
   const pending = lookupPending || addPending;
 
-  function handleLookup() {
-    const cleaned = isbn.replace(/[^0-9Xx]/g, "");
+  function handleLookup(scannedIsbn?: string) {
+    const raw = scannedIsbn ?? isbn;
+    const cleaned = raw.replace(/[^0-9Xx]/g, "");
     if (!cleaned) {
       setLookupError(dict.required ?? "ISBN is required");
       return;
@@ -44,7 +46,7 @@ export function AddBookForm({
     setLookupError(null);
     setAddError(null);
     startLookup(async () => {
-      const res = await lookupIsbnAction(isbn);
+      const res = await lookupIsbnAction(raw);
       if (res.ok && res.data) {
         const data = res.data;
         // Direct add — with all details, one step
@@ -127,8 +129,10 @@ export function AddBookForm({
     });
   }
 
-  function handleScan() {
-    toast.info("Barcode scanning coming soon!");
+  function handleScan(isbn: string) {
+    setIsbn(isbn);
+    if (lookupError) setLookupError(null);
+    handleLookup(isbn);
   }
 
   return (
@@ -161,21 +165,13 @@ export function AddBookForm({
                 lookupError ? "border-[var(--destructive)] bg-[var(--error-soft)]" : "border-border"
               }`}
             />
-            <button
-              type="button"
-              onClick={handleScan}
-              className="flex-shrink-0 rounded-[8px] border border-border bg-secondary px-2.5 py-2 text-muted-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:hidden"
-              title={dict.scan}
-              aria-label={dict.scan}
-            >
-              <Camera size={16} />
-            </button>
+            <BarcodeScanner onDetected={handleScan} title={dict.scan} />
           </div>
         </div>
 
         <button
           type="button"
-          onClick={handleLookup}
+          onClick={() => handleLookup()}
           disabled={lookupPending || !isbn.trim()}
           className="inline-flex items-center gap-1.5 rounded-[8px] border border-border bg-secondary px-3.5 py-2 font-[var(--font-sans)] text-[13px] font-medium text-secondary-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-40 disabled:cursor-not-allowed"
         >
