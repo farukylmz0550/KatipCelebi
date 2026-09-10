@@ -2,7 +2,7 @@
 
 <img src="public/icon.svg" width="80" height="80" alt="Bookshelf" />
 
-# Bookshelf™
+# Bookshelf
 
 **Your warm, calm, timeless personal library.**
 
@@ -21,7 +21,7 @@
 
 ---
 
-> **Bookshelf™** — Kişisel dijital kütüphane deneyimi. Kitaplarınızı, ödünç geçmişini, hedeflerinizi ve istatistiklerinizi **sıcak, sakin, zamanın ötesinde** bir arayüzde takip edin. Duolingo tarzı oyunlaştırma ile.
+> **Bookshelf** — Kişisel dijital kütüphane deneyimi. Kitaplarınızı, ödünç geçmişini, hedeflerinizi ve istatistiklerinizi **sıcak, sakin, zamanın ötesinde** bir arayüzde takip edin. Duolingo tarzı oyunlaştırma ile.
 
 Web rewrite of the original PyQt6 desktop app — [`legacy` branch](../../tree/legacy).
 
@@ -288,15 +288,15 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) — TypeScript strict, Prettier 120 wid
 
 **GPLv3** — Only source code is licensed under the GPLV3 license
 
-**CC-BY-NC-ND** — The Bookshelf™ logo, brand assets, and all materials contained within the brand set directory are licensed under the CC BY-NC-ND 4.0 license.
+**CC-BY-NC-ND** — The Bookshelf logo, brand assets, and all materials contained within the brand set directory are licensed under the CC BY-NC-ND 4.0 license.
 
-**Bookshelf™** — is an unregistered trademark that identifies the Bookshelf™ project and the brand associated with the project.
+**Bookshelf** — is an unregistered trademark that identifies the Bookshelf project and the brand associated with the project.
 
-**The Bookshelf™ name, logo, and brand identity are not licensed under the GNU GPLv3.** Use of the Bookshelf™ source code under the GNU GPLv3 does not grant any trademark rights to use the Bookshelf™ name or brand identity.
+**The Bookshelf name, logo, and brand identity are not licensed under the GNU GPLv3.** Use of the Bookshelf source code under the GNU GPLv3 does not grant any trademark rights to use the Bookshelf name or brand identity.
 
-Forked and modified versions of the software may be used and distributed under the terms of the GNU GPLv3. However, unless separate permission to use the Bookshelf™ trademark is granted, such versions must use a different project name and brand identity.
+Forked and modified versions of the software may be used and distributed under the terms of the GNU GPLv3. However, unless separate permission to use the Bookshelf trademark is granted, such versions must use a different project name and brand identity.
 
-The Bookshelf name or logo must not be used in a way that creates the impression that a project is approved, supported, endorsed, or officially associated with Bookshelf™.
+The Bookshelf name or logo must not be used in a way that creates the impression that a project is approved, supported, endorsed, or officially associated with Bookshelf.
 
 <div align="center">
 
