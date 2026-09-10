@@ -59,9 +59,9 @@
   --primary: #a25f4c;
   --primary-foreground: #ffffff;
   --secondary: #ead6d0;
-  --secondary-foreground: #2b2727;
+  --secondary-foreground: #6f6666;
   --muted: #e5d9d4;
-  --muted-foreground: #6f6666;
+  --muted-foreground: #968b8a;
   --accent: #a25f4c;
   --accent-foreground: #ffffff;
   --destructive: #9c5149;
@@ -82,7 +82,7 @@
   --sidebar-accent-foreground: #2b2727;
   --sidebar-border: #ccbdb8;
   --sidebar-ring: #a06a62;
-  /* Design Language extensions */
+  /* Design Language extensions — §5 Visual Surfaces: tonal contrast */
   --surface: #f0e4df;
   --surface-elevated: #fdf7f3;
   --border-strong: #b29f99;
@@ -93,11 +93,17 @@
   --error-text: #7c3d38;
   --success: #5d7658;
   --success-soft: #dde7da;
+  --success-text: #466040;
   --warning: #9a743f;
   --warning-soft: #f0e2ca;
+  --warning-text: #76572d;
   --info: #5c7481;
   --info-soft: #dae5ea;
+  --info-text: #45606b;
   --selection: #e3c9c2;
+  --selection-text: #3a2927;
+  --disabled-surface: #d9d1ce;
+  --disabled-text: #968e8b;
   --font-sans: var(--font-noto-sans);
   --font-serif: var(--font-noto-serif);
   --font-mono: var(--font-noto-mono);
@@ -136,7 +142,7 @@
   --sidebar-accent-foreground: #f2eee8;
   --sidebar-border: #444845;
   --sidebar-ring: #d08b6d;
-  /* extensions */
+  /* extensions — §5 Visual Surfaces */
   --surface: #272a29;
   --surface-elevated: #333735;
   --border-strong: #5b605b;
@@ -147,11 +153,17 @@
   --error-text: #e19a92;
   --success: #789873;
   --success-soft: #304238;
+  --success-text: #a8c8a2;
   --warning: #c09a57;
   --warning-soft: #473d2b;
+  --warning-text: #d9bc80;
   --info: #7ea0b1;
   --info-soft: #293b45;
+  --info-text: #a9cad8;
   --selection: #5a4038;
+  --selection-text: #f6ece7;
+  --disabled-surface: #303432;
+  --disabled-text: #777c79;
 }
 
 @layer base {
@@ -166,7 +178,7 @@
   }
 }
 
-/* ── GNOME-specific utility classes ── */
+/* ── Utility classes ── */
 @layer utilities {
   .safe-top {
     padding-top: env(safe-area-inset-top);
@@ -180,29 +192,19 @@
   .safe-right {
     padding-right: env(safe-area-inset-right);
   }
-  .gnome-header {
-    background: var(--card);
-    border-bottom: 1px solid var(--border);
-  }
-  .gnome-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-xl);
-  }
-  .gnome-boxed-list {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-  }
-  .gnome-boxed-list-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--border);
-  }
-  .gnome-boxed-list-item:last-child {
-    border-bottom: none;
-  }
+}
+
+/* ── Material Surface System ── */
+/* §5 Visual Surfaces: tonal contrast + subtle border + restrained shadow */
+/* §11 Book Cards: "physical through geometry, spacing, surface treatment" */
+/* Light: warm, airy, paper-like. Dark: deep, quiet, sophisticated. */
+.paper-surface {
+  box-shadow:
+    0 1px 3px 0 rgba(160, 140, 125, 0.08),
+    0 1px 2px -1px rgba(160, 140, 125, 0.06);
+}
+.dark .paper-surface {
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.2),
+    0 1px 2px -1px rgba(0, 0, 0, 0.14);
 }

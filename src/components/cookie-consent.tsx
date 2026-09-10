@@ -31,7 +31,7 @@ export function CookieConsent({ dict }: { dict?: CookieDict }) {
   const t: CookieDict = dict ?? {
     title: "Çerezler",
     subtitle: "For your personal library",
-    desc: "KatipCelebi uses cookies to personalize your experience — to remember preferences like theme, language, sidebar state and view mode. Essential cookies are required for session security.",
+    desc: "KatipCelebi™ uses cookies to personalize your experience — to remember preferences like theme, language, sidebar state and view mode. Essential cookies are required for session security.",
     descMuted:
       "If you reject preference cookies, preferences are stored only on this device and not persisted across sessions.",
     mobileDesc: "We use cookies to remember preferences (theme, language, sidebar). Legally we need your consent.",
@@ -317,7 +317,7 @@ function PrefRow({
           } ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
         >
           <div
-            className={`h-4 w-4 translate-y-0.5 rounded-full bg-white shadow-sm transition-transform ${checked ? "translate-x-4" : "translate-x-0.5"}`}
+            className={`h-4 w-4 translate-y-0.5 rounded-full bg-background shadow-sm transition-transform ${checked ? "translate-x-4" : "translate-x-0.5"}`}
           />
         </div>
       </label>

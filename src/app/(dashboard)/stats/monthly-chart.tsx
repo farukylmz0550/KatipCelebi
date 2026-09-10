@@ -3,8 +3,8 @@
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 const PALETTE = {
-  light: { surface: "#fcfcfb", gridline: "#e1e0d9", axis: "#c3c2b7", muted: "#898781", bar: "#2a78d6", ink: "#0b0b0b" },
-  dark: { surface: "#1a1a19", gridline: "#2c2c2a", axis: "#383835", muted: "#898781", bar: "#3987e5", ink: "#ffffff" },
+  light: { surface: "#fdf7f3", gridline: "#ccbdb8", axis: "#b29f99", muted: "#968b8a", bar: "#a25f4c", ink: "#2b2727" },
+  dark: { surface: "#333735", gridline: "#444845", axis: "#5b605b", muted: "#8f8b84", bar: "#c17a5e", ink: "#f2eee8" },
 };
 
 export function MonthlyChart({
@@ -19,10 +19,7 @@ export function MonthlyChart({
   const colors = dark ? PALETTE.dark : PALETTE.light;
 
   return (
-    <div
-      className="h-64 w-full rounded-lg border border-neutral-200 p-4 dark:border-neutral-800"
-      style={{ backgroundColor: colors.surface }}
-    >
+    <div className="h-64 w-full rounded-lg border border-border p-4" style={{ backgroundColor: colors.surface }}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
           <CartesianGrid vertical={false} stroke={colors.gridline} />
