@@ -111,7 +111,7 @@ export function Sidebar({ dict, isAdmin, userName, initialCollapsed }: SidebarPr
           <img src="/icon-192.png" alt="" className="h-7 w-7 rounded-[8px] shrink-0" />
           {!collapsed && (
             <span className="font-[var(--font-serif)] text-sm font-semibold tracking-tight text-foreground truncate">
-              KatipCelebi
+              Bookshelf
             </span>
           )}
         </Link>

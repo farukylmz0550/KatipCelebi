@@ -3,7 +3,7 @@ import { resetDb } from "./helpers/db";
 import { createAdminViaSetup, login } from "./helpers/auth";
 
 test.describe("stats / gamification / achievements / leaderboard / excel / i18n / theme", () => {
-  const admin = { name: "Admin", email: "admin@katip.test", password: "password123" };
+  const admin = { name: "Admin", email: "admin@bookshelf.test", password: "password123" };
 
   test.beforeEach(async ({ page }) => {
     await resetDb(page);
@@ -106,10 +106,10 @@ test.describe("stats / gamification / achievements / leaderboard / excel / i18n 
   test("non-admin cannot access admin covers", async ({ page }) => {
     await page.goto("/register");
     await page.getByPlaceholder("Your name").fill("Normal");
-    await page.getByPlaceholder("you@example.com").fill("normal@katip.test");
+    await page.getByPlaceholder("you@example.com").fill("normal@bookshelf.test");
     await page.getByPlaceholder("Min 8 characters").fill("password123");
     await page.getByRole("button", { name: /create account/i }).click();
-    await login(page, "normal@katip.test", "password123");
+    await login(page, "normal@bookshelf.test", "password123");
     await page.goto("/admin/covers");
     await expect(page.getByText(/forbidden|admin only/i)).toBeVisible();
   });

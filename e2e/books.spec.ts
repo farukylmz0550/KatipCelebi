@@ -3,7 +3,7 @@ import { resetDb } from "./helpers/db";
 import { createAdminViaSetup, login } from "./helpers/auth";
 
 test.describe("books", () => {
-  const admin = { name: "Admin", email: "admin@katip.test", password: "password123" };
+  const admin = { name: "Admin", email: "admin@bookshelf.test", password: "password123" };
 
   test.beforeEach(async ({ page }) => {
     await resetDb(page);

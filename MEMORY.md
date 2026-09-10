@@ -1,4 +1,4 @@
-# KatipCelebi — Memory Bank
+# Bookshelf — Memory Bank
 
 > Last updated: 2026-09-09
 > Version: 2.3.2
@@ -12,7 +12,7 @@ Personal library management application. Book adding, lending tracking, reading 
 
 Web rewrite of the original PyQt6 desktop app (`legacy` branch).
 
-**Repo:** https://github.com/farukylmz0550/KatipCelebi
+**Repo:** https://github.com/farukylmz0550/Bookshelf
 
 ---
 
@@ -38,7 +38,7 @@ Web rewrite of the original PyQt6 desktop app (`legacy` branch).
 ## 3. File Structure
 
 ```
-katipcelebi/
+bookshelf/
 ├── src/
 │   ├── app/
 │   │   ├── (dashboard)/

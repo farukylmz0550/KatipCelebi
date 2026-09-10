@@ -290,12 +290,12 @@
     "title": "Licencias y Atribuciones",
     "description": "Este proyecto utiliza las siguientes tecnologías de código abierto:",
     "nav": "Licencias",
-    "projectLicense": "KatipCelebi está licenciado bajo la GNU General Public License v3.0."
+    "projectLicense": "Bookshelf está licenciado bajo la GNU General Public License v3.0."
   },
   "cookieConsent": {
     "title": "Cookies",
     "subtitle": "Para tu biblioteca personal",
-    "desc": "KatipCelebi usa cookies para personalizar tu experiencia.",
+    "desc": "Bookshelf usa cookies para personalizar tu experiencia.",
     "descMuted": "Si rechazas, las preferencias solo se guardan en este dispositivo.",
     "mobileDesc": "Usamos cookies para recordar preferencias. Necesitamos tu consentimiento.",
     "essentialTitle": "Esencial",

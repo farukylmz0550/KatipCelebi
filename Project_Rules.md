@@ -1,8 +1,8 @@
-# KatipCelebi Project Rules
+# Bookshelf Project Rules
 
 ## Purpose
 
-This document defines the project-level rules that should be followed when modifying, extending, refactoring, or redesigning KatipCelebi.
+This document defines the project-level rules that should be followed when modifying, extending, refactoring, or redesigning Bookshelf.
 
 These rules complement:
 
@@ -10,13 +10,13 @@ These rules complement:
 - `Architecture_Principles.md` for architectural responsibilities and boundaries
 - `UI_Design_Language.md` for the visual and interaction language
 
-The purpose of this document is to preserve the integrity of the existing project while allowing KatipCelebi to evolve in a controlled and maintainable way.
+The purpose of this document is to preserve the integrity of the existing project while allowing Bookshelf to evolve in a controlled and maintainable way.
 
 ---
 
 ## 1. Respect the Existing Technology Stack
 
-The existing KatipCelebi technology stack is the baseline.
+The existing Bookshelf technology stack is the baseline.
 
 Do not replace or migrate the framework, programming language, build system, ORM, database, or major dependencies unless there is an explicit requirement or a clearly demonstrated technical need.
 
@@ -141,7 +141,7 @@ A module should not gradually become responsible for unrelated concerns.
 
 ## 8. Do Not Duplicate Existing Systems
 
-Before creating a new implementation, check whether KatipCelebi already has an appropriate solution.
+Before creating a new implementation, check whether Bookshelf already has an appropriate solution.
 
 Do not unnecessarily create duplicate:
 
@@ -173,13 +173,13 @@ Do not turn simple code into a framework inside the framework.
 
 ## 10. Avoid Under-Engineering as Well as Over-Engineering
 
-KatipCelebi should not be artificially simplified merely because it is developed by a small number of people.
+Bookshelf should not be artificially simplified merely because it is developed by a small number of people.
 
 Likewise, it should not be burdened with enterprise-scale architecture that solves problems the project does not actually have.
 
 The goal is:
 
-> **A robust architecture appropriate to KatipCelebi's real scope without unnecessary complexity.**
+> **A robust architecture appropriate to Bookshelf's real scope without unnecessary complexity.**
 
 Complexity should be justified by requirements, not by assumptions about project size.
 
@@ -258,7 +258,7 @@ Security decisions must remain enforced at the appropriate trusted boundary.
 
 ## 15. Preserve Localization
 
-KatipCelebi's localization system is a core part of the project.
+Bookshelf's localization system is a core part of the project.
 
 New functionality must integrate with the existing localization mechanism.
 
@@ -330,7 +330,7 @@ New or modified UI should follow `UI_Design_Language.md`.
 
 Do not introduce isolated visual styles because they look attractive in one component.
 
-KatipCelebi should feel like one product.
+Bookshelf should feel like one product.
 
 The following should remain consistent:
 
@@ -538,9 +538,9 @@ Existing conventions should not be overridden merely because another approach ap
 
 # Core Philosophy
 
-The purpose of these rules is not to freeze KatipCelebi.
+The purpose of these rules is not to freeze Bookshelf.
 
-KatipCelebi should evolve.
+Bookshelf should evolve.
 
 The goal is to make change deliberate rather than accidental.
 
@@ -564,4 +564,4 @@ The goal is to make change deliberate rather than accidental.
 
 # Final Principle
 
-> **KatipCelebi's quality is not measured by how many files it has, how sophisticated its architecture looks, or how much code it contains. It is measured by whether every part of the system has a clear purpose, behaves predictably, and can evolve without unnecessarily breaking the rest of the product.**
+> **Bookshelf's quality is not measured by how many files it has, how sophisticated its architecture looks, or how much code it contains. It is measured by whether every part of the system has a clear purpose, behaves predictably, and can evolve without unnecessarily breaking the rest of the product.**

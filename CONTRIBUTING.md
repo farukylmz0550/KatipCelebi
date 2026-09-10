@@ -1,4 +1,4 @@
-# Contributing to KatipCelebi
+# Contributing to Bookshelf
 
 Thanks for your interest in contributing! This guide covers code style, git workflow, and PR process.
 

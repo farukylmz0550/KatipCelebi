@@ -31,7 +31,7 @@ export function CookieConsent({ dict }: { dict?: CookieDict }) {
   const t: CookieDict = dict ?? {
     title: "Çerezler",
     subtitle: "For your personal library",
-    desc: "KatipCelebi™ uses cookies to personalize your experience — to remember preferences like theme, language, sidebar state and view mode. Essential cookies are required for session security.",
+    desc: "Bookshelf uses cookies to personalize your experience — to remember preferences like theme, language, sidebar state and view mode. Essential cookies are required for session security.",
     descMuted:
       "If you reject preference cookies, preferences are stored only on this device and not persisted across sessions.",
     mobileDesc: "We use cookies to remember preferences (theme, language, sidebar). Legally we need your consent.",

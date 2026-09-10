@@ -25,7 +25,7 @@ export default function SetupServerPage() {
     try {
       const parsed = new URL(url);
       // Save to localStorage for TWA
-      localStorage.setItem("katipcelebi-server", parsed.origin);
+      localStorage.setItem("bookshelf-server", parsed.origin);
       // Redirect to the server's login page
       window.location.href = `${parsed.origin}/login`;
     } catch {
@@ -40,7 +40,7 @@ export default function SetupServerPage() {
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
             <Globe size={32} className="text-primary" />
           </div>
-          <h1 className="text-xl font-semibold">KatipCelebi</h1>
+          <h1 className="text-xl font-semibold">Bookshelf</h1>
           <p className="mt-1 text-sm text-muted-foreground">Sunucu adresinizi girin</p>
         </div>
 
@@ -69,7 +69,7 @@ export default function SetupServerPage() {
         <p className="text-center text-xs text-muted-foreground">
           {"Running your own server? "}
           <a
-            href="https://github.com/farukylmz0550/KatipCelebi"
+            href="https://github.com/farukylmz0550/Bookshelf"
             className="text-primary hover:underline"
             target="_blank"
             rel="noopener"

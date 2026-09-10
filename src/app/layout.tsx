@@ -38,8 +38,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "KatipCelebi",
-    template: "%s | KatipCelebi",
+    default: "Bookshelf",
+    template: "%s | Bookshelf",
   },
   description:
     "Personal digital library experience — Track your books, lending history, reading goals and stats in a warm, calm, timeless interface. Noto Serif/Sans typography, Terracotta/Dusty Rose & Ink & Copper palette, equal-sized physical book cards and responsive shell.",
@@ -48,19 +48,19 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "KatipCelebi",
+    title: "Bookshelf",
   },
   openGraph: {
-    title: "KatipCelebi",
+    title: "Bookshelf",
     description:
       "Personal digital library — warm, calm, timeless. Noto typography and Terracotta/Ink-Copper palette with book cards.",
     type: "website",
     locale: "en_US",
-    siteName: "KatipCelebi",
+    siteName: "Bookshelf",
   },
   twitter: {
     card: "summary",
-    title: "KatipCelebi",
+    title: "Bookshelf",
     description: "Personal digital library — warm, calm, timeless.",
   },
   robots: {

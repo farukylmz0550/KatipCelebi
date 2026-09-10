@@ -31,7 +31,7 @@ export default function SetupForm({ dict }: { dict: Record<string, string> }) {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="w-full max-w-sm">
-        <h1 className="mb-2 text-center text-xl font-medium text-foreground">KatipCelebi</h1>
+        <h1 className="mb-2 text-center text-xl font-medium text-foreground">Bookshelf</h1>
         <p className="mb-8 text-center text-[13px] text-muted-foreground">{dict.setupTitle}</p>
         <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-border bg-card p-6">
           <div>

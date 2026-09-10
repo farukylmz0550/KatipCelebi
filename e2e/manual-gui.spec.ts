@@ -9,13 +9,13 @@ test.describe("manual GUI", () => {
     await page.goto("/");
     await expect(page).toHaveURL(/\/setup/);
     await page.getByPlaceholder("Your name").fill("ManualAdmin");
-    await page.getByPlaceholder("you@example.com").fill("manual@katip.test");
+    await page.getByPlaceholder("you@example.com").fill("manual@bookshelf.test");
     await page.getByPlaceholder("Min 8 characters").fill("password123");
     await page.getByRole("button", { name: /create admin account/i }).click();
     await expect(page).toHaveURL(/\/login/);
     await page.screenshot({ path: "e2e/screenshots/01-setup-login.png", fullPage: true });
 
-    await page.getByPlaceholder("you@example.com").fill("manual@katip.test");
+    await page.getByPlaceholder("you@example.com").fill("manual@bookshelf.test");
     await page.getByPlaceholder("••••••••").fill("password123");
     await page.getByRole("button", { name: /^sign in$/i }).click();
     await expect(page).toHaveURL(/\/books/);

@@ -9,7 +9,7 @@ test.describe("setup / first admin", () => {
     await expect(page).toHaveURL(/\/setup/);
     await expect(page.getByRole("button", { name: /create admin account/i })).toBeVisible();
 
-    const admin = { name: "Admin", email: "admin@katip.test", password: "password123" };
+    const admin = { name: "Admin", email: "admin@bookshelf.test", password: "password123" };
     await createAdminViaSetup(page, admin);
 
     await page.goto("/setup");

@@ -1,8 +1,8 @@
-# KatipCelebi UI Design Language
+# Bookshelf UI Design Language
 
 ## Purpose
 
-Redesign the KatipCelebi interface as a cohesive, intuitive, warm, and timeless personal library application.
+Redesign the Bookshelf interface as a cohesive, intuitive, warm, and timeless personal library application.
 
 This document is the source of truth for the visual language, UX principles, responsive layout, and interaction model. Do not introduce a new visual direction unless explicitly requested.
 
@@ -10,7 +10,7 @@ This document is the source of truth for the visual language, UX principles, res
 
 ## 1. Product Character
 
-KatipCelebi should feel like a **personal digital library**, not a generic SaaS dashboard or an enterprise administration panel.
+Bookshelf should feel like a **personal digital library**, not a generic SaaS dashboard or an enterprise administration panel.
 
 ### Core character
 
@@ -81,13 +81,13 @@ Use the Noto family for broad multilingual coverage and visual consistency acros
 
 Do not use unrelated font families unless explicitly requested.
 
-Serif is intentional. It is part of KatipCelebi’s character and should not be removed just to make the interface look more generic.
+Serif is intentional. It is part of Bookshelf’s character and should not be removed just to make the interface look more generic.
 
 ---
 
 ## 4. Color Themes
 
-KatipCelebi has two themes that belong to the same visual family.
+Bookshelf has two themes that belong to the same visual family.
 
 ## 4.1 Light Theme: Terracotta × Dusty Rose
 
@@ -434,7 +434,7 @@ Mobile may reorganize information inside a card, but should preserve the core ca
 
 ## 14. Interaction Model
 
-KatipCelebi should support touch-friendly interaction where applicable.
+Bookshelf should support touch-friendly interaction where applicable.
 
 ### Tap
 
@@ -551,7 +551,7 @@ Priorities include:
 
 ## 20. What to Avoid
 
-Do not turn KatipCelebi into:
+Do not turn Bookshelf into:
 
 - a generic SaaS dashboard
 - a corporate admin panel
@@ -571,7 +571,7 @@ The design should still feel appropriate years from now.
 
 ## 21. GNOME Influence
 
-Use GNOME primarily as a source of **interaction and usability principles**, not as KatipCelebi’s visual identity.
+Use GNOME primarily as a source of **interaction and usability principles**, not as Bookshelf’s visual identity.
 
 Borrow principles such as:
 
@@ -589,7 +589,7 @@ Do not copy GNOME’s visual styling wholesale.
 
 ## 22. Core Design Summary
 
-KatipCelebi should be:
+Bookshelf should be:
 
 > **A warm, calm, timeless personal digital library that combines classical academic character with modern, highly intuitive interaction.**
 

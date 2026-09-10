@@ -1,12 +1,12 @@
-# KatipCelebi Architecture Principles
+# Bookshelf Architecture Principles
 
 ## Purpose
 
-This document defines the architectural principles for KatipCelebi.
+This document defines the architectural principles for Bookshelf.
 
 Its purpose is not to force a specific framework architecture, directory structure, or abstraction pattern. Its purpose is to keep the codebase understandable, maintainable, predictable, and internally consistent as the project evolves.
 
-KatipCelebi is primarily a TypeScript project. These principles are therefore written around responsibilities and boundaries rather than around a particular frontend framework.
+Bookshelf is primarily a TypeScript project. These principles are therefore written around responsibilities and boundaries rather than around a particular frontend framework.
 
 ---
 
@@ -75,7 +75,7 @@ Clear boundaries make the code easier to understand and safer to change.
 
 ## 4. Preserve the Existing Project Architecture
 
-KatipCelebi already has an established project structure and working feature set.
+Bookshelf already has an established project structure and working feature set.
 
 New work should build on that structure instead of replacing it without a clear reason.
 
@@ -92,7 +92,7 @@ Before restructuring an existing area:
 
 ## 5. Architecture Should Follow the Project, Not the Other Way Around
 
-Architecture exists to serve KatipCelebi.
+Architecture exists to serve Bookshelf.
 
 The project should not become unnecessarily complicated just to satisfy an abstract architectural pattern.
 
@@ -214,7 +214,7 @@ Likewise, data-access code should not contain visual decisions.
 
 ## 11. Keep Platform-Specific Behavior Isolated
 
-KatipCelebi supports behavior that may differ depending on device or platform.
+Bookshelf supports behavior that may differ depending on device or platform.
 
 Examples include:
 
@@ -440,7 +440,7 @@ Do not treat a hidden button as authorization.
 
 ## 24. Localization Must Remain a First-Class Concern
 
-KatipCelebi supports multiple languages.
+Bookshelf supports multiple languages.
 
 User-facing strings should not be scattered through the codebase in a way that makes translation inconsistent or difficult.
 
@@ -536,11 +536,11 @@ When several architectures can solve the same problem, prefer the one that:
 - is easier to understand
 - is easier to test
 - is easier to change
-- fits the existing KatipCelebi structure
+- fits the existing Bookshelf structure
 
 The goal is not the most sophisticated architecture.
 
-The goal is an architecture that remains understandable as KatipCelebi grows.
+The goal is an architecture that remains understandable as Bookshelf grows.
 
 ---
 
@@ -548,7 +548,7 @@ The goal is an architecture that remains understandable as KatipCelebi grows.
 
 All principles in this document can be reduced to one idea:
 
-> **Every part of KatipCelebi should do its own job as well as possible without unnecessarily doing another part's job.**
+> **Every part of Bookshelf should do its own job as well as possible without unnecessarily doing another part's job.**
 
 And two supporting rules:
 

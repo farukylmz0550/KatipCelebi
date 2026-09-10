@@ -1,15 +1,15 @@
 <div align="center">
 
-<img src="public/icon.svg" width="80" height="80" alt="KatipCelebi" />
+<img src="public/icon.svg" width="80" height="80" alt="Bookshelf" />
 
-# KatipCelebi™
+# Bookshelf™
 
 **Your warm, calm, timeless personal library.**
 
 *Terracotta × Dusty Rose · Ink & Copper · Noto Serif/Sans · 60/40 physical cards*
 
-[![Version](https://img.shields.io/badge/version-2.3.2-EAD6D0?style=flat-square&labelColor=2B2727&color=A25F4C)](https://github.com/farukylmz0550/KatipCelebi/releases)
-[![Docker](https://img.shields.io/badge/docker-ghcr.io%2Fkatipcelebi-272A29?style=flat-square&logo=docker&labelColor=1D2020&color=C17A5E)](https://ghcr.io/farukylmz0550/katipcelebi)
+[![Version](https://img.shields.io/badge/version-2.3.2-EAD6D0?style=flat-square&labelColor=2B2727&color=A25F4C)](https://github.com/farukylmz0550/Bookshelf/releases)
+[![Docker](https://img.shields.io/badge/docker-ghcr.io%2Fbookshelf-272A29?style=flat-square&logo=docker&labelColor=1D2020&color=C17A5E)](https://ghcr.io/farukylmz0550/bookshelf)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=nextdotjs)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 
@@ -21,7 +21,7 @@
 
 ---
 
-> **KatipCelebi™** — Kişisel dijital kütüphane deneyimi. Kitaplarınızı, ödünç geçmişini, hedeflerinizi ve istatistiklerinizi **sıcak, sakin, zamanın ötesinde** bir arayüzde takip edin. Duolingo tarzı oyunlaştırma ile.
+> **Bookshelf™** — Kişisel dijital kütüphane deneyimi. Kitaplarınızı, ödünç geçmişini, hedeflerinizi ve istatistiklerinizi **sıcak, sakin, zamanın ötesinde** bir arayüzde takip edin. Duolingo tarzı oyunlaştırma ile.
 
 Web rewrite of the original PyQt6 desktop app — [`legacy` branch](../../tree/legacy).
 
@@ -46,7 +46,7 @@ Web rewrite of the original PyQt6 desktop app — [`legacy` branch](../../tree/l
 | 🖥️ **Shell** | Collapsible sidebar (desktop, `sidebar-collapsed` cookie) + bottom nav (mobile) · `viewport-fit=cover` · safe-area |
 | 📦 **PWA** | `manifest.json` shortcuts · `sw.js` · install prompt |
 | 🔐 **Admin** | Approve/reject, promote/demote, delete users + cover cache (bottom of sidebar) |
-| 🐳 **Docker** | `ghcr.io/farukylmz0550/katipcelebi` — one command |
+| 🐳 **Docker** | `ghcr.io/farukylmz0550/bookshelf` — one command |
 
 ---
 
@@ -88,10 +88,10 @@ Web rewrite of the original PyQt6 desktop app — [`legacy` branch](../../tree/l
 cat > docker-compose.yml << 'EOF'
 services:
   app:
-    image: ghcr.io/farukylmz0550/katipcelebi:latest
+    image: ghcr.io/farukylmz0550/bookshelf:latest
     restart: unless-stopped
     environment:
-      DATABASE_URL: file:/data/katipcelebi.db
+      DATABASE_URL: file:/data/bookshelf.db
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
       NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
     ports:
@@ -110,8 +110,8 @@ docker compose up -d
 ### Build from source
 
 ```bash
-git clone https://github.com/farukylmz0550/KatipCelebi.git
-cd KatipCelebi
+git clone https://github.com/farukylmz0550/Bookshelf.git
+cd Bookshelf
 cp .env.example .env  # set NEXTAUTH_SECRET=$(openssl rand -base64 32)
 docker compose up -d --build
 ```
@@ -119,7 +119,7 @@ docker compose up -d --build
 ### Local dev
 
 ```bash
-git clone https://github.com/farukylmz0550/KatipCelebi.git && cd KatipCelebi
+git clone https://github.com/farukylmz0550/Bookshelf.git && cd Bookshelf
 npm install
 npx prisma migrate dev
 npm run db:seed
@@ -154,7 +154,7 @@ npm run dev  # → http://localhost:3000
 <summary>Click to expand</summary>
 
 ```
-katipcelebi/
+bookshelf/
 ├── src/
 │   ├── app/
 │   │   ├── (dashboard)/
@@ -260,20 +260,20 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) — TypeScript strict, Prettier 120 wid
 
 **GPLv3** — Only source code is licensed under the GPLV3 license
 
-**CC-BY-NC-ND** — The KatipCelebi™ logo, brand assets, and all materials contained within the brand set directory are licensed under the CC BY-NC-ND 4.0 license.
+**CC-BY-NC-ND** — The Bookshelf™ logo, brand assets, and all materials contained within the brand set directory are licensed under the CC BY-NC-ND 4.0 license.
 
-**KatipCelebi™** — is an unregistered trademark that identifies the KatipCelebi™ project and the brand associated with the project.
+**Bookshelf™** — is an unregistered trademark that identifies the Bookshelf™ project and the brand associated with the project.
 
-**The KatipCelebi™ name, logo, and brand identity are not licensed under the GNU GPLv3.** Use of the KatipCelebi™ source code under the GNU GPLv3 does not grant any trademark rights to use the KatipCelebi™ name or brand identity.
+**The Bookshelf™ name, logo, and brand identity are not licensed under the GNU GPLv3.** Use of the Bookshelf™ source code under the GNU GPLv3 does not grant any trademark rights to use the Bookshelf™ name or brand identity.
 
-Forked and modified versions of the software may be used and distributed under the terms of the GNU GPLv3. However, unless separate permission to use the KatipCelebi™ trademark is granted, such versions must use a different project name and brand identity.
+Forked and modified versions of the software may be used and distributed under the terms of the GNU GPLv3. However, unless separate permission to use the Bookshelf™ trademark is granted, such versions must use a different project name and brand identity.
 
-The KatipCelebi name or logo must not be used in a way that creates the impression that a project is approved, supported, endorsed, or officially associated with KatipCelebi™.
+The Bookshelf name or logo must not be used in a way that creates the impression that a project is approved, supported, endorsed, or officially associated with Bookshelf™.
 
 <div align="center">
 
 *Cozy Library + Personal Collection · Clarity before decoration.*
 
-**[⬆ back to top](#katipcelebi)**
+**[⬆ back to top](#bookshelf)**
 
 </div>

@@ -4,7 +4,7 @@
 // Keep logic in sync with src/app/sw-register.tsx which posts "schedule-notifications"/"check-streak".
 
 /** @type {string} */
-const CACHE_NAME = "katipcelebi-v2";
+const CACHE_NAME = "bookshelf-v2";
 
 self.addEventListener("install", () => {
   self.skipWaiting();
@@ -51,15 +51,15 @@ self.addEventListener("push", (event) => {
   try {
     data = event.data.json();
   } catch {
-    data = { title: "KatipCelebi", body: event.data.text() };
+    data = { title: "Bookshelf", body: event.data.text() };
   }
 
   event.waitUntil(
-    self.registration.showNotification(data.title || "KatipCelebi", {
+    self.registration.showNotification(data.title || "Bookshelf", {
       body: data.body || "New notification",
       icon: "/icon-192.png",
       badge: "/icon-192.png",
-      tag: data.tag || "katipcelebi-push",
+      tag: data.tag || "bookshelf-push",
       renotify: true,
       data: data.url || "/books",
     })
@@ -112,7 +112,7 @@ function scheduleNotifications() {
         body: msg.body,
         icon: "/icon-192.png",
         badge: "/icon-192.png",
-        tag: `katipcelebi-${time}`,
+        tag: `bookshelf-${time}`,
         renotify: true,
       });
     }, time - Date.now());

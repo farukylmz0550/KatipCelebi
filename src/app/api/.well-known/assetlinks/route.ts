@@ -8,7 +8,7 @@ export async function GET() {
       relation: ["delegate_permission/common.handle_all_urls"],
       target: {
         namespace: "android_app",
-        package_name: "com.farukylmz.katipcelebi",
+        package_name: "com.farukylmz.bookshelf",
         sha256_cert_fingerprints: [fingerprint],
       },
     },

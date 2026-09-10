@@ -3,8 +3,8 @@ import { resetDb } from "./helpers/db";
 import { createAdminViaSetup, login, register, logout } from "./helpers/auth";
 
 test.describe("auth", () => {
-  const admin = { name: "Admin", email: "admin@katip.test", password: "password123" };
-  const user = { name: "Faruk", email: "faruk@katip.test", password: "password123" };
+  const admin = { name: "Admin", email: "admin@bookshelf.test", password: "password123" };
+  const user = { name: "Faruk", email: "faruk@bookshelf.test", password: "password123" };
 
   test.beforeEach(async ({ page }) => {
     await resetDb(page);
@@ -22,7 +22,7 @@ test.describe("auth", () => {
 
   test("invalid login shows error", async ({ page }) => {
     await page.goto("/login");
-    await page.getByPlaceholder("you@example.com").fill("nope@katip.test");
+    await page.getByPlaceholder("you@example.com").fill("nope@bookshelf.test");
     await page.getByPlaceholder("••••••••").fill("wrongpass");
     await page.getByRole("button", { name: /^sign in$/i }).click();
     await expect(page.getByText(/invalid email or password/i)).toBeVisible();

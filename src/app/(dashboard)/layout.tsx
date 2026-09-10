@@ -54,7 +54,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/icon-192.png" alt="" className="h-6 w-6 rounded-[8px]" />
             <span className="font-[var(--font-serif)] text-sm font-semibold tracking-tight text-foreground">
-              KatipCelebi
+              Bookshelf
             </span>
           </Link>
           <div className="ml-auto flex items-center gap-0.5">

@@ -1,8 +1,8 @@
 {
   "id": "/",
   "scope": "/",
-  "name": "KatipCelebi",
-  "short_name": "KatipCelebi",
+  "name": "Bookshelf",
+  "short_name": "Bookshelf",
   "description": "Track your books, lending history, reading goals, and stats with gamification. Self-hosted personal library manager.",
   "start_url": "/",
   "display": "standalone",

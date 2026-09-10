@@ -1,7 +1,7 @@
 // OpenLibrary client — legacy src/books/openlibrary/* port.
 // Features: retry 3x backoff, 429/5xx, 20MiB guard, User-Agent, author parallel.
 
-const USER_AGENT = "KatipCelebi/1.0";
+const USER_AGENT = "Bookshelf/1.0";
 const TIMEOUT_MS = 10000;
 const MAX_BYTES = 20 * 1024 * 1024;
 

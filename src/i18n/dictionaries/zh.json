@@ -290,12 +290,12 @@
     "title": "许可证与致谢",
     "description": "本项目使用以下开源技术：",
     "nav": "许可证",
-    "projectLicense": "KatipCelebi 基于 GNU 通用公共许可证 v3.0 授权。"
+    "projectLicense": "Bookshelf 基于 GNU 通用公共许可证 v3.0 授权。"
   },
   "cookieConsent": {
     "title": "Cookies",
     "subtitle": "用于您的私人图书馆",
-    "desc": "KatipCelebi 使用 cookies 个性化体验。",
+    "desc": "Bookshelf 使用 cookies 个性化体验。",
     "descMuted": "如果拒绝，偏好仅存储在此设备上。",
     "mobileDesc": "我们使用 cookies 记住偏好。",
     "essentialTitle": "必要",

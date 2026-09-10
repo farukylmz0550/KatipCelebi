@@ -16,7 +16,7 @@ export function ShareButton({ title, author }: ShareButtonProps) {
 
     if (navigator.share) {
       try {
-        await navigator.share({ title: text, text: `KatipCelebi'de: ${text}` });
+        await navigator.share({ title: text, text: `Bookshelf'de: ${text}` });
       } catch {
         // User cancelled
       }
