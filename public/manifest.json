@@ -60,6 +60,21 @@
       ]
     }
   ],
-  "screenshots": [],
+  "screenshots": [
+    {
+      "src": "/screenshots/narrow.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Book detail — reading status and lending"
+    },
+    {
+      "src": "/screenshots/wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Stats — charts, streak and goals"
+    }
+  ],
   "prefer_related_applications": false
 }

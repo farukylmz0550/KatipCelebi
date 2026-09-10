@@ -148,7 +148,12 @@ export function BooksGrid({
       ) : view === "card" ? (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {filtered.map((book) => (
-            <BookCard key={book.id} book={book as Book} lentOut={!!lentMap[book.id]} />
+            <BookCard
+              key={book.id}
+              book={book as Book}
+              lentOut={!!lentMap[book.id]}
+              statusLabels={{ toRead: dict.toRead, reading: dict.reading, finished: dict.finished }}
+            />
           ))}
         </div>
       ) : (

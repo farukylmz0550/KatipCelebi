@@ -248,25 +248,25 @@ Both projects continue under GPLv3.
 ## 12. PWA Improvements TODO
 
 ### High Priority
-- [ ] **Camera ISBN barcode scan** — `html5-qrcode` with phone camera
+- [x] **Camera ISBN barcode scan** — `src/components/barcode-scanner.tsx` (html5-qrcode) wired into `add-book-form.tsx`; scan fills ISBN and auto-runs lookup + add
 - [x] **Safe area insets** — `env(safe-area-inset-*)` + `safe-bottom`/`safe-top` (layout, bottom-nav)
 - [x] **viewport-fit=cover** — `layout.tsx:27` `viewportFit: "cover"`
 - [x] **Bottom navigation bar** — `src/components/bottom-nav.tsx` + `src/components/sidebar.tsx` (Responsive Hybrid Shell)
 
 ### Medium Priority
-- [ ] **Offline precaching** — Pre-cache app shell (HTML/CSS/JS) on SW install
-- [ ] **Offline fallback page** — Show info page when offline instead of blank
-- [ ] **Web Share API** — Share book detail via WhatsApp/email
-- [ ] **True push notification** — Real push from server (currently timer-based)
-- [ ] **SW update notification** — Show toast when new version arrives
-- [ ] **Custom install button** — `BeforeInstallPrompt` API with custom "Install" button
+- [x] **Offline precaching** — `sw.js` install precaches `/offline.html`, manifest, icons (cache `bookshelf-v3`)
+- [x] **Offline fallback page** — navigations fall back to precached `/offline.html` when offline
+- [x] **Web Share API** — `src/components/share-button.tsx` (book detail, mobile)
+- [x] **True push notification** — `web-push` + VAPID (`src/lib/push.ts`), `/api/push/subscribe`, `/api/push/streak-remind` (Bearer CRON_SECRET), Docker cron service daily trigger; local timer fallback kept
+- [x] **SW update notification** — `sw-register.tsx` `updatefound` → refresh toast
+- [x] **Custom install button** — `src/components/install-prompt.tsx` (`BeforeInstallPrompt`)
 
 ### Low Priority
-- [ ] **Background sync** — Offline form submission, sync when online
-- [ ] **Manifest shortcuts** — Quick access from home screen (add book, lending)
-- [ ] **Manifest screenshots** — Screenshots for rich install banner
-- [ ] **Touch gestures** — Swipe, long-press (book status change, etc.)
-- [ ] **Haptic feedback** — Vibration (Vibration API)
+- [x] **Background sync** — `src/lib/offline-queue.ts` (localStorage queue) + SW `sync` tag `bookshelf-sync-books`
+- [x] **Manifest shortcuts** — Add book / Lending / Stats
+- [x] **Manifest screenshots** — `public/screenshots/narrow.png` (720×1280) + `wide.png` (1280×720)
+- [x] **Touch gestures** — swipe (status cycle) + long-press (status menu) on book card
+- [x] **Haptic feedback** — `src/lib/haptic.ts` (book card, book personal, streak widget)
 
 ---
 
