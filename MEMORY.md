@@ -270,4 +270,286 @@ Both projects continue under GPLv3.
 
 ---
 
+## 13. Tomorrow's TODO — BookShelf UI/Branding Overhaul
+
+> ⚠️ **LOGO KAYNAKLARI:** `Bookshelf — Color Master.svg` ve `Bookshelf — Symbolic Master.svg` (kök dizin).
+> Favicon dahil **TÜM** asset'ler bu iki master SVG'den üretilecek:
+> **Color Master** → renkli ikonlar (`icon.svg`, `logo.svg`, `icon-192/512.png`, `apple-touch-icon.png`, `favicon.ico`)
+> **Symbolic Master** → semantik/monokrom kullanım.
+> Her madde kırmızı = zorunlu/önemli iş.
+
+### 1. Paper Material
+- <font color="red">**- [ ] Apply the new paper material system across the GUI**</font>
+- <font color="red">**- [ ] Apply it to the main background**</font>
+- <font color="red">**- [ ] Apply it to the sidebar**</font>
+- <font color="red">**- [ ] Apply it to page surfaces**</font>
+- <font color="red">**- [ ] Apply it to the book-add panel**</font>
+- <font color="red">**- [ ] Apply it to the search and filter areas**</font>
+- <font color="red">**- [ ] Apply it to book cards**</font>
+- <font color="red">**- [ ] Apply it to inputs**</font>
+- <font color="red">**- [ ] Apply it to buttons**</font>
+- <font color="red">**- [ ] Apply it to dialogs and popovers**</font>
+- <font color="red">**- [ ] Make sure the texture feels visible but soft**</font>
+- <font color="red">**- [ ] Make sure the texture does not look harsh, noisy, or dirty**</font>
+- <font color="red">**- [ ] Make sure the texture does not reduce text and icon readability**</font>
+- <font color="red">**- [ ] Check the final result in the Light theme**</font>
+- <font color="red">**- [ ] Create / verify an appropriate material treatment for the Dark theme**</font>
+
+### 2. Typography
+- <font color="red">**- [ ] Complete Noto Serif usage**</font>
+- <font color="red">**- [ ] Complete Noto Sans usage**</font>
+- <font color="red">**- [ ] Check page titles**</font>
+- <font color="red">**- [ ] Check subtitles**</font>
+- <font color="red">**- [ ] Check navigation text**</font>
+- <font color="red">**- [ ] Check button text**</font>
+- <font color="red">**- [ ] Check form labels**</font>
+- <font color="red">**- [ ] Check book titles**</font>
+- <font color="red">**- [ ] Check metadata text**</font>
+- <font color="red">**- [ ] Adjust font weights for readability**</font>
+- <font color="red">**- [ ] Strengthen text that appears too thin**</font>
+- <font color="red">**- [ ] Recheck readability over the paper texture**</font>
+
+### 3. Logo & Branding
+- <font color="red">**- [ ] Integrate the new BookShelf logo into the application — kaynak: `Bookshelf — Color Master.svg` / `Bookshelf — Symbolic Master.svg`**</font>
+- <font color="red">**- [ ] Remove all old logo usage**</font>
+- <font color="red">**- [ ] Update the sidebar logo**</font>
+- <font color="red">**- [ ] Replace the favicon with the 32×32 version**</font>
+- <font color="red">**- [ ] Prepare the 512×512 launcher icon**</font>
+- <font color="red">**- [ ] Preserve the 1024×1024 master logo**</font>
+- <font color="red">**- [ ] Check logo usage in the Dark theme**</font>
+- <font color="red">**- [ ] Check logo proportions and spacing**</font>
+- <font color="red">**- [ ] Integrate the Brand Set into the project**</font>
+- <font color="red">**- [ ] Add the Brand Set README**</font>
+- <font color="red">**- [ ] Display `BookShelf` for every user-facing brand reference**</font>
+- <font color="red">**- [ ] Do not use trademark symbols in technical names**</font>
+- <font color="red">**- [ ] Do not use trademark symbols in file names, routes, variables, functions, or other code identifiers**</font>
+
+### 4. Books Page
+- <font color="red">**- [ ] Fully adapt book cards to the design language**</font>
+- <font color="red">**- [ ] Verify that all cards have identical dimensions**</font>
+- <font color="red">**- [ ] Apply the paper material to book cards**</font>
+- <font color="red">**- [ ] Refine the cover / title / metadata hierarchy**</font>
+- <font color="red">**- [ ] Refine the hover state**</font>
+- <font color="red">**- [ ] Refine the selected state**</font>
+- <font color="red">**- [ ] Check card behavior on small screens**</font>
+- <font color="red">**- [ ] Adapt the search area to the design language**</font>
+- <font color="red">**- [ ] Adapt the filter area to the design language**</font>
+- <font color="red">**- [ ] Check Card / List view**</font>
+- <font color="red">**- [ ] Adapt the empty state to the design language**</font>
+- <font color="red">**- [ ] Test very long book titles**</font>
+- <font color="red">**- [ ] Test the grid with a large number of books**</font>
+
+### 5. Book Add / Edit
+- <font color="red">**- [ ] Redesign the book-add panel within the design language**</font>
+- <font color="red">**- [ ] Apply the paper material**</font>
+- <font color="red">**- [ ] Refine form headings**</font>
+- <font color="red">**- [ ] Check label and input weights**</font>
+- <font color="red">**- [ ] Check the ISBN field**</font>
+- <font color="red">**- [ ] Clarify the primary action**</font>
+- <font color="red">**- [ ] Simplify secondary actions**</font>
+- <font color="red">**- [ ] Check validation states**</font>
+- <font color="red">**- [ ] Check error states**</font>
+- <font color="red">**- [ ] Check loading states**</font>
+- <font color="red">**- [ ] Check mobile form behavior**</font>
+
+### 6. Lending
+- <font color="red">**- [ ] Adapt the Lending page to the design language**</font>
+- <font color="red">**- [ ] Check the lending workflow**</font>
+- <font color="red">**- [ ] Check the return workflow**</font>
+- <font color="red">**- [ ] Check borrower / person presentation**</font>
+- <font color="red">**- [ ] Check status indicators**</font>
+- <font color="red">**- [ ] Check mobile layout**</font>
+
+### 7. People
+- <font color="red">**- [ ] Adapt the People page to the design language**</font>
+- <font color="red">**- [ ] Check person cards / lists**</font>
+- <font color="red">**- [ ] Check trust score presentation**</font>
+- <font color="red">**- [ ] Check lending history presentation**</font>
+- <font color="red">**- [ ] Check the empty state**</font>
+
+### 8. Statistics
+- <font color="red">**- [ ] Adapt the Statistics page to the design language**</font>
+- <font color="red">**- [ ] Check chart surfaces**</font>
+- <font color="red">**- [ ] Check the streak widget**</font>
+- <font color="red">**- [ ] Check the heatmap**</font>
+- <font color="red">**- [ ] Check goal progress presentation**</font>
+- <font color="red">**- [ ] Check color and contrast consistency in charts**</font>
+
+### 9. Gamification
+- <font color="red">**- [ ] Adapt the Achievements page to the design language**</font>
+- <font color="red">**- [ ] Check XP / level presentation**</font>
+- <font color="red">**- [ ] Check achievement cards**</font>
+- <font color="red">**- [ ] Check the leaderboard**</font>
+- <font color="red">**- [ ] Check goal screens**</font>
+- <font color="red">**- [ ] Make sure gamification components do not look overly playful**</font>
+
+### 10. Profile / Settings / Admin / More
+- <font color="red">**- [ ] Adapt the Profile page to the design language**</font>
+- <font color="red">**- [ ] Adapt the Settings page to the design language**</font>
+- <font color="red">**- [ ] Adapt the Admin page to the design language**</font>
+- <font color="red">**- [ ] Check the More page**</font>
+- <font color="red">**- [ ] Check user management screens**</font>
+- <font color="red">**- [ ] Check theme selection**</font>
+- <font color="red">**- [ ] Check language selection**</font>
+- <font color="red">**- [ ] Check cookie / consent areas**</font>
+
+### 11. Shared UI Components
+- <font color="red">**- [ ] Standardize button styles**</font>
+- <font color="red">**- [ ] Standardize input styles**</font>
+- <font color="red">**- [ ] Check select / dropdown styles**</font>
+- <font color="red">**- [ ] Standardize dialog / modal styles**</font>
+- <font color="red">**- [ ] Standardize badge / status styles**</font>
+- <font color="red">**- [ ] Check tooltip usage**</font>
+- <font color="red">**- [ ] Check table styles**</font>
+- <font color="red">**- [ ] Standardize empty / loading / error states**</font>
+- <font color="red">**- [ ] Check icon consistency**</font>
+- <font color="red">**- [ ] Standardize border radius usage**</font>
+- <font color="red">**- [ ] Standardize shadow usage**</font>
+
+### 12. Responsive
+- <font color="red">**- [ ] Check desktop layout**</font>
+- <font color="red">**- [ ] Check desktop with collapsed sidebar**</font>
+- <font color="red">**- [ ] Check landscape tablet**</font>
+- <font color="red">**- [ ] Check portrait tablet**</font>
+- <font color="red">**- [ ] Check mobile**</font>
+- <font color="red">**- [ ] Check mobile bottom navigation**</font>
+- <font color="red">**- [ ] Check safe-area behavior**</font>
+- <font color="red">**- [ ] Test long titles**</font>
+- <font color="red">**- [ ] Test long usernames**</font>
+- <font color="red">**- [ ] Check overflow and clipping on narrow screens**</font>
+- <font color="red">**- [ ] Test landscape / portrait transitions**</font>
+
+### 13. Accessibility
+- <font color="red">**- [ ] Check text contrast**</font>
+- <font color="red">**- [ ] Check focus states**</font>
+- <font color="red">**- [ ] Check keyboard navigation**</font>
+- <font color="red">**- [ ] Check touch target sizes**</font>
+- <font color="red">**- [ ] Verify that color is not the only indicator of state**</font>
+- <font color="red">**- [ ] Check reduced-motion behavior**</font>
+- <font color="red">**- [ ] Verify that paper texture does not reduce accessibility**</font>
+
+### 14. Visual Cleanup
+- <font color="red">**- [ ] Remove old colors**</font>
+- <font color="red">**- [ ] Remove old component styles**</font>
+- <font color="red">**- [ ] Remove outdated border-radius usage**</font>
+- <font color="red">**- [ ] Remove outdated shadow usage**</font>
+- <font color="red">**- [ ] Remove unnecessary gradients**</font>
+- <font color="red">**- [ ] Remove unnecessary blur / glassmorphism**</font>
+- <font color="red">**- [ ] Remove unnecessary decorative elements**</font>
+- <font color="red">**- [ ] Remove outdated icon styles**</font>
+- <font color="red">**- [ ] Fix visual inconsistencies between pages**</font>
+- <font color="red">**- [ ] Remove unused styles and assets**</font>
+
+### 15. Functional Checks
+- <font color="red">**- [ ] Add a book**</font>
+- <font color="red">**- [ ] Edit a book**</font>
+- <font color="red">**- [ ] Delete a book**</font>
+- <font color="red">**- [ ] Lend a book**</font>
+- <font color="red">**- [ ] Return a book**</font>
+- <font color="red">**- [ ] Search**</font>
+- <font color="red">**- [ ] Filter**</font>
+- <font color="red">**- [ ] Statistics**</font>
+- <font color="red">**- [ ] Achievements**</font>
+- <font color="red">**- [ ] Leaderboard**</font>
+- <font color="red">**- [ ] User actions**</font>
+- <font color="red">**- [ ] Settings**</font>
+- <font color="red">**- [ ] Authentication flow**</font>
+- <font color="red">**- [ ] Change language**</font>
+- <font color="red">**- [ ] Switch Light / Dark theme**</font>
+
+### 16. PWA / Asset Checks
+- <font color="red">**- [ ] Update the icons referenced by the PWA manifest**</font>
+- <font color="red">**- [ ] Check favicon usage**</font>
+- <font color="red">**- [ ] Check the Apple touch icon**</font>
+- <font color="red">**- [ ] Check the 192×192 icon**</font>
+- <font color="red">**- [ ] Check the 512×512 icon**</font>
+- <font color="red">**- [ ] Check the PWA install prompt**</font>
+- <font color="red">**- [ ] Check service-worker asset caching**</font>
+- <font color="red">**- [ ] Make sure old logo assets are no longer served from cache**</font>
+
+### 17. Docker / Self-hosted
+- <font color="red">**- [ ] Verify that branding changes are included in Docker builds**</font>
+- <font color="red">**- [ ] Verify that public assets are included in production builds**</font>
+- <font color="red">**- [ ] Check `APP_PORT` behavior**</font>
+- <font color="red">**- [ ] Check the default port 1024 setup**</font>
+- <font color="red">**- [ ] Perform a clean Docker installation**</font>
+- <font color="red">**- [ ] Test the initial `/setup` flow**</font>
+- <font color="red">**- [ ] Test the `/login` flow**</font>
+- <font color="red">**- [ ] Test the admin approval flow**</font>
+
+### 18. Internationalization
+- <font color="red">**- [ ] Complete new UI text in all 6 languages**</font>
+- <font color="red">**- [ ] Check `EN / TR / ES / FR / RU / ZH` dictionaries**</font>
+- <font color="red">**- [ ] Verify `BookShelf` branding across all user-facing languages**</font>
+- <font color="red">**- [ ] Test long translations for overflow**</font>
+- <font color="red">**- [ ] Find and remove missing translation keys**</font>
+
+### 19. Technical QA
+- <font color="red">**- [ ] Run `npm test`**</font>
+- <font color="red">**- [ ] Run `npx playwright test`**</font>
+- <font color="red">**- [ ] Run `npm run lint`**</font>
+- <font color="red">**- [ ] Run `npm run format:check`**</font>
+- <font color="red">**- [ ] Run a production build**</font>
+- <font color="red">**- [ ] Check console errors**</font>
+- <font color="red">**- [ ] Check console warnings**</font>
+- <font color="red">**- [ ] Check visual regressions**</font>
+- <font color="red">**- [ ] Check mobile regressions**</font>
+- <font color="red">**- [ ] Check authentication regressions**</font>
+- <font color="red">**- [ ] Check data mutation regressions**</font>
+
+### 20. README / Release
+- <font color="red">**- [ ] Update README screenshots with the new UI**</font>
+- <font color="red">**- [ ] Update the design section**</font>
+- <font color="red">**- [ ] Update logo references**</font>
+- <font color="red">**- [ ] Check `BookShelf` usage**</font>
+- <font color="red">**- [ ] Check the GPLv3 / CC BY-NC-ND separation**</font>
+- <font color="red">**- [ ] Add the Brand Set reference**</font>
+- <font color="red">**- [ ] Verify that Quick Start instructions are still correct**</font>
+- <font color="red">**- [ ] Prepare release notes**</font>
+
+### 21. Final User Testing
+- <font color="red">**- [ ] Perform a clean Docker installation**</font>
+- <font color="red">**- [ ] Create an admin account**</font>
+- <font color="red">**- [ ] Register a user**</font>
+- <font color="red">**- [ ] Test the approval flow**</font>
+- <font color="red">**- [ ] Add a book**</font>
+- <font color="red">**- [ ] Add a book using ISBN**</font>
+- <font color="red">**- [ ] Edit a book**</font>
+- <font color="red">**- [ ] Delete a book**</font>
+- <font color="red">**- [ ] Lend a book**</font>
+- <font color="red">**- [ ] Return a book**</font>
+- <font color="red">**- [ ] Search**</font>
+- <font color="red">**- [ ] Filter**</font>
+- <font color="red">**- [ ] Check statistics**</font>
+- <font color="red">**- [ ] Unlock an achievement**</font>
+- <font color="red">**- [ ] Check the leaderboard**</font>
+- <font color="red">**- [ ] Create a goal**</font>
+- <font color="red">**- [ ] Update the profile**</font>
+- <font color="red">**- [ ] Change the language**</font>
+- <font color="red">**- [ ] Change the theme**</font>
+- <font color="red">**- [ ] Use the application from mobile from start to finish**</font>
+- <font color="red">**- [ ] Test PWA installation**</font>
+- <font color="red">**- [ ] Restart the application**</font>
+- <font color="red">**- [ ] Verify that data remains intact**</font>
+
+### 22. Final Review
+- <font color="red">**- [ ] Verify full compliance with `UI_Design_Language.md`**</font>
+- <font color="red">**- [ ] Verify full compliance with `Project_Rules.md`**</font>
+- <font color="red">**- [ ] Verify full compliance with `Architecture_Principles.md`**</font>
+- <font color="red">**- [ ] Verify the new logo is used everywhere — kaynak: `Bookshelf — Color Master.svg` + `Bookshelf — Symbolic Master.svg`, favicon dahil**</font>
+- <font color="red">**- [ ] Verify all user-facing brand references use `BookShelf`**</font>
+- <font color="red">**- [ ] Verify no technical identifier contains trademark symbols**</font>
+- <font color="red">**- [ ] Verify paper texture is balanced**</font>
+- <font color="red">**- [ ] Verify typography is sufficiently strong and readable**</font>
+- <font color="red">**- [ ] Verify book cards are consistent**</font>
+- <font color="red">**- [ ] Verify Light theme**</font>
+- <font color="red">**- [ ] Verify Dark theme**</font>
+- <font color="red">**- [ ] Verify responsive behavior**</font>
+- <font color="red">**- [ ] Verify PWA assets**</font>
+- <font color="red">**- [ ] Verify Docker installation**</font>
+- <font color="red">**- [ ] Verify there are no known bugs**</font>
+- <font color="red">**- [ ] Confirm the project is ready for release**</font>
+
+---
+
 *This file provides project context for AI assistants. Should be updated regularly.*
