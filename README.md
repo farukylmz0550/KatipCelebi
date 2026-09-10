@@ -8,7 +8,7 @@
 
 *Terracotta × Dusty Rose · Ink & Copper · Noto Serif/Sans · 60/40 physical cards*
 
-[![Version](https://img.shields.io/badge/version-2.3.2-EAD6D0?style=flat-square&labelColor=2B2727&color=A25F4C)](https://github.com/farukylmz0550/Bookshelf/releases)
+[![Version](https://img.shields.io/badge/version-2.3.2-EAD6D0?style=flat-square&labelColor=2B2727&color=A25F4C)](https://github.com/farukylmz0550/bookshelf-web/releases)
 [![Docker](https://img.shields.io/badge/docker-ghcr.io%2Fbookshelf-272A29?style=flat-square&logo=docker&labelColor=1D2020&color=C17A5E)](https://ghcr.io/farukylmz0550/bookshelf)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=nextdotjs)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
@@ -110,8 +110,8 @@ docker compose up -d
 ### Build from source
 
 ```bash
-git clone https://github.com/farukylmz0550/Bookshelf.git
-cd Bookshelf
+git clone https://github.com/farukylmz0550/bookshelf-web.git
+cd bookshelf-web
 cp .env.example .env  # set NEXTAUTH_SECRET=$(openssl rand -base64 32)
 docker compose up -d --build
 ```
@@ -119,7 +119,7 @@ docker compose up -d --build
 ### Local dev
 
 ```bash
-git clone https://github.com/farukylmz0550/Bookshelf.git && cd Bookshelf
+git clone https://github.com/farukylmz0550/bookshelf-web.git && cd bookshelf-web
 npm install
 npx prisma migrate dev
 npm run db:seed

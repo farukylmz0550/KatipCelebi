@@ -69,7 +69,7 @@ export default function SetupServerPage() {
         <p className="text-center text-xs text-muted-foreground">
           {"Running your own server? "}
           <a
-            href="https://github.com/farukylmz0550/Bookshelf"
+            href="https://github.com/farukylmz0550/bookshelf-web"
             className="text-primary hover:underline"
             target="_blank"
             rel="noopener"

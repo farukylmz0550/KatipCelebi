@@ -12,7 +12,7 @@ Personal library management application. Book adding, lending tracking, reading 
 
 Web rewrite of the original PyQt6 desktop app (`legacy` branch).
 
-**Repo:** https://github.com/farukylmz0550/Bookshelf
+**Repo:** https://github.com/farukylmz0550/bookshelf-web
 
 ---
 
