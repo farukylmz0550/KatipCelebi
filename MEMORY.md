@@ -272,6 +272,14 @@ Both projects continue under GPLv3.
 
 ## 13. Tomorrow's TODO — BookShelf UI/Branding Overhaul
 
+> ✅ **PROGRESS — 2026-09-11 (session 3 — release published):**
+> - Release notes moved out of README → GitHub Releases page (source of truth: releases URL)
+> - README: AI warning banner as a centered GitHub `[!WARNING]` alert at the very top; License section now links the two master SVG files directly
+> - e2e fixture "Ayse Yilmaz" (ASCII-only)
+> - GitHub Releases: `2.4.0` created with English notes; legacy Turkish bodies of `v2.3.1` and `v2.3.0` rewritten in English
+> - Tag `2.4.0` re-pointed to the release commit; Docker image rebuilt and pushed (`ghcr.io/farukylmz0550/bookshelf:2.4.0` + `:latest`)
+> - Release notes no longer live in README — future releases: write notes directly on the GitHub Releases page
+>
 > ✅ **PROGRESS — 2026-09-11 (session 2 — release prep):**
 > - **§3 Brand Set:** added `brand/` directory — master SVGs (Color + Symbolic), `brand/icons/` (all generated icons), `brand/README.md` (usage rules, regeneration commands, CC BY-NC-ND note)
 > - **§20 README / Release:** package.json + badge → **2.4.0**; README: title/brand `Book Shelf`, Brand + Paper Material rows in Features, Design section updated, License section brand names + anchor fixed, **Release Notes 2.4.0** added; 12 e2e screenshots regenerated with the new UI (`manual-gui.spec.ts` resets the DB → dev.db now has `manual@bookshelf.test` admin + 2 books, previous admin data replaced by the e2e flow — that is the project's e2e design)

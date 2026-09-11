@@ -21,9 +21,9 @@ test.describe("lending + people", () => {
   test("create lending (person auto-create, XP+5) and return", async ({ page }) => {
     await page.goto("/lending");
     await page.locator("select").first().selectOption({ index: 0 });
-    await page.getByPlaceholder("Name").fill("Ayşe Yılmaz");
+    await page.getByPlaceholder("Name").fill("Ayse Yilmaz");
     await page.getByRole("button", { name: /^lend$/i }).click();
-    await expect(page.getByText("Ayşe Yılmaz")).toBeVisible();
+    await expect(page.getByText("Ayse Yilmaz")).toBeVisible();
     await page
       .getByRole("button", { name: /mark returned/i })
       .first()

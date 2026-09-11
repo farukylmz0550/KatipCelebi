@@ -1,6 +1,10 @@
+<div align="center">
+
 > [!WARNING]
 >
 > ### This Project Is Made Entirely With AI!
+
+</div>
 
 <div align="center">
 
@@ -305,18 +309,7 @@ Forked and modified versions of the software may be used and distributed under t
 
 The Book Shelf name or logo must not be used in a way that creates the impression that a project is approved, supported, endorsed, or officially associated with Book Shelf.
 
----
-
-## 📝 Release Notes
-
-### 2.4.0 — Paper & Brand Overhaul
-
-- **Brand:** New Book Shelf identity — all icons and favicons rendered from `Bookshelf — Color Master.svg` (`brand/` set added, Brand Set README)
-- **Paper material:** Global soft paper grain + warm top-light wash, applied across background, sidebar, cards, panels, dialogs
-- **UI consistency:** All off-palette colors replaced with design tokens; loading/empty/error states unified
-- **Typography:** Noto Serif/Sans/Mono usage audited and completed
-- **i18n:** Hardcoded strings moved to dictionaries; new keys in all 6 languages
-- **Brand:** User-facing references use `Book Shelf`; technical identifiers keep `bookshelf`
+**Master files:** [`Bookshelf — Color Master.svg`](https://github.com/farukylmz0550/bookshelf-web/blob/main/Bookshelf%20%E2%80%94%20Color%20Master.svg) · [`Bookshelf — Symbolic Master.svg`](https://github.com/farukylmz0550/bookshelf-web/blob/main/Bookshelf%20%E2%80%94%20Symbolic%20Master.svg)
 
 <div align="center">
 
