@@ -29,6 +29,7 @@ Rendered from `Bookshelf — Color Master.svg` with librsvg (`rsvg-convert` / Im
 | `icon.png` | 512×512 | General-purpose raster master |
 | `apple-touch-icon.png` | 180×180 | iOS home screen icon |
 | `favicon.ico` | 16/32/48 | Legacy favicon |
+| `icon-512-maskable.png` | 512×512 | PWA maskable icon (artwork scaled to ~74% on a `#E5D9D4` background — inside the central 80% safe zone) |
 
 ## Regeneration
 
@@ -43,6 +44,10 @@ magick -background none "Bookshelf — Color Master.svg" -resize 512x512 icon-51
 magick -background none "Bookshelf — Color Master.svg" -resize 512x512 icon.png
 magick -background none "Bookshelf — Color Master.svg" -resize 180x180 apple-touch-icon.png
 magick -background none "Bookshelf — Color Master.svg" -define icon:auto-resize=16,32,48 favicon.ico
+
+# Maskable icon — artwork scaled to ~74% and centered on the app background
+magick -background none -density 144 "Bookshelf — Color Master.svg" -resize 378x378 content.png
+magick -background "#E5D9D4" content.png -gravity center -background "#E5D9D4" -extent 512x512 icon-512-maskable.png
 ```
 
 ## Usage Rules

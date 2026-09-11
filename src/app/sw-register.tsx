@@ -30,7 +30,7 @@ async function subscribeToPush(reg: ServiceWorkerRegistration, vapidPublicKey: s
       body: JSON.stringify(subscription.toJSON()),
     });
   } catch {
-    // Subscription is optional — local fallback notifications keep working
+    // Subscription is optional — scheduled notifications are server-driven
   }
 }
 
@@ -54,38 +54,15 @@ export function SWRegister({ vapidPublicKey }: { vapidPublicKey?: string }) {
           });
         });
 
-        // Request notification permission
+        // Request notification permission; push subscription feeds the
+        // server-side scheduler (docker-compose cron → /api/push/streak-remind).
         if ("Notification" in window && Notification.permission === "default") {
           Notification.requestPermission().then((perm) => {
-            if (perm === "granted") {
-              reg.active?.postMessage("schedule-notifications");
-              if (vapidPublicKey) void subscribeToPush(reg, vapidPublicKey);
-            }
+            if (perm === "granted" && vapidPublicKey) void subscribeToPush(reg, vapidPublicKey);
           });
-        } else if (Notification.permission === "granted") {
-          reg.active?.postMessage("schedule-notifications");
-          if (vapidPublicKey) void subscribeToPush(reg, vapidPublicKey);
+        } else if (Notification.permission === "granted" && vapidPublicKey) {
+          void subscribeToPush(reg, vapidPublicKey);
         }
-
-        // Re-schedule every 12 hours
-        setInterval(
-          () => {
-            if (Notification.permission === "granted") {
-              reg.active?.postMessage("schedule-notifications");
-            }
-          },
-          12 * 60 * 60 * 1000,
-        );
-
-        // Check streak every hour
-        setInterval(
-          () => {
-            if (Notification.permission === "granted") {
-              reg.active?.postMessage("check-streak");
-            }
-          },
-          60 * 60 * 1000,
-        );
       });
     }
   }, [vapidPublicKey]);

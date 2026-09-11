@@ -272,6 +272,13 @@ Both projects continue under GPLv3.
 
 ## 13. Tomorrow's TODO — BookShelf UI/Branding Overhaul
 
+> ✅ **PROGRESS — 2026-09-11 (session 5 — PWA reliability patch 2.4.2):**
+> - **manifest.json:** `theme_color` `#3584e4` (obsolete GNOME blue) → `#A25F4C`; `background_color` `#000000` → `#E5D9D4`; icons split: `icon-192` (any) + `icon-512` (any) + `icon-512-maskable.png` (maskable) — `"any maskable"` combined purpose removed.
+> - **Maskable icon:** `public/icon-512-maskable.png` generated from `Bookshelf — Color Master.svg` (artwork ~74% on `#E5D9D4`, ~13% padding per side, inside the central 80% safe zone). Added to `brand/icons/` + regeneration commands in `brand/README.md` + `sw.js` precache list.
+> - **Timer-based notification scheduling removed (PWA-only):** sw.js `scheduleNotifications()` + `MESSAGES`/`randomMessage` + `checkStreak()` + hourly `setInterval` + `schedule-notifications`/`check-streak`/dead `test-notification` message branches deleted; `activate` call removed. sw-register.tsx: both `setInterval` blocks + `postMessage` calls removed (SW registration, updatefound toast, permission request and `subscribeToPush` kept). notification-perm.tsx: postMessage removed (button only requests permission). Remaining setInterval/setTimeout occurrences are unrelated legitimate uses (openlibrary retry/abort, touch-gestures, share-button, cookie-consent, excel URL revoke, reset retry).
+> - **Server-side scheduling untouched:** docker-compose cron → `/api/push/streak-remind` (CRON_SECRET) → VAPID Web Push remains the only scheduled notification mechanism.
+> - **PWA validation:** manifest 200 · theme/background/icon purposes verified · all icons + sw.js 200 · SW still has push/notificationclick handlers · SW is timer-free. QA: tsc ✅ lint ✅ format ✅ unit 104/104 ✅ e2e 25/25 ✅ build ✅
+>
 > ✅ **PROGRESS — 2026-09-11 (session 4 — security & refactor patch):**
 > - **Security:** `src/lib/rate-limit.ts` — shared in-memory limiter singleton (per-runtime Map, documented). Login brute-force throttle in `auth.ts` authorize() (10/5min per IP, counter reset on success, matcher still excludes `api/auth` — db/bcrypt unavailable in middleware runtime). Register + setup actions throttled (5/min). Throttles active only in production (`throttlingEnabled()`), so dev/e2e are unaffected. next-auth pinned to exact `5.0.0-beta.32` — **upgrade debt: bump when v5 stable ships**.
 > - **Race fixes:** lending create wrapped in `$transaction` (copy-guard atomic); `setBookStatus` uses conditional `updateMany` (status `{ not: status }`) so FINISHED XP awards once; `useStreakShield` moves `dailyActivity.create` inside the transaction (XP rollback safe); last-admin guard in `toggleAdmin`/`deleteUser`.

@@ -18,10 +18,9 @@ export function NotificationPerm({ dict }: { dict: Record<string, string> }) {
 
   async function request() {
     if (!("Notification" in window)) return;
-    const perm = await Notification.requestPermission();
-    if (perm === "granted") {
-      navigator.serviceWorker.controller?.postMessage("schedule-notifications");
-    }
+    // Granting permission enables server-side push (subscription is set up by
+    // SWRegister); scheduled reminders are delivered via /api/push/streak-remind.
+    await Notification.requestPermission();
   }
 
   if (permission === "unsupported" || permission === "denied" || permission === "granted") return null;
