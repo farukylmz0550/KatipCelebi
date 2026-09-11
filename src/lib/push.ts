@@ -86,8 +86,8 @@ export async function sendStreakReminders(): Promise<{ sent: number; skipped: nu
         continue;
       }
       const count = await sendPushToUser(userId, {
-        title: "Streak'in kırılmak üzere! 🔥",
-        body: `Bugün henüz okumadın. ${info.currentStreak} günlük streak'ini kaybetme!`,
+        title: "Your streak is about to break! 🔥",
+        body: `You haven't read today. Don't lose your ${info.currentStreak}-day streak!`,
         url: "/books",
         tag: "streak-warning",
       });

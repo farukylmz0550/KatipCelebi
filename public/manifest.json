@@ -1,8 +1,8 @@
 {
   "id": "/",
   "scope": "/",
-  "name": "Bookshelf",
-  "short_name": "Bookshelf",
+  "name": "Book Shelf",
+  "short_name": "Book Shelf",
   "description": "Track your books, lending history, reading goals, and stats with gamification. Self-hosted personal library manager.",
   "start_url": "/",
   "display": "standalone",
@@ -27,8 +27,8 @@
   ],
   "shortcuts": [
     {
-      "name": "Kitap Ekle",
-      "short_name": "Kitap",
+      "name": "Add Book",
+      "short_name": "Add",
       "url": "/books",
       "icons": [
         {
@@ -38,8 +38,8 @@
       ]
     },
     {
-      "name": "Ödünçlerim",
-      "short_name": "Ödünç",
+      "name": "Lending",
+      "short_name": "Lend",
       "url": "/lending",
       "icons": [
         {
@@ -49,7 +49,7 @@
       ]
     },
     {
-      "name": "İstatistikler",
+      "name": "Statistics",
       "short_name": "Stats",
       "url": "/stats",
       "icons": [

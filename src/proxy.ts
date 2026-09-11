@@ -1,7 +1,19 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
-const PUBLIC_PATHS = ["/login", "/register", "/setup", "/manifest.json", "/sw.js", "/icon-192.png", "/icon-512.png"];
+const PUBLIC_PATHS = [
+  "/login",
+  "/register",
+  "/setup",
+  "/manifest.json",
+  "/sw.js",
+  "/icon-192.png",
+  "/icon-512.png",
+  "/icon.png",
+  "/icon.svg",
+  "/logo.svg",
+  "/apple-touch-icon.png",
+];
 
 // NOTE: This in-memory rate limiter only works in single-instance deployments.
 // In serverless, edge, or multi-replica setups, each instance has its own Map.

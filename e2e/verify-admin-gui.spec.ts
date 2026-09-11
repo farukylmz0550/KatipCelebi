@@ -9,9 +9,9 @@ test.describe("verify admin@admin.admin GUI", () => {
     await page.goto("/login");
     await page.getByPlaceholder("you@example.com").fill("admin@admin.admin");
     await page.getByPlaceholder("••••••••").fill("password123");
-    await page.getByRole("button", { name: /^sign in$/i }).click();
+    await page.getByRole("button", { name: /^log in$/i }).click();
     await expect(page).toHaveURL(/\/books/);
-    await expect(page.locator("header").getByText("admin").first()).toBeVisible();
+    await expect(page.locator("aside").getByText("admin").first()).toBeVisible();
     await page.screenshot({ path: "e2e/screenshots/verify-01-books.png", fullPage: true });
 
     await page.getByPlaceholder("Title").first().fill("Verify Book");
@@ -31,11 +31,8 @@ test.describe("verify admin@admin.admin GUI", () => {
     await expect(page.getByText("Verify Sub")).toBeVisible();
 
     await page.goto("/books");
-    await page
-      .getByRole("button", { name: /mark finished/i })
-      .first()
-      .click();
-    await expect(page.getByRole("button", { name: /mark finished/i })).toHaveCount(0);
+    await page.locator("a[href^='/books/']").first().click();
+    await page.locator("select").selectOption("FINISHED");
     await page.screenshot({ path: "e2e/screenshots/verify-03-finished.png", fullPage: true });
 
     await page.goto("/lending");
@@ -49,7 +46,7 @@ test.describe("verify admin@admin.admin GUI", () => {
     await page.screenshot({ path: "e2e/screenshots/verify-04-people.png", fullPage: true });
 
     await page.goto("/stats");
-    await expect(page.getByText("Total")).toBeVisible();
+    await expect(page.getByText("Total books", { exact: true })).toBeVisible();
     await page.screenshot({ path: "e2e/screenshots/verify-05-stats.png", fullPage: true });
 
     await page.goto("/achievements");

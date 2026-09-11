@@ -1,14 +1,17 @@
 import { test, expect } from "@playwright/test";
 import { resetDb } from "./helpers/db";
+import { dismissCookieConsent, clickSetting } from "./helpers/auth";
 
 test.describe("manual GUI", () => {
   test("full flow: setup → books → lending → people → stats → achievements → leaderboard → admin → i18n/theme", async ({
     page,
   }) => {
+    test.setTimeout(120000); // long end-to-end flow with screenshots
     await resetDb(page);
     await page.goto("/");
+    await dismissCookieConsent(page);
     await expect(page).toHaveURL(/\/setup/);
-    await page.getByPlaceholder("Your name").fill("ManualAdmin");
+    await page.getByPlaceholder("Name").fill("ManualAdmin");
     await page.getByPlaceholder("you@example.com").fill("manual@bookshelf.test");
     await page.getByPlaceholder("Min 8 characters").fill("password123");
     await page.getByRole("button", { name: /create admin account/i }).click();
@@ -17,9 +20,9 @@ test.describe("manual GUI", () => {
 
     await page.getByPlaceholder("you@example.com").fill("manual@bookshelf.test");
     await page.getByPlaceholder("••••••••").fill("password123");
-    await page.getByRole("button", { name: /^sign in$/i }).click();
+    await page.getByRole("button", { name: /^log in$/i }).click();
     await expect(page).toHaveURL(/\/books/);
-    await expect(page.locator("header").getByText("ManualAdmin").first()).toBeVisible();
+    await expect(page.locator("aside").getByText("ManualAdmin").first()).toBeVisible();
     await page.screenshot({ path: "e2e/screenshots/02-books-empty.png", fullPage: true });
 
     await page.getByPlaceholder("Title").first().fill("Manual Book One");
@@ -32,10 +35,10 @@ test.describe("manual GUI", () => {
     await page.getByPlaceholder("Author").fill("Stephen Hawking");
     await page.getByRole("button", { name: /^add$/i }).click();
     await expect(page.getByText("History of Time").first()).toBeVisible();
-    await page.getByPlaceholder("Search by title, author, ISBN...").fill("History");
+    await page.getByPlaceholder("Search...").fill("History");
     await expect(page.getByText("History of Time").first()).toBeVisible();
     await expect(page.getByText("Manual Book One").first()).toBeHidden();
-    await page.getByPlaceholder("Search by title, author, ISBN...").fill("");
+    await page.getByPlaceholder("Search...").fill("");
     await page.screenshot({ path: "e2e/screenshots/04-filter.png", fullPage: true });
 
     await page.locator("a[href^='/books/']").first().click();
@@ -64,7 +67,7 @@ test.describe("manual GUI", () => {
     await page.screenshot({ path: "e2e/screenshots/07-people.png", fullPage: true });
 
     await page.goto("/stats");
-    await expect(page.getByText("Total")).toBeVisible();
+    await expect(page.getByText("Total books", { exact: true })).toBeVisible();
     await page.screenshot({ path: "e2e/screenshots/08-stats.png", fullPage: true });
 
     await page.goto("/achievements");
@@ -79,10 +82,13 @@ test.describe("manual GUI", () => {
     await expect(page.getByRole("heading", { name: /cover cache/i })).toBeVisible();
     await page.screenshot({ path: "e2e/screenshots/11-admin.png", fullPage: true });
 
-    await page.goto("/books");
-    await page.locator("header").getByRole("button", { name: /EN/i }).click();
-    await page.getByLabel("Toggle theme").click();
+    await page.goto("/settings");
+    // Theme & locale live in Settings (Settings-only design); wait for each action
+    await clickSetting(page, /Türkçe/i);
+    await clickSetting(page, "Dark");
     await page.screenshot({ path: "e2e/screenshots/12-i18n-theme.png", fullPage: true });
+    // Switch back to English so the Excel step matches EN labels
+    await clickSetting(page, /^English/);
 
     await page.goto("/books");
     const [dl] = await Promise.all([

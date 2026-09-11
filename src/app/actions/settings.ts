@@ -49,7 +49,7 @@ export async function sendTestPush(): Promise<{ ok: boolean; error?: string }> {
   const userId = await requireUserId();
   try {
     const count = await sendPushToUser(userId, {
-      title: "Bookshelf",
+      title: "Book Shelf",
       body: "Test push — it works! 🎉",
       url: "/books",
       tag: "test-push",

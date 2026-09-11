@@ -52,9 +52,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
         <header className="sticky top-0 z-30 flex h-12 items-center gap-2 border-b border-[var(--border)] bg-[var(--surface)] px-3 safe-top md:hidden">
           <Link href="/books" className="flex items-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/icon-192.png" alt="" className="h-6 w-6 rounded-[8px]" />
+            <img src="/logo.svg" alt="" className="h-6 w-6" />
             <span className="font-[var(--font-serif)] text-sm font-semibold tracking-tight text-foreground">
-              Bookshelf
+              Book Shelf
             </span>
           </Link>
           <div className="ml-auto flex items-center gap-0.5">

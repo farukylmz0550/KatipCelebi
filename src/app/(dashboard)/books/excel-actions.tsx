@@ -13,7 +13,8 @@ function downloadBase64(base64: string, filename: string) {
   a.href = url;
   a.download = filename;
   a.click();
-  URL.revokeObjectURL(url);
+  // Revoke later — revoking synchronously can cancel an in-progress download
+  setTimeout(() => URL.revokeObjectURL(url), 30_000);
 }
 
 export function ExcelActions({ dict }: { dict: Record<string, string> }) {

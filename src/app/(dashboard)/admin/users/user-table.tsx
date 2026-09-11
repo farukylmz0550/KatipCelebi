@@ -84,7 +84,7 @@ export function UserTable({ users, dict }: { users: User[]; dict: Record<string,
                 {dict.approved}
               </span>
             ) : (
-              <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-medium text-amber-700 dark:bg-amber-900 dark:text-amber-300">
+              <span className="rounded-full bg-[var(--warning-soft)] px-2 py-0.5 text-[10px] font-medium text-[var(--warning-text)]">
                 {dict.pending}
               </span>
             )}

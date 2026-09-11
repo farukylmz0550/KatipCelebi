@@ -128,7 +128,7 @@ export function AddBookForm({
         // Network/server unreachable — queue for background sync when offline
         if (!navigator.onLine) {
           enqueuePendingBook(bookInput);
-          toast.info("Offline — kitap kaydedildi, bağlantı gelince eklenecek");
+          toast.info("Offline — book saved locally, it will be added when you are back online");
           setIsbn("");
           setTitle("");
           setAuthor("");

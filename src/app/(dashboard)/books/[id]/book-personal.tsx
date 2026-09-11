@@ -82,17 +82,17 @@ export function BookPersonal({ book, dict }: { book: Book; dict: Record<string, 
       : null;
 
   return (
-    <section className="space-y-4 rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
+    <section className="paper-surface space-y-4 rounded-[12px] border border-[var(--border)] bg-[var(--surface)] p-4">
       <h2 className="font-medium">{dict.personal}</h2>
 
       <div className="flex items-center gap-2">
-        <span className="text-sm text-neutral-600 dark:text-neutral-400">{dict.rating}</span>
+        <span className="text-sm text-muted-foreground">{dict.rating}</span>
         <div className="flex gap-1">
           {[1, 2, 3, 4, 5].map((n) => (
             <button
               key={n}
               onClick={() => saveRating(n === rating ? 0 : n)}
-              className={`text-lg ${n <= rating ? "text-amber-500" : "text-neutral-300"}`}
+              className={`text-lg ${n <= rating ? "text-[var(--warning)]" : "text-[var(--border-strong)]"}`}
             >
               ★
             </button>
@@ -105,28 +105,28 @@ export function BookPersonal({ book, dict }: { book: Book; dict: Record<string, 
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-sm text-neutral-600 dark:text-neutral-400">{dict.status}</span>
+        <span className="text-sm text-muted-foreground">{dict.status}</span>
         <select
           value={book.status}
           onChange={(e) => onStatusChange(e.target.value as never)}
-          className="rounded border border-neutral-300 px-2 py-1 text-sm dark:border-neutral-700 dark:bg-neutral-800"
+          className="rounded-[8px] border border-[var(--border)] bg-[var(--surface-elevated)] px-2 py-1 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
         >
           <option value="TO_READ">{dict.toRead}</option>
           <option value="READING">{dict.reading}</option>
           <option value="FINISHED">{dict.finished}</option>
         </select>
         {book.startedAt && (
-          <span className="text-xs text-neutral-500">
+          <span className="text-xs text-muted-foreground">
             {dict.started} {new Date(book.startedAt).toLocaleDateString()}
           </span>
         )}
         {book.finishedAt && (
-          <span className="text-xs text-neutral-500">
+          <span className="text-xs text-muted-foreground">
             {dict.finishedDate} {new Date(book.finishedAt).toLocaleDateString()}
           </span>
         )}
         {days !== null && (
-          <span className="text-xs text-neutral-500">
+          <span className="text-xs text-muted-foreground">
             · {days} {dict.days}
           </span>
         )}
@@ -134,7 +134,7 @@ export function BookPersonal({ book, dict }: { book: Book; dict: Record<string, 
 
       {book.status === "READING" && (
         <div className="flex items-center gap-2">
-          <span className="text-sm text-neutral-600 dark:text-neutral-400">{dict.currentPage}</span>
+          <span className="text-sm text-muted-foreground">{dict.currentPage}</span>
           <input
             type="number"
             min={0}
@@ -143,55 +143,55 @@ export function BookPersonal({ book, dict }: { book: Book; dict: Record<string, 
             onChange={(e) => setCurrentPage(e.target.value)}
             onBlur={saveCurrentPage}
             placeholder="0"
-            className="w-20 rounded border border-neutral-300 px-2 py-1 text-sm dark:border-neutral-700 dark:bg-neutral-800"
+            className="w-20 rounded-[8px] border border-[var(--border)] bg-[var(--surface-elevated)] px-2 py-1 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
           />
-          {book.numberOfPages && <span className="text-xs text-neutral-500">/ {book.numberOfPages}</span>}
+          {book.numberOfPages && <span className="text-xs text-muted-foreground">/ {book.numberOfPages}</span>}
         </div>
       )}
 
       <div className="space-y-1">
-        <label className="text-sm text-neutral-600 dark:text-neutral-400">{dict.tags}</label>
+        <label className="text-sm text-muted-foreground">{dict.tags}</label>
         <div className="flex gap-2">
           <input
             value={tags}
             onChange={(e) => setTags(e.target.value)}
             placeholder={dict.tagsPlaceholder}
-            className="flex-1 rounded border border-neutral-300 px-3 py-1.5 text-sm dark:border-neutral-700 dark:bg-neutral-800"
+            className="flex-1 rounded-[8px] border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
           />
           <button
             onClick={saveTags}
             disabled={pending}
-            className="rounded border border-neutral-300 px-3 py-1.5 text-sm disabled:opacity-50 dark:border-neutral-700"
+            className="rounded-[8px] border border-[var(--border)] px-3 py-1.5 text-sm text-foreground transition-colors hover:bg-[var(--accent-soft)] disabled:opacity-50"
           >
             {dict.save}
           </button>
         </div>
         {tags && (
-          <p className="text-xs text-neutral-500">
+          <p className="text-xs text-muted-foreground">
             {dict.show} {show(tags)}
           </p>
         )}
       </div>
 
       <div className="space-y-1">
-        <label className="text-sm text-neutral-600 dark:text-neutral-400">{dict.notes}</label>
+        <label className="text-sm text-muted-foreground">{dict.notes}</label>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           rows={4}
           placeholder={dict.notesPlaceholder}
-          className="w-full rounded border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800"
+          className="w-full rounded-[8px] border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
         />
         <button
           onClick={saveNotes}
           disabled={pending}
-          className="rounded bg-neutral-900 px-3 py-1.5 text-sm text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900"
+          className="rounded-[8px] bg-[var(--primary)] px-3 py-1.5 text-sm text-[var(--primary-foreground)] transition-colors hover:bg-[var(--accent-hover)] disabled:opacity-50"
         >
           {dict.saveNotes}
         </button>
         {notes && (
-          <div className="rounded border border-neutral-200 bg-neutral-50 p-3 text-sm dark:border-neutral-800 dark:bg-neutral-800">
-            <p className="mb-1 text-xs text-neutral-500">{dict.preview}</p>
+          <div className="rounded-[8px] border border-[var(--border)] bg-[var(--surface-elevated)] p-3 text-sm">
+            <p className="mb-1 text-xs text-muted-foreground">{dict.preview}</p>
             <p className="whitespace-pre-wrap">{notes}</p>
           </div>
         )}

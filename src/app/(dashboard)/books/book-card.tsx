@@ -109,7 +109,7 @@ export function BookCard({
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-[var(--surface-elevated)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/icon-192.png" alt="" className="h-14 w-14 opacity-15" />
+              <img src="/logo.svg" alt="" className="h-14 w-14 opacity-15" />
             </div>
           )}
           {lentOut && (

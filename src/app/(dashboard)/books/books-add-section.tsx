@@ -19,13 +19,16 @@ type Dict = {
   addSuccess?: string;
   addFailed?: string;
   required?: string;
+  detailedAdd?: string;
+  addDetailed?: string;
+  orWithAllFields?: string;
 };
 
 export function BooksAddSection({ dict, excel }: { dict: Dict; excel: React.ReactNode }) {
   const [showDetailed, setShowDetailed] = useState(false);
 
   return (
-    <div className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] p-4">
+    <div className="paper-surface rounded-[12px] border border-[var(--border)] bg-[var(--surface)] p-4">
       <AddBookForm dict={dict} />
       <div className="mt-3 flex items-center justify-between border-t border-[var(--border)] pt-3">
         <button
@@ -34,9 +37,11 @@ export function BooksAddSection({ dict, excel }: { dict: Dict; excel: React.Reac
           className="inline-flex items-center gap-1.5 rounded-[8px] px-2 py-1.5 font-[var(--font-sans)] text-xs font-medium text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
         >
           {showDetailed ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-          Detailed add
+          {dict.detailedAdd ?? "Detailed add"}
         </button>
-        <span className="font-[var(--font-sans)] text-xs text-muted-foreground">or with all fields</span>
+        <span className="font-[var(--font-sans)] text-xs text-muted-foreground">
+          {dict.orWithAllFields ?? "or with all fields"}
+        </span>
       </div>
       {showDetailed && (
         <div className="mt-4 animate-in fade-in">
@@ -134,7 +139,9 @@ function DetailedAddForm({ dict, onDone }: { dict: Dict; onDone?: () => void }) 
 
   return (
     <div className="space-y-3 rounded-[8px] border border-[var(--border)] bg-[var(--surface-elevated)] p-3">
-      <p className="font-[var(--font-serif)] text-sm font-semibold text-foreground">Add detailed book</p>
+      <p className="font-[var(--font-serif)] text-sm font-semibold text-foreground">
+        {dict.addDetailed ?? "Add detailed book"}
+      </p>
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <label className={labelCls}>Title *</label>

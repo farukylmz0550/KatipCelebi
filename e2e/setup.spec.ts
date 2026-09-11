@@ -17,7 +17,7 @@ test.describe("setup / first admin", () => {
 
     const { login } = await import("./helpers/auth");
     await login(page, admin.email, admin.password);
-    await expect(page.locator("header").getByText("Admin").first()).toBeVisible();
+    await expect(page.locator("aside").getByText("Admin").first()).toBeVisible();
   });
 
   test("dashboard redirects to /setup when DB empty", async ({ page }) => {

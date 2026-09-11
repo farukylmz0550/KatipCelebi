@@ -74,12 +74,12 @@ export function BookFacts({ book, dict }: { book: Book; dict: Record<string, str
 
   if (!editing) {
     return (
-      <section className="rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
+      <section className="paper-surface rounded-[12px] border border-[var(--border)] bg-[var(--surface)] p-4">
         <div className="mb-3 flex items-center justify-between">
           <h2 className="font-medium">{dict.facts}</h2>
           <button
             onClick={() => setEditing(true)}
-            className="rounded border border-neutral-300 px-3 py-1 text-sm dark:border-neutral-700"
+            className="rounded-[8px] border border-[var(--border)] px-3 py-1 text-sm text-foreground transition-colors hover:bg-[var(--accent-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
           >
             {dict.edit}
           </button>
@@ -87,7 +87,7 @@ export function BookFacts({ book, dict }: { book: Book; dict: Record<string, str
         <dl className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
           {fields.map(([key, label]) => (
             <div key={key} className="flex gap-2">
-              <dt className="min-w-[110px] text-neutral-500 dark:text-neutral-400">{label}:</dt>
+              <dt className="min-w-[110px] text-muted-foreground">{label}:</dt>
               <dd className="flex-1 truncate">{(form as Record<string, string>)[key] || "—"}</dd>
             </div>
           ))}
@@ -97,32 +97,32 @@ export function BookFacts({ book, dict }: { book: Book; dict: Record<string, str
   }
 
   return (
-    <section className="rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
+    <section className="paper-surface rounded-[12px] border border-[var(--border)] bg-[var(--surface)] p-4">
       <h2 className="mb-3 font-medium">{dict.editFacts}</h2>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {fields.map(([key, label]) => (
           <label key={key} className="space-y-1 text-sm">
-            <span className="text-neutral-600 dark:text-neutral-400">{label}</span>
+            <span className="text-muted-foreground">{label}</span>
             <input
               value={form[key] ?? ""}
               onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-              className="w-full rounded border border-neutral-300 px-3 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+              className="w-full rounded-[8px] border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-1.5 text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
             />
           </label>
         ))}
       </div>
-      {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+      {error && <p className="mt-2 text-sm text-[var(--error-text)]">{error}</p>}
       <div className="mt-3 flex gap-2">
         <button
           onClick={onSave}
           disabled={pending}
-          className="rounded bg-neutral-900 px-4 py-1.5 text-sm text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900"
+          className="rounded-[8px] bg-[var(--primary)] px-4 py-1.5 text-sm text-[var(--primary-foreground)] transition-colors hover:bg-[var(--accent-hover)] disabled:opacity-50"
         >
           {dict.save}
         </button>
         <button
           onClick={() => setEditing(false)}
-          className="rounded border border-neutral-300 px-4 py-1.5 text-sm dark:border-neutral-700"
+          className="rounded-[8px] border border-[var(--border)] px-4 py-1.5 text-sm text-foreground transition-colors hover:bg-[var(--accent-soft)]"
         >
           {dict.cancel}
         </button>

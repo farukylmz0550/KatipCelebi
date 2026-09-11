@@ -1,7 +1,7 @@
 # Bookshelf — Memory Bank
 
-> Last updated: 2026-09-09
-> Version: 2.3.2
+> Last updated: 2026-09-11
+> Version: 2.4.0
 > Branch: main
 
 ---
@@ -272,11 +272,25 @@ Both projects continue under GPLv3.
 
 ## 13. Tomorrow's TODO — BookShelf UI/Branding Overhaul
 
-> ⚠️ **LOGO KAYNAKLARI:** `Bookshelf — Color Master.svg` ve `Bookshelf — Symbolic Master.svg` (kök dizin).
-> Favicon dahil **TÜM** asset'ler bu iki master SVG'den üretilecek:
-> **Color Master** → renkli ikonlar (`icon.svg`, `logo.svg`, `icon-192/512.png`, `apple-touch-icon.png`, `favicon.ico`)
-> **Symbolic Master** → semantik/monokrom kullanım.
-> Her madde kırmızı = zorunlu/önemli iş.
+> ✅ **PROGRESS — 2026-09-11 (session 2 — release prep):**
+> - **§3 Brand Set:** added `brand/` directory — master SVGs (Color + Symbolic), `brand/icons/` (all generated icons), `brand/README.md` (usage rules, regeneration commands, CC BY-NC-ND note)
+> - **§20 README / Release:** package.json + badge → **2.4.0**; README: title/brand `Book Shelf`, Brand + Paper Material rows in Features, Design section updated, License section brand names + anchor fixed, **Release Notes 2.4.0** added; 12 e2e screenshots regenerated with the new UI (`manual-gui.spec.ts` resets the DB → dev.db now has `manual@bookshelf.test` admin + 2 books, previous admin data replaced by the e2e flow — that is the project's e2e design)
+> - **§21 Final User Testing (automated):** `manual-gui.spec` full flow (setup → books → lending → people → stats → achievements → leaderboard → admin → i18n/theme) ✅ + `verify-admin-gui` 25/25 ✅ + manual mobile-view QA ✅. **On-device PWA installation test must be done manually.**
+> - **Remaining (single item):** real mobile device / PWA installation trial — manual user test.
+>
+> ✅ **PROGRESS — 2026-09-11 (session 1):**
+> - **§3 Logo & Branding (mostly complete):** All assets rendered from `Bookshelf — Color Master.svg` (Librsvg render): `icon.svg`, `logo.svg` (identical master copies), `icon-192/512.png`, `icon.png`, `apple-touch-icon.png`, `favicon.ico` (16/32/48). 7 in-code img references switched to `/logo.svg`. `proxy.ts` PUBLIC_PATHS updated. Brand name `Book Shelf` everywhere user-facing (src ×12, i18n ×6 languages, manifest.json, sw.js notifications, offline.html). Technical names kept (`bookshelf` package, `Bookshelf/1.0` User-Agent, cache/tag names). Trademark symbols removed from code (README exempt).
+> - **§1 Paper Material (system + application):** `globals.css` — global grain overlay (`body::after`, fractal-noise 180px tile; light 3.5% multiply / dark 5% soft-light) + warm top-light wash + `.paper-surface` (inset paper-edge highlight + restrained shadow). Applied surfaces: add panel, filter bar, dialog, sheet, cookie modal, book-detail panels, book detail cover frame. Light/dark visual verification done.
+> - **§14 Visual Cleanup (done):** All off-token colors removed (neutral/gray/white/green/amber/blue/orange/red → design tokens). Affected: book-facts, book-lending, book-personal, book detail page, loading.tsx ×4, user-table (amber badge → warning-soft), streak-widget (orange/amber → primary/warning), activity-heatmap (green scale → success alphas), profile-form, share-button.
+> - **§18 i18n (partial):** New keys added in 6 languages (books.cover/rating/detailedAdd/addDetailed/orWithAllFields). Hardcoded Turkish strings translated to English or wired to the dictionary: books-grid list headers, books-add-section ×3, setup-server, cookie-consent fallback, add-book-form offline toast, push.ts streak notification, offline.html, activity-heatmap (Pzt→Mon, Az/Çok→Less/More, locale-independent date — hydration fix), streak-widget (Pzt→M/T/W..., En uzun→Longest, Streak Koruma→Use streak shield).
+> - **§19 Technical QA (done):** tsc ✅ · lint ✅ (1 pre-existing warning: setup-server no-location-assign) · format:check ✅ · unit 97/97 ✅ · e2e 25/25 ✅ · production build ✅ · console errors clean ✅
+> - **Remaining:** Brand Set folder + README (§3), README screenshots/release notes (§20), final user testing (§21), per-page fine-tuning (§4–10 hover/selected/state visuals), responsive + a11y detail sweep (§12–13).
+>
+> ⚠️ **LOGO SOURCES:** `Bookshelf — Color Master.svg` and `Bookshelf — Symbolic Master.svg` (repository root).
+> **ALL** assets, including the favicon, will be generated from these two master SVGs:
+> **Color Master** → colored icons (`icon.svg`, `logo.svg`, `icon-192/512.png`, `apple-touch-icon.png`, `favicon.ico`)
+> **Symbolic Master** → semantic/monochrome usage.
+> Each item in red = mandatory/important work.
 
 ### 1. Paper Material
 - <font color="red">**- [ ] Apply the new paper material system across the GUI**</font>

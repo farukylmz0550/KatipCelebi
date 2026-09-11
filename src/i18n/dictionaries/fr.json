@@ -99,7 +99,12 @@
     "lookupFailed": "Recherche échouée. Réessayez.",
     "addSuccess": "Livre ajouté",
     "addFailed": "Échec de l ajout",
-    "required": "Ce champ est requis"
+    "required": "Ce champ est requis",
+    "cover": "Couverture",
+    "rating": "Note",
+    "detailedAdd": "Ajout détaillé",
+    "addDetailed": "Ajouter un livre détaillé",
+    "orWithAllFields": "ou avec tous les champs"
   },
   "facts": {
     "title": "Titre *",
@@ -290,12 +295,12 @@
     "title": "Licences et Attributions",
     "description": "Ce projet utilise les technologies open source suivantes :",
     "nav": "Licences",
-    "projectLicense": "Bookshelf est sous licence GNU General Public License v3.0."
+    "projectLicense": "Book Shelf est sous licence GNU General Public License v3.0."
   },
   "cookieConsent": {
     "title": "Cookies",
     "subtitle": "Pour votre bibliothèque",
-    "desc": "Bookshelf utilise des cookies pour personnaliser votre expérience.",
+    "desc": "Book Shelf utilise des cookies pour personnaliser votre expérience.",
     "descMuted": "Si vous refusez, les préférences ne sont stockées que sur cet appareil.",
     "mobileDesc": "Nous utilisons des cookies pour mémoriser les préférences.",
     "essentialTitle": "Essentiel",

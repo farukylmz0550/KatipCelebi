@@ -108,10 +108,10 @@ export function Sidebar({ dict, isAdmin, userName, initialCollapsed }: SidebarPr
       <div className="flex h-12 items-center gap-2 border-b border-[var(--border)] px-3">
         <Link href="/books" className="flex items-center gap-2 min-w-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/icon-192.png" alt="" className="h-7 w-7 rounded-[8px] shrink-0" />
+          <img src="/logo.svg" alt="" className="h-7 w-7 shrink-0" />
           {!collapsed && (
             <span className="font-[var(--font-serif)] text-sm font-semibold tracking-tight text-foreground truncate">
-              Bookshelf
+              Book Shelf
             </span>
           )}
         </Link>

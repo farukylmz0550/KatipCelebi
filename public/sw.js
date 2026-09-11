@@ -121,11 +121,11 @@ self.addEventListener("push", (event) => {
   try {
     data = event.data.json();
   } catch {
-    data = { title: "Bookshelf", body: event.data.text() };
+    data = { title: "Book Shelf", body: event.data.text() };
   }
 
   event.waitUntil(
-    self.registration.showNotification(data.title || "Bookshelf", {
+    self.registration.showNotification(data.title || "Book Shelf", {
       body: data.body || "New notification",
       icon: "/icon-192.png",
       badge: "/icon-192.png",
@@ -219,8 +219,8 @@ async function checkStreak() {
 
     const data = await response.json();
     if (!data.isTodayActive && data.currentStreak > 0) {
-      self.registration.showNotification("Streak'in kırılmak üzere! 🔥", {
-        body: `Bugün henüz okumadın. ${data.currentStreak} günlük streak'ini kaybetme!`,
+      self.registration.showNotification("Your streak is about to break! 🔥", {
+        body: `You haven't read today. Don't lose your ${data.currentStreak}-day streak!`,
         icon: "/icon-192.png",
         badge: "/icon-192.png",
         tag: "streak-warning",

@@ -1,10 +1,10 @@
-import { requireAdmin } from "@/lib/session";
+import { requireAdminPage } from "@/lib/session";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { getUsers } from "@/app/actions/admin";
 import { UserTable } from "./user-table";
 
 export default async function AdminUsersPage() {
-  await requireAdmin();
+  await requireAdminPage();
   const dict = await getDictionary();
   const users = await getUsers();
 

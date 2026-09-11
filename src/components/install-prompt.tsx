@@ -53,7 +53,7 @@ export function InstallPrompt() {
           <Download size={18} className="text-primary" />
         </div>
         <div className="flex-1">
-          <p className="text-sm font-medium">{"Install Bookshelf"}</p>
+          <p className="text-sm font-medium">{"Install Book Shelf"}</p>
           <p className="text-xs text-muted-foreground">Add to home screen, use offline</p>
         </div>
         <button

@@ -35,8 +35,8 @@ export default function RegisterForm({ dict }: { dict: Record<string, string> })
         <div className="w-full max-w-sm">
           <div className="mb-6 flex flex-col items-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/icon-192.png" alt="Bookshelf" className="mb-3 h-20 w-20 rounded-2xl" />
-            <h1 className="text-xl font-semibold text-foreground">Bookshelf</h1>
+            <img src="/logo.svg" alt="Book Shelf" className="mb-3 h-20 w-20" />
+            <h1 className="text-xl font-semibold text-foreground">Book Shelf</h1>
           </div>
           <div className="gnome-card p-6 text-center">
             <p className="text-sm text-foreground">{dict.registrationSuccess}</p>
@@ -58,8 +58,8 @@ export default function RegisterForm({ dict }: { dict: Record<string, string> })
       <div className="w-full max-w-sm">
         <div className="mb-6 flex flex-col items-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/icon-192.png" alt="Bookshelf" className="mb-3 h-20 w-20 rounded-2xl" />
-          <h1 className="text-xl font-semibold text-foreground">Bookshelf</h1>
+          <img src="/logo.svg" alt="Book Shelf" className="mb-3 h-20 w-20" />
+          <h1 className="text-xl font-semibold text-foreground">Book Shelf</h1>
           <p className="mt-1 text-xs text-muted-foreground">Create account</p>
         </div>
         <form method="POST" onSubmit={handleSubmit} className="gnome-card p-6">
@@ -78,7 +78,7 @@ export default function RegisterForm({ dict }: { dict: Record<string, string> })
               <input
                 name="email"
                 type="email"
-                placeholder="ornek@email.com"
+                placeholder="you@example.com"
                 required
                 className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />

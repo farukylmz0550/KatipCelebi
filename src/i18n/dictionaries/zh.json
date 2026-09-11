@@ -99,7 +99,12 @@
     "lookupFailed": "查询失败，请重试。",
     "addSuccess": "已添加图书",
     "addFailed": "添加失败",
-    "required": "必填"
+    "required": "必填",
+    "cover": "封面",
+    "rating": "评分",
+    "detailedAdd": "详细添加",
+    "addDetailed": "添加详细信息书籍",
+    "orWithAllFields": "或使用所有字段"
   },
   "facts": {
     "title": "标题 *",
@@ -290,12 +295,12 @@
     "title": "许可证与致谢",
     "description": "本项目使用以下开源技术：",
     "nav": "许可证",
-    "projectLicense": "Bookshelf 基于 GNU 通用公共许可证 v3.0 授权。"
+    "projectLicense": "Book Shelf 基于 GNU 通用公共许可证 v3.0 授权。"
   },
   "cookieConsent": {
     "title": "Cookies",
     "subtitle": "用于您的私人图书馆",
-    "desc": "Bookshelf 使用 cookies 个性化体验。",
+    "desc": "Book Shelf 使用 cookies 个性化体验。",
     "descMuted": "如果拒绝，偏好仅存储在此设备上。",
     "mobileDesc": "我们使用 cookies 记住偏好。",
     "essentialTitle": "必要",

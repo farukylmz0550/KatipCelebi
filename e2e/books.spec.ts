@@ -21,13 +21,12 @@ test.describe("books", () => {
   });
 
   test("ISBN lookup + add", async ({ page }) => {
+    test.setTimeout(60000); // Open Library can be slow / retried
     await page.goto("/books");
     await page.getByPlaceholder("ISBN").fill("9780140449136");
+    // Lookup auto-adds the matched book (Open Library can be slow)
     await page.getByRole("button", { name: /look up/i }).click();
-    await page.waitForTimeout(1500);
-    await page.getByPlaceholder("Title").first().fill("The Odyssey");
-    await page.getByRole("button", { name: /^add$/i }).click();
-    await expect(page.locator("a[href^='/books/']").first()).toBeVisible();
+    await expect(page.locator("a[href^='/books/']").first()).toBeVisible({ timeout: 30000 });
   });
 
   test("bulk import removed — no ISBN list", async ({ page }) => {
@@ -46,14 +45,14 @@ test.describe("books", () => {
     await page.getByRole("button", { name: /^add$/i }).click();
     await expect(page.getByText("Science Fiction Epic", { exact: true }).first()).toBeVisible();
 
-    await page.getByPlaceholder("Search by title, author, ISBN...").fill("History");
+    await page.getByPlaceholder("Search...").fill("History");
     await expect(page.getByText("A History Book", { exact: true }).first()).toBeVisible();
     await expect(page.getByText("Science Fiction Epic", { exact: true }).first()).toBeHidden();
 
-    await page.getByPlaceholder("Search by title, author, ISBN...").fill("");
+    await page.getByPlaceholder("Search...").fill("");
     await page.getByRole("button", { name: /filters/i }).click();
-    await page.locator("select").filter({ hasText: "Status" }).selectOption("TO_READ");
-    await expect(page.getByText(/0 of 2|of 2/).first()).toBeVisible();
+    await page.locator("select").filter({ hasText: "Status" }).selectOption("FINISHED");
+    await expect(page.getByText(/0 of 2/).first()).toBeVisible();
   });
 
   test("book detail: facts edit + personal (rating/signed/tags/notes) + copies", async ({ page }) => {

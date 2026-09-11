@@ -29,7 +29,7 @@ export function FilterBar({
     filters.tag !== "any";
 
   return (
-    <div className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] p-3">
+    <div className="paper-surface rounded-[12px] border border-[var(--border)] bg-[var(--surface)] p-3">
       <div className="flex items-center gap-2">
         <input
           placeholder={dict.search}

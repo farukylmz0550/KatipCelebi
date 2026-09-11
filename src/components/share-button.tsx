@@ -16,7 +16,7 @@ export function ShareButton({ title, author }: ShareButtonProps) {
 
     if (navigator.share) {
       try {
-        await navigator.share({ title: text, text: `Bookshelf'de: ${text}` });
+        await navigator.share({ title: text, text: `Book Shelf'te: ${text}` });
       } catch {
         // User cancelled
       }
@@ -34,7 +34,7 @@ export function ShareButton({ title, author }: ShareButtonProps) {
       className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground md:hidden"
       title="Share"
     >
-      {copied ? <Check size={16} className="text-green-500" /> : <Share2 size={16} />}
+      {copied ? <Check size={16} className="text-[var(--success)]" /> : <Share2 size={16} />}
     </button>
   );
 }

@@ -13,7 +13,7 @@ export default function SetupServerPage() {
 
     let url = serverUrl.trim();
     if (!url) {
-      setError("Sunucu adresi gerekli");
+      setError("Server address required");
       return;
     }
 
@@ -40,8 +40,8 @@ export default function SetupServerPage() {
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
             <Globe size={32} className="text-primary" />
           </div>
-          <h1 className="text-xl font-semibold">Bookshelf</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Sunucu adresinizi girin</p>
+          <h1 className="text-xl font-semibold">Book Shelf</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Enter your server address</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-3">
@@ -50,7 +50,7 @@ export default function SetupServerPage() {
               type="text"
               value={serverUrl}
               onChange={(e) => setServerUrl(e.target.value)}
-              placeholder="ornek.com veya https://ornek.com"
+              placeholder="example.com or https://example.com"
               className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
               autoFocus
               autoComplete="url"
@@ -61,7 +61,7 @@ export default function SetupServerPage() {
             type="submit"
             className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
           >
-            Devam Et
+            Continue
             <ArrowRight size={16} />
           </button>
         </form>
@@ -74,7 +74,7 @@ export default function SetupServerPage() {
             target="_blank"
             rel="noopener"
           >
-            {"GitHub'dan kurun"}
+            {"Set up on GitHub"}
           </a>
         </p>
       </div>

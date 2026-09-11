@@ -29,19 +29,19 @@ type CookieDict = {
 
 export function CookieConsent({ dict }: { dict?: CookieDict }) {
   const t: CookieDict = dict ?? {
-    title: "Çerezler",
+    title: "Cookies",
     subtitle: "For your personal library",
-    desc: "Bookshelf uses cookies to personalize your experience — to remember preferences like theme, language, sidebar state and view mode. Essential cookies are required for session security.",
+    desc: "Book Shelf uses cookies to personalize your experience — to remember preferences like theme, language, sidebar state and view mode. Essential cookies are required for session security.",
     descMuted:
       "If you reject preference cookies, preferences are stored only on this device and not persisted across sessions.",
     mobileDesc: "We use cookies to remember preferences (theme, language, sidebar). Legally we need your consent.",
-    essentialTitle: "Zorunlu",
+    essentialTitle: "Essential",
     essentialDesc: "Session, security, login. Cannot be disabled.",
-    preferencesTitle: "Tercihler",
+    preferencesTitle: "Preferences",
     preferencesDesc: "Theme, language, sidebar, card/list view.",
-    analyticsTitle: "Analitik",
+    analyticsTitle: "Analytics",
     analyticsDesc: "Anonymous usage statistics (currently inactive).",
-    accept: "Kabul Et",
+    accept: "Accept",
     reject: "Reddet",
     preferencesBtn: "Tercihler",
     save: "Kaydet",
@@ -89,7 +89,7 @@ export function CookieConsent({ dict }: { dict?: CookieDict }) {
 
   if (!visible) return null;
 
-  const cardBase = "border border-[var(--border)] bg-[var(--surface-elevated)] shadow-lg rounded-[12px]";
+  const cardBase = "paper-surface border border-[var(--border)] bg-[var(--surface-elevated)] shadow-lg rounded-[12px]";
 
   return (
     <>

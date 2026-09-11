@@ -1,9 +1,9 @@
-import { requireAdmin } from "@/lib/session";
+import { requireAdminPage } from "@/lib/session";
 import { getCoverStats, clearCoverCache } from "@/app/actions/covers";
 import { getDictionary } from "@/i18n/get-dictionary";
 
 export default async function AdminCoversPage() {
-  await requireAdmin();
+  await requireAdminPage();
   const { count, totalUrlBytes } = await getCoverStats();
   const dict = await getDictionary();
 

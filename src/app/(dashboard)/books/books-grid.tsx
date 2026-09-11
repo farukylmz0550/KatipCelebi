@@ -140,7 +140,7 @@ export function BooksGrid({
       {filtered.length === 0 ? (
         <div className="flex flex-col items-center py-16">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/icon-192.png" alt="" className="mb-4 h-16 w-16 rounded-2xl opacity-20" />
+          <img src="/logo.svg" alt="" className="mb-4 h-16 w-16 opacity-20" />
           <p className="font-[var(--font-sans)] text-sm text-muted-foreground">
             {total === 0 ? dict.empty : (dict.noResults ?? "No results — try clearing filters")}
           </p>
@@ -160,19 +160,19 @@ export function BooksGrid({
         <div className="overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--surface)]">
           <div className="hidden grid-cols-[3rem_1fr_12rem_6rem_5rem] gap-3 border-b border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-2 sm:grid">
             <span className="font-[var(--font-sans)] text-[10px] uppercase tracking-widest text-muted-foreground">
-              Kapak
+              {dict.cover ?? "Cover"}
             </span>
             <span className="font-[var(--font-sans)] text-[10px] uppercase tracking-widest text-muted-foreground">
-              Kitap
+              {dict.title}
             </span>
             <span className="font-[var(--font-sans)] text-[10px] uppercase tracking-widest text-muted-foreground">
-              Yazar
+              {dict.author}
             </span>
             <span className="font-[var(--font-sans)] text-center text-[10px] uppercase tracking-widest text-muted-foreground">
-              Durum
+              {dict.status}
             </span>
             <span className="font-[var(--font-sans)] text-center text-[10px] uppercase tracking-widest text-muted-foreground">
-              Puan
+              {dict.rating ?? "Rating"}
             </span>
           </div>
           {filtered.map((book) => (
@@ -188,7 +188,7 @@ export function BooksGrid({
                 ) : (
                   <div className="flex h-full w-full items-center justify-center">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/icon-192.png" alt="" className="h-4 w-4 opacity-20" />
+                    <img src="/logo.svg" alt="" className="h-4 w-4 opacity-20" />
                   </div>
                 )}
               </div>

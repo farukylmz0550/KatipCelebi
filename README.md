@@ -1,14 +1,18 @@
+> [!WARNING]
+>
+> ### ⚠️ This Project Is Made Entirely With AI!
+
 <div align="center">
 
-<img src="public/icon.svg" width="80" height="80" alt="Bookshelf" />
+<img src="public/icon.svg" width="80" height="80" alt="Book Shelf" />
 
-# Bookshelf
+# Book Shelf
 
 **Your warm, calm, timeless personal library.**
 
-*Terracotta × Dusty Rose · Ink & Copper · Noto Serif/Sans · 60/40 physical cards*
+*Terracotta × Dusty Rose · Ink & Copper · Noto Serif/Sans · 60/40 physical cards · Paper material*
 
-[![Version](https://img.shields.io/badge/version-2.3.2-EAD6D0?style=flat-square&labelColor=2B2727&color=A25F4C)](https://github.com/farukylmz0550/bookshelf-web/releases)
+[![Version](https://img.shields.io/badge/version-2.4.0-EAD6D0?style=flat-square&labelColor=2B2727&color=A25F4C)](https://github.com/farukylmz0550/bookshelf-web/releases)
 [![Docker](https://img.shields.io/badge/docker-ghcr.io%2Fbookshelf-272A29?style=flat-square&logo=docker&labelColor=1D2020&color=C17A5E)](https://ghcr.io/farukylmz0550/bookshelf)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=nextdotjs)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
@@ -21,7 +25,7 @@
 
 ---
 
-> **Bookshelf** — Kişisel dijital kütüphane deneyimi. Kitaplarınızı, ödünç geçmişini, hedeflerinizi ve istatistiklerinizi **sıcak, sakin, zamanın ötesinde** bir arayüzde takip edin. Duolingo tarzı oyunlaştırma ile.
+> **Book Shelf** — Personal digital library experience. Track your books, lending history, goals and stats in a **warm, calm, timeless** interface. With Duolingo-style gamification.
 
 Web rewrite of the original PyQt6 desktop app — [`legacy` branch](../../tree/legacy).
 
@@ -46,6 +50,7 @@ Web rewrite of the original PyQt6 desktop app — [`legacy` branch](../../tree/l
 | 🖥️ **Shell** | Collapsible sidebar (desktop, `sidebar-collapsed` cookie) + bottom nav (mobile) · `viewport-fit=cover` · safe-area |
 | 📦 **PWA** | `manifest.json` shortcuts · `sw.js` · install prompt |
 | 🔐 **Admin** | Approve/reject, promote/demote, delete users + cover cache (bottom of sidebar) |
+| 🎴 **Brand** | `brand/` set — Color + Symbolic masters, all icons rendered from the Color Master |
 | 🐳 **Docker** | `ghcr.io/farukylmz0550/bookshelf` — one command |
 
 ---
@@ -57,7 +62,7 @@ Web rewrite of the original PyQt6 desktop app — [`legacy` branch](../../tree/l
 | Books — Card & List | Stats — Level & Goals | Leaderboard |
 |---|---|---|
 | <img src="e2e/screenshots/01-setup-login.png" width="320" style="border-radius:12px; border:1px solid #CCBDB8" /> | <img src="e2e/screenshots/08-stats.png" width="320" style="border-radius:12px; border:1px solid #CCBDB8" /> | <img src="e2e/screenshots/10-leaderboard.png" width="320" style="border-radius:12px; border:1px solid #CCBDB8" /> |
-| *60/40 cards · 2→4 cols* | *Monthly chart · Streak* | *Top ranking* |
+| *Paper material · 60/40 cards · 2→4 cols* | *Monthly chart · Streak* | *Top ranking* |
 
 *Full flow: `npx playwright test e2e/manual-gui.spec.ts` → `e2e/screenshots/` (12 images)*
 
@@ -75,7 +80,9 @@ Web rewrite of the original PyQt6 desktop app — [`legacy` branch](../../tree/l
 | **Dark** Ink & Copper | `#1D2020` | `#272A29` | `#333735` | `#C17A5E` | `#F2EEE8` |
 
 - **Typography:** Noto Serif (titles) · Noto Sans (ui) · Noto Mono (technical)
+- **Paper Material:** Global soft grain overlay (fractal-noise, ~3.5% light / 5% dark) + warm top-light wash — every surface shares the same material without hurting readability
 - **Cards:** Identical geometry, `rounded-[12px]`, subtle `border-strong` + `shadow-sm` on hover — no drag-drop
+- **Brand:** `brand/` — Color & Symbolic masters + all generated icons (CC BY-NC-ND)
 - **Sources:** `UI_Design_Language.md` · `Architecture_Principles.md` · `Project_Rules.md`
 
 ---
@@ -288,20 +295,33 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) — TypeScript strict, Prettier 120 wid
 
 **GPLv3** — Only source code is licensed under the GPLV3 license
 
-**CC-BY-NC-ND** — The Bookshelf logo, brand assets, and all materials contained within the brand set directory are licensed under the CC BY-NC-ND 4.0 license.
+**CC-BY-NC-ND** — The Book Shelf logo, brand assets, and all materials contained within the brand set directory are licensed under the CC BY-NC-ND 4.0 license.
 
-**Bookshelf** — is an unregistered trademark that identifies the Bookshelf project and the brand associated with the project.
+**Book Shelf** — is an unregistered trademark that identifies the Book Shelf project and the brand associated with the project.
 
-**The Bookshelf name, logo, and brand identity are not licensed under the GNU GPLv3.** Use of the Bookshelf source code under the GNU GPLv3 does not grant any trademark rights to use the Bookshelf name or brand identity.
+**The Book Shelf name, logo, and brand identity are not licensed under the GNU GPLv3.** Use of the Book Shelf source code under the GNU GPLv3 does not grant any trademark rights to use the Book Shelf name or brand identity.
 
-Forked and modified versions of the software may be used and distributed under the terms of the GNU GPLv3. However, unless separate permission to use the Bookshelf trademark is granted, such versions must use a different project name and brand identity.
+Forked and modified versions of the software may be used and distributed under the terms of the GNU GPLv3. However, unless separate permission to use the Book Shelf trademark is granted, such versions must use a different project name and brand identity.
 
-The Bookshelf name or logo must not be used in a way that creates the impression that a project is approved, supported, endorsed, or officially associated with Bookshelf.
+The Book Shelf name or logo must not be used in a way that creates the impression that a project is approved, supported, endorsed, or officially associated with Book Shelf.
+
+---
+
+## 📝 Release Notes
+
+### 2.4.0 — Paper & Brand Overhaul
+
+- **Brand:** New Book Shelf identity — all icons and favicons rendered from `Bookshelf — Color Master.svg` (`brand/` set added, Brand Set README)
+- **Paper material:** Global soft paper grain + warm top-light wash, applied across background, sidebar, cards, panels, dialogs
+- **UI consistency:** All off-palette colors replaced with design tokens; loading/empty/error states unified
+- **Typography:** Noto Serif/Sans/Mono usage audited and completed
+- **i18n:** Hardcoded strings moved to dictionaries; new keys in all 6 languages
+- **Brand:** User-facing references use `Book Shelf`; technical identifiers keep `bookshelf`
 
 <div align="center">
 
 *Cozy Library + Personal Collection · Clarity before decoration.*
 
-**[⬆ back to top](#bookshelf)**
+**[⬆ back to top](#book-shelf)**
 
 </div>

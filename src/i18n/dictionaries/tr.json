@@ -99,7 +99,12 @@
     "lookupFailed": "Arama başarısız. Tekrar deneyin.",
     "addSuccess": "Kitap eklendi",
     "addFailed": "Kitap eklenemedi",
-    "required": "Bu alan gerekli"
+    "required": "Bu alan gerekli",
+    "cover": "Kapak",
+    "rating": "Puan",
+    "detailedAdd": "Detaylı ekle",
+    "addDetailed": "Detaylı kitap ekle",
+    "orWithAllFields": "veya tüm alanlarla"
   },
   "facts": {
     "title": "Başlık *",
@@ -290,12 +295,12 @@
     "title": "Lisanslar & Atıflar",
     "description": "Bu proje aşağıdaki açık kaynak teknolojileri kullanmaktadır:",
     "nav": "Lisanslar",
-    "projectLicense": "Bookshelf, GNU Genel Kamu Lisansı v3.0 altında lisanslanmıştır."
+    "projectLicense": "Book Shelf, GNU Genel Kamu Lisansı v3.0 altında lisanslanmıştır."
   },
   "cookieConsent": {
     "title": "Çerezler",
     "subtitle": "Kişisel kütüphaneniz için",
-    "desc": "Bookshelf, deneyiminizi kişiselleştirmek için çerezleri kullanır — tema, dil, yan çubuk durumu ve görünüm modu gibi tercihlerinizi hatırlamak için. Zorunlu çerezler oturum güvenliği için gereklidir.",
+    "desc": "Book Shelf, deneyiminizi kişiselleştirmek için çerezleri kullanır — tema, dil, yan çubuk durumu ve görünüm modu gibi tercihlerinizi hatırlamak için. Zorunlu çerezler oturum güvenliği için gereklidir.",
     "descMuted": "Tercih çerezlerini reddederseniz, tercihleriniz yalnızca bu cihazda saklanır ve oturumlar arası korunmaz.",
     "mobileDesc": "Tercihlerinizi (tema, dil, yan çubuk) hatırlamak için çerezleri kullanıyoruz. Yasal olarak onayınızı almamız gerekiyor.",
     "essentialTitle": "Zorunlu",

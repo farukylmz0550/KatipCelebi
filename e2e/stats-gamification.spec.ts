@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { resetDb } from "./helpers/db";
-import { createAdminViaSetup, login } from "./helpers/auth";
+import { createAdminViaSetup, login, dismissCookieConsent, clickSetting } from "./helpers/auth";
 
 test.describe("stats / gamification / achievements / leaderboard / excel / i18n / theme", () => {
   const admin = { name: "Admin", email: "admin@bookshelf.test", password: "password123" };
@@ -18,19 +18,17 @@ test.describe("stats / gamification / achievements / leaderboard / excel / i18n 
     await expect(page.getByText("Stats Book", { exact: true }).first()).toBeVisible();
 
     await page.goto("/stats");
-    await expect(page.getByText("Level")).toBeVisible();
+    await expect(page.getByText("Level", { exact: true })).toBeVisible();
 
     await page.getByPlaceholder("Target").first().fill("10");
     await page.getByRole("button", { name: /^set$/i }).first().click();
     await expect(page.getByPlaceholder("Target").first()).toHaveValue("10");
 
     await page.goto("/books");
-    await page
-      .getByRole("button", { name: /mark finished/i })
-      .first()
-      .click();
+    await page.locator("a[href^='/books/']").first().click();
+    await page.locator("select").selectOption("FINISHED");
     await page.goto("/stats");
-    await expect(page.getByText("Finished")).toBeVisible();
+    await expect(page.getByText("Finished", { exact: true })).toBeVisible();
   });
 
   test("achievements unlock", async ({ page }) => {
@@ -45,10 +43,8 @@ test.describe("stats / gamification / achievements / leaderboard / excel / i18n 
     await expect(page.getByText("First Book").first()).toBeVisible();
 
     await page.goto("/books");
-    await page
-      .getByRole("button", { name: /mark finished/i })
-      .first()
-      .click();
+    await page.locator("a[href^='/books/']").first().click();
+    await page.locator("select").selectOption("FINISHED");
     await page.goto("/achievements");
     await expect(page.getByText("Bookworm Beginnings")).toBeVisible();
 
@@ -61,26 +57,26 @@ test.describe("stats / gamification / achievements / leaderboard / excel / i18n 
 
   test("leaderboard shows self highlighted", async ({ page }) => {
     await page.goto("/leaderboard");
-    await expect(page.getByText("Leaderboard")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Leaderboard" })).toBeVisible();
     await expect(page.getByText("Admin").first()).toBeVisible();
     await expect(page.getByText("1", { exact: true }).first()).toBeVisible();
   });
 
   test("i18n locale switch", async ({ page }) => {
+    await page.goto("/settings");
+    await dismissCookieConsent(page);
+    // Language switching lives in Settings (Settings-only design)
+    await clickSetting(page, /Türkçe/i);
     await page.goto("/books");
-    await expect(page.getByText("Books", { exact: true }).first()).toBeVisible();
-    await page.locator("header").getByRole("button", { name: "EN", exact: true }).click();
-    await expect(page.getByText("Collection").first()).toBeVisible();
-    await page.locator("header").getByRole("button", { name: /TR/i }).click();
-    await page.locator("header").getByRole("button", { name: /ES/i });
+    await expect(page.getByText("Kitaplar").first()).toBeVisible();
   });
 
   test("theme toggle dark/light", async ({ page }) => {
-    await page.goto("/books");
+    await page.goto("/settings");
+    await dismissCookieConsent(page);
     const html = page.locator("html");
-    const initial = await html.getAttribute("class");
-    await page.getByLabel("Toggle theme").click();
-    await expect.poll(async () => await html.getAttribute("class")).not.toEqual(initial);
+    await clickSetting(page, "Dark");
+    await expect.poll(async () => await html.getAttribute("class")).toContain("dark");
   });
 
   test("excel: template download, export", async ({ page }) => {
@@ -105,12 +101,21 @@ test.describe("stats / gamification / achievements / leaderboard / excel / i18n 
 
   test("non-admin cannot access admin covers", async ({ page }) => {
     await page.goto("/register");
-    await page.getByPlaceholder("Your name").fill("Normal");
+    await dismissCookieConsent(page);
+    await page.getByPlaceholder("Name").fill("Normal");
     await page.getByPlaceholder("you@example.com").fill("normal@bookshelf.test");
     await page.getByPlaceholder("Min 8 characters").fill("password123");
     await page.getByRole("button", { name: /create account/i }).click();
+    await expect(page.getByText(/registration successful/i)).toBeVisible();
+    // Approve the pending user as admin before first login
+    await login(page, admin.email, admin.password);
+    await page.goto("/admin/users");
+    await page.getByRole("button", { name: "Approve" }).first().click();
+    await page.getByRole("button", { name: /log out/i }).click();
+    await expect(page).toHaveURL(/\/login/);
     await login(page, "normal@bookshelf.test", "password123");
     await page.goto("/admin/covers");
-    await expect(page.getByText(/forbidden|admin only/i)).toBeVisible();
+    // Non-admins are redirected away from admin pages
+    await expect(page).toHaveURL(/\/books/);
   });
 });

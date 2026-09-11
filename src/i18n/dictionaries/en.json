@@ -99,7 +99,12 @@
     "lookupFailed": "Lookup failed. Try again.",
     "addSuccess": "Book added",
     "addFailed": "Failed to add book",
-    "required": "This field is required"
+    "required": "This field is required",
+    "cover": "Cover",
+    "rating": "Rating",
+    "detailedAdd": "Detailed add",
+    "addDetailed": "Add detailed book",
+    "orWithAllFields": "or with all fields"
   },
   "facts": {
     "title": "Title *",
@@ -290,12 +295,12 @@
     "title": "Licenses & Attributions",
     "description": "This project uses the following open-source technologies:",
     "nav": "Licenses",
-    "projectLicense": "Bookshelf is licensed under the GNU General Public License v3.0."
+    "projectLicense": "Book Shelf is licensed under the GNU General Public License v3.0."
   },
   "cookieConsent": {
     "title": "Cookies",
     "subtitle": "For your personal library",
-    "desc": "Bookshelf uses cookies to personalize your experience — to remember preferences like theme, language, sidebar state and view mode. Essential cookies are required for session security.",
+    "desc": "Book Shelf uses cookies to personalize your experience — to remember preferences like theme, language, sidebar state and view mode. Essential cookies are required for session security.",
     "descMuted": "If you reject preference cookies, preferences are stored only on this device and not persisted across sessions.",
     "mobileDesc": "We use cookies to remember preferences (theme, language, sidebar). Legally we need your consent.",
     "essentialTitle": "Essential",

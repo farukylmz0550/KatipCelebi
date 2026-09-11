@@ -30,7 +30,7 @@ export function StreakWidget({
     });
   }, []);
 
-  const weekDays = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
+  const weekDays = ["M", "T", "W", "T", "F", "S", "S"];
   const today = new Date().getDay();
   const todayIndex = today === 0 ? 6 : today - 1;
 
@@ -40,12 +40,12 @@ export function StreakWidget({
         <div className="flex items-center gap-3">
           <div
             className={`flex h-10 w-10 items-center justify-center rounded-xl ${
-              currentStreak > 0 ? "bg-orange-500/12" : "bg-muted"
+              currentStreak > 0 ? "bg-[var(--accent-soft)]" : "bg-muted"
             }`}
           >
             <Flame
               size={22}
-              className={currentStreak > 0 ? "text-orange-500" : "text-muted-foreground"}
+              className={currentStreak > 0 ? "text-[var(--primary)]" : "text-muted-foreground"}
               fill={currentStreak > 0 ? "currentColor" : "none"}
             />
           </div>
@@ -56,7 +56,7 @@ export function StreakWidget({
         </div>
         {longestStreak > 0 && (
           <div className="text-right text-xs text-muted-foreground">
-            En uzun: <span className="font-medium text-foreground">{longestStreak}</span>
+            Longest: <span className="font-medium text-foreground">{longestStreak}</span>
           </div>
         )}
       </div>
@@ -68,8 +68,8 @@ export function StreakWidget({
               className={`h-7 w-7 rounded-lg text-[10px] font-medium flex items-center justify-center transition-colors ${
                 i === todayIndex
                   ? isTodayActive
-                    ? "bg-orange-500 text-white"
-                    : "border border-orange-500 text-orange-500"
+                    ? "bg-[var(--primary)] text-white"
+                    : "border border-[var(--primary)] text-[var(--primary)]"
                   : i < todayIndex
                     ? "bg-muted text-muted-foreground"
                     : "bg-transparent text-muted-foreground/40"
@@ -83,9 +83,9 @@ export function StreakWidget({
 
       <div className="mt-3 text-center text-xs">
         {isTodayActive ? (
-          <span className="font-medium text-green-600 dark:text-green-400">Read today!</span>
+          <span className="font-medium text-[var(--success)]">Read today!</span>
         ) : (
-          <span className="text-orange-500">Not read today</span>
+          <span className="text-[var(--error-text)]">Not read today</span>
         )}
       </div>
 
@@ -93,10 +93,10 @@ export function StreakWidget({
         <button
           onClick={handleUseShield}
           disabled={isPending}
-          className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2.5 text-xs font-medium text-amber-600 transition-colors hover:bg-amber-500/20 disabled:opacity-50"
+          className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--warning)]/30 bg-[var(--warning-soft)] px-3 py-2.5 text-xs font-medium text-[var(--warning-text)] transition-colors hover:bg-[var(--warning-soft)]/70 disabled:opacity-50"
         >
           <Shield size={14} />
-          Streak Koruma Kullan ({shieldCost} XP)
+          Use streak shield ({shieldCost} XP)
         </button>
       )}
     </div>

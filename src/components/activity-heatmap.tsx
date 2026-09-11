@@ -4,15 +4,15 @@ interface ActivityHeatmapProps {
   activities: { date: string; count: number; pagesRead: number }[];
 }
 
-const WEEK_DAYS = ["Pzt", "", "Çar", "", "Cum", "", "Paz"];
+const WEEK_DAYS = ["Mon", "", "Wed", "", "Fri", "", "Sun"];
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function getIntensityClass(count: number): string {
   if (count === 0) return "bg-muted/50";
-  if (count === 1) return "bg-green-300/60 dark:bg-green-900/60";
-  if (count === 2) return "bg-green-400/70 dark:bg-green-800/70";
-  if (count <= 4) return "bg-green-500/80 dark:bg-green-700/80";
-  return "bg-green-600 dark:bg-green-600";
+  if (count === 1) return "bg-[var(--success)]/30";
+  if (count === 2) return "bg-[var(--success)]/50";
+  if (count <= 4) return "bg-[var(--success)]/75";
+  return "bg-[var(--success)]";
 }
 
 function formatDate(date: Date): string {
@@ -79,7 +79,7 @@ export function ActivityHeatmap({ activities }: ActivityHeatmapProps) {
     <div className="gnome-card p-4">
       <div className="mb-3 flex items-center justify-between">
         <p className="text-[13px] font-medium text-foreground">Yearly Activity</p>
-        <p className="text-xs text-muted-foreground">{totalActivities} etkinlik</p>
+        <p className="text-xs text-muted-foreground">{totalActivities} activities</p>
       </div>
 
       <div className="mb-1 flex pl-8">
@@ -114,7 +114,7 @@ export function ActivityHeatmap({ activities }: ActivityHeatmapProps) {
                 <div
                   key={di}
                   className={`h-[10px] w-[10px] rounded-sm ${getIntensityClass(day.count)} transition-colors`}
-                  title={`${day.date.toLocaleDateString("tr-TR")} — ${day.count} etkinlik`}
+                  title={`${formatDate(day.date)} — ${day.count} activities`}
                 />
               ))}
             </div>
@@ -123,11 +123,11 @@ export function ActivityHeatmap({ activities }: ActivityHeatmapProps) {
       </div>
 
       <div className="mt-2 flex items-center justify-end gap-1">
-        <span className="text-[9px] text-muted-foreground">Az</span>
+        <span className="text-[9px] text-muted-foreground">Less</span>
         {[0, 1, 2, 3, 5].map((n) => (
           <div key={n} className={`h-[10px] w-[10px] rounded-sm ${getIntensityClass(n)}`} />
         ))}
-        <span className="text-[9px] text-muted-foreground">Çok</span>
+        <span className="text-[9px] text-muted-foreground">More</span>
       </div>
     </div>
   );
