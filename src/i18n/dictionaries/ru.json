@@ -160,7 +160,8 @@
     "noHistory": "Нет истории выдач",
     "returned": "возвращено",
     "outLabel": "на руках",
-    "takeBack": "Вернуть"
+    "takeBack": "Вернуть",
+    "dueDate": "Срок возврата"
   },
   "lending": {
     "title": "Выдачи",
@@ -172,7 +173,11 @@
     "empty": "Пока нет выдач.",
     "activeLoans": "Активные Выдачи",
     "returnedSection": "Возвращённые",
-    "namePlaceholder": "Имя"
+    "namePlaceholder": "Имя",
+    "dueDate": "Срок возврата",
+    "dueDateOptional": "необязательно",
+    "overdues": "Просрочено",
+    "dueLabel": "До"
   },
   "people": {
     "title": "Люди",

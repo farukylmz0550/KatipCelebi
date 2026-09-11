@@ -160,7 +160,8 @@
     "noHistory": "Aucun historique de prêt",
     "returned": "rendu",
     "outLabel": "emprunté",
-    "takeBack": "Récupérer"
+    "takeBack": "Récupérer",
+    "dueDate": "Date de retour"
   },
   "lending": {
     "title": "Prêts",
@@ -172,7 +173,11 @@
     "empty": "Aucun prêt.",
     "activeLoans": "Prêts Actifs",
     "returnedSection": "Rendus",
-    "namePlaceholder": "Nom"
+    "namePlaceholder": "Nom",
+    "dueDate": "Date de retour",
+    "dueDateOptional": "facultatif",
+    "overdues": "En retard",
+    "dueLabel": "Retour le"
   },
   "people": {
     "title": "Personnes",

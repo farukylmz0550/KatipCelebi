@@ -28,9 +28,17 @@ export function BookLending({
 }) {
   const [copies, setCopies] = useState(String(book.copies ?? 1));
   const [borrower, setBorrower] = useState("");
+  const [dueDate, setDueDate] = useState("");
   const [pending, startTransition] = useTransition();
   const router = useRouter();
   const out = lendings.filter((l) => !l.returnedAt).length;
+
+  const today = new Date();
+  const minDue = new Date(
+    Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()) + 24 * 60 * 60 * 1000,
+  )
+    .toISOString()
+    .slice(0, 10);
 
   function saveCopies() {
     const n = Math.max(1, Math.min(999, parseInt(copies || "1", 10)));
@@ -43,10 +51,13 @@ export function BookLending({
   function onLend(e: React.FormEvent) {
     e.preventDefault();
     if (!borrower.trim()) return;
+    const due = dueDate || null;
+    if (due && isNaN(new Date(due).getTime())) return; // client-side UX guard; server is authoritative
     startTransition(async () => {
       try {
-        await createLending(book.id, borrower.trim());
+        await createLending(book.id, borrower.trim(), due);
         setBorrower("");
+        setDueDate("");
         router.refresh();
       } catch (err) {
         alert(err instanceof Error ? err.message : String(err));
@@ -88,13 +99,21 @@ export function BookLending({
         </span>
       </div>
 
-      <form onSubmit={onLend} className="flex gap-2">
+      <form onSubmit={onLend} className="flex flex-wrap gap-2">
         <input
           list="persons"
           value={borrower}
           onChange={(e) => setBorrower(e.target.value)}
           placeholder={dict.borrowerPlaceholder}
           className="flex-1 rounded-[8px] border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+        />
+        <input
+          type="date"
+          value={dueDate}
+          min={minDue}
+          onChange={(e) => setDueDate(e.target.value)}
+          aria-label={dict.dueDate}
+          className="w-[140px] rounded-[8px] border border-[var(--border)] bg-[var(--surface-elevated)] px-2 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
         />
         <datalist id="persons">
           {persons.map((p) => (

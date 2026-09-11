@@ -272,6 +272,15 @@ Both projects continue under GPLv3.
 
 ## 13. Tomorrow's TODO — BookShelf UI/Branding Overhaul
 
+> ✅ **PROGRESS — 2026-09-11 (session 6 — v2.5.0 lending due dates + overdue reminders):**
+> - **Schema:** `LendingRecord.dueDate DateTime?` (nullable, no index) — migration `20260911140705_add_lending_due_date` applied to dev.db; existing rows untouched. Docker entrypoint applies it automatically.
+> - **Lending action:** `createLending(bookId, borrowerName, dueDate?: string | null)` — authoritative server-side Zod validation via `parseDueDate` (`src/lib/lending-due.ts`): date-only input normalized to end-of-UTC-day, must be strictly in the future (today counts as due, not overdue); no due date → `null`. Transaction + person/copy guards preserved.
+> - **UI (both lending forms):** optional native `<input type="date">` (`min` = tomorrow) in `lending-form.tsx` AND `book-lending.tsx` (book detail); `lending-row.tsx` shows a `secondary` "Due <date>" badge for active due dates and an `error-soft` "Overdue · <date>" badge (destructive return button) when `dueDate < now && returnedAt = null`; null dueDate shows nothing. New i18n keys in 6 languages: `lending.dueDate/dueDateOptional/overdues/dueLabel` + `bookLending.dueDate`.
+> - **Overdue push:** `sendOverdueReminders()` in `lib/push.ts` — single query `dueDate < now && returnedAt: null`, ownership derived from `book.userId`; one grouped notification per user per run (≤3 titles + "+N more", `tag: overdue-remind`, respects notificationsEnabled). New endpoint `/api/push/overdue-remind` (same CRON_SECRET pattern: 503 unconfigured / 401 wrong secret). Docker cron now hits both endpoints daily (same container, no second scheduler).
+> - **Dedup limitation (by design):** no notification-history table exists in the architecture; grouping + daily cron cadence bound the frequency to max 1 notification/user/day while overdue persists. No extra table added.
+> - **Return flow unchanged:** `returnedAt != null` automatically removes a record from the overdue set — no cleanup logic added.
+> - **Tests:** new `lending-due.test.ts` (11 tests: A–D validator, F–G isOverdue, J grouping) → 115 unit total; new `e2e/lending-overdue.spec.ts` (UI badge flow + 401/503 endpoint guards + streak endpoint co-existence) → 28 e2e total. tsc ✅ lint ✅ format ✅ build ✅
+>
 > ✅ **PROGRESS — 2026-09-11 (session 5 — PWA reliability patch 2.4.2):**
 > - **manifest.json:** `theme_color` `#3584e4` (obsolete GNOME blue) → `#A25F4C`; `background_color` `#000000` → `#E5D9D4`; icons split: `icon-192` (any) + `icon-512` (any) + `icon-512-maskable.png` (maskable) — `"any maskable"` combined purpose removed.
 > - **Maskable icon:** `public/icon-512-maskable.png` generated from `Bookshelf — Color Master.svg` (artwork ~74% on `#E5D9D4`, ~13% padding per side, inside the central 80% safe zone). Added to `brand/icons/` + regeneration commands in `brand/README.md` + `sw.js` precache list.

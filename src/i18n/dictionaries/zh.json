@@ -160,7 +160,8 @@
     "noHistory": "无借阅历史",
     "returned": "已归还",
     "outLabel": "借出",
-    "takeBack": "收回"
+    "takeBack": "收回",
+    "dueDate": "应还日期"
   },
   "lending": {
     "title": "借阅",
@@ -172,7 +173,11 @@
     "empty": "暂无借阅记录。",
     "activeLoans": "活跃借阅",
     "returnedSection": "已归还",
-    "namePlaceholder": "姓名"
+    "namePlaceholder": "姓名",
+    "dueDate": "应还日期",
+    "dueDateOptional": "可选",
+    "overdues": "已逾期",
+    "dueLabel": "应还"
   },
   "people": {
     "title": "人物",

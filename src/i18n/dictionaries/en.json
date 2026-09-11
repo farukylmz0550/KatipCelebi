@@ -160,7 +160,8 @@
     "noHistory": "No lending history",
     "returned": "returned",
     "outLabel": "out",
-    "takeBack": "Take back"
+    "takeBack": "Take back",
+    "dueDate": "Due date"
   },
   "lending": {
     "title": "Lending",
@@ -172,7 +173,11 @@
     "empty": "No lending records yet.",
     "activeLoans": "Active Loans",
     "returnedSection": "Returned",
-    "namePlaceholder": "Name"
+    "namePlaceholder": "Name",
+    "dueDate": "Due date",
+    "dueDateOptional": "optional",
+    "overdues": "Overdue",
+    "dueLabel": "Due"
   },
   "people": {
     "title": "People",

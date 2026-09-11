@@ -6,11 +6,16 @@ import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { awardXp, XP_REWARDS, syncAchievements } from "@/lib/gamification";
 import { normalizeName } from "@/lib/person";
+import { parseDueDate } from "@/lib/lending-due";
 
 const borrowerNameSchema = z.string().min(1).max(200);
 
-export async function createLending(bookId: string, borrowerName: string) {
+export async function createLending(bookId: string, borrowerName: string, dueDate?: string | null) {
   const userId = await requireUserId();
+  // Authoritative server-side validation — the due date must resolve before
+  // any record is created. Clients cannot bypass it.
+  const normalizedDueDate = parseDueDate(dueDate);
+
   const book = await db.book.findFirst({ where: { id: bookId, userId } });
   if (!book) throw new Error("Not found");
 
@@ -40,6 +45,7 @@ export async function createLending(bookId: string, borrowerName: string) {
         personId: person.id,
         personName: nameTrimmed,
         bookTitle: book.title,
+        dueDate: normalizedDueDate,
       },
     });
   });

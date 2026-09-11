@@ -1,6 +1,7 @@
 import webpush from "web-push";
 import { db } from "@/lib/db";
 import { getStreakInfo } from "@/lib/streak";
+import { isOverdue, groupOverdueByUser } from "@/lib/lending-due";
 
 let configured = false;
 
@@ -91,6 +92,58 @@ export async function sendStreakReminders(): Promise<{ sent: number; skipped: nu
         url: "/books",
         tag: "streak-warning",
       });
+      sent += count;
+    } catch {
+      skipped += 1;
+    }
+  }
+
+  return { sent, skipped };
+}
+
+/**
+ * Overdue lending reminders: one grouped notification per user per run.
+ * Ownership is derived from the book relation stored in the database —
+ * no client-supplied identifiers are involved.
+ */
+export async function sendOverdueReminders(): Promise<{ sent: number; skipped: number }> {
+  ensureConfigured();
+
+  const overdueRecords = await db.lendingRecord.findMany({
+    where: { dueDate: { lt: new Date() }, returnedAt: null },
+    select: { dueDate: true, book: { select: { userId: true, title: true } } },
+  });
+
+  if (overdueRecords.length === 0) return { sent: 0, skipped: 0 };
+
+  const active = overdueRecords.filter((r) => isOverdue({ dueDate: r.dueDate ?? null, returnedAt: null }));
+  const payloads = groupOverdueByUser(active);
+  if (payloads.length === 0) return { sent: 0, skipped: 0 };
+
+  const subscribed = new Set(
+    (
+      await db.pushSubscription.findMany({
+        select: { userId: true },
+        distinct: ["userId"],
+      })
+    ).map((s) => s.userId),
+  );
+
+  let sent = 0;
+  let skipped = 0;
+
+  for (const { userId, payload } of payloads) {
+    if (!subscribed.has(userId)) {
+      skipped += 1;
+      continue;
+    }
+    try {
+      const settings = await db.userSettings.findUnique({ where: { userId } });
+      if (settings && !settings.notificationsEnabled) {
+        skipped += 1;
+        continue;
+      }
+      const count = await sendPushToUser(userId, { ...payload, url: "/lending", tag: "overdue-remind" });
       sent += count;
     } catch {
       skipped += 1;

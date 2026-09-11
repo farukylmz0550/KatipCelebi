@@ -10,19 +10,43 @@ export function LendingForm({
   dict,
 }: {
   books: Book[];
-  dict: { book: string; borrower: string; lendCta: string; namePlaceholder: string };
+  dict: {
+    book: string;
+    borrower: string;
+    lendCta: string;
+    namePlaceholder: string;
+    dueDate: string;
+    dueDateOptional: string;
+  };
 }) {
   const [bookId, setBookId] = useState(books[0]?.id ?? "");
   const [borrowerName, setBorrowerName] = useState("");
+  const [dueDate, setDueDate] = useState("");
   const [pending, startTransition] = useTransition();
+
+  const today = new Date();
+  const minDue = new Date(
+    Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()) + 24 * 60 * 60 * 1000,
+  )
+    .toISOString()
+    .slice(0, 10);
 
   function handleSubmit() {
     if (!bookId || !borrowerName) return;
+    const due = dueDate || null;
+    if (due) {
+      const normalized = new Date(due);
+      if (isNaN(normalized.getTime())) return; // client-side UX guard; server is authoritative
+    }
     startTransition(async () => {
-      await createLending(bookId, borrowerName);
+      await createLending(bookId, borrowerName, due);
       setBorrowerName("");
+      setDueDate("");
     });
   }
+
+  const inputCls =
+    "w-full rounded-[8px] border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-2 font-[var(--font-sans)] text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ring)]";
 
   return (
     <div className="flex flex-wrap items-end gap-3">
@@ -30,11 +54,7 @@ export function LendingForm({
         <label className="mb-1 block font-[var(--font-sans)] text-[11px] font-medium uppercase tracking-widest text-muted-foreground">
           {dict.book}
         </label>
-        <select
-          value={bookId}
-          onChange={(e) => setBookId(e.target.value)}
-          className="w-full rounded-[8px] border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-2 font-[var(--font-sans)] text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
-        >
+        <select value={bookId} onChange={(e) => setBookId(e.target.value)} className={inputCls}>
           {books.map((book) => (
             <option key={book.id} value={book.id}>
               {book.title}
@@ -50,7 +70,19 @@ export function LendingForm({
           value={borrowerName}
           onChange={(e) => setBorrowerName(e.target.value)}
           placeholder={dict.namePlaceholder}
-          className="w-full rounded-[8px] border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-2 font-[var(--font-sans)] text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+          className={inputCls}
+        />
+      </div>
+      <div className="min-w-[150px]">
+        <label className="mb-1 block font-[var(--font-sans)] text-[11px] font-medium uppercase tracking-widest text-muted-foreground">
+          {dict.dueDate} <span className="normal-case tracking-normal opacity-60">({dict.dueDateOptional})</span>
+        </label>
+        <input
+          type="date"
+          value={dueDate}
+          min={minDue}
+          onChange={(e) => setDueDate(e.target.value)}
+          className={inputCls}
         />
       </div>
       <button

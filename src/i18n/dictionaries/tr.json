@@ -160,7 +160,8 @@
     "noHistory": "Ödünç geçmişi yok",
     "returned": "iade edildi",
     "outLabel": "dışarıda",
-    "takeBack": "Geri al"
+    "takeBack": "Geri al",
+    "dueDate": "Bitiş tarihi"
   },
   "lending": {
     "title": "Ödünç Verme",
@@ -172,7 +173,11 @@
     "empty": "Henüz ödünç kaydı yok.",
     "activeLoans": "Aktif Ödünçler",
     "returnedSection": "İade Edilenler",
-    "namePlaceholder": "Ad"
+    "namePlaceholder": "Ad",
+    "dueDate": "Son tarih",
+    "dueDateOptional": "opsiyonel",
+    "overdues": "Gecikmiş",
+    "dueLabel": "Bitiş"
   },
   "people": {
     "title": "Kişiler",

@@ -106,6 +106,7 @@ model LendingRecord {
   personName   String?
   lentAt       DateTime  @default(now())
   returnedAt   DateTime?
+  dueDate      DateTime?
 
   @@index([bookId])
   @@index([personId])

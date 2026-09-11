@@ -2,17 +2,26 @@
 
 import { useTransition } from "react";
 import { returnLending } from "@/app/actions/lending";
+import { isOverdue } from "@/lib/lending-due";
 
 type Lending = {
   id: string;
   borrowerName: string;
   lentAt: Date;
   returnedAt: Date | null;
+  dueDate: Date | null;
   book: { title: string };
 };
 
-export function LendingRow({ record, dict }: { record: Lending; dict: { returned: string; markReturned: string } }) {
+export function LendingRow({
+  record,
+  dict,
+}: {
+  record: Lending;
+  dict: { returned: string; markReturned: string; dueLabel: string; overdues: string };
+}) {
   const [pending, startTransition] = useTransition();
+  const overdue = isOverdue(record);
 
   return (
     <div className="flex items-center justify-between border-b border-[var(--border)] last:border-b-0 px-4 py-3 transition-colors hover:bg-[var(--surface-elevated)]">
@@ -28,11 +37,26 @@ export function LendingRow({ record, dict }: { record: Lending; dict: { returned
         <span className="rounded-full bg-[var(--success-soft)] border border-[var(--border)] px-2.5 py-0.5 font-[var(--font-sans)] text-[10px] font-medium text-[var(--success-text)]">
           {dict.returned}
         </span>
-      ) : (
+      ) : record.dueDate ? (
+        overdue ? (
+          <span className="rounded-full bg-[var(--error-soft)] border border-[var(--border)] px-2.5 py-0.5 font-[var(--font-sans)] text-[10px] font-medium text-[var(--error-text)]">
+            {dict.overdues} · {new Date(record.dueDate).toLocaleDateString()}
+          </span>
+        ) : (
+          <span className="rounded-full bg-[var(--secondary)] border border-[var(--border)] px-2.5 py-0.5 font-[var(--font-sans)] text-[10px] font-medium text-[var(--secondary-foreground)]">
+            {dict.dueLabel} {new Date(record.dueDate).toLocaleDateString()}
+          </span>
+        )
+      ) : null}
+      {!record.returnedAt && (
         <button
           disabled={pending}
           onClick={() => startTransition(() => returnLending(record.id))}
-          className="rounded-[8px] bg-[var(--accent)] px-3.5 py-1.5 font-[var(--font-sans)] text-[11px] font-medium text-white shadow-sm transition-colors hover:bg-[var(--accent-hover)] active:bg-[var(--accent-active)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] disabled:opacity-40 disabled:cursor-not-allowed"
+          className={`ml-3 rounded-[8px] px-3.5 py-1.5 font-[var(--font-sans)] text-[11px] font-medium shadow-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] ${
+            overdue
+              ? "bg-[var(--destructive)] text-white hover:opacity-90"
+              : "bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] active:bg-[var(--accent-active)]"
+          }`}
         >
           {dict.markReturned}
         </button>
