@@ -27,8 +27,6 @@
 
 > **Book Shelf** — Personal digital library experience. Track your books, lending history, goals and stats in a **warm, calm, timeless** interface. With Duolingo-style gamification.
 
-Web rewrite of the original PyQt6 desktop app — [`legacy` branch](../../tree/legacy).
-
 ---
 
 ## ✨ Features
