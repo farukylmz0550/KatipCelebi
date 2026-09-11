@@ -1,6 +1,6 @@
 > [!WARNING]
 >
-> ### ⚠️ This Project Is Made Entirely With AI!
+> ### This Project Is Made Entirely With AI!
 
 <div align="center">
 
