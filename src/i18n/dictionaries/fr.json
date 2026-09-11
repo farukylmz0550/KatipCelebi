@@ -322,5 +322,18 @@
     "back": "Retour",
     "close": "Fermer",
     "licensesLink": "Voir Licences."
+  },
+  "goodreads": {
+    "importGoodreads": "Importer depuis Goodreads",
+    "importing": "Import en cours…",
+    "importComplete": "Import terminé",
+    "imported": "Importés",
+    "duplicatesSkipped": "Doublons ignorés",
+    "invalidRows": "Lignes invalides",
+    "lookupFailed": "Recherche échouée",
+    "invalidCsv": "Fichier CSV Goodreads invalide",
+    "fileTooLarge": "Fichier trop volumineux (limite 20MB)",
+    "noValidBooks": "Aucun livre valide trouvé",
+    "tooManyRows": "Trop de lignes (max 5000)"
   }
 }

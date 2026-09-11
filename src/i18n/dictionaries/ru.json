@@ -322,5 +322,18 @@
     "back": "Назад",
     "close": "Закрыть",
     "licensesLink": "См. Лицензии."
+  },
+  "goodreads": {
+    "importGoodreads": "Импорт из Goodreads",
+    "importing": "Импорт…",
+    "importComplete": "Импорт завершён",
+    "imported": "Импортировано",
+    "duplicatesSkipped": "Пропущено дублей",
+    "invalidRows": "Некорректных строк",
+    "lookupFailed": "Не найдено в Open Library",
+    "invalidCsv": "Недопустимый CSV-файл Goodreads",
+    "fileTooLarge": "Файл слишком большой (лимит 20МБ)",
+    "noValidBooks": "Действительных книг не найдено",
+    "tooManyRows": "Слишком много строк (максимум 5000)"
   }
 }

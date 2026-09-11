@@ -27,7 +27,10 @@ export default async function BooksPage() {
           {books.length} {dict.common.books} · {dict.books.addBook}
         </p>
       </header>
-      <BooksAddSection dict={dict.books as never} excel={<ExcelActions dict={dict.excel} />} />
+      <BooksAddSection
+        dict={dict.books as never}
+        excel={<ExcelActions dict={dict.excel} goodreadsDict={dict.goodreads as never} />}
+      />
       <BooksGrid books={books as never} lentMap={lentMap} dict={{ ...dict.books, filter: dict.filter } as never} />
     </div>
   );

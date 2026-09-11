@@ -322,5 +322,18 @@
     "back": "Geri",
     "close": "Kapat",
     "licensesLink": "Ayrıntılar için Lisanslar sayfasına bakın."
+  },
+  "goodreads": {
+    "importGoodreads": "Goodreads'ten içe aktar",
+    "importing": "İçe aktarılıyor…",
+    "importComplete": "İçe aktarma tamamlandı",
+    "imported": "İçe aktarılan",
+    "duplicatesSkipped": "Atlanan kopya",
+    "invalidRows": "Geçersiz satır",
+    "lookupFailed": "Eşleşmeyen ISBN",
+    "invalidCsv": "Geçersiz Goodreads CSV dosyası",
+    "fileTooLarge": "Dosya çok büyük (20MB sınırı)",
+    "noValidBooks": "Geçerli kitap bulunamadı",
+    "tooManyRows": "Çok fazla satır (en fazla 5000)"
   }
 }

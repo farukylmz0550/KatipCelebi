@@ -1,7 +1,7 @@
 # Bookshelf — Memory Bank
 
 > Last updated: 2026-09-11
-> Version: 2.4.0
+> Version: 2.6.0
 > Branch: main
 
 ---
@@ -133,6 +133,7 @@ User ──────┬── Book ──────── LendingRecord
 | `people.ts` | create, remove |
 | `goals.ts` | set yearly/monthly |
 | `excel.ts` | export, template, import |
+| `goodreads.ts` | importGoodreadsCsv (Goodreads CSV → books: ISBN dedupe, shelf→status/tags, Open Library enrichment, XP+achievements) |
 | `profile.ts` | update name, change password |
 | `covers.ts` | clear cache (admin) |
 | `admin.ts` | approve/reject users, toggle admin, delete users |
@@ -178,8 +179,8 @@ docker compose up -d --build
 ## 8. Testing
 
 ```bash
-npm test              # 97 unit tests (vitest)
-npx playwright test   # 25 e2e tests (playwright)
+npm test              # 137 unit tests (vitest)
+npx playwright test   # 32 e2e tests (playwright)
 npm run lint          # eslint
 npm run format:check  # prettier
 ```
@@ -190,6 +191,7 @@ npm run format:check  # prettier
 
 | Date | Commit | Description |
 |-------|--------|----------|
+| 2026-09-11 | `2.6.0` | Goodreads CSV import — `src/lib/books/goodreads.ts` (RFC 4180 parser, ISBN13-first normalization, shelf→status/tags) + `src/app/actions/goodreads.ts` (20 MiB, 5000-row guard, ISBN dedupe, OL enrichment, revalidatePath) + books UI button + 6-lang i18n |
 | 2026-09-09 | `2.3.2` | English-only (hardcoded Turkish → English, i18n synced, locale native names kept), releases titled as "{version}" without v |
 | 2026-09-09 | `2.3.1` | Settings-only theme/locale (sidebar/mobile header removed), licenses link in Settings, docs Turkish → English, book card 60/40 readable (h-[380px] object-contain) |
 | 2026-09-09 | `2.3.0` | UI Design Language 60/40 card, Noto, Terracotta/Ink-Copper, collapsible sidebar, cookie consent (C), ISBN one-click + detailed form, bulk import removed, high-contrast removed, Sun/Moon SVG |
@@ -238,6 +240,20 @@ npm run format:check  # prettier
 
 ---
 
+## 10.1 Release Process (Rule)
+
+- After every **comprehensive feature/patch** is completed and the validation set passes (`npm test` · `npm run lint` · `npm run format:check` · `npm run build` · `npx playwright test`), **ASK the user**: "Release alalım mı?"
+- **Never commit/push/tag/release without explicit user approval.**
+- Upon approval, follow this flow:
+  1. Conventional Commit on `main`: `feat|fix: {version} — {short description}`
+  2. `git push origin main`
+  3. Tag `{version}` (no `v` prefix — 2.4.0+ convention) and push it
+  4. Docker image: `gh workflow run docker-publish.yml` (workflow triggers on `v*` tags only; versions without prefix need dispatch; it reads the version from `package.json`) → GHCR `{version}` + `latest`
+  5. `gh release create {version} --title "{version}" --notes-file <notes.md>` — notes follow the 2.5.1 template: what changed + **QA** line (tsc/lint/format/unit/e2e/build counts) + Docker line
+- Monitor with `gh run list` and `gh release view {version}`.
+
+---
+
 ## 11. Original Project (Legacy)
 
 Desktop app written with PyQt6. Located in `legacy` branch.
@@ -272,6 +288,14 @@ Both projects continue under GPLv3.
 
 ## 13. Tomorrow's TODO — BookShelf UI/Branding Overhaul
 
+> ✅ **PROGRESS — 2026-09-11 (session 8 — v2.6.0 Goodreads CSV import):**
+> - **Parser:** `src/lib/books/goodreads.ts` — hand-rolled RFC 4180 `parseCsvText` (quoted fields, escaped `""`, commas in quotes, CRLF, BOM, UTF-8 string input — no naive `split(",")`, no new dependency); header matching case-insensitive; Zod per-row validation; formula-wrapped ISBNs (`="…"`) + Excel float remnants cleaned; valid ISBN13 preferred over ISBN-10, invalid never fabricated; `Date Read` parsed as UTC; shelves → unambiguous status (read > currently-reading > to-read) + custom shelves as tags; one bad row never aborts the import. Guards: 20 MiB (`GOODREADS_CSV_MAX_BYTES`), 5000 rows, ≤10 error messages.
+> - **Action:** `src/app/actions/goodreads.ts` `importGoodreadsCsv(base64)` — `requireUserId()`, in-memory duplicate check derived only from the current user's books (ISBN match; title|author exact match only for ISBN-less rows — no fuzzy guessing), Open Library enrichment via existing `lookupIsbns` (deduped per unique ISBN, failures swallowed → `lookupFailed`), `createMany` + row-by-row fallback, `awardXp` + `syncAchievements`, **`revalidatePath("/books")`** (e2e found the grid stayed stale without it), machine-readable error codes (`invalidCsv|fileTooLarge|tooManyRows|noValidBooks`).
+> - **UI:** "Import from Goodreads" (BookOpen icon) next to Excel import in `excel-actions.tsx`; loading state; summary line (imported / duplicates skipped / invalid rows / lookup failed) + first error detail; client maps error codes to i18n strings.
+> - **i18n:** `goodreads` block in all 6 dictionaries + `tooManyRows` key added.
+> - **Tests:** `src/lib/books/goodreads.test.ts` (parser A–N, shelves, date, rating — union-narrowed with an `expectRows` helper to keep `tsc` happy) → 137 unit total; `e2e/goodreads-import.spec.ts` (valid import + summary, duplicate skip, invalid CSV i18n message, Excel regression) → 32 e2e total. e2e uses an `importCsv` helper with response-wait + retry (hydration race: a change event landing pre-hydration is lost).
+> - **QA:** tsc ✅ lint ✅ (1 pre-existing warning) format ✅ unit 137/137 ✅ e2e 32/32 ✅ prod build ✅ — released as `2.6.0`.
+>
 > ✅ **PROGRESS — 2026-09-11 (session 7 — v2.5.1 cleanup patch):**
 > - **README:** AI banner is now a single centered heading (`<h2 align="center">`) — no GitHub alert, no emoji (user's final preference).
 > - **Admin guard atomics:** `toggleAdmin`/`deleteUser` last-admin count + update/delete wrapped in `db.$transaction` (same interactive-transaction pattern as lending/streak) — two concurrent requests can no longer both pass the check.

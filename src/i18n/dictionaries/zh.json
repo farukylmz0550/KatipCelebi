@@ -322,5 +322,18 @@
     "back": "返回",
     "close": "关闭",
     "licensesLink": "查看许可证。"
+  },
+  "goodreads": {
+    "importGoodreads": "从 Goodreads 导入",
+    "importing": "导入中…",
+    "importComplete": "导入完成",
+    "imported": "已导入",
+    "duplicatesSkipped": "跳过的重复项",
+    "invalidRows": "无效行",
+    "lookupFailed": "查询失败",
+    "invalidCsv": "无效的 Goodreads CSV 文件",
+    "fileTooLarge": "文件过大（上限 20MB）",
+    "noValidBooks": "未找到有效书籍",
+    "tooManyRows": "行数过多（最多 5000）"
   }
 }
