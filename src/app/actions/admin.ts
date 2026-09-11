@@ -34,22 +34,28 @@ export async function rejectUser(userId: string) {
 
 export async function toggleAdmin(userId: string) {
   await requireAdmin();
-  const user = await db.user.findUniqueOrThrow({ where: { id: userId }, select: { isAdmin: true } });
-  if (user.isAdmin) {
-    const adminCount = await db.user.count({ where: { isAdmin: true } });
-    if (adminCount <= 1) throw new Error("Cannot demote the last admin");
-  }
-  await db.user.update({ where: { id: userId }, data: { isAdmin: !user.isAdmin } });
+  // Atomic guard: the count check and the update run in one transaction so
+  // two concurrent requests cannot both pass the last-admin check.
+  await db.$transaction(async (tx) => {
+    const user = await tx.user.findUniqueOrThrow({ where: { id: userId }, select: { isAdmin: true } });
+    if (user.isAdmin) {
+      const adminCount = await tx.user.count({ where: { isAdmin: true } });
+      if (adminCount <= 1) throw new Error("Cannot demote the last admin");
+    }
+    await tx.user.update({ where: { id: userId }, data: { isAdmin: !user.isAdmin } });
+  });
   return { ok: true };
 }
 
 export async function deleteUser(userId: string) {
   await requireAdmin();
-  const user = await db.user.findUniqueOrThrow({ where: { id: userId }, select: { isAdmin: true } });
-  if (user.isAdmin) {
-    const adminCount = await db.user.count({ where: { isAdmin: true } });
-    if (adminCount <= 1) throw new Error("Cannot delete the last admin");
-  }
-  await db.user.delete({ where: { id: userId } });
+  await db.$transaction(async (tx) => {
+    const user = await tx.user.findUniqueOrThrow({ where: { id: userId }, select: { isAdmin: true } });
+    if (user.isAdmin) {
+      const adminCount = await tx.user.count({ where: { isAdmin: true } });
+      if (adminCount <= 1) throw new Error("Cannot delete the last admin");
+    }
+    await tx.user.delete({ where: { id: userId } });
+  });
   return { ok: true };
 }

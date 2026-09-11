@@ -272,6 +272,13 @@ Both projects continue under GPLv3.
 
 ## 13. Tomorrow's TODO — BookShelf UI/Branding Overhaul
 
+> ✅ **PROGRESS — 2026-09-11 (session 7 — v2.5.1 cleanup patch):**
+> - **README:** AI banner is now a single centered heading (`<h2 align="center">`) — no GitHub alert, no emoji (user's final preference).
+> - **Admin guard atomics:** `toggleAdmin`/`deleteUser` last-admin count + update/delete wrapped in `db.$transaction` (same interactive-transaction pattern as lending/streak) — two concurrent requests can no longer both pass the check.
+> - **cookie-consent view split (SRP):** desktop modal (`hidden md:flex`) and mobile banner (`md:hidden`) are fully independent render trees → `cookie-consent-desktop.tsx` + `cookie-consent-mobile.tsx` + thin `cookie-consent.tsx` wrapper (single `useCookieConsent()` call, state passed as prop). Import surface unchanged.
+> - **SRP test on the other 4 files (no split — single reason to change each):** `books-grid.tsx` (188) one cohesive filter+views composition; `sidebar.tsx` (157) one nav shell, cookie/NavLink logic already extracted; `book-card.tsx` (172) card + its long-press menu are one interaction, status logic already in `lib/status-cycle.ts`; `book-personal.tsx` (168) field logic already in `useEditableField`/`useSaver`. No forced splits.
+> - **QA:** tsc ✅ lint ✅ format ✅ unit 115/115 ✅ e2e 28/28 ✅ build ✅
+>
 > ✅ **PROGRESS — 2026-09-11 (session 6 — v2.5.0 lending due dates + overdue reminders):**
 > - **Schema:** `LendingRecord.dueDate DateTime?` (nullable, no index) — migration `20260911140705_add_lending_due_date` applied to dev.db; existing rows untouched. Docker entrypoint applies it automatically.
 > - **Lending action:** `createLending(bookId, borrowerName, dueDate?: string | null)` — authoritative server-side Zod validation via `parseDueDate` (`src/lib/lending-due.ts`): date-only input normalized to end-of-UTC-day, must be strictly in the future (today counts as due, not overdue); no due date → `null`. Transaction + person/copy guards preserved.
