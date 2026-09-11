@@ -1,4 +1,6 @@
-<h2 align="center">This Project Is Made Entirely With AI!</h2>
+> [!WARNING]
+>
+> ### This Project Is Made Entirely With AI!
 
 <div align="center">
 
