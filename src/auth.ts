@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
+import { checkRateLimit, resetRateLimit, throttlingEnabled, DEFAULT_LIMITS } from "@/lib/rate-limit";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
@@ -9,7 +10,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     Credentials({
       credentials: { email: {}, password: {} },
-      authorize: async (credentials) => {
+      // Brute-force guard: throttled per IP. authorize() runs in the Node
+      // runtime (db/bcrypt not available in the middleware runtime), so the
+      // limiter lives here instead of the proxy matcher.
+      authorize: async (credentials, request) => {
+        const ip =
+          request instanceof Request
+            ? (request.headers.get("x-forwarded-for") ?? request.headers.get("x-real-ip") ?? "anonymous")
+            : "anonymous";
+        if (throttlingEnabled() && !checkRateLimit(`login:${ip}`, DEFAULT_LIMITS.login)) return null;
+
         const email = credentials?.email as string | undefined;
         const password = credentials?.password as string | undefined;
         if (!email || !password) return null;
@@ -23,6 +33,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!user.approved) {
           throw new Error("APPROVAL_PENDING");
         }
+
+        // Successful login clears the throttle counter for this IP
+        if (throttlingEnabled()) resetRateLimit(`login:${ip}`);
 
         return { id: user.id, email: user.email, name: user.name };
       },

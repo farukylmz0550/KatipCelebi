@@ -1,20 +1,23 @@
 import { db } from "@/lib/db";
 import { shieldCost as calcShieldCost } from "./gamification-pure";
 
+/** Start of the current UTC day — day boundaries are timezone-independent (UTC). */
+export function startOfUtcDay(date: Date = new Date()): Date {
+  const d = new Date(date.getTime() - date.getUTCMilliseconds());
+  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), 0, 0, 0, 0));
+}
+
 /** Calculate current and longest streak from daily activities. */
 export function calculateStreak(activities: { date: Date; count: number }[]): { current: number; longest: number } {
   if (activities.length === 0) return { current: 0, longest: 0 };
 
   const sorted = [...activities].sort((a, b) => b.date.getTime() - a.date.getTime());
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = startOfUtcDay();
 
-  const yesterday = new Date(today);
-  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
 
-  const latestDate = new Date(sorted[0].date);
-  latestDate.setHours(0, 0, 0, 0);
+  const latestDate = startOfUtcDay(sorted[0].date);
 
   // Streak is only valid if latest activity is today or yesterday
   if (latestDate.getTime() < yesterday.getTime()) {
@@ -23,10 +26,8 @@ export function calculateStreak(activities: { date: Date; count: number }[]): { 
 
   let current = 1;
   for (let i = 0; i < sorted.length - 1; i++) {
-    const curr = new Date(sorted[i].date);
-    const prev = new Date(sorted[i + 1].date);
-    curr.setHours(0, 0, 0, 0);
-    prev.setHours(0, 0, 0, 0);
+    const curr = startOfUtcDay(sorted[i].date);
+    const prev = startOfUtcDay(sorted[i + 1].date);
 
     const diffDays = (curr.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24);
     if (diffDays === 1) {
@@ -44,10 +45,8 @@ function computeLongest(sorted: { date: Date; count: number }[]): number {
   let longest = 1;
   let streak = 1;
   for (let i = 0; i < sorted.length - 1; i++) {
-    const curr = new Date(sorted[i].date);
-    const prev = new Date(sorted[i + 1].date);
-    curr.setHours(0, 0, 0, 0);
-    prev.setHours(0, 0, 0, 0);
+    const curr = startOfUtcDay(sorted[i].date);
+    const prev = startOfUtcDay(sorted[i + 1].date);
     const diffDays = (curr.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24);
     if (diffDays === 1) {
       streak++;
@@ -61,22 +60,15 @@ function computeLongest(sorted: { date: Date; count: number }[]): number {
 
 /** Check if the user has activity today. */
 export function isTodayActive(activities: { date: Date }[]): boolean {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  return activities.some((a) => {
-    const d = new Date(a.date);
-    d.setHours(0, 0, 0, 0);
-    return d.getTime() === today.getTime();
-  });
+  const today = startOfUtcDay();
+  return activities.some((a) => startOfUtcDay(a.date).getTime() === today.getTime());
 }
 
 /** Check if streak is broken (no activity yesterday or today). */
 export function isStreakBroken(lastActiveDate: Date | null): boolean {
   if (!lastActiveDate) return true;
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const last = new Date(lastActiveDate);
-  last.setHours(0, 0, 0, 0);
+  const today = startOfUtcDay();
+  const last = startOfUtcDay(lastActiveDate);
   const diffDays = (today.getTime() - last.getTime()) / (1000 * 60 * 60 * 24);
   return diffDays > 1;
 }
@@ -89,8 +81,7 @@ export async function getStreakInfo(userId: string) {
   });
   if (!user) return null;
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = startOfUtcDay();
 
   const todayActivity = await db.dailyActivity.findUnique({
     where: { userId_date: { userId, date: today } },

@@ -17,6 +17,7 @@ export async function clearCoverCache() {
   // Admin clears all covers (self-host single tenant, admin can clear globally)
   // For safety, clear only admin's books if you want per-user: change to { userId }
   await db.book.updateMany({ where: { coverUrl: { not: null } }, data: { coverUrl: null, coverFetchedAt: null } });
+  revalidatePath("/admin");
   revalidatePath("/admin/covers");
   return { ok: true };
 }

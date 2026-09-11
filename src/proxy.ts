@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
+import { checkRateLimit, throttlingEnabled, DEFAULT_LIMITS } from "@/lib/rate-limit";
 
 const PUBLIC_PATHS = [
   "/login",
@@ -15,32 +16,22 @@ const PUBLIC_PATHS = [
   "/apple-touch-icon.png",
 ];
 
+// NOTE: The limiter util holds a Map per runtime — proxy (middleware) and the
+// Node server are separate runtimes, so each has its own instance. That is by
+// design: the middleware guards /api/* (non-auth), while login/register
+// throttling lives in the Node runtime (auth.ts authorize + server actions).
 // NOTE: This in-memory rate limiter only works in single-instance deployments.
 // In serverless, edge, or multi-replica setups, each instance has its own Map.
 // For production at scale, replace with Redis-backed rate limiting (e.g. @upstash/ratelimit).
-const rateLimit = new Map<string, { count: number; lastReset: number }>();
-const RATE_LIMIT_MAX = 100;
-const RATE_LIMIT_WINDOW = 60 * 1000;
-
-function checkRateLimit(key: string): boolean {
-  const now = Date.now();
-  const entry = rateLimit.get(key);
-  if (!entry || now - entry.lastReset > RATE_LIMIT_WINDOW) {
-    rateLimit.set(key, { count: 1, lastReset: now });
-    return true;
-  }
-  if (entry.count >= RATE_LIMIT_MAX) return false;
-  entry.count++;
-  return true;
-}
 
 export default auth(async (req) => {
   const pathname = req.nextUrl.pathname;
 
-  // Rate limit API routes (except auth)
+  // Rate limit API routes (except auth — auth throttling lives in auth.ts
+  // authorize() because the middleware runtime cannot load db/bcrypt).
   if (pathname.startsWith("/api/") && !pathname.startsWith("/api/auth")) {
     const ip = req.headers.get("x-forwarded-for") ?? req.headers.get("x-real-ip") ?? "anonymous";
-    if (!checkRateLimit(`${ip}:${pathname}`)) {
+    if (throttlingEnabled() && !checkRateLimit(`${ip}:${pathname}`, DEFAULT_LIMITS.api)) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
     }
   }

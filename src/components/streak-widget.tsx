@@ -63,7 +63,7 @@ export function StreakWidget({
 
       <div className="mt-3 flex gap-1">
         {weekDays.map((day, i) => (
-          <div key={day} className="flex flex-1 flex-col items-center gap-0.5">
+          <div key={i} className="flex flex-1 flex-col items-center gap-0.5">
             <div
               className={`h-7 w-7 rounded-lg text-[10px] font-medium flex items-center justify-center transition-colors ${
                 i === todayIndex

@@ -2,8 +2,15 @@
 
 import bcrypt from "bcryptjs";
 import { z } from "zod";
+import { headers } from "next/headers";
 import { db } from "@/lib/db";
 import { needsSetup } from "@/lib/setup";
+import { checkRateLimit, throttlingEnabled, DEFAULT_LIMITS } from "@/lib/rate-limit";
+
+async function clientIp(): Promise<string> {
+  const h = await headers();
+  return h.get("x-forwarded-for") ?? h.get("x-real-ip") ?? "anonymous";
+}
 
 const registerSchema = z.object({
   email: z.string().email(),
@@ -12,6 +19,9 @@ const registerSchema = z.object({
 });
 
 export async function registerUser(input: { email: string; password: string; name: string }) {
+  if (throttlingEnabled() && !checkRateLimit(`register:${await clientIp()}`, DEFAULT_LIMITS.register)) {
+    return { error: "Too many requests. Try again later." };
+  }
   if (await needsSetup()) return { error: "Setup admin account first at /setup" };
   if (process.env.ALLOW_REGISTRATION === "false") return { error: "Registration is disabled" };
   const parsed = registerSchema.safeParse(input);

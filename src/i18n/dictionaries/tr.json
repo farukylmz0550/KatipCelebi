@@ -271,7 +271,8 @@
     "somethingWentWrong": "Bir şeyler yanlış gitti",
     "tryAgain": "Tekrar dene",
     "admin": "Admin",
-    "books": "kitap"
+    "books": "kitap",
+    "users": "kullanıcı"
   },
   "admin": {
     "coversTitle": "Kapak Önbelleği (Admin)",

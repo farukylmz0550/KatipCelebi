@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
-import { calculateStreak } from "@/lib/streak";
+import { calculateStreak, startOfUtcDay } from "@/lib/streak";
 import { calculateFinishXp, shieldCost as calcShieldCost } from "@/lib/gamification-pure";
 import { awardXp, syncAchievements } from "@/lib/gamification";
 
@@ -11,8 +11,7 @@ import { awardXp, syncAchievements } from "@/lib/gamification";
 export async function recordActivity(pagesRead?: number) {
   const userId = await requireUserId();
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = startOfUtcDay();
 
   // Upsert daily activity
   const existing = await db.dailyActivity.findUnique({
@@ -93,35 +92,34 @@ export async function useStreakShield() {
   if (user.currentStreak === 0) throw new Error("No active streak to protect");
 
   // Check if already active today
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = startOfUtcDay();
   const todayActivity = await db.dailyActivity.findUnique({
     where: { userId_date: { userId, date: today } },
   });
   if (todayActivity) throw new Error("Already active today, no need for shield");
 
-  // Deduct XP and create shield record
-  await db.$transaction([
-    db.user.update({
+  // Deduct XP + create shield record + record a synthetic activity to
+  // maintain the streak — all atomic, so a failure rolls back the XP cost.
+  await db.$transaction(async (tx) => {
+    await tx.user.update({
       where: { id: userId },
       data: {
         xp: { decrement: cost },
         streakShieldCount: { increment: 1 },
       },
-    }),
-    db.streakShield.create({
+    });
+    await tx.streakShield.create({
       data: { userId },
-    }),
-  ]);
-
-  // Record a synthetic activity to maintain streak
-  await db.dailyActivity.create({
-    data: {
-      userId,
-      date: today,
-      count: 0,
-      pagesRead: 0,
-    },
+    });
+    // Record a synthetic activity to maintain streak
+    await tx.dailyActivity.create({
+      data: {
+        userId,
+        date: today,
+        count: 0,
+        pagesRead: 0,
+      },
+    });
   });
 
   revalidatePath("/stats");

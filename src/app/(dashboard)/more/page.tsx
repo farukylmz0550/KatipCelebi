@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Trophy, TrendingUp, Settings, Shield, Image, ChevronRight } from "lucide-react";
+import { Trophy, TrendingUp, Settings, Shield, ChevronRight } from "lucide-react";
 import { auth } from "@/auth";
 import { getDictionary } from "@/i18n/get-dictionary";
 
@@ -29,10 +29,7 @@ export default async function MorePage() {
 
   if (isAdmin) {
     sections.push({
-      items: [
-        { href: "/admin/users", icon: Shield, label: dict.common.admin },
-        { href: "/admin/covers", icon: Image, label: "Covers" },
-      ],
+      items: [{ href: "/admin", icon: Shield, label: dict.admin.adminLabel }],
     });
   }
 

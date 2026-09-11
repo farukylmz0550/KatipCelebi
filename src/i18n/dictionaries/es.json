@@ -271,7 +271,8 @@
     "somethingWentWrong": "Algo salió mal",
     "tryAgain": "Intentar de nuevo",
     "admin": "Admin",
-    "books": "libros"
+    "books": "libros",
+    "users": "usuarios"
   },
   "admin": {
     "coversTitle": "Caché de Portadas (Admin)",

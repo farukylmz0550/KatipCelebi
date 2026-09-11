@@ -271,7 +271,8 @@
     "somethingWentWrong": "Something went wrong",
     "tryAgain": "Try again",
     "admin": "Admin",
-    "books": "books"
+    "books": "books",
+    "users": "users"
   },
   "admin": {
     "coversTitle": "Cover Cache (Admin)",

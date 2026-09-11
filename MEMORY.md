@@ -272,6 +272,16 @@ Both projects continue under GPLv3.
 
 ## 13. Tomorrow's TODO — BookShelf UI/Branding Overhaul
 
+> ✅ **PROGRESS — 2026-09-11 (session 4 — security & refactor patch):**
+> - **Security:** `src/lib/rate-limit.ts` — shared in-memory limiter singleton (per-runtime Map, documented). Login brute-force throttle in `auth.ts` authorize() (10/5min per IP, counter reset on success, matcher still excludes `api/auth` — db/bcrypt unavailable in middleware runtime). Register + setup actions throttled (5/min). Throttles active only in production (`throttlingEnabled()`), so dev/e2e are unaffected. next-auth pinned to exact `5.0.0-beta.32` — **upgrade debt: bump when v5 stable ships**.
+> - **Race fixes:** lending create wrapped in `$transaction` (copy-guard atomic); `setBookStatus` uses conditional `updateMany` (status `{ not: status }`) so FINISHED XP awards once; `useStreakShield` moves `dailyActivity.create` inside the transaction (XP rollback safe); last-admin guard in `toggleAdmin`/`deleteUser`.
+> - **Streak timezone:** all day boundaries moved to UTC via `startOfUtcDay()` in `lib/streak.ts` (+ `actions/streak.ts`). One-time continuity risk for existing local-midnight records — noted in release notes. This fixes server-TZ inconsistency, NOT per-user local days (accepted trade-off).
+> - **License:** `package.json` `"license": "GPL-3.0-only"`; `brand/LICENSE` (CC BY-NC-ND 4.0 notice) added.
+> - **Refactor (behavior-preserving):** cookie-consent → `lib/use-cookie-consent.ts` hook + `components/pref-row.tsx`; `DetailedAddForm` → `books/detailed-add-form.tsx`; add-book-form logic → `lib/books/use-add-book-form.tsx` hook; view-mode cookie helpers → `lib/books/view-mode.ts`; sidebar → `lib/sidebar-cookie.ts` + `components/nav-link.tsx` + `lib/nav.ts`; settings → `components/settings/{notification-settings,appearance-settings,toggle-row}`; book-card status cycling → `lib/books/status-cycle.ts` (+4 unit tests); book-personal repeats → `lib/use-editable-field.ts` (`useEditableField` + `useSaver`).
+> - **Dev overlay:** Next.js dev tools button hidden (`devIndicators: false`), duplicate React keys fixed (streak-widget `key={i}`), `data-scroll-behavior="smooth"` added — console now clean (0 issues).
+> - **Admin consolidation:** single scrollable `/admin` page (User Management + Cover Cache); `/admin/users` + `/admin/covers` redirect to `/admin`; sidebar + More show a single Admin link; `adminLabel` used for nav; new `common.users` key in 6 dictionaries.
+> - **QA:** tsc ✅ · lint ✅ (1 pre-existing warning) · format ✅ · unit 104/104 ✅ · e2e 25/25 ✅ · prod build ✅ · console 0 issues + devtools badge absent ✅
+>
 > ✅ **PROGRESS — 2026-09-11 (session 3 — release published):**
 > - Release notes moved out of README → GitHub Releases page (source of truth: releases URL)
 > - README: AI warning banner as a centered GitHub `[!WARNING]` alert at the very top; License section now links the two master SVG files directly

@@ -76,6 +76,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang={locale}
+      data-scroll-behavior="smooth"
       className={`${notoSerif.variable} ${notoSans.variable} ${notoMono.variable} ${theme === "dark" ? "dark" : ""} h-full antialiased`}
     >
       <head>

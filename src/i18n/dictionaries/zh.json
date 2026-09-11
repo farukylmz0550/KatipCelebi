@@ -271,7 +271,8 @@
     "somethingWentWrong": "出了点问题",
     "tryAgain": "重试",
     "admin": "管理",
-    "books": "本"
+    "books": "本",
+    "users": "用户"
   },
   "admin": {
     "coversTitle": "封面缓存（管理）",

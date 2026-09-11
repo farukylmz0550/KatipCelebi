@@ -271,7 +271,8 @@
     "somethingWentWrong": "Une erreur s'est produite",
     "tryAgain": "Réessayer",
     "admin": "Admin",
-    "books": "livres"
+    "books": "livres",
+    "users": "utilisateurs"
   },
   "admin": {
     "coversTitle": "Cache des Couvertures (Admin)",

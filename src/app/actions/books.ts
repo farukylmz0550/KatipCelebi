@@ -194,20 +194,18 @@ export async function setBookStatus(bookId: string, status: "TO_READ" | "READING
   const book = await db.book.findFirst({ where: { id: bookId, userId } });
   if (!book) throw new Error("Not found");
 
-  const data: Record<string, unknown> = { status };
-  if (status === "FINISHED") {
-    data.finishedAt = new Date();
-    if (!book.startedAt) data.startedAt = new Date();
-  } else if (status === "READING") {
-    if (!book.startedAt) data.startedAt = new Date();
-    data.finishedAt = null;
-  } else {
-    data.finishedAt = null;
-  }
+  // Conditional update acts as an atomic guard: only transitions that change
+  // the current status take effect, so concurrent FINISHED requests award XP once.
+  const updated = await db.book.updateMany({
+    where: { id: bookId, userId, status: { not: status } },
+    data: {
+      status,
+      finishedAt: status === "FINISHED" ? new Date() : null,
+      ...(status !== "TO_READ" && !book.startedAt ? { startedAt: new Date() } : {}),
+    },
+  });
 
-  await db.book.update({ where: { id: bookId }, data });
-
-  if (status === "FINISHED" && book.status !== "FINISHED") {
+  if (status === "FINISHED" && updated.count > 0) {
     const { finishBookWithXp } = await import("./streak");
     const pages = book.numberOfPages ? parseInt(book.numberOfPages, 10) : null;
     await finishBookWithXp(bookId, isNaN(pages!) ? null : pages);

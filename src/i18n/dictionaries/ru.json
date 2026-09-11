@@ -271,7 +271,8 @@
     "somethingWentWrong": "Что-то пошло не так",
     "tryAgain": "Попробовать снова",
     "admin": "Админ",
-    "books": "книг"
+    "books": "книг",
+    "users": "пользователей"
   },
   "admin": {
     "coversTitle": "Кэш Обложек (Админ)",

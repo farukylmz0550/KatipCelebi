@@ -32,8 +32,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
     people: dict.nav.people,
     profile: (dict as unknown as { profile: { title: string } }).profile?.title ?? "Profile",
     settings: dict.nav.settings,
-    adminUsers: dict.admin.usersTitle,
-    adminCovers: dict.admin.coversTitle,
+    admin: dict.admin.adminLabel,
     logout: dict.nav.logout,
   };
 

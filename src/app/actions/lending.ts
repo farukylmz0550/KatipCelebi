@@ -19,28 +19,31 @@ export async function createLending(bookId: string, borrowerName: string) {
 
   const nameTrimmed = parsed.data;
 
-  // Find or create Person
+  // Find or create Person + copy-aware guard, atomically (check-then-act race)
   const normalized = normalizeName(nameTrimmed);
-  const persons = await db.person.findMany({ where: { userId }, select: { id: true, name: true } });
-  let person = persons.find((p) => normalizeName(p.name) === normalized);
-  if (!person) {
-    person = await db.person.create({ data: { userId, name: nameTrimmed } });
-  }
-
-  // Copy-aware guard: out < copies
-  const outCount = await db.lendingRecord.count({ where: { bookId, returnedAt: null } });
   const copies = (book as unknown as { copies?: number }).copies ?? 1;
-  if (outCount >= copies) throw new Error("All copies are out");
 
-  await db.lendingRecord.create({
-    data: {
-      bookId,
-      borrowerName: nameTrimmed,
-      personId: person.id,
-      personName: nameTrimmed,
-      bookTitle: book.title,
-    },
+  await db.$transaction(async (tx) => {
+    const persons = await tx.person.findMany({ where: { userId }, select: { id: true, name: true } });
+    let person = persons.find((p) => normalizeName(p.name) === normalized);
+    if (!person) {
+      person = await tx.person.create({ data: { userId, name: nameTrimmed } });
+    }
+
+    const outCount = await tx.lendingRecord.count({ where: { bookId, returnedAt: null } });
+    if (outCount >= copies) throw new Error("All copies are out");
+
+    await tx.lendingRecord.create({
+      data: {
+        bookId,
+        borrowerName: nameTrimmed,
+        personId: person.id,
+        personName: nameTrimmed,
+        bookTitle: book.title,
+      },
+    });
   });
+
   await awardXp(userId, XP_REWARDS.LENDING_CREATED);
   await syncAchievements(userId);
   revalidatePath("/lending");

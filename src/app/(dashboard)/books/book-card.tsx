@@ -6,6 +6,7 @@ import { useRef, useState, useTransition } from "react";
 import { setBookStatus } from "@/app/actions/books";
 import { useSwipe, useLongPress } from "@/lib/touch-gestures";
 import { hapticFeedback } from "@/lib/haptic";
+import { getNextStatus, getPrevStatus, statusLabel, STATUS_ORDER, type StatusLabels } from "@/lib/books/status-cycle";
 
 type Book = {
   id: string;
@@ -16,37 +17,6 @@ type Book = {
   signed?: boolean | null;
   status?: string | null;
 };
-
-interface StatusLabels {
-  toRead: string;
-  reading: string;
-  finished: string;
-}
-
-const STATUS_ORDER = ["TO_READ", "READING", "FINISHED"] as const;
-
-function getNextStatus(current: string): string {
-  const idx = STATUS_ORDER.indexOf(current as (typeof STATUS_ORDER)[number]);
-  if (idx === -1) return STATUS_ORDER[0];
-  return STATUS_ORDER[(idx + 1) % STATUS_ORDER.length];
-}
-
-function getPrevStatus(current: string): string {
-  const idx = STATUS_ORDER.indexOf(current as (typeof STATUS_ORDER)[number]);
-  if (idx === -1) return STATUS_ORDER[STATUS_ORDER.length - 1];
-  return STATUS_ORDER[(idx - 1 + STATUS_ORDER.length) % STATUS_ORDER.length];
-}
-
-const STATUS_LABELS: Record<string, string> = {
-  TO_READ: "To Read",
-  READING: "Reading",
-  FINISHED: "Finished",
-};
-
-function statusLabel(status: string, labels?: StatusLabels): string {
-  if (!labels) return STATUS_LABELS[status] ?? status;
-  return status === "TO_READ" ? labels.toRead : status === "READING" ? labels.reading : labels.finished;
-}
 
 export function BookCard({
   book,
