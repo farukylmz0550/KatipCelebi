@@ -1,0 +1,38 @@
+import { describe, expect, it } from "vitest";
+import { dictionaries, LOCALES } from "./get-dictionary";
+
+describe("dictionary parity", () => {
+  it("annual block has identical key sets across all 6 languages (R)", () => {
+    const enKeys = Object.keys(dictionaries.en.annual).sort();
+    for (const locale of LOCALES) {
+      expect(Object.keys(dictionaries[locale].annual).sort()).toEqual(enKeys);
+    }
+  });
+
+  it("annual insights contain their placeholders in every language (R)", () => {
+    for (const locale of LOCALES) {
+      const a = dictionaries[locale].annual;
+      expect(a.insightBooksMany).toContain("{count}");
+      expect(a.insightPagesMany).toContain("{count}");
+      expect(a.insightStreakMany).toContain("{count}");
+      expect(a.insightMonth).toContain("{month}");
+      expect(a.insightGenre).toContain("{genre}");
+      expect(a.insightAuthor).toContain("{author}");
+      expect(a.noReadingData).toContain("{year}");
+    }
+  });
+
+  it("notify templates contain their placeholders with language-appropriate percent placement (R)", () => {
+    for (const locale of LOCALES) {
+      const n = dictionaries[locale].notify;
+      expect(n.goalMonthStart).toContain("{target}");
+      expect(n.goalProgressMid).toContain("{count}");
+      expect(n.goalProgressMid).toContain("{percent}");
+      expect(n.goalProgressFinal).toContain("{remaining}");
+    }
+    // Percent symbol placement is inside the template (localized), not the value:
+    // Turkish places the sign first ("%60"), English after ("60%").
+    expect(dictionaries.tr.notify.goalProgressMid).toContain("%{percent}");
+    expect(dictionaries.en.notify.goalProgressMid).toContain("{percent}%");
+  });
+});

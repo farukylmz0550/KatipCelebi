@@ -12,12 +12,17 @@ interface SettingsFormProps {
   settings: UserSettingsData;
   currentTheme: Theme;
   currentLocale: Locale;
+  dict?: {
+    settings?: {
+      goalReminders?: string;
+    };
+  };
 }
 
-export function SettingsForm({ settings, currentTheme, currentLocale }: SettingsFormProps) {
+export function SettingsForm({ settings, currentTheme, currentLocale, dict }: SettingsFormProps) {
   return (
     <div className="space-y-6">
-      <NotificationSettings settings={settings} />
+      <NotificationSettings settings={settings} dict={{ goalReminders: dict?.settings?.goalReminders }} />
       <AppearanceSettings currentTheme={currentTheme} currentLocale={currentLocale} />
 
       {/* Licenses — link to /licenses */}

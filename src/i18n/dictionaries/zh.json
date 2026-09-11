@@ -104,7 +104,18 @@
     "rating": "评分",
     "detailedAdd": "详细添加",
     "addDetailed": "添加详细信息书籍",
-    "orWithAllFields": "或使用所有字段"
+    "orWithAllFields": "或使用所有字段",
+    "logPagesButton": "读了 {count} 页",
+    "logPagesToast": "已记录 {count} 页",
+    "logPagesError": "阅读记录失败",
+    "pagesLeft": "还剩 {count} 页",
+    "bookFinishedToast": "读完一本书！",
+    "nextBookCta": "开始一本新书",
+    "nextBookDialogTitle": "开始一本新书",
+    "nextBookEmpty": "暂无待读书籍——待读列表为空",
+    "startBook": "开始",
+    "reReadButton": "重新阅读",
+    "earlyFinishBlocked": "请先读完剩余页数——读完所有页数后书籍会自动结束。"
   },
   "facts": {
     "title": "标题 *",
@@ -219,7 +230,11 @@
     "totalFinished": "总完成",
     "streak": "连续",
     "longestStreak": "最长连续",
-    "todayActive": "今日活跃"
+    "todayActive": "今日活跃",
+    "goalLockedDesc": "目标每年设置一次，1 月 1 日重新开放。",
+    "goalSaveError": "保存目标失败。",
+    "goalConfirm": "确认目标",
+    "goalLocked": "这些目标今年内保持锁定，1 月 1 日重新开放。"
   },
   "achievements": {
     "title": "成就",
@@ -295,7 +310,17 @@
     "reject": "拒绝",
     "adminLabel": "管理",
     "actions": "操作",
-    "confirmDelete": "确定要删除此用户吗？"
+    "confirmDelete": "确定要删除此用户吗？",
+    "readingSettingsTitle": "阅读设置",
+    "readingSettingsDesc": "BookShelf 中使用的页数与 XP 数值（仅系统管理员）。",
+    "pagesPerReadEvent": "每次阅读记录的页数",
+    "xpBookAdded": "XP · 添加书籍",
+    "xpBookFinishedBase": "XP · 读完书籍（基础）",
+    "xpPagesPer10": "XP · 每 10 页",
+    "xpLending": "XP · 创建借阅",
+    "xpPerLevelBase": "XP · 等级基数",
+    "save": "保存",
+    "settingsSaved": "设置已保存。"
   },
   "licenses": {
     "title": "许可证与致谢",
@@ -335,5 +360,51 @@
     "fileTooLarge": "文件过大（上限 20MB）",
     "noValidBooks": "未找到有效书籍",
     "tooManyRows": "行数过多（最多 5000）"
+  },
+  "annual": {
+    "title": "年度总结",
+    "selectYear": "选择年份",
+    "readingSummary": "阅读总结",
+    "booksRead": "已读书籍",
+    "pagesRead": "已读页数",
+    "averagePages": "平均页数",
+    "readingDays": "阅读天数",
+    "longestStreak": "最长连续纪录",
+    "mostReadAuthor": "读得最多的作者",
+    "mostReadGenre": "读得最多的类型",
+    "uniqueAuthors": "不同作者",
+    "uniqueGenres": "不同类型",
+    "firstBook": "第一本书",
+    "lastBook": "最后一本书",
+    "longestBook": "页数最多的书",
+    "shortestBook": "页数最少的书",
+    "byMonth": "按月统计已读书籍",
+    "notableBooks": "亮点书籍",
+    "exportSummary": "下载总结",
+    "exporting": "正在生成图片…",
+    "noReadingData": "{year} 年没有阅读数据",
+    "noData": "暂无数据",
+    "insightMonth": "{month}是你读书最多的月份。",
+    "insightGenre": "你读得最多的类型是{genre}。",
+    "insightAuthor": "你读得最多的作者是{author}。",
+    "shareCardTitle": "我的阅读年度",
+    "pagesShort": "页",
+    "insightBooksOne": "今年你读了 1 本书。",
+    "insightBooksMany": "今年你读了 {count} 本书。",
+    "insightPagesOne": "你翻过了 1 页。",
+    "insightPagesMany": "你翻过了 {count} 页。",
+    "insightStreakOne": "你最长的连续阅读纪录是 1 天。",
+    "insightStreakMany": "你最长的连续阅读纪录是 {count} 天。",
+    "enableSound": "开启声音",
+    "soundOn": "声音已开启",
+    "soundOff": "声音已关闭"
+  },
+  "settings": {
+    "goalReminders": "目标进度提醒"
+  },
+  "notify": {
+    "goalMonthStart": "新的一月开始。你本月的阅读目标是 {target} 本书。",
+    "goalProgressMid": "本月你已读 {count} 本书，完成了目标的 {percent}%。",
+    "goalProgressFinal": "距离目标还剩 {remaining} 本书。"
   }
 }

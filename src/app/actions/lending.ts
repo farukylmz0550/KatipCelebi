@@ -4,7 +4,8 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
-import { awardXp, XP_REWARDS, syncAchievements } from "@/lib/gamification";
+import { awardXp, syncAchievements } from "@/lib/gamification";
+import { getAppSettings } from "@/lib/settings";
 import { normalizeName } from "@/lib/person";
 import { parseDueDate } from "@/lib/lending-due";
 
@@ -50,7 +51,7 @@ export async function createLending(bookId: string, borrowerName: string, dueDat
     });
   });
 
-  await awardXp(userId, XP_REWARDS.LENDING_CREATED);
+  await awardXp(userId, (await getAppSettings()).xpLending);
   await syncAchievements(userId);
   revalidatePath("/lending");
   revalidatePath("/people");

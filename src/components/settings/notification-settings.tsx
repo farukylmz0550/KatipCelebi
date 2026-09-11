@@ -6,7 +6,15 @@ import { toast } from "sonner";
 import { updateSettings, sendTestPush, type UserSettingsData } from "@/app/actions/settings";
 import { ToggleRow } from "@/components/settings/toggle-row";
 
-export function NotificationSettings({ settings }: { settings: UserSettingsData }) {
+export function NotificationSettings({
+  settings,
+  dict,
+}: {
+  settings: UserSettingsData;
+  dict?: {
+    goalReminders?: string;
+  };
+}) {
   const [isPending, startTransition] = useTransition();
   const [testPushPending, startTestPush] = useTransition();
 
@@ -49,6 +57,12 @@ export function NotificationSettings({ settings }: { settings: UserSettingsData 
           label="Weekly digest"
           checked={settings.weeklyDigest}
           onChange={() => handleToggle("weeklyDigest")}
+          disabled={isPending}
+        />
+        <ToggleRow
+          label={dict?.goalReminders ?? "Goal progress reminders"}
+          checked={settings.goalReminders}
+          onChange={() => handleToggle("goalReminders")}
           disabled={isPending}
         />
         <button

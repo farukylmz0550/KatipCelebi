@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { getAppSettings } from "@/lib/settings";
 import { BooksAddSection } from "./books-add-section";
 import { BooksGrid } from "./books-grid";
 import { ExcelActions } from "./excel-actions";
@@ -8,7 +9,10 @@ import { ExcelActions } from "./excel-actions";
 export default async function BooksPage() {
   const userId = await requireUserId();
   const dict = await getDictionary();
-  const books = await db.book.findMany({ where: { userId }, orderBy: { addedAt: "desc" } });
+  const [books, settings] = await Promise.all([
+    db.book.findMany({ where: { userId }, orderBy: { addedAt: "desc" } }),
+    getAppSettings(),
+  ]);
   const lentRecords = await db.lendingRecord.findMany({
     where: { book: { userId }, returnedAt: null },
     select: { bookId: true },
@@ -31,7 +35,25 @@ export default async function BooksPage() {
         dict={dict.books as never}
         excel={<ExcelActions dict={dict.excel} goodreadsDict={dict.goodreads as never} />}
       />
-      <BooksGrid books={books as never} lentMap={lentMap} dict={{ ...dict.books, filter: dict.filter } as never} />
+      <BooksGrid
+        books={books as never}
+        lentMap={lentMap}
+        dict={{ ...dict.books, filter: dict.filter } as never}
+        pagesPerReadEvent={settings.pagesPerReadEvent}
+        cardDict={{
+          logPagesButton: dict.books.logPagesButton,
+          logPagesToast: dict.books.logPagesToast,
+          logPagesError: dict.books.logPagesError,
+          pagesLeft: dict.books.pagesLeft,
+          reReadButton: dict.books.reReadButton,
+          bookFinishedToast: dict.books.bookFinishedToast,
+          earlyFinishBlocked: dict.books.earlyFinishBlocked,
+          nextBookCta: dict.books.nextBookCta,
+          nextBookDialogTitle: dict.books.nextBookDialogTitle,
+          nextBookEmpty: dict.books.nextBookEmpty,
+          startBook: dict.books.startBook,
+        }}
+      />
     </div>
   );
 }

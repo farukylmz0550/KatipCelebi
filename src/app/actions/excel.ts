@@ -4,7 +4,8 @@ import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { buildExportWorkbook, buildTemplateWorkbook, readIsbnsFromBuffer } from "@/lib/books/excel";
 import { lookupIsbns } from "@/lib/isbn";
-import { awardXp, XP_REWARDS, syncAchievements } from "@/lib/gamification";
+import { awardXp, syncAchievements } from "@/lib/gamification";
+import { getAppSettings } from "@/lib/settings";
 
 export async function exportLibraryExcel(): Promise<{ base64: string; filename: string }> {
   const userId = await requireUserId();
@@ -45,7 +46,7 @@ export async function importExcelFile(base64: string): Promise<{ imported: numbe
     await db.book.createMany({
       data: found.map((b) => ({ userId, isbn: b.isbn, title: b.title, author: b.author, coverUrl: b.coverUrl })),
     });
-    await awardXp(userId, found.length * XP_REWARDS.BOOK_ADDED);
+    await awardXp(userId, found.length * (await getAppSettings()).xpBookAdded);
     await syncAchievements(userId);
     return { imported: found.length };
   } catch (e) {

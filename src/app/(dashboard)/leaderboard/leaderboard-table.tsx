@@ -9,6 +9,7 @@ type User = { id: string; name: string; xp: number };
 const PAGE_SIZE = 20;
 
 export function LeaderboardTable({
+  xpPerLevelBase = 100,
   users,
   currentUserId,
   dict,
@@ -16,6 +17,7 @@ export function LeaderboardTable({
   users: User[];
   currentUserId: string;
   dict: { rank: string; name: string; level: string; xp: string };
+  xpPerLevelBase?: number;
 }) {
   const [page, setPage] = useState(0);
   const totalPages = Math.ceil(users.length / PAGE_SIZE);
@@ -39,7 +41,9 @@ export function LeaderboardTable({
         >
           <span className="text-sm tabular-nums text-muted-foreground">{start + i + 1}</span>
           <span className="text-sm text-foreground">{user.name}</span>
-          <span className="text-center text-sm tabular-nums text-muted-foreground">{levelForXp(user.xp)}</span>
+          <span className="text-center text-sm tabular-nums text-muted-foreground">
+            {levelForXp(user.xp, xpPerLevelBase)}
+          </span>
           <span className="text-right text-sm tabular-nums text-muted-foreground">{user.xp}</span>
         </div>
       ))}

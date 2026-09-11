@@ -5,7 +5,8 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { lookupIsbn } from "@/lib/isbn";
-import { awardXp, XP_REWARDS, syncAchievements } from "@/lib/gamification";
+import { awardXp, syncAchievements } from "@/lib/gamification";
+import { getAppSettings } from "@/lib/settings";
 
 const addBookSchema = z.object({
   isbn: z
@@ -180,7 +181,8 @@ export async function addBook(input: {
   }
   // XP/achievements are non-blocking — book creation already succeeded
   try {
-    await awardXp(userId, XP_REWARDS.BOOK_ADDED);
+    const settings = await getAppSettings();
+    await awardXp(userId, settings.xpBookAdded);
   } catch {}
   try {
     await syncAchievements(userId);
@@ -189,10 +191,22 @@ export async function addBook(input: {
   return { ok: true };
 }
 
-export async function setBookStatus(bookId: string, status: "TO_READ" | "READING" | "FINISHED") {
+export async function setBookStatus(
+  bookId: string,
+  status: "TO_READ" | "READING" | "FINISHED",
+): Promise<{ ok: boolean; error?: string }> {
   const userId = await requireUserId();
   const book = await db.book.findFirst({ where: { id: bookId, userId } });
   if (!book) throw new Error("Not found");
+
+  // v2.7.0 (user rule): a book with a known page count can only be finished
+  // when ALL of its pages have been read — early manual finish is blocked.
+  // Books without a page count keep manual finishing.
+  const totalPages = book.numberOfPages ? parseInt(book.numberOfPages, 10) : null;
+  const knownPages = totalPages !== null && !isNaN(totalPages) && totalPages > 0;
+  if (status === "FINISHED" && knownPages && (book.currentPage ?? 0) < totalPages) {
+    return { ok: false, error: "RemainingPages" };
+  }
 
   // Conditional update acts as an atomic guard: only transitions that change
   // the current status take effect, so concurrent FINISHED requests award XP once.
@@ -206,13 +220,112 @@ export async function setBookStatus(bookId: string, status: "TO_READ" | "READING
   });
 
   if (status === "FINISHED" && updated.count > 0) {
+    // One read event per completion (re-reads each add +1).
+    try {
+      await db.bookReadEvent.create({
+        data: {
+          userId,
+          bookId: book.id,
+          bookTitle: book.title,
+          pagesRead: knownPages ? totalPages : null,
+        },
+      });
+    } catch {}
     const { finishBookWithXp } = await import("./streak");
-    const pages = book.numberOfPages ? parseInt(book.numberOfPages, 10) : null;
-    await finishBookWithXp(bookId, isNaN(pages!) ? null : pages);
+    await finishBookWithXp(bookId, knownPages ? totalPages : null);
   }
   revalidatePath("/books");
   revalidatePath("/stats");
   revalidatePath(`/books/${bookId}`);
+  return { ok: true };
+}
+
+/**
+ * v2.7.0 — "I read N pages" (streak-only): advances the book's currentPage by
+ * the configured step, feeds DailyActivity/streaks and awards page-based XP.
+ * It does NOT count the book as finished and does NOT write a read event —
+ * a book is only finished when ALL of its pages have been read, which
+ * triggers the automatic FINISHED transition (+1 booksRead, finish XP).
+ */
+export async function logPagesRead(
+  bookId: string,
+  pages?: number,
+): Promise<{ ok: boolean; logged?: number; finished?: boolean; error?: string }> {
+  const userId = await requireUserId();
+  const book = await db.book.findFirst({ where: { id: bookId, userId } });
+  if (!book) return { ok: false, error: "Not found" };
+
+  const settings = await getAppSettings();
+  const pagesLogged = Math.max(1, Math.min(5000, Math.floor(pages ?? settings.pagesPerReadEvent)));
+  const totalPages = book.numberOfPages ? parseInt(book.numberOfPages, 10) : null;
+  const knownPages = totalPages !== null && !isNaN(totalPages) && totalPages > 0;
+  const current = book.currentPage ?? 0;
+  const newCurrent = knownPages ? Math.min(current + pagesLogged, totalPages) : current + pagesLogged;
+
+  // All pages read → automatic FINISHED: one read event + finish XP
+  // (finishBookWithXp also records the activity, so skip the plain log below).
+  if (knownPages && newCurrent >= totalPages) {
+    const finishedNow = book.status !== "FINISHED";
+    await db.book.updateMany({
+      where: { id: bookId, userId },
+      data: { status: "FINISHED", finishedAt: new Date(), currentPage: totalPages },
+    });
+    if (finishedNow) {
+      try {
+        await db.bookReadEvent.create({
+          data: { userId, bookId: book.id, bookTitle: book.title, pagesRead: totalPages },
+        });
+      } catch {}
+      const { finishBookWithXp } = await import("./streak");
+      await finishBookWithXp(bookId, totalPages);
+    }
+    revalidatePath("/books");
+    revalidatePath("/stats");
+    return { ok: true, logged: pagesLogged, finished: true };
+  }
+
+  const updateData: { currentPage: number; status?: "READING"; startedAt?: Date } = { currentPage: newCurrent };
+  if (book.status === "TO_READ") {
+    // Reading progress implies the book has been started.
+    updateData.status = "READING";
+    if (!book.startedAt) updateData.startedAt = new Date();
+  }
+  await db.book.update({ where: { id: bookId }, data: updateData as never });
+
+  // Streak-only path: no read event, no finish bonus XP.
+  const { recordActivity } = await import("./streak");
+  await recordActivity(pagesLogged);
+  const xp = Math.floor(pagesLogged / 10) * settings.xpPagesPer10;
+  if (xp > 0) {
+    try {
+      await awardXp(userId, xp);
+      await syncAchievements(userId);
+    } catch {}
+  }
+
+  revalidatePath("/books");
+  revalidatePath("/stats");
+  return { ok: true, logged: pagesLogged };
+}
+
+/**
+ * v2.7.0 — start re-reading a finished book: page counter resets to 0, the
+ * book returns to READING; when all pages are read again the automatic
+ * FINISHED transition adds another read event (+1).
+ */
+export async function startReRead(bookId: string): Promise<{ ok: boolean; error?: string }> {
+  const userId = await requireUserId();
+  const book = await db.book.findFirst({ where: { id: bookId, userId } });
+  if (!book) return { ok: false, error: "Not found" };
+  if (book.status !== "FINISHED") return { ok: false, error: "Not finished" };
+
+  await db.book.update({
+    where: { id: bookId },
+    data: { status: "READING", currentPage: 0, finishedAt: null },
+  });
+  revalidatePath("/books");
+  revalidatePath("/stats");
+  return { ok: true };
 }
 
 export async function updateBook(

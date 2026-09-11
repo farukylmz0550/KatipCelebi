@@ -9,6 +9,7 @@ export type UserSettingsData = {
   notificationsEnabled: boolean;
   streakReminders: boolean;
   weeklyDigest: boolean;
+  goalReminders: boolean;
 };
 
 export async function getSettings(): Promise<UserSettingsData> {
@@ -21,12 +22,14 @@ export async function getSettings(): Promise<UserSettingsData> {
       notificationsEnabled: true,
       streakReminders: true,
       weeklyDigest: false,
+      goalReminders: true,
     };
   }
   return {
     notificationsEnabled: settings.notificationsEnabled,
     streakReminders: settings.streakReminders,
     weeklyDigest: settings.weeklyDigest,
+    goalReminders: settings.goalReminders,
   };
 }
 
@@ -40,6 +43,7 @@ export async function updateSettings(data: Partial<UserSettingsData>) {
       notificationsEnabled: data.notificationsEnabled ?? true,
       streakReminders: data.streakReminders ?? true,
       weeklyDigest: data.weeklyDigest ?? false,
+      goalReminders: data.goalReminders ?? true,
     },
   });
   revalidatePath("/settings");

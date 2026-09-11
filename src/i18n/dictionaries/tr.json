@@ -104,7 +104,18 @@
     "rating": "Puan",
     "detailedAdd": "Detaylı ekle",
     "addDetailed": "Detaylı kitap ekle",
-    "orWithAllFields": "veya tüm alanlarla"
+    "orWithAllFields": "veya tüm alanlarla",
+    "logPagesButton": "{count} sayfa okudum",
+    "logPagesToast": "{count} sayfa kaydedildi",
+    "logPagesError": "Okuma kaydedilemedi",
+    "pagesLeft": "{count} sayfa kaldı",
+    "bookFinishedToast": "Kitap bitti!",
+    "nextBookCta": "Yeni kitaba başla",
+    "nextBookDialogTitle": "Yeni kitaba başla",
+    "nextBookEmpty": "Okunacak kitap yok — okunacaklar listen boş",
+    "startBook": "Başla",
+    "reReadButton": "Yeniden oku",
+    "earlyFinishBlocked": "Önce kalan sayfaları oku — tüm sayfalar okununca kitap otomatik biter."
   },
   "facts": {
     "title": "Başlık *",
@@ -219,7 +230,11 @@
     "totalFinished": "Toplam bitirilen",
     "streak": "Seri",
     "longestStreak": "En Uzun Seri",
-    "todayActive": "Bugün Aktif"
+    "todayActive": "Bugün Aktif",
+    "goalLockedDesc": "Hedefler yılda bir kez ayarlanır. 1 Ocak'ta yeniden açılır.",
+    "goalSaveError": "Hedefler kaydedilemedi. Lütfen tekrar dene.",
+    "goalConfirm": "Hedefleri onayla",
+    "goalLocked": "Bu hedefler yıl boyunca kilitli kalır ve 1 Ocak'ta yeniden açılır."
   },
   "achievements": {
     "title": "Başarımlar",
@@ -295,7 +310,17 @@
     "reject": "Reddet",
     "adminLabel": "Admin",
     "actions": "İşlemler",
-    "confirmDelete": "Bu kullanıcıyı silmek istediğinizden emin misiniz?"
+    "confirmDelete": "Bu kullanıcıyı silmek istediğinizden emin misiniz?",
+    "readingSettingsTitle": "Okuma Ayarları",
+    "readingSettingsDesc": "BookShelf genelinde kullanılan sayfa ve XP değerleri (sadece sistem yöneticisi).",
+    "pagesPerReadEvent": "Okuma kaydı başına sayfa",
+    "xpBookAdded": "XP · kitap eklendi",
+    "xpBookFinishedBase": "XP · kitap bitti (temel)",
+    "xpPagesPer10": "XP · 10 sayfaya",
+    "xpLending": "XP · ödünç verme",
+    "xpPerLevelBase": "XP · seviye tabanı",
+    "save": "Kaydet",
+    "settingsSaved": "Ayarlar kaydedildi."
   },
   "licenses": {
     "title": "Lisanslar & Atıflar",
@@ -335,5 +360,51 @@
     "fileTooLarge": "Dosya çok büyük (20MB sınırı)",
     "noValidBooks": "Geçerli kitap bulunamadı",
     "tooManyRows": "Çok fazla satır (en fazla 5000)"
+  },
+  "annual": {
+    "title": "Yıllık Özet",
+    "selectYear": "Yıl seç",
+    "readingSummary": "Okuma Özeti",
+    "booksRead": "Okunan kitap",
+    "pagesRead": "Okunan sayfa",
+    "averagePages": "Ortalama sayfa",
+    "readingDays": "Okuma günü",
+    "longestStreak": "En uzun seri",
+    "mostReadAuthor": "En çok okunan yazar",
+    "mostReadGenre": "En çok okunan tür",
+    "uniqueAuthors": "Farklı yazar",
+    "uniqueGenres": "Farklı tür",
+    "firstBook": "İlk kitap",
+    "lastBook": "Son kitap",
+    "longestBook": "En uzun kitap",
+    "shortestBook": "En kısa kitap",
+    "byMonth": "Aylara göre okunan kitap",
+    "notableBooks": "Öne çıkan kitaplar",
+    "exportSummary": "Özeti indir",
+    "exporting": "Görsel oluşturuluyor…",
+    "noReadingData": "{year} için okuma verisi yok",
+    "noData": "Veri yok",
+    "insightMonth": "En çok kitabı {month} ayında okudun.",
+    "insightGenre": "En çok okuduğun tür {genre} idi.",
+    "insightAuthor": "En çok okuduğun yazar {author} idi.",
+    "shareCardTitle": "Okuma Yılım",
+    "pagesShort": "sayfa",
+    "insightBooksOne": "Bu yıl 1 kitap okudun.",
+    "insightBooksMany": "Bu yıl {count} kitap okudun.",
+    "insightPagesOne": "1 sayfa çevirdin.",
+    "insightPagesMany": "{count} sayfa çevirdin.",
+    "insightStreakOne": "En uzun serin 1 gündü.",
+    "insightStreakMany": "En uzun serin {count} gündü.",
+    "enableSound": "Sesi aç",
+    "soundOn": "Ses açık",
+    "soundOff": "Ses kapalı"
+  },
+  "settings": {
+    "goalReminders": "Hedef ilerleme bildirimleri"
+  },
+  "notify": {
+    "goalMonthStart": "Yeni ay başladı. Bu ayki okuma hedefin {target} kitap.",
+    "goalProgressMid": "Bu ay {count} kitap okudun. Hedefinin %{percent}'indesin.",
+    "goalProgressFinal": "Hedefine {remaining} kitap kaldı."
   }
 }

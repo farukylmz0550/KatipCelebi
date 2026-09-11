@@ -17,7 +17,12 @@ export default async function SettingsPage() {
         </h1>
         <p className="font-[var(--font-sans)] text-sm text-muted-foreground">{dict.nav.settings}</p>
       </header>
-      <SettingsForm settings={settings} currentTheme={theme} currentLocale={locale} />
+      <SettingsForm
+        settings={settings}
+        currentTheme={theme}
+        currentLocale={locale}
+        dict={{ settings: { goalReminders: dict.settings.goalReminders } }}
+      />
     </div>
   );
 }

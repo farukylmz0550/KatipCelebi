@@ -10,7 +10,7 @@
 
 *Terracotta × Dusty Rose · Ink & Copper · Noto Serif/Sans · 60/40 physical cards · Paper material*
 
-[![Version](https://img.shields.io/badge/version-2.6.0-EAD6D0?style=flat-square&labelColor=2B2727&color=A25F4C)](https://github.com/farukylmz0550/bookshelf-web/releases)
+[![Version](https://img.shields.io/badge/version-2.7.0-EAD6D0?style=flat-square&labelColor=2B2727&color=A25F4C)](https://github.com/farukylmz0550/bookshelf-web/releases)
 [![Docker](https://img.shields.io/badge/docker-ghcr.io%2Fbookshelf-272A29?style=flat-square&logo=docker&labelColor=1D2020&color=C17A5E)](https://ghcr.io/farukylmz0550/bookshelf)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=nextdotjs)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
@@ -272,6 +272,12 @@ All mutations via `src/app/actions/` — `awardXp()` + `syncAchievements()` afte
 | `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` | No | — | Web Push — `npx web-push generate-vapid-keys` |
 | `VAPID_SUBJECT` | No | `mailto:…` | Push contact URL |
 | `CRON_SECRET` | No | — | Bearer token for the cron service (`/api/push/streak-remind`) |
+| `READ_EVENT_PAGES` | No | `20` | Pages logged per "I read N pages" click |
+| `XP_BOOK_ADDED` | No | `5` | XP per added book |
+| `XP_BOOK_FINISHED_BASE` | No | `50` | XP base for finishing a book |
+| `XP_PAGES_PER_10` | No | `3` | XP per 10 read pages |
+| `XP_LENDING` | No | `5` | XP per lending |
+| `XP_PER_LEVEL_BASE` | No | `100` | Fibonacci level-curve base XP |
 
 ---
 

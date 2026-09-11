@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState, useTransition } from "react";
-import { setBookStatus } from "@/app/actions/books";
+import { toast } from "sonner";
+import { BookPlus, RotateCcw } from "lucide-react";
+import { setBookStatus, logPagesRead, startReRead } from "@/app/actions/books";
 import { useSwipe, useLongPress } from "@/lib/touch-gestures";
 import { hapticFeedback } from "@/lib/haptic";
 import { getNextStatus, getPrevStatus, statusLabel, STATUS_ORDER, type StatusLabels } from "@/lib/books/status-cycle";
@@ -16,16 +18,37 @@ type Book = {
   rating?: number | null;
   signed?: boolean | null;
   status?: string | null;
+  currentPage?: number | null;
+  numberOfPages?: string | null;
+};
+
+type CardDict = {
+  toRead: string;
+  reading: string;
+  finished: string;
+  logPagesButton: string;
+  logPagesToast: string;
+  logPagesError: string;
+  pagesLeft: string;
+  reReadButton: string;
+  bookFinishedToast: string;
+  earlyFinishBlocked: string;
 };
 
 export function BookCard({
   book,
   lentOut,
   statusLabels,
+  pagesPerReadEvent,
+  dict,
+  onFinished,
 }: {
   book: Book;
   lentOut: boolean;
   statusLabels?: StatusLabels;
+  pagesPerReadEvent: number;
+  dict: CardDict;
+  onFinished?: (title: string) => void;
 }) {
   const rating = book.rating ?? 0;
   const status = book.status ?? "TO_READ";
@@ -34,10 +57,51 @@ export function BookCard({
   const [menuOpen, setMenuOpen] = useState(false);
   const longPressedRef = useRef(false);
 
+  const totalPages = book.numberOfPages ? parseInt(book.numberOfPages, 10) : null;
+  const knownPages = totalPages !== null && !isNaN(totalPages) && totalPages > 0;
+  const pagesLeft = knownPages ? Math.max(0, totalPages - (book.currentPage ?? 0)) : null;
+
   function changeStatus(next: string) {
     hapticFeedback("medium");
     startTransition(async () => {
-      await setBookStatus(book.id, next as "TO_READ" | "READING" | "FINISHED");
+      const res = await setBookStatus(book.id, next as "TO_READ" | "READING" | "FINISHED");
+      if (!res.ok) {
+        toast.error(res.error === "RemainingPages" ? dict.earlyFinishBlocked : dict.logPagesError);
+        return;
+      }
+      if (next === "FINISHED") toast.success(dict.bookFinishedToast);
+      router.refresh();
+      if (next === "FINISHED" && onFinished) onFinished(book.title);
+    });
+  }
+
+  function logPages() {
+    hapticFeedback("light");
+    startTransition(async () => {
+      const res = await logPagesRead(book.id);
+      if (!res.ok) {
+        toast.error(dict.logPagesError);
+        return;
+      }
+      toast.success(
+        res.finished
+          ? dict.bookFinishedToast
+          : dict.logPagesToast.replace("{count}", String(res.logged ?? pagesPerReadEvent)),
+      );
+      router.refresh();
+      if (res.finished && onFinished) onFinished(book.title);
+    });
+  }
+
+  function reRead() {
+    hapticFeedback("medium");
+    startTransition(async () => {
+      const res = await startReRead(book.id);
+      if (!res.ok) {
+        toast.error(dict.logPagesError);
+        return;
+      }
+      toast.success(dict.reReadButton);
       router.refresh();
     });
   }
@@ -126,6 +190,42 @@ export function BookCard({
               </span>
             )}
           </div>
+          {/* v2.7.0 — remaining pages for books being read + streak-only actions */}
+          {status === "READING" && knownPages && (
+            <p className="font-[var(--font-sans)] text-[11px] tabular-nums text-muted-foreground">
+              {dict.pagesLeft.replace("{count}", String(pagesLeft))}
+            </p>
+          )}
+          {status === "READING" && (
+            <button
+              type="button"
+              disabled={pending}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                logPages();
+              }}
+              className="inline-flex w-full items-center justify-center gap-1 rounded-[6px] border border-[var(--border)] bg-[var(--surface-elevated)] px-2 py-1 font-[var(--font-sans)] text-[11px] font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground disabled:opacity-50"
+            >
+              <BookPlus size={12} />
+              {dict.logPagesButton.replace("{count}", String(pagesPerReadEvent))}
+            </button>
+          )}
+          {status === "FINISHED" && (
+            <button
+              type="button"
+              disabled={pending}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                reRead();
+              }}
+              className="inline-flex w-full items-center justify-center gap-1 rounded-[6px] border border-[var(--border)] bg-[var(--surface-elevated)] px-2 py-1 font-[var(--font-sans)] text-[11px] font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground disabled:opacity-50"
+            >
+              <RotateCcw size={12} />
+              {dict.reReadButton}
+            </button>
+          )}
         </div>
       </Link>
 

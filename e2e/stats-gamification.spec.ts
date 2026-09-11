@@ -20,9 +20,11 @@ test.describe("stats / gamification / achievements / leaderboard / excel / i18n 
     await page.goto("/stats");
     await expect(page.getByText("Level", { exact: true })).toBeVisible();
 
-    await page.getByPlaceholder("Target").first().fill("10");
-    await page.getByRole("button", { name: /^set$/i }).first().click();
-    await expect(page.getByPlaceholder("Target").first()).toHaveValue("10");
+    // v2.7.0 — goals are confirmed once and then locked for the year
+    await page.locator('form input[type="number"]').first().fill("10");
+    await page.getByRole("button", { name: /confirm goals/i }).click();
+    await expect(page.locator("form input[type=\"number\"]")).toHaveCount(0);
+    await expect(page.locator("p.text-lg.font-semibold.tabular-nums", { hasText: "10" }).first()).toBeVisible();
 
     await page.goto("/books");
     await page.locator("a[href^='/books/']").first().click();

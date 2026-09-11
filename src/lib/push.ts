@@ -2,6 +2,7 @@ import webpush from "web-push";
 import { db } from "@/lib/db";
 import { getStreakInfo } from "@/lib/streak";
 import { isOverdue, groupOverdueByUser } from "@/lib/lending-due";
+import { goalProgressNotification } from "@/lib/goal-progress";
 
 let configured = false;
 
@@ -145,6 +146,90 @@ export async function sendOverdueReminders(): Promise<{ sent: number; skipped: n
       }
       const count = await sendPushToUser(userId, { ...payload, url: "/lending", tag: "overdue-remind" });
       sent += count;
+    } catch {
+      skipped += 1;
+    }
+  }
+
+  return { sent, skipped };
+}
+
+/**
+ * Goal-progress push notifications (v2.7.0) — calendar-based, per user:
+ * day 1 = month start with target, days 10/20 = progress percent, last 3
+ * days = remaining books. Silenced once the monthly goal is reached (rule A).
+ * Localized from the user's stored locale (cookie sync), English fallback.
+ */
+export async function sendGoalProgressReminders(): Promise<{ sent: number; skipped: number }> {
+  ensureConfigured();
+
+  const subscriptions = await db.pushSubscription.findMany({
+    select: { userId: true },
+    distinct: ["userId"],
+  });
+
+  let sent = 0;
+  let skipped = 0;
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const nextMonthStart = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+
+  for (const { userId } of subscriptions) {
+    try {
+      const settings = await db.userSettings.findUnique({ where: { userId } });
+      if (settings && (!settings.notificationsEnabled || !settings.goalReminders)) {
+        skipped += 1;
+        continue;
+      }
+
+      const goal = await db.goal.findUnique({ where: { userId } });
+      const monthlyTarget = goal?.monthly ?? 0;
+      if (monthlyTarget <= 0) {
+        skipped += 1;
+        continue;
+      }
+
+      const booksThisMonth = await db.bookReadEvent.count({
+        where: { userId, readAt: { gte: monthStart, lt: nextMonthStart } },
+      });
+
+      const notification = goalProgressNotification(now, monthlyTarget, booksThisMonth);
+      if (!notification) {
+        skipped += 1;
+        continue;
+      }
+
+      const { dictionaries, LOCALES } = await import("@/i18n/get-dictionary");
+      const locale = (
+        settings?.locale && LOCALES.includes(settings.locale as never) ? settings.locale : "en"
+      ) as keyof typeof dictionaries;
+      const t = dictionaries[locale].notify;
+
+      const payload: PushPayload =
+        notification.kind === "month-start"
+          ? {
+              title: "Book Shelf",
+              body: t.goalMonthStart.replace("{target}", String(notification.target)),
+              url: "/stats",
+              tag: "goal-progress",
+            }
+          : notification.kind === "progress"
+            ? {
+                title: "Book Shelf",
+                body: t.goalProgressMid
+                  .replace("{count}", String(notification.count))
+                  .replace("{percent}", String(notification.percent)),
+                url: "/stats",
+                tag: "goal-progress",
+              }
+            : {
+                title: "Book Shelf",
+                body: t.goalProgressFinal.replace("{remaining}", String(notification.remaining)),
+                url: "/stats",
+                tag: "goal-progress",
+              };
+
+      sent += await sendPushToUser(userId, payload);
     } catch {
       skipped += 1;
     }

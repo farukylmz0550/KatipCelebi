@@ -58,6 +58,38 @@ function computeLongest(sorted: { date: Date; count: number }[]): number {
   return longest;
 }
 
+/**
+ * Longest consecutive-activity run overlapping the given UTC year.
+ * A streak is a single unbroken chain of days — runs overlapping the year
+ * are counted WHOLE (their full length), so a streak that began in the
+ * previous year or continues into the next is never truncated or split.
+ * Shield-maintained synthetic days (count 0) count as part of a run,
+ * matching the existing streak semantics.
+ */
+export function longestStreakWithinYear(activities: { date: Date; count: number }[], year: number): number {
+  if (activities.length === 0) return 0;
+  const days = [...new Set(activities.map((a) => startOfUtcDay(a.date).getTime()))].sort((a, b) => a - b);
+  const yearStart = Date.UTC(year, 0, 1);
+  const yearEnd = Date.UTC(year + 1, 0, 1);
+  const DAY_MS = 24 * 60 * 60 * 1000;
+
+  let longest = 0;
+  let runStart = days[0];
+  let prev = days[0];
+  for (let i = 1; i <= days.length; i++) {
+    const closed = i === days.length || days[i] - prev > DAY_MS;
+    if (closed) {
+      // Run [runStart, prev] — overlaps the year when it intersects [yearStart, yearEnd).
+      if (prev >= yearStart && runStart < yearEnd) {
+        longest = Math.max(longest, (prev - runStart) / DAY_MS + 1);
+      }
+      runStart = days[i] ?? prev;
+    }
+    if (i < days.length) prev = days[i];
+  }
+  return longest;
+}
+
 /** Check if the user has activity today. */
 export function isTodayActive(activities: { date: Date }[]): boolean {
   const today = startOfUtcDay();

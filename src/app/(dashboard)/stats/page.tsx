@@ -1,48 +1,70 @@
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
-import { getDictionary } from "@/i18n/get-dictionary";
+import { getDictionary, getLocale } from "@/i18n/get-dictionary";
 import { getTheme } from "@/lib/theme";
 import { levelProgress } from "@/lib/gamification";
 import { monthlyFinishCounts } from "@/lib/stats";
 import { finishedInMonth, finishedInYear } from "@/lib/goals";
 import { getStreakInfo } from "@/lib/streak";
+import { getAppSettings } from "@/lib/settings";
+import { getAnnualReadingSummary, getAvailableYears, isAnnualSummaryWindow, parseSelectedYear } from "@/lib/annual";
+import { isGoalUnlocked } from "@/lib/goals";
 import { MonthlyChart } from "./monthly-chart";
 import { GoalProgress } from "./goal-progress";
 import { GoalForms } from "./goal-forms";
 import { StreakWidget } from "@/components/streak-widget";
 import { ActivityHeatmap } from "@/components/activity-heatmap";
+import { AnnualSummary } from "./annual-summary";
 
-export default async function StatsPage() {
+export default async function StatsPage({ searchParams }: { searchParams?: Promise<{ year?: string }> }) {
   const userId = await requireUserId();
   const dict = await getDictionary();
   const theme = await getTheme();
+  const locale = await getLocale();
 
-  const [user, totalBooks, reading, finishedBooks, goal, streakInfo, dailyActivities] = await Promise.all([
-    db.user.findUniqueOrThrow({ where: { id: userId }, select: { xp: true } }),
-    db.book.count({ where: { userId } }),
-    db.book.count({ where: { userId, status: "READING" } }),
-    db.book.findMany({
-      where: { userId, status: "FINISHED", finishedAt: { not: null } },
-      select: { finishedAt: true },
-    }),
-    db.goal.findUnique({ where: { userId } }),
-    getStreakInfo(userId),
-    db.dailyActivity.findMany({
-      where: { userId },
-      select: { date: true, count: true, pagesRead: true },
-      orderBy: { date: "asc" },
-    }),
+  const currentYear = new Date().getFullYear();
+  // During the Jan 1–7 window the summary features the just-completed year.
+  // In development (window always open, arbitrary date) feature the current
+  // year so the experience stays usable and testable year-round.
+  const summaryVisible = isAnnualSummaryWindow();
+  const defaultYear = !summaryVisible || process.env.NODE_ENV === "development" ? currentYear : currentYear - 1;
+  const selectedYear = parseSelectedYear((await searchParams)?.year, defaultYear);
+  const [availableYears, annualSummary] = await Promise.all([
+    summaryVisible ? getAvailableYears(userId, currentYear - 1, currentYear) : Promise.resolve([]),
+    summaryVisible ? getAnnualReadingSummary(userId, selectedYear) : Promise.resolve(null),
   ]);
+
+  const monthLabels = Array.from({ length: 12 }, (_, i) =>
+    new Date(2024, i, 1).toLocaleDateString(locale, { month: "short" }),
+  );
+
+  const [user, totalBooks, reading, finishedCount, goal, streakInfo, dailyActivities, readEventDates] =
+    await Promise.all([
+      db.user.findUniqueOrThrow({ where: { id: userId }, select: { xp: true } }),
+      db.book.count({ where: { userId } }),
+      db.book.count({ where: { userId, status: "READING" } }),
+      db.book.count({ where: { userId, status: "FINISHED" } }),
+      db.goal.findUnique({ where: { userId } }),
+      getStreakInfo(userId),
+      db.dailyActivity.findMany({
+        where: { userId },
+        select: { date: true, count: true, pagesRead: true },
+        orderBy: { date: "asc" },
+      }),
+      db.bookReadEvent.findMany({ where: { userId }, select: { readAt: true } }),
+    ]);
 
   const yearly = goal?.yearly ?? 0;
   const monthly = goal?.monthly ?? 0;
-  const finishedDates = finishedBooks.map((b) => b.finishedAt as Date);
   const now = new Date();
-  const doneYear = finishedInYear(finishedDates, now.getFullYear());
-  const doneMonth = finishedInMonth(finishedDates, now.getFullYear(), now.getMonth());
+  // v2.7.0 "read" definition: one BookReadEvent = one read session (completions
+  // and partial page-logs alike). Goal progress uses this canonical counting.
+  const readDates = readEventDates.map((e) => e.readAt);
+  const doneYear = finishedInYear(readDates, now.getFullYear());
+  const doneMonth = finishedInMonth(readDates, now.getFullYear(), now.getMonth());
 
-  const { level } = levelProgress(user.xp);
-  const chartData = monthlyFinishCounts(finishedDates);
+  const { level } = levelProgress(user.xp, (await getAppSettings()).xpPerLevelBase);
+  const chartData = monthlyFinishCounts(readDates);
 
   const booksWithDuration = await db.book.findMany({
     where: { userId, status: "FINISHED", startedAt: { not: null }, finishedAt: { not: null } },
@@ -84,7 +106,7 @@ export default async function StatsPage() {
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
         {[
           { label: dict.stats.totalBooks, value: totalBooks },
-          { label: dict.stats.finished, value: finishedBooks.length },
+          { label: dict.stats.finished, value: finishedCount },
           { label: dict.stats.reading, value: reading },
           { label: dict.stats.level, value: level },
           { label: dict.stats.xp, value: user.xp },
@@ -125,9 +147,14 @@ export default async function StatsPage() {
           monthlyGoal: dict.stats.monthlyGoal,
           goalTarget: dict.stats.goalTarget,
           setGoal: dict.stats.setGoal,
+          goalLocked: dict.stats.goalLocked,
+          goalLockedDesc: dict.stats.goalLockedDesc,
+          goalSaveError: dict.stats.goalSaveError,
+          goalConfirm: dict.stats.goalConfirm,
         }}
         yearly={yearly}
         monthly={monthly}
+        locked={!isGoalUnlocked(goal, currentYear)}
       />
       <div className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] p-4">
         <p className="mb-3 text-[13px] font-medium text-foreground">{dict.stats.byMonth}</p>
@@ -141,6 +168,18 @@ export default async function StatsPage() {
           pagesRead: a.pagesRead,
         }))}
       />
+
+      {summaryVisible && annualSummary && (
+        <AnnualSummary
+          summary={annualSummary}
+          availableYears={availableYears}
+          selectedYear={selectedYear}
+          monthLabels={monthLabels}
+          dark={theme === "dark"}
+          dict={dict.annual}
+          yearlyTarget={goal?.confirmedAt && goal?.targetYear === currentYear ? yearly : 0}
+        />
+      )}
     </div>
   );
 }

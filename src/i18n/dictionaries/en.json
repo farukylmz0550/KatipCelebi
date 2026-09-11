@@ -104,7 +104,18 @@
     "rating": "Rating",
     "detailedAdd": "Detailed add",
     "addDetailed": "Add detailed book",
-    "orWithAllFields": "or with all fields"
+    "orWithAllFields": "or with all fields",
+    "logPagesButton": "Log {count} pages read",
+    "logPagesToast": "{count} pages logged",
+    "logPagesError": "Could not log reading",
+    "pagesLeft": "{count} pages left",
+    "bookFinishedToast": "Book finished!",
+    "nextBookCta": "Start a new book",
+    "nextBookDialogTitle": "Start a new book",
+    "nextBookEmpty": "Nothing to read next — your to-read list is empty",
+    "startBook": "Start",
+    "reReadButton": "Read again",
+    "earlyFinishBlocked": "Finish the remaining pages first — the book auto-finishes when all pages are read."
   },
   "facts": {
     "title": "Title *",
@@ -219,7 +230,11 @@
     "totalFinished": "Total finished",
     "streak": "Streak",
     "longestStreak": "Longest Streak",
-    "todayActive": "Active Today"
+    "todayActive": "Active Today",
+    "goalLockedDesc": "Goals are set once per year. They reopen on January 1.",
+    "goalSaveError": "Could not save goals. Please try again.",
+    "goalConfirm": "Confirm goals",
+    "goalLocked": "These goals stay locked for the rest of the year and reopen on January 1."
   },
   "achievements": {
     "title": "Achievements",
@@ -295,7 +310,17 @@
     "reject": "Reject",
     "adminLabel": "Admin",
     "actions": "Actions",
-    "confirmDelete": "Are you sure you want to delete this user?"
+    "confirmDelete": "Are you sure you want to delete this user?",
+    "readingSettingsTitle": "Reading Settings",
+    "readingSettingsDesc": "System-admin only: page and XP values used across BookShelf.",
+    "pagesPerReadEvent": "Pages per reading log",
+    "xpBookAdded": "XP · book added",
+    "xpBookFinishedBase": "XP · book finished (base)",
+    "xpPagesPer10": "XP · per 10 pages",
+    "xpLending": "XP · lending created",
+    "xpPerLevelBase": "XP · level base",
+    "save": "Save",
+    "settingsSaved": "Settings saved."
   },
   "licenses": {
     "title": "Licenses & Attributions",
@@ -335,5 +360,51 @@
     "fileTooLarge": "File too large (20MB limit)",
     "noValidBooks": "No valid books found",
     "tooManyRows": "Too many rows (5000 max)"
+  },
+  "annual": {
+    "title": "Annual Summary",
+    "selectYear": "Select year",
+    "readingSummary": "Reading Summary",
+    "booksRead": "Books read",
+    "pagesRead": "Pages read",
+    "averagePages": "Average pages",
+    "readingDays": "Reading days",
+    "longestStreak": "Longest streak",
+    "mostReadAuthor": "Most-read author",
+    "mostReadGenre": "Most-read genre",
+    "uniqueAuthors": "Unique authors",
+    "uniqueGenres": "Unique genres",
+    "firstBook": "First book",
+    "lastBook": "Last book",
+    "longestBook": "Longest book",
+    "shortestBook": "Shortest book",
+    "byMonth": "Books read by month",
+    "notableBooks": "Notable books",
+    "exportSummary": "Download summary",
+    "exporting": "Generating image…",
+    "noReadingData": "No reading data for {year}",
+    "noData": "No data available",
+    "insightMonth": "You read the most books in {month}.",
+    "insightGenre": "Your most-read genre was {genre}.",
+    "insightAuthor": "Your most-read author was {author}.",
+    "shareCardTitle": "My Reading Year",
+    "pagesShort": "pages",
+    "insightBooksOne": "You read 1 book this year.",
+    "insightBooksMany": "You read {count} books this year.",
+    "insightPagesOne": "You turned 1 page.",
+    "insightPagesMany": "You turned {count} pages.",
+    "insightStreakOne": "Your longest streak was 1 day.",
+    "insightStreakMany": "Your longest streak was {count} days.",
+    "enableSound": "Enable sound",
+    "soundOn": "Sound on",
+    "soundOff": "Sound off"
+  },
+  "settings": {
+    "goalReminders": "Goal progress reminders"
+  },
+  "notify": {
+    "goalMonthStart": "New month started. Your reading goal this month is {target} books.",
+    "goalProgressMid": "You read {count} books this month. You're at {percent}% of your goal.",
+    "goalProgressFinal": "{remaining} books left to your goal."
   }
 }

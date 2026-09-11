@@ -104,7 +104,18 @@
     "rating": "Note",
     "detailedAdd": "Ajout détaillé",
     "addDetailed": "Ajouter un livre détaillé",
-    "orWithAllFields": "ou avec tous les champs"
+    "orWithAllFields": "ou avec tous les champs",
+    "logPagesButton": "J'ai lu {count} pages",
+    "logPagesToast": "{count} pages enregistrées",
+    "logPagesError": "Impossible d'enregistrer la lecture",
+    "pagesLeft": "Il reste {count} pages",
+    "bookFinishedToast": "Livre terminé !",
+    "nextBookCta": "Commencer un nouveau livre",
+    "nextBookDialogTitle": "Commencer un nouveau livre",
+    "nextBookEmpty": "Rien à lire — ta liste « à lire » est vide",
+    "startBook": "Commencer",
+    "reReadButton": "Relire",
+    "earlyFinishBlocked": "Termine d'abord les pages restantes — le livre se termine automatiquement quand toutes les pages sont lues."
   },
   "facts": {
     "title": "Titre *",
@@ -219,7 +230,11 @@
     "totalFinished": "Total terminés",
     "streak": "Série",
     "longestStreak": "Plus Longue Série",
-    "todayActive": "Actif Aujourd'hui"
+    "todayActive": "Actif Aujourd'hui",
+    "goalLockedDesc": "Les objectifs se fixent une fois par an. Ils se rouvrent le 1er janvier.",
+    "goalSaveError": "Impossible d'enregistrer les objectifs.",
+    "goalConfirm": "Confirmer les objectifs",
+    "goalLocked": "Ces objectifs restent verrouillés le reste de l'année et se rouvrent le 1er janvier."
   },
   "achievements": {
     "title": "Succès",
@@ -295,7 +310,17 @@
     "reject": "Rejeter",
     "adminLabel": "Admin",
     "actions": "Actions",
-    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?"
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+    "readingSettingsTitle": "Réglages de lecture",
+    "readingSettingsDesc": "Valeurs de pages et XP utilisées dans BookShelf (administrateur système uniquement).",
+    "pagesPerReadEvent": "Pages par journal de lecture",
+    "xpBookAdded": "XP · livre ajouté",
+    "xpBookFinishedBase": "XP · livre terminé (base)",
+    "xpPagesPer10": "XP · par 10 pages",
+    "xpLending": "XP · prêt créé",
+    "xpPerLevelBase": "XP · base de niveau",
+    "save": "Enregistrer",
+    "settingsSaved": "Réglages enregistrés."
   },
   "licenses": {
     "title": "Licences et Attributions",
@@ -335,5 +360,51 @@
     "fileTooLarge": "Fichier trop volumineux (limite 20MB)",
     "noValidBooks": "Aucun livre valide trouvé",
     "tooManyRows": "Trop de lignes (max 5000)"
+  },
+  "annual": {
+    "title": "Résumé annuel",
+    "selectYear": "Choisir l'année",
+    "readingSummary": "Résumé de lecture",
+    "booksRead": "Livres lus",
+    "pagesRead": "Pages lues",
+    "averagePages": "Pages en moyenne",
+    "readingDays": "Jours de lecture",
+    "longestStreak": "Série la plus longue",
+    "mostReadAuthor": "Auteur le plus lu",
+    "mostReadGenre": "Genre le plus lu",
+    "uniqueAuthors": "Auteurs uniques",
+    "uniqueGenres": "Genres uniques",
+    "firstBook": "Premier livre",
+    "lastBook": "Dernier livre",
+    "longestBook": "Livre le plus long",
+    "shortestBook": "Livre le plus court",
+    "byMonth": "Livres lus par mois",
+    "notableBooks": "Livres marquants",
+    "exportSummary": "Télécharger le résumé",
+    "exporting": "Génération de l'image…",
+    "noReadingData": "Aucune donnée de lecture pour {year}",
+    "noData": "Aucune donnée disponible",
+    "insightMonth": "Tu as lu le plus de livres en {month}.",
+    "insightGenre": "Ton genre le plus lu était {genre}.",
+    "insightAuthor": "Ton auteur le plus lu était {author}.",
+    "shareCardTitle": "Mon année de lecture",
+    "pagesShort": "pages",
+    "insightBooksOne": "Tu as lu 1 livre cette année.",
+    "insightBooksMany": "Tu as lu {count} livres cette année.",
+    "insightPagesOne": "Tu as tourné 1 page.",
+    "insightPagesMany": "Tu as tourné {count} pages.",
+    "insightStreakOne": "Ta plus longue série a duré 1 jour.",
+    "insightStreakMany": "Ta plus longue série a duré {count} jours.",
+    "enableSound": "Activer le son",
+    "soundOn": "Son activé",
+    "soundOff": "Son coupé"
+  },
+  "settings": {
+    "goalReminders": "Rappels de progression d'objectif"
+  },
+  "notify": {
+    "goalMonthStart": "Un nouveau mois commence. Ton objectif de lecture ce mois-ci : {target} livres.",
+    "goalProgressMid": "Tu as lu {count} livres ce mois-ci. Tu es à {percent} % de ton objectif.",
+    "goalProgressFinal": "Il te reste {remaining} livres pour ton objectif."
   }
 }

@@ -1,7 +1,7 @@
 # Bookshelf — Memory Bank
 
 > Last updated: 2026-09-11
-> Version: 2.6.0
+> Version: 2.7.0
 > Branch: main
 
 ---
@@ -140,7 +140,8 @@ User ──────┬── Book ──────── LendingRecord
 | `locale.ts` | switch language (consent-gated) |
 | `theme.ts` | toggle theme Sun/Moon SVG (light/dark, consent-gated) |
 | `logout.ts` | signOut |
-| `settings.ts` | update notifications/streak/weeklyDigest |
+| `settings.ts` | update notifications/streak/weeklyDigest/goalReminders (goalReminders feeds calendar-based goal-progress push) |
+| `settings-admin.ts` | updateAppSettings (system-admin only: reading/XP values) |
 | `cookies.ts` | setConsentCookie, hasConsent |
 
 Every data-modifying action runs `awardXp()` + `syncAchievements()`. ISBN one-click flow chains `lookupIsbnAction` → `addBook` with all Open Library fields.
@@ -179,8 +180,8 @@ docker compose up -d --build
 ## 8. Testing
 
 ```bash
-npm test              # 137 unit tests (vitest)
-npx playwright test   # 32 e2e tests (playwright)
+npm test              # 190 unit tests (vitest)
+npx playwright test   # 38 e2e tests (playwright)
 npm run lint          # eslint
 npm run format:check  # prettier
 ```
@@ -191,6 +192,7 @@ npm run format:check  # prettier
 
 | Date | Commit | Description |
 |-------|--------|----------|
+| 2026-09-11 | `2.7.0` | Annual Reading Summary (Jan 1–7 window, read-event metrics, PNG share card, 9-piece CC0 mood music) + reading rules (page-log button, auto-FINISH at all pages read, re-read +1, early-finish block) + goal lock (once/year) + goal-progress push calendar + AppSettings admin/env values |
 | 2026-09-11 | `2.6.0` | Goodreads CSV import — `src/lib/books/goodreads.ts` (RFC 4180 parser, ISBN13-first normalization, shelf→status/tags) + `src/app/actions/goodreads.ts` (20 MiB, 5000-row guard, ISBN dedupe, OL enrichment, revalidatePath) + books UI button + 6-lang i18n |
 | 2026-09-09 | `2.3.2` | English-only (hardcoded Turkish → English, i18n synced, locale native names kept), releases titled as "{version}" without v |
 | 2026-09-09 | `2.3.1` | Settings-only theme/locale (sidebar/mobile header removed), licenses link in Settings, docs Turkish → English, book card 60/40 readable (h-[380px] object-contain) |
@@ -237,6 +239,7 @@ npm run format:check  # prettier
 - **High Contrast:** Removed as incompatible with `UI_Design_Language.md` (GNOME residue). Theme is now only `light`/`dark` (Sun/Moon SVG, Lucide ISC).
 - **Book Card 60/40:** `h-[380px]` `h-[60%]` cover `object-contain p-2` + `h-[40%]` metadata `gap-1 px-3 py-3`, `text-[15px] serif` readable. Bulk import (`importBooksByIsbn`) removed.
 - **Cookie Consent:** Server/client split via `src/lib/cookies-shared.ts`; `next/headers` only on server.
+- **License file naming:** root-level `LICENSE-{LİSANADI}` convention — `LICENSE-GPLV3`, `LICENSE-CC-BY-NC-ND`, `LICENSE-CC0` (audio renders). Never drop the suffix or rename mid-project.
 
 ---
 
@@ -288,6 +291,16 @@ Both projects continue under GPLv3.
 
 ## 13. Tomorrow's TODO — BookShelf UI/Branding Overhaul
 
+> ✅ **PROGRESS — 2026-09-11 (session 9 — v2.7.0 Annual Reading Summary + reading system):**
+> - **Annual Summary (no "Wrapped" branding anywhere):** `/stats` bottom section, visible ONLY Jan 1 00:00 → Jan 7 end on the **server-local clock** (`isAnnualSummaryWindow`, dev/e2e always open); default year = just-completed year in production (current year in dev). Metrics from **read events**; Recharts + sr-only text fallback; PNG share-card (deterministic canvas, no user data beyond stats).
+> - **Reading rules (user-defined):** "Log N pages read" card button on `/books` → `currentPage` +N (default 20, `AppSettings.pagesPerReadEvent`) + streak (`recordActivity`) + page-based XP (`floor(pages/10) × xpPagesPer10`, NO streak multiplier) — does NOT finish the book. Book finishes ONLY when ALL pages are read → automatic FINISHED (+1 `BookReadEvent`, finish XP w/ streak bonus). Early manual finish blocked (`RemainingPages`); page-less books keep manual finishing. "Read again" on FINISHED cards → currentPage=0 + READING; re-completion adds +1.
+> - **Goal lock:** yearly+monthly targets confirmed ONCE per year (`confirmGoals`) → locked read-only cards until Jan 1 (server-local); migration marked existing goals as confirmed for the current year. Goal progress counts read events (completions).
+> - **Music (CC0):** 9 public-domain pieces rendered ONCE at dev time (`scripts/render-annual-audio.mjs` offline synth → ffmpeg/libmp3lame 96k, ID3 artist=`farukylmz0505`, CC0 comment; `LICENSE-CC0` + `public/audio/annual/README.md`). The APP picks the piece deterministically from goal-progress mood: `<⅓` sad (Chopin Nocturne, Moonlight, Swan Lake) · `⅓–⅔` neutral (Minuet in G, Für Elise) · `⅔–1` happy (Nachtmusik, Rondo alla Turca, Spring) · `>1` celebration (Ode to Joy) — mood pool pick by year hash. Plays once (no loop), lazy single fetch, mute toggle, autoplay "Enable sound" fallback, sw.js runtime-cache + CACHE_NAME v4.
+> - **Goal-progress push (calendar):** day 1 = month start + target · day 10/20 = "N books, P% of goal" · last 3 days = remaining books · **silenced once monthly goal reached (rule A)**. `/api/push/goal-progress` (CRON_SECRET) added to the daily docker cron list. Localized templates (percent sign inside the template: TR "%{percent}", EN "{percent}%"); per-user locale synced from the cookie into `UserSettings.locale` (EN fallback).
+> - **AppSettings (singleton):** pagesPerReadEvent, xpBookAdded, xpBookFinishedBase, xpPagesPer10, xpLending, xpPerLevelBase — env defaults (`READ_EVENT_PAGES`, `XP_*`), system-admin editable on `/admin` ("Reading Settings"). `gamification-pure` now parametric with legacy defaults; level curve base configurable (derived level → changes retroactively).
+> - **Schema (user-driven, single migration `20260911193502_annual_summary_settings_reads`):** Goal.targetYear/confirmedAt (existing goals locked) · BookReadEvent (+backfill of existing FINISHED books) · AppSettings · UserSettings.goalReminders + locale.
+> - **QA:** tsc ✅ lint ✅ (1 pre-existing warning) format ✅ unit 190/190 ✅ e2e 38/38 ✅ prod build ✅ ffprobe assets ✅
+>
 > ✅ **PROGRESS — 2026-09-11 (session 8 — v2.6.0 Goodreads CSV import):**
 > - **Parser:** `src/lib/books/goodreads.ts` — hand-rolled RFC 4180 `parseCsvText` (quoted fields, escaped `""`, commas in quotes, CRLF, BOM, UTF-8 string input — no naive `split(",")`, no new dependency); header matching case-insensitive; Zod per-row validation; formula-wrapped ISBNs (`="…"`) + Excel float remnants cleaned; valid ISBN13 preferred over ISBN-10, invalid never fabricated; `Date Read` parsed as UTC; shelves → unambiguous status (read > currently-reading > to-read) + custom shelves as tags; one bad row never aborts the import. Guards: 20 MiB (`GOODREADS_CSV_MAX_BYTES`), 5000 rows, ≤10 error messages.
 > - **Action:** `src/app/actions/goodreads.ts` `importGoodreadsCsv(base64)` — `requireUserId()`, in-memory duplicate check derived only from the current user's books (ISBN match; title|author exact match only for ISBN-less rows — no fuzzy guessing), Open Library enrichment via existing `lookupIsbns` (deduped per unique ISBN, failures swallowed → `lookupFailed`), `createMany` + row-by-row fallback, `awardXp` + `syncAchievements`, **`revalidatePath("/books")`** (e2e found the grid stayed stale without it), machine-readable error codes (`invalidCsv|fileTooLarge|tooManyRows|noValidBooks`).

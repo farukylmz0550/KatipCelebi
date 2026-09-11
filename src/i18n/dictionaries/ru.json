@@ -104,7 +104,18 @@
     "rating": "Оценка",
     "detailedAdd": "Расширенное добавление",
     "addDetailed": "Добавить книгу с деталями",
-    "orWithAllFields": "или со всеми полями"
+    "orWithAllFields": "или со всеми полями",
+    "logPagesButton": "Прочитал(а) {count} страниц",
+    "logPagesToast": "Записано страниц: {count}",
+    "logPagesError": "Не удалось записать чтение",
+    "pagesLeft": "Осталось страниц: {count}",
+    "bookFinishedToast": "Книга прочитана!",
+    "nextBookCta": "Начать новую книгу",
+    "nextBookDialogTitle": "Начать новый книгу",
+    "nextBookEmpty": "Читать нечего — список «прочитать» пуст",
+    "startBook": "Начать",
+    "reReadButton": "Перечитать",
+    "earlyFinishBlocked": "Сначала прочитай оставшиеся страницы — книга завершится автоматически, когда все страницы прочитаны."
   },
   "facts": {
     "title": "Название *",
@@ -219,7 +230,11 @@
     "totalFinished": "Всего завершено",
     "streak": "Серия",
     "longestStreak": "Самая Длинная Серия",
-    "todayActive": "Активен Сегодня"
+    "todayActive": "Активен Сегодня",
+    "goalLockedDesc": "Цели задаются раз в год. Они откроются 1 января.",
+    "goalSaveError": "Не удалось сохранить цели.",
+    "goalConfirm": "Подтвердить цели",
+    "goalLocked": "Эти цели заблокированы до конца года и откроются 1 января."
   },
   "achievements": {
     "title": "Достижения",
@@ -295,7 +310,17 @@
     "reject": "Отклонить",
     "adminLabel": "Админ",
     "actions": "Действия",
-    "confirmDelete": "Вы уверены, что хотите удалить этого пользователя?"
+    "confirmDelete": "Вы уверены, что хотите удалить этого пользователя?",
+    "readingSettingsTitle": "Настройки чтения",
+    "readingSettingsDesc": "Значения страниц и XP, используемые в BookShelf (только системный администратор).",
+    "pagesPerReadEvent": "Страниц за одну запись",
+    "xpBookAdded": "XP · книга добавлена",
+    "xpBookFinishedBase": "XP · книга завершена (база)",
+    "xpPagesPer10": "XP · за 10 страниц",
+    "xpLending": "XP · выдача создана",
+    "xpPerLevelBase": "XP · база уровня",
+    "save": "Сохранить",
+    "settingsSaved": "Настройки сохранены."
   },
   "licenses": {
     "title": "Лицензии и Атрибуции",
@@ -335,5 +360,51 @@
     "fileTooLarge": "Файл слишком большой (лимит 20МБ)",
     "noValidBooks": "Действительных книг не найдено",
     "tooManyRows": "Слишком много строк (максимум 5000)"
+  },
+  "annual": {
+    "title": "Годовой итог",
+    "selectYear": "Выбрать год",
+    "readingSummary": "Итоги чтения",
+    "booksRead": "Прочитано книг",
+    "pagesRead": "Прочитано страниц",
+    "averagePages": "Страниц в среднем",
+    "readingDays": "Дней чтения",
+    "longestStreak": "Самая длинная серия",
+    "mostReadAuthor": "Самый читаемый автор",
+    "mostReadGenre": "Самый читаемый жанр",
+    "uniqueAuthors": "Уникальных авторов",
+    "uniqueGenres": "Уникальных жанров",
+    "firstBook": "Первая книга",
+    "lastBook": "Последняя книга",
+    "longestBook": "Самая длинная книга",
+    "shortestBook": "Самая короткая книга",
+    "byMonth": "Прочитано книг по месяцам",
+    "notableBooks": "Заметные книги",
+    "exportSummary": "Скачать итог",
+    "exporting": "Создание изображения…",
+    "noReadingData": "Нет данных о чтении за {year} год",
+    "noData": "Нет доступных данных",
+    "insightMonth": "Больше всего книг ты прочитал(а) в {month}.",
+    "insightGenre": "Твой самый читаемый жанр — {genre}.",
+    "insightAuthor": "Твой самый читаемый автор — {author}.",
+    "shareCardTitle": "Мой год чтения",
+    "pagesShort": "страниц",
+    "insightBooksOne": "За год прочитана 1 книга.",
+    "insightBooksMany": "Ты прочитал(а) {count} книг.",
+    "insightPagesOne": "Ты перелистал(а) 1 страницу.",
+    "insightPagesMany": "Ты перелистал(а) {count} страниц.",
+    "insightStreakOne": "Твоя самая длинная серия — 1 день.",
+    "insightStreakMany": "Твоя самая длинная серия — {count} дней.",
+    "enableSound": "Включить звук",
+    "soundOn": "Звук включён",
+    "soundOff": "Звук выключен"
+  },
+  "settings": {
+    "goalReminders": "Напоминания о прогрессе цели"
+  },
+  "notify": {
+    "goalMonthStart": "Начался новый месяц. Твоя цель по чтению на этот месяц — {target} книг.",
+    "goalProgressMid": "В этом месяце ты прочитал(а) {count} книг. Ты на {percent}% к цели.",
+    "goalProgressFinal": "До твоей цели осталось {remaining} книг."
   }
 }

@@ -36,7 +36,13 @@ export function BookPersonal({ book, dict }: { book: Book; dict: Record<string, 
 
   function onStatusChange(status: "TO_READ" | "READING" | "FINISHED") {
     if (status === "FINISHED") hapticFeedback("medium");
-    save(() => setBookStatus(book.id, status));
+    save(async () => {
+      const res = await setBookStatus(book.id, status);
+      if (!res.ok && res.error === "RemainingPages") {
+        const { toast } = await import("sonner");
+        toast.error(dict.earlyFinishBlocked);
+      }
+    });
   }
 
   const days =

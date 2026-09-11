@@ -70,7 +70,7 @@ export default async function BookDetailPage({ params }: { params: Promise<{ id:
       </div>
 
       <BookFacts book={book} dict={dict.facts} />
-      <BookPersonal book={book} dict={dict.personal} />
+      <BookPersonal book={book} dict={{ ...dict.personal, earlyFinishBlocked: dict.books.earlyFinishBlocked }} />
       <BookLending book={book} lendings={lendings} persons={persons} dict={dict.bookLending} />
     </div>
   );

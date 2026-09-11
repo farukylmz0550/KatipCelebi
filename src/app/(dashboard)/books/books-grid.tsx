@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LayoutGrid, List } from "lucide-react";
 import { BookCard } from "./book-card";
 import { FilterBar } from "./filter-bar";
 import { Filters, defaultFilters, arrange } from "@/lib/books/filters";
 import { getInitialView, setViewCookie, type ViewMode } from "@/lib/books/view-mode";
+import { setBookStatus } from "@/app/actions/books";
 
 type Book = {
   id: string;
@@ -20,17 +22,41 @@ type Book = {
   status?: string | null;
   publishDate?: string | null;
   coverUrl?: string | null;
+  currentPage?: number | null;
+  numberOfPages?: string | null;
+};
+
+type CardDict = {
+  logPagesButton: string;
+  logPagesToast: string;
+  logPagesError: string;
+  pagesLeft: string;
+  reReadButton: string;
+  bookFinishedToast: string;
+  earlyFinishBlocked: string;
+  nextBookCta: string;
+  nextBookDialogTitle: string;
+  nextBookEmpty: string;
+  startBook: string;
 };
 
 export function BooksGrid({
   books,
   lentMap,
   dict,
+  cardDict,
+  pagesPerReadEvent,
 }: {
   books: Book[];
   lentMap: Record<string, boolean>;
   dict: { empty: string; noResults?: string } & Record<string, string>;
+  cardDict: CardDict;
+  pagesPerReadEvent: number;
 }) {
+  const router = useRouter();
+  // v2.7.0 — "start a new book" flow after finishing one
+  const [nextBookOpen, setNextBookOpen] = useState(false);
+  const toReadBooks = useMemo(() => books.filter((b) => (b.status ?? "TO_READ") === "TO_READ"), [books]);
   const [filters, setFilters] = useState<Filters>(defaultFilters);
   const [view, setView] = useState<ViewMode>("card");
   const tagsInUse = useMemo(() => {
@@ -116,6 +142,14 @@ export function BooksGrid({
               book={book as Book}
               lentOut={!!lentMap[book.id]}
               statusLabels={{ toRead: dict.toRead, reading: dict.reading, finished: dict.finished }}
+              pagesPerReadEvent={pagesPerReadEvent}
+              dict={{
+                toRead: dict.toRead,
+                reading: dict.reading,
+                finished: dict.finished,
+                ...cardDict,
+              }}
+              onFinished={() => setNextBookOpen(true)}
             />
           ))}
         </div>
@@ -181,6 +215,56 @@ export function BooksGrid({
               </span>
             </Link>
           ))}
+        </div>
+      )}
+
+      {/* v2.7.0 — after finishing a book: pick a to-read book to start next */}
+      {nextBookOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          onClick={() => setNextBookOpen(false)}
+        >
+          <div
+            className="w-full max-w-sm rounded-xl bg-card p-4 shadow-lg"
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-label={cardDict.nextBookDialogTitle}
+          >
+            <h3 className="mb-3 font-[var(--font-serif)] text-sm font-semibold text-foreground">
+              {cardDict.nextBookDialogTitle}
+            </h3>
+            {toReadBooks.length === 0 ? (
+              <p className="py-4 text-center text-sm text-muted-foreground">{cardDict.nextBookEmpty}</p>
+            ) : (
+              <ul className="max-h-72 space-y-1 overflow-y-auto">
+                {toReadBooks.map((book) => (
+                  <li key={book.id}>
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        await setBookStatus(book.id, "READING");
+                        setNextBookOpen(false);
+                        router.refresh();
+                      }}
+                      className="flex w-full items-baseline justify-between gap-3 rounded-[8px] px-2 py-2 text-left transition-colors hover:bg-accent hover:text-accent-foreground"
+                    >
+                      <span className="min-w-0">
+                        <span className="block truncate font-[var(--font-serif)] text-sm text-foreground">
+                          {book.title}
+                        </span>
+                        <span className="block truncate font-[var(--font-sans)] text-xs text-muted-foreground">
+                          {book.author ?? "—"}
+                        </span>
+                      </span>
+                      <span className="shrink-0 font-[var(--font-sans)] text-xs font-medium text-[var(--accent)]">
+                        {cardDict.startBook}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       )}
     </div>

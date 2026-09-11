@@ -2,13 +2,17 @@ import { requireAdminPage } from "@/lib/session";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { getUsers } from "@/app/actions/admin";
 import { getCoverStats, clearCoverCache } from "@/app/actions/covers";
+import { readAppSettings } from "@/app/actions/settings-admin";
+import { defaultAppSettings } from "@/lib/settings";
 import { UserTable } from "./users/user-table";
+import { ReadingSettingsCard } from "./reading-settings-card";
 
 export default async function AdminPage() {
   await requireAdminPage();
   const dict = await getDictionary();
   const users = await getUsers();
   const coverStats = await getCoverStats();
+  const appSettings = (await readAppSettings()) ?? defaultAppSettings();
 
   const pending = users.filter((u) => !u.approved);
   const approved = users.filter((u) => u.approved);
@@ -73,6 +77,26 @@ export default async function AdminPage() {
             </button>
           </form>
         </div>
+      </section>
+      {/* §3 — Reading Settings */}
+      <section className="space-y-3">
+        <h2 className="font-[var(--font-serif)] text-lg font-semibold tracking-tight text-foreground">
+          {dict.admin.readingSettingsTitle}
+        </h2>
+        <p className="font-[var(--font-sans)] text-sm text-muted-foreground">{dict.admin.readingSettingsDesc}</p>
+        <ReadingSettingsCard
+          initial={appSettings}
+          dict={{
+            pagesPerReadEvent: dict.admin.pagesPerReadEvent,
+            xpBookAdded: dict.admin.xpBookAdded,
+            xpBookFinishedBase: dict.admin.xpBookFinishedBase,
+            xpPagesPer10: dict.admin.xpPagesPer10,
+            xpLending: dict.admin.xpLending,
+            xpPerLevelBase: dict.admin.xpPerLevelBase,
+            save: dict.admin.save,
+            saved: dict.admin.settingsSaved,
+          }}
+        />
       </section>
     </div>
   );

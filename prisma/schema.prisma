@@ -31,13 +31,16 @@ model User {
   streakShieldCount  Int       @default(0)
   createdAt          DateTime  @default(now())
 
-  books        Book[]
-  persons      Person[]
-  goal         Goal?
-  achievements UserAchievement[]
+  books           Book[]
+  persons         Person[]
+  goal            Goal?
+  achievements    UserAchievement[]
   dailyActivities DailyActivity[]
   streakShields   StreakShield[]
   settings        UserSettings?
+  readEvents      BookReadEvent[]
+
+  @@index([id])
 }
 
 model Book {
@@ -75,9 +78,29 @@ model Book {
   currentPage    Int?
 
   lendingRecords LendingRecord[]
+  readEvents     BookReadEvent[]
 
   @@index([userId])
   @@index([tags])
+}
+
+// Read sessions (v2.7.0): one row per logged reading event — a book completion
+// (FINISHED) or a partial "I read N pages" log. A book can have many events in
+// the same month/year (re-reads count). Canonical basis for booksRead stats.
+model BookReadEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookId    String
+  book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  // Denormalized snapshot — survives book edits/deletes
+  bookTitle String?
+  // null for completions of books without a usable page count
+  pagesRead Int?
+  readAt    DateTime @default(now())
+
+  @@index([userId, readAt])
+  @@index([bookId])
 }
 
 model Person {
@@ -113,12 +136,18 @@ model LendingRecord {
 }
 
 model Goal {
-  id        String   @id @default(cuid())
-  userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  yearly    Int      @default(0)
-  monthly   Int      @default(0)
-  updatedAt DateTime @updatedAt
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  yearly      Int       @default(0)
+  monthly     Int       @default(0)
+  // Goal lock (v2.7.0): targets are confirmed once per calendar year and stay
+  // locked until Jan 1 of the next year (server-local clock).
+  targetYear  Int?
+  confirmedAt DateTime?
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userId])
 }
 
 // Static catalog of achievements; titleKey/descriptionKey reference i18n message keys.
@@ -172,6 +201,10 @@ model UserSettings {
   notificationsEnabled  Boolean @default(true)
   streakReminders       Boolean @default(true)
   weeklyDigest          Boolean @default(false)
+  // v2.7.0 — calendar-based goal-progress push notifications
+  goalReminders         Boolean @default(true)
+  // Per-user locale for localized push notifications (synced from the cookie)
+  locale                String?
 
   @@index([userId])
 }
@@ -186,4 +219,16 @@ model PushSubscription {
 
   @@unique([userId, endpoint])
   @@index([userId])
+}
+
+// Singleton site settings (v2.7.0) — system-admin editable reading/gamification
+// values. Absent row = env-var defaults. Env provides defaults; admin edits win.
+model AppSettings {
+  id                  String @id @default(cuid())
+  pagesPerReadEvent   Int
+  xpBookAdded         Int
+  xpBookFinishedBase  Int
+  xpPagesPer10        Int
+  xpLending           Int
+  xpPerLevelBase      Int
 }

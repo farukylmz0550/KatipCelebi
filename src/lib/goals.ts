@@ -35,3 +35,20 @@ export function finishedInYear(finishedAt: Date[], year: number): number {
 export function finishedInMonth(finishedAt: Date[], year: number, month: number): number {
   return finishedAt.filter((d) => d.getFullYear() === year && d.getMonth() === month).length;
 }
+
+// ---------------------------------------------------------------------------
+// Goal lock (v2.7.0) — targets are confirmed once per calendar year and stay
+// locked until Jan 1 of the next year (server-local clock).
+// ---------------------------------------------------------------------------
+
+export type LockableGoal = {
+  targetYear: number | null;
+  confirmedAt: Date | null;
+};
+
+/** Goals are editable when unset, unconfirmed, or confirmed for a past year. */
+export function isGoalUnlocked(goal: LockableGoal | null, currentYear: number): boolean {
+  if (!goal) return true;
+  if (goal.confirmedAt === null) return true;
+  return goal.targetYear !== currentYear;
+}

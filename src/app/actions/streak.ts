@@ -6,6 +6,7 @@ import { requireUserId } from "@/lib/session";
 import { calculateStreak, startOfUtcDay } from "@/lib/streak";
 import { calculateFinishXp, shieldCost as calcShieldCost } from "@/lib/gamification-pure";
 import { awardXp, syncAchievements } from "@/lib/gamification";
+import { getAppSettings } from "@/lib/settings";
 
 /** Record a reading activity for today. Called when a book is finished or page progress is made. */
 export async function recordActivity(pagesRead?: number) {
@@ -63,12 +64,16 @@ export async function recordActivity(pagesRead?: number) {
 export async function finishBookWithXp(bookId: string, pages: number | null) {
   const userId = await requireUserId();
 
-  const user = await db.user.findUnique({
-    where: { id: userId },
-    select: { currentStreak: true },
-  });
+  const [user, settings] = await Promise.all([
+    db.user.findUnique({ where: { id: userId }, select: { currentStreak: true } }),
+    getAppSettings(),
+  ]);
 
-  const xp = calculateFinishXp(pages, user?.currentStreak ?? 0);
+  const xp = calculateFinishXp(pages, user?.currentStreak ?? 0, {
+    bookFinishedBase: settings.xpBookFinishedBase,
+    pagesPer10: settings.xpPagesPer10,
+    perLevelBase: settings.xpPerLevelBase,
+  });
   await awardXp(userId, xp);
   await recordActivity(pages ?? undefined);
   await syncAchievements(userId);

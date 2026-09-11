@@ -5,6 +5,24 @@ export const XP_REWARDS = {
   LENDING_CREATED: 5,
 } as const;
 
+/**
+ * Configurable XP parameters (v2.7.0) — resolved from AppSettings/env at
+ * runtime; every parameter defaults to the legacy XP_REWARDS value so the
+ * default behavior is byte-for-byte unchanged.
+ */
+export type XpConfig = {
+  bookFinishedBase: number;
+  pagesPer10: number;
+  /** Base XP of the Fibonacci level curve (legacy: 100). */
+  perLevelBase: number;
+};
+
+export const DEFAULT_XP_CONFIG: XpConfig = {
+  bookFinishedBase: XP_REWARDS.BOOK_FINISHED_BASE,
+  pagesPer10: XP_REWARDS.PAGES_PER_10,
+  perLevelBase: 100,
+};
+
 function fibonacci(n: number): number {
   if (n <= 1) return 1;
   let a = 1,
@@ -16,40 +34,40 @@ function fibonacci(n: number): number {
 }
 
 /** XP required to advance FROM the given level to the next. */
-export function xpForNextLevel(currentLevel: number): number {
-  return 100 * fibonacci(currentLevel);
+export function xpForNextLevel(currentLevel: number, base: number = DEFAULT_XP_CONFIG.perLevelBase): number {
+  return base * fibonacci(currentLevel);
 }
 
 /** Total XP accumulated to reach the given level from level 1. */
-function totalXpForLevel(level: number): number {
+function totalXpForLevel(level: number, base: number): number {
   let total = 0;
   for (let i = 1; i < level; i++) {
-    total += xpForNextLevel(i);
+    total += xpForNextLevel(i, base);
   }
   return total;
 }
 
 /** Level derived from total XP. Pure function — level is derived, never stored. */
-export function levelForXp(xp: number): number {
+export function levelForXp(xp: number, base: number = DEFAULT_XP_CONFIG.perLevelBase): number {
   let level = 1;
   let total = 0;
-  while (total + xpForNextLevel(level) <= xp) {
-    total += xpForNextLevel(level);
+  while (total + xpForNextLevel(level, base) <= xp) {
+    total += xpForNextLevel(level, base);
     level++;
   }
   return level;
 }
 
 /** XP progress within the current level. */
-export function levelProgress(xp: number) {
-  const level = levelForXp(xp);
-  const currentFloor = totalXpForLevel(level);
-  const nextFloor = currentFloor + xpForNextLevel(level);
+export function levelProgress(xp: number, base: number = DEFAULT_XP_CONFIG.perLevelBase) {
+  const level = levelForXp(xp, base);
+  const currentFloor = totalXpForLevel(level, base);
+  const nextFloor = currentFloor + xpForNextLevel(level, base);
   return {
     level,
     currentFloor,
     nextFloor,
-    xpForNext: xpForNextLevel(level),
+    xpForNext: xpForNextLevel(level, base),
     progress: nextFloor === currentFloor ? 0 : (xp - currentFloor) / (nextFloor - currentFloor),
   };
 }
@@ -64,11 +82,15 @@ export function streakMultiplier(streak: number): number {
   return 1.0;
 }
 
-/** Calculate XP for finishing a book. */
-export function calculateFinishXp(pages: number | null | undefined, streak: number): number {
-  let xp = XP_REWARDS.BOOK_FINISHED_BASE;
+/** Calculate XP for finishing a book (config from AppSettings; defaults legacy). */
+export function calculateFinishXp(
+  pages: number | null | undefined,
+  streak: number,
+  config: XpConfig = DEFAULT_XP_CONFIG,
+): number {
+  let xp = config.bookFinishedBase;
   if (pages && pages > 0) {
-    xp += Math.floor(pages / 10) * XP_REWARDS.PAGES_PER_10;
+    xp += Math.floor(pages / 10) * config.pagesPer10;
   }
   return Math.floor(xp * streakMultiplier(streak));
 }
