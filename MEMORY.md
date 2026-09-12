@@ -1,7 +1,7 @@
 # Bookshelf — Memory Bank
 
 > Last updated: 2026-09-12
-> Version: 2.8.0
+> Version: 2.9.0
 > Branch: main
 
 ---
@@ -192,6 +192,7 @@ npm run format:check  # prettier
 
 | Date | Commit | Description |
 |-------|--------|----------|
+| 2026-09-12 | `ddeed16` | `2.9.0` — **feature-freeze begins (patches only from here on)**: AppSettings fixed singleton id `singleton` (atomic upsert; migration `20260912130000_appsettings_singleton_id` dedupes+pins), logPagesRead optimistic lock (currentPage unchanged incl. NULL, conflict on race, XP only after confirmed write, auto-finish +status guard), finishBookWithXp idempotency (fresh check + 10s TTL claim), createGroup order race transaction; dependency overrides (mysql2 ^3.24.4, deepmerge-ts ^8.0.2, uuid ^11.1.1) → npm audit 0; CHANGELOG.md created; 218 unit (incl. race-safety.test.ts ×8) + 42 e2e green |
 | 2026-09-12 | `119fba0` | `2.8.0` — Groups/Shelves: `BookGroup` + `BookGroupMembership` (many-to-many, cascade rules), migration `20260912000000_add_groups`, `src/lib/groups.ts` (pure validation: name ≤60, palette/hex colors `#RRGGBB`, `applyReorder` permutation check), `src/app/actions/groups.ts` (6 ownership-scoped actions: create/rename/delete/reorder/addBookToGroup/removeBookFromGroup, stable error codes), `/groups` manager (dialogs, up/down reorder, palette+hex picker) + `/groups/[id]` detail (existing BooksGrid reuse, empty state), books-page Group filter (AND with tags/status/search), book-card color dots (max 3 + "+n"), book-detail membership chips, sidebar+More nav, 6-lang i18n (31 keys), 210 unit + 42 e2e green |
 | 2026-09-11 | `2.7.0` | Annual Reading Summary (Jan 1–7 window, read-event metrics, PNG share card, 9-piece CC0 mood music) + reading rules (page-log button, auto-FINISH at all pages read, re-read +1, early-finish block) + goal lock (once/year) + goal-progress push calendar + AppSettings admin/env values |
 | 2026-09-11 | `2.6.0` | Goodreads CSV import — `src/lib/books/goodreads.ts` (RFC 4180 parser, ISBN13-first normalization, shelf→status/tags) + `src/app/actions/goodreads.ts` (20 MiB, 5000-row guard, ISBN dedupe, OL enrichment, revalidatePath) + books UI button + 6-lang i18n |
