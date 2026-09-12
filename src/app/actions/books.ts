@@ -262,37 +262,52 @@ export async function logPagesRead(
   const current = book.currentPage ?? 0;
   const newCurrent = knownPages ? Math.min(current + pagesLogged, totalPages) : current + pagesLogged;
 
-  // All pages read → automatic FINISHED: one read event + finish XP
+  // v2.9.0 — "currentPage still holds the value this call read". Books never
+  // opened store NULL, not 0, so the unchanged-check must match both.
+  const currentPageUnchanged =
+    current === 0 ? { OR: [{ currentPage: 0 }, { currentPage: null as null }] } : { currentPage: current };
+
+  // All pages read → automatic FINISH: one read event + finish XP
   // (finishBookWithXp also records the activity, so skip the plain log below).
+  // v2.9.0 — optimistic lock: the transition only fires when currentPage still
+  // holds the value this call read and the book is not FINISHED yet, so a
+  // concurrent duplicate call can never award a second read event / finish XP.
   if (knownPages && newCurrent >= totalPages) {
-    const finishedNow = book.status !== "FINISHED";
-    await db.book.updateMany({
-      where: { id: bookId, userId },
+    const finished = await db.book.updateMany({
+      where: { id: bookId, userId, ...currentPageUnchanged, status: { not: "FINISHED" } },
       data: { status: "FINISHED", finishedAt: new Date(), currentPage: totalPages },
     });
-    if (finishedNow) {
-      try {
-        await db.bookReadEvent.create({
-          data: { userId, bookId: book.id, bookTitle: book.title, pagesRead: totalPages },
-        });
-      } catch {}
-      const { finishBookWithXp } = await import("./streak");
-      await finishBookWithXp(bookId, totalPages);
-    }
+    if (finished.count === 0) return { ok: false, error: "Conflict, please retry" };
+    try {
+      await db.bookReadEvent.create({
+        data: { userId, bookId: book.id, bookTitle: book.title, pagesRead: totalPages },
+      });
+    } catch {}
+    const { finishBookWithXp } = await import("./streak");
+    await finishBookWithXp(bookId, totalPages);
     revalidatePath("/books");
     revalidatePath("/stats");
     return { ok: true, logged: pagesLogged, finished: true };
   }
 
+  // v2.9.0 — optimistic lock: the write only applies when currentPage still
+  // holds the value this call read. A concurrent call that already advanced
+  // the page counter makes this write a no-op (count 0) — report a conflict
+  // instead of silently losing the other call's progress or double-awarding XP.
   const updateData: { currentPage: number; status?: "READING"; startedAt?: Date } = { currentPage: newCurrent };
   if (book.status === "TO_READ") {
     // Reading progress implies the book has been started.
     updateData.status = "READING";
     if (!book.startedAt) updateData.startedAt = new Date();
   }
-  await db.book.update({ where: { id: bookId }, data: updateData as never });
+  const updated = await db.book.updateMany({
+    where: { id: bookId, userId, ...currentPageUnchanged },
+    data: updateData,
+  });
+  if (updated.count === 0) return { ok: false, error: "Conflict, please retry" };
 
-  // Streak-only path: no read event, no finish bonus XP.
+  // Streak-only path: no read event, no finish bonus XP. XP/activity are
+  // awarded only after the write is confirmed.
   const { recordActivity } = await import("./streak");
   await recordActivity(pagesLogged);
   const xp = Math.floor(pagesLogged / 10) * settings.xpPagesPer10;

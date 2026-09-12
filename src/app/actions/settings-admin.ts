@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/session";
-import { clampSetting, invalidateAppSettingsCache, type AppSettingsValues } from "@/lib/settings";
+import { clampSetting, invalidateAppSettingsCache, APP_SETTINGS_ID, type AppSettingsValues } from "@/lib/settings";
 
 const settingsSchema = z.object({
   pagesPerReadEvent: z.number().int().min(1).max(1000),
@@ -32,8 +32,13 @@ export async function updateAppSettings(
   });
   if (!parsed.success) return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
 
-  await db.appSettings.deleteMany();
-  await db.appSettings.create({ data: parsed.data });
+  // Single atomic upsert on the fixed singleton row — concurrent admin
+  // updates (double-click, two admins) can never produce two rows.
+  await db.appSettings.upsert({
+    where: { id: APP_SETTINGS_ID },
+    update: parsed.data,
+    create: { id: APP_SETTINGS_ID, ...parsed.data },
+  });
   invalidateAppSettingsCache();
   revalidatePath("/admin");
   revalidatePath("/stats");
@@ -42,6 +47,6 @@ export async function updateAppSettings(
 
 export async function readAppSettings(): Promise<AppSettingsValues | null> {
   await requireAdmin();
-  const row = await db.appSettings.findFirst();
+  const row = await db.appSettings.findUnique({ where: { id: APP_SETTINGS_ID } });
   return row ?? null;
 }

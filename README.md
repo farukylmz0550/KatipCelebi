@@ -10,10 +10,12 @@
 
 *Terracotta × Dusty Rose · Ink & Copper · Noto Serif/Sans · 60/40 physical cards · Paper material*
 
-[![Version](https://img.shields.io/badge/version-2.8.0-EAD6D0?style=flat-square&labelColor=2B2727&color=A25F4C)](https://github.com/farukylmz0550/bookshelf-web/releases)
+[![Version](https://img.shields.io/badge/version-2.9.0-EAD6D0?style=flat-square&labelColor=2B2727&color=A25F4C)](https://github.com/farukylmz0550/bookshelf-web/releases)
 [![Docker](https://img.shields.io/badge/docker-ghcr.io%2Fbookshelf-272A29?style=flat-square&logo=docker&labelColor=1D2020&color=C17A5E)](https://ghcr.io/farukylmz0550/bookshelf)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=nextdotjs)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+
+> **Feature-freeze:** 2.9.0 and onward are patch releases only (bugfix / security / performance — no behavior, schema or feature changes). See [`CHANGELOG.md`](CHANGELOG.md).
 
 *Self-hosted · Private · No tracking · Your books, your data.*
 

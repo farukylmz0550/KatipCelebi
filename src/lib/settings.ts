@@ -14,6 +14,9 @@ export type AppSettingsValues = {
   xpPerLevelBase: number;
 };
 
+/** Fixed singleton row id (v2.9.0) — writes are one upsert, never delete+create. */
+export const APP_SETTINGS_ID = "singleton";
+
 function envInt(env: NodeJS.ProcessEnv, name: string, fallback: number): number {
   const raw = env[name];
   if (!raw) return fallback;
@@ -46,7 +49,7 @@ let cache: { values: AppSettingsValues; at: number } | null = null;
 
 /** Valid (admin-confirmed) settings row, else null. */
 export async function readAppSettingsRow(): Promise<AppSettingsValues | null> {
-  const row = await db.appSettings.findFirst();
+  const row = await db.appSettings.findUnique({ where: { id: APP_SETTINGS_ID } });
   if (!row) return null;
   return {
     pagesPerReadEvent: clampSetting(row.pagesPerReadEvent),

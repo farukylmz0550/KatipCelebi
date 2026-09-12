@@ -46,17 +46,22 @@ export async function createGroup(name: unknown, color?: unknown): Promise<Actio
   if (!parsed.success) return fail(parsed.error.issues[0]?.message ?? "INVALID_INPUT");
   if (!parsed.data.name.ok) return fail(parsed.data.name.error);
   if (!parsed.data.color.ok) return fail(parsed.data.color.error);
+  const groupName = parsed.data.name.value;
+  const groupColor = parsed.data.color.value;
 
   try {
-    // New groups append to the end of the user's shelf order.
-    const maxOrder = (await db.bookGroup.aggregate({ where: { userId }, _max: { order: true } }))._max.order;
-    const group = await db.bookGroup.create({
-      data: {
-        userId,
-        name: parsed.data.name.value,
-        color: parsed.data.color.value,
-        order: (maxOrder ?? -1) + 1,
-      },
+    // Aggregate + create run in one transaction (v2.9.0): two concurrent
+    // creates can no longer read the same max order and tie on `order`.
+    const group = await db.$transaction(async (tx) => {
+      const maxOrder = (await tx.bookGroup.aggregate({ where: { userId }, _max: { order: true } }))._max.order;
+      return tx.bookGroup.create({
+        data: {
+          userId,
+          name: groupName,
+          color: groupColor,
+          order: (maxOrder ?? -1) + 1,
+        },
+      });
     });
     revalidateGroups();
     return { ok: true, groupId: group.id };

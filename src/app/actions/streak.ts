@@ -60,9 +60,32 @@ export async function recordActivity(pagesRead?: number) {
   revalidatePath("/books");
 }
 
+// v2.9.0 — defense-in-depth against duplicate finish invocations: after a
+// legitimate finish this short-lived in-process claim collapses any immediate
+// duplicate call (double-tap, racing callers) to a no-op. Legitimate re-reads
+// are unaffected: startReRead moves the book to READING and the next finish
+// happens well past the TTL. Caller-side callers (setBookStatus, logPagesRead)
+// additionally gate this on an atomic status transition, which is the DB-level
+// guarantee; this map is process-local extra safety.
+const FINISH_CLAIM_TTL_MS = 10_000;
+const recentFinishClaims = new Map<string, number>();
+
 /** Finish a book with XP calculation. */
 export async function finishBookWithXp(bookId: string, pages: number | null) {
   const userId = await requireUserId();
+
+  // Fresh scoped read: only a book the caller owns, already transitioned to
+  // FINISHED by the caller's atomic update, may award finish XP.
+  const book = await db.book.findFirst({
+    where: { id: bookId, userId, status: "FINISHED" },
+    select: { id: true },
+  });
+  if (!book) return 0;
+
+  const now = Date.now();
+  const claimedAt = recentFinishClaims.get(bookId);
+  if (claimedAt !== undefined && now - claimedAt < FINISH_CLAIM_TTL_MS) return 0;
+  recentFinishClaims.set(bookId, now);
 
   const [user, settings] = await Promise.all([
     db.user.findUnique({ where: { id: userId }, select: { currentStreak: true } }),

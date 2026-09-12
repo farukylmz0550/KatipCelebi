@@ -24,9 +24,10 @@ test.describe("books", () => {
     test.setTimeout(60000); // Open Library can be slow / retried
     await page.goto("/books");
     await page.getByPlaceholder("ISBN").fill("9780140449136");
-    // Lookup auto-adds the matched book (Open Library can be slow)
+    // Lookup auto-adds the matched book — Open Library can be slow; the
+    // lookup path allows 3×10s retries upstream, so wait up to 60s here.
     await page.getByRole("button", { name: /look up/i }).click();
-    await expect(page.locator("a[href^='/books/']").first()).toBeVisible({ timeout: 30000 });
+    await expect(page.locator("a[href^='/books/']").first()).toBeVisible({ timeout: 60000 });
   });
 
   test("bulk import removed — no ISBN list", async ({ page }) => {

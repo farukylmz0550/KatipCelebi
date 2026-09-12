@@ -225,8 +225,10 @@ model PushSubscription {
 
 // Singleton site settings (v2.7.0) — system-admin editable reading/gamification
 // values. Absent row = env-var defaults. Env provides defaults; admin edits win.
+// v2.9.0: fixed singleton id ("singleton") — writes are a single upsert, so
+// concurrent admin updates can never produce more than one row.
 model AppSettings {
-  id                  String @id @default(cuid())
+  id                  String @id
   pagesPerReadEvent   Int
   xpBookAdded         Int
   xpBookFinishedBase  Int
