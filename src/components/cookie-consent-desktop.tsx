@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 "use client";
 
 import { Cookie, Shield, BarChart3, Settings, X } from "lucide-react";

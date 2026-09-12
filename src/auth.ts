@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";

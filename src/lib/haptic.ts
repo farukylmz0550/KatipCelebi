@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 export type HapticStyle = "light" | "medium" | "heavy";
 
 const PATTERNS: Record<HapticStyle, number | number[]> = {

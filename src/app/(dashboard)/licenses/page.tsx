@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { getDictionary } from "@/i18n/get-dictionary";
 import { Scale } from "lucide-react";
 

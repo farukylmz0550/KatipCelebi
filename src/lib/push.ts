@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import webpush from "web-push";
 import { db } from "@/lib/db";
 import { getStreakInfo } from "@/lib/streak";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 "use client";
 
 import { Tabs as TabsPrimitive } from "@base-ui/react/tabs";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 export default function BooksLoading() {
   return (
     <div className="space-y-6">

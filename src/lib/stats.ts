@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 /** Buckets finish dates into their last-6-months' "YYYY-MM" label, zero-filled. */
 export function monthlyFinishCounts(finishedAt: Date[], now = new Date()): { month: string; count: number }[] {
   const months: { key: string; month: string }[] = [];

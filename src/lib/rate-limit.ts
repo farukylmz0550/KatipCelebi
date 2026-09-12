@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 // In-memory sliding-window rate limiter — single shared instance per runtime.
 // NOTE: proxy.ts (middleware) and the Node.js server are separate runtimes;
 // each runtime gets its own Map instance from this module. Within a runtime,

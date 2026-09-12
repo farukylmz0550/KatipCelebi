@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
+// SPDX-License-Identifier: GPL-3.0-only
 // @ts-check
 // Documented exception to CONTRIBUTING.md "TypeScript everywhere" — see CONTRIBUTING.md
 // Plain-JS Docker fallback for prisma/seed.ts (TS source of truth). tsx is dev-only, so production

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import * as React from "react";
 import { Input as InputPrimitive } from "@base-ui/react/input";
 

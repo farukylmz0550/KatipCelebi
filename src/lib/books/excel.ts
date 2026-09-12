@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 // Excel — legacy src/books/excel_io.py port.
 // Single responsibility: Excel import/export.
 

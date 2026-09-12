@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { db } from "@/lib/db";

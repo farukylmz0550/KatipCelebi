@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 "use client";
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { db } from "@/lib/db";
 import { requireUserId } from "@/lib/session";
 import { getDictionary, getLocale } from "@/i18n/get-dictionary";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { cookies } from "next/headers";
 
 export type Theme = "light" | "dark";

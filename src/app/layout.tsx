@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import type { Metadata, Viewport } from "next";
 import { Noto_Serif, Noto_Sans, Noto_Sans_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";

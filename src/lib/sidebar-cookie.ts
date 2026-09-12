@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { clientHasConsent } from "@/lib/cookies-client";
 
 /** Persist the sidebar collapse preference (cookie with consent, else localStorage). */

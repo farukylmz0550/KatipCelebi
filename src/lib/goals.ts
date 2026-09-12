@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 // Pure Goal logic — legacy stats/goals.py + stats/summary.py Goal port.
 // Single responsibility: goal math.
 

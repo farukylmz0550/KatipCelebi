@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 // OpenLibrary client — legacy src/books/openlibrary/* port.
 // Features: retry 3x backoff, 429/5xx, 20MiB guard, User-Agent, author parallel.
 

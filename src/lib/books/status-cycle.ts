@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 export const STATUS_ORDER = ["TO_READ", "READING", "FINISHED"] as const;
 
 export type BookStatus = (typeof STATUS_ORDER)[number];

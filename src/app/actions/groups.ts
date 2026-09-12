@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 "use server";
 
 // v2.8.0 — Groups / Shelves server actions. Every mutation authenticates via

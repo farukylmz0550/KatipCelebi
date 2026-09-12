@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { test, expect } from "@playwright/test";
 import { resetDb } from "./helpers/db";
 import { dismissCookieConsent, clickSetting } from "./helpers/auth";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import "dotenv/config";
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import { PrismaClient } from "../src/generated/prisma/client";

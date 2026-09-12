@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 // AppSettings (v2.7.0) — singleton site settings editable by the system admin.
 // Resolution order: DB row (admin edits) → env defaults → code defaults.
 // Pure defaults/env reading is separated so tests can exercise the pure part.

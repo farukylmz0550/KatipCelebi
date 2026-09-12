@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { expect, type Page } from "@playwright/test";
 
 /** Click a settings button and wait for its server action POST to complete. */

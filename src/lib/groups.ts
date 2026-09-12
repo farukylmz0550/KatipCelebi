@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 // Groups / Shelves (v2.8.0) — pure validation & ordering logic.
 // Server actions (src/app/actions/groups.ts) call these; unit-tested in
 // groups.test.ts. No DB access here so every rule stays testable in isolation.

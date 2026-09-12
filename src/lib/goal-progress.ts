@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 // Goal-progress push notifications (v2.7.0) — pure calendar rules.
 //
 // Schedule (server-local clock; the cron calls the endpoint daily and the

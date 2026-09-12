@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { clientHasConsent } from "@/lib/cookies-client";
 
 export type ViewMode = "card" | "list";

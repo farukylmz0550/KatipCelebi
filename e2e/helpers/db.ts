@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 export async function resetDb(page?: { request: { post: (url: string) => Promise<{ ok: () => boolean }> } }) {
   // Wait for any pending server actions to finish (avoid busy DB)
   await new Promise((r) => setTimeout(r, 800));

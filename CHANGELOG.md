@@ -4,6 +4,14 @@ All notable changes to **Book Shelf** are documented here.
 From **2.9.0 onward the project is in feature-freeze**: every future release is a
 PATCH (bugfix / security / performance only — no behavior, schema or feature changes).
 
+## 2.9.1 — 2026-09-12
+
+- **License metadata** — machine-readable `SPDX-License-Identifier` headers added
+  to all GPL source files (including root configs, e2e specs and tooling
+  scripts) and to the CC-BY-NC-ND brand SVG masters/icons; new root
+  [`NOTICE.md`](NOTICE.md) summarizes which license applies to which path.
+  Metadata only — no behavior, schema or feature changes.
+
 ## 2.9.0 — 2026-09-12
 
 **Feature-freeze begins:** 2.9.0 and onward: patches only.

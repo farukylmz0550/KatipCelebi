@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import Link from "next/link";
 import { getDictionary } from "@/i18n/get-dictionary";
 

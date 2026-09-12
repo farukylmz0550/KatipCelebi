@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 "use server";
 
 import { db } from "@/lib/db";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { getDictionary } from "@/i18n/get-dictionary";

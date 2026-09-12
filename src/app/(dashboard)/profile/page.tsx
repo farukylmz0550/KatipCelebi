@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";

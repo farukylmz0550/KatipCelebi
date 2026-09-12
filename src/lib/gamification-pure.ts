@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 export const XP_REWARDS = {
   BOOK_ADDED: 5,
   BOOK_FINISHED_BASE: 50,

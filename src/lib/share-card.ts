@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 // Share-card content — pure, deterministic (same summary → same card data).
 // The canvas renderer consumes this; text is never interpreted as markup.
 

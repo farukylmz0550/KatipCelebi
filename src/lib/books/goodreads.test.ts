@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { describe, it, expect } from "vitest";
 import { parseCsvText, parseGoodreadsRows, parseShelves, parseGoodreadsDate } from "./goodreads";
 import type { GoodreadsParseResult } from "./goodreads";

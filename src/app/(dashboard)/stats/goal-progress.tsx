@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { fraction, reached, yearlyGoal, monthlyGoal } from "@/lib/goals";
 
 type Props = {

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import type { DefaultSession } from "next-auth";
 
 declare module "next-auth" {

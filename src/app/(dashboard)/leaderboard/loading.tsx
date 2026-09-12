@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 export default function LeaderboardLoading() {
   return (
     <div className="space-y-6">

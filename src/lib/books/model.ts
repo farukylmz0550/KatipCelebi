@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 // Book model helpers — legacy src/books/model.py port.
 // Single responsibility: Book identity & field parsing.
 

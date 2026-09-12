@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { db } from "@/lib/db";
 
 /** True when no user exists yet — first-time setup required. */

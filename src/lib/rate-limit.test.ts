@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { checkRateLimit, resetRateLimit } from "./rate-limit";
 

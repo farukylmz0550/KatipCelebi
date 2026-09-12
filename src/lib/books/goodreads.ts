@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 // Goodreads CSV import — legacy parity for Goodreads exports.
 // Single responsibility: Goodreads CSV parsing, ISBN normalization,
 // shelf→status/tags mapping and import result counting.

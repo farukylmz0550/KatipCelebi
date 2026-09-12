@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 "use client";
 
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";

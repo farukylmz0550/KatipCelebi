@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { requireAdminPage } from "@/lib/session";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { getUsers } from "@/app/actions/admin";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 "use client";
 
 // v2.8.0 — group membership control on the book detail page. Mutations are

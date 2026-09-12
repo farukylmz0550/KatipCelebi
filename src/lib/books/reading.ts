@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 // Reading helpers — legacy src/books/reading.py port.
 
 export const NOT_READ = "not_read";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 // v2.9.0 — concurrency regression tests (settings singleton, page-log XP,
 // finish idempotency, group order). Runs the real server actions against an
 // isolated throwaway SQLite database built from the project migrations, with

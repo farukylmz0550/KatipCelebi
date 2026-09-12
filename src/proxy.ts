@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 import { checkRateLimit, throttlingEnabled, DEFAULT_LIMITS } from "@/lib/rate-limit";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { test, expect, type Page } from "@playwright/test";
 import { resetDb } from "./helpers/db";
 import { createAdminViaSetup, login } from "./helpers/auth";

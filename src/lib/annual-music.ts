@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 // Annual-summary background music (v2.7.0).
 //
 // Licensing: all compositions are public domain (composers died more than 70

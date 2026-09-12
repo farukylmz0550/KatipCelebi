@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * v2.7.0 — Annual-summary background music renderer (dev-time, one-shot).
  *

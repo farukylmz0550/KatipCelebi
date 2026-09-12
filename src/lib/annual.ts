@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 // Annual Reading Summary — server-side aggregation over existing data (v2.7.0).
 // Presentation layer over existing reading data: no new data collection beyond
 // the user-driven read events, no summary persistence.

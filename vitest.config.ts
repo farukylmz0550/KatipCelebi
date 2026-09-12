@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import path from "node:path";
 import { defineConfig } from "vitest/config";
 

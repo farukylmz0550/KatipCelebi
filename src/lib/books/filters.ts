@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 // Filters — legacy src/books/filters.py port.
 // Single responsibility: filter & sort.
 

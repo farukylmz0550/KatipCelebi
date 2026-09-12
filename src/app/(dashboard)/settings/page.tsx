@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { getDictionary, getLocale } from "@/i18n/get-dictionary";
 import { SettingsForm } from "./settings-form";
 import { getSettings } from "@/app/actions/settings";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 // Person helpers — legacy src/people/model.py port.
 // Single responsibility: person normalization & trust.
 

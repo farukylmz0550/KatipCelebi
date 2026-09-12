@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/session";

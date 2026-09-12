@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 declare module "better-sqlite3" {
   class Database {
     constructor(filename: string, options?: Record<string, unknown>);

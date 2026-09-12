@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import { cookies } from "next/headers";
 import en from "./dictionaries/en.json";
 import tr from "./dictionaries/tr.json";

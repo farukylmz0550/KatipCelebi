@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
