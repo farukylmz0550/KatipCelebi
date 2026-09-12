@@ -8,7 +8,8 @@
     "leaderboard": "Clasificación",
     "more": "Más",
     "settings": "Ajustes",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "groups": "Grupos"
   },
   "theme": {
     "light": "Claro",
@@ -67,7 +68,9 @@
     "clear": "Limpiar",
     "noResults": "Sin resultados — intenta limpiar los filtros",
     "booksCount": "libros",
-    "ofTotal": "de"
+    "ofTotal": "de",
+    "group": "Grupo",
+    "allGroups": "Todos los grupos"
   },
   "books": {
     "title": "Mis Libros",
@@ -406,5 +409,38 @@
     "goalMonthStart": "Comenzó un nuevo mes. Tu objetivo de lectura este mes es de {target} libros.",
     "goalProgressMid": "Este mes has leído {count} libros. Estás al {percent}% de tu objetivo.",
     "goalProgressFinal": "Te quedan {remaining} libros para tu objetivo."
+  },
+  "groups": {
+    "title": "Grupos",
+    "subtitle": "Tus estanterías: organiza los libros a tu manera",
+    "create": "Crear grupo",
+    "createCta": "Crear",
+    "newGroup": "Nuevo grupo",
+    "name": "Nombre del grupo",
+    "namePlaceholder": "p. ej. Favoritos",
+    "color": "Color",
+    "noColor": "Sin color",
+    "rename": "Renombrar grupo",
+    "delete": "Eliminar grupo",
+    "deleteConfirm": "¿Eliminar este grupo? Tus libros permanecen en la biblioteca.",
+    "reorder": "Reordenar grupos",
+    "moveUp": "Subir",
+    "moveDown": "Bajar",
+    "empty": "Aún no hay grupos",
+    "emptyHint": "Crea una estantería para organizar tus libros.",
+    "emptyShelf": "Todavía no hay nada en esta estantería.",
+    "addBooks": "Añadir libros",
+    "back": "Volver a grupos",
+    "manageGroups": "Gestionar grupos",
+    "addToGroup": "Añadir al grupo",
+    "removeFromGroup": "Quitar del grupo",
+    "createdToast": "Grupo creado",
+    "renamedToast": "Grupo renombrado",
+    "deletedToast": "Grupo eliminado",
+    "addedToast": "Añadido al grupo",
+    "removedToast": "Quitado del grupo",
+    "errorDuplicateName": "Ya existe un grupo con este nombre.",
+    "errorNotFound": "Grupo no encontrado.",
+    "errorGeneric": "Algo salió mal. Inténtalo de nuevo."
   }
 }

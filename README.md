@@ -10,7 +10,7 @@
 
 *Terracotta × Dusty Rose · Ink & Copper · Noto Serif/Sans · 60/40 physical cards · Paper material*
 
-[![Version](https://img.shields.io/badge/version-2.7.0-EAD6D0?style=flat-square&labelColor=2B2727&color=A25F4C)](https://github.com/farukylmz0550/bookshelf-web/releases)
+[![Version](https://img.shields.io/badge/version-2.8.0-EAD6D0?style=flat-square&labelColor=2B2727&color=A25F4C)](https://github.com/farukylmz0550/bookshelf-web/releases)
 [![Docker](https://img.shields.io/badge/docker-ghcr.io%2Fbookshelf-272A29?style=flat-square&logo=docker&labelColor=1D2020&color=C17A5E)](https://ghcr.io/farukylmz0550/bookshelf)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=nextdotjs)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
@@ -33,6 +33,7 @@
 |---|---|
 | 📚 **Library** | One-click ISBN (Open Library, full metadata: publishers, dates, languages, subjects, ISBN10/13) + detailed manual form (arrow → 14 fields) · Card/List toggle · Excel import/export |
 | 🎴 **Cards** | Equal `h-[380px]` **60% cover / 40% meta** · `object-contain` · 12px radius · `2→3→4` responsive grid |
+| 🗂️ **Groups** | Personal shelves — create/rename/delete/reorder, optional color · many-to-many books · dedicated `/groups/[id]` grid view · main-page group filter (AND with tags/status/search) |
 | 🤝 **Lending** | Lend / return, copy-aware, auto Person creation |
 | 👥 **People** | Trust scores + lending history |
 | 📊 **Stats** | Total/finished/reading, avg days, monthly chart, streak widget, heatmap |

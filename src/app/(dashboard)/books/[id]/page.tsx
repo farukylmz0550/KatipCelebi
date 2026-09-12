@@ -5,6 +5,7 @@ import { requireUserId } from "@/lib/session";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { BookFacts } from "./book-facts";
 import { BookPersonal } from "./book-personal";
+import { BookGroups } from "./book-groups";
 import { BookLending } from "./book-lending";
 import { ShareButton } from "@/components/share-button";
 
@@ -15,9 +16,22 @@ export default async function BookDetailPage({ params }: { params: Promise<{ id:
   const book = await db.book.findFirst({ where: { id, userId } });
   if (!book) notFound();
 
-  const lendings = await db.lendingRecord.findMany({ where: { bookId: id }, orderBy: { lentAt: "desc" } });
+  const [lendings, persons, groups, memberships] = await Promise.all([
+    db.lendingRecord.findMany({ where: { bookId: id }, orderBy: { lentAt: "desc" } }),
+    db.person.findMany({ where: { userId }, select: { id: true, name: true } }),
+    db.bookGroup.findMany({
+      where: { userId },
+      orderBy: [{ order: "asc" }, { createdAt: "asc" }],
+      select: { id: true, name: true, color: true },
+    }),
+    db.bookGroupMembership.findMany({
+      where: { group: { userId }, bookId: id },
+      select: { groupId: true },
+    }),
+  ]);
   const lentOut = lendings.filter((l) => !l.returnedAt).length;
-  const persons = await db.person.findMany({ where: { userId }, select: { id: true, name: true } });
+  const memberGroupIds = new Set(memberships.map((m) => m.groupId));
+  const memberGroups = groups.filter((g) => memberGroupIds.has(g.id));
 
   return (
     <div className="mx-auto max-w-[680px] space-y-6">
@@ -71,6 +85,21 @@ export default async function BookDetailPage({ params }: { params: Promise<{ id:
 
       <BookFacts book={book} dict={dict.facts} />
       <BookPersonal book={book} dict={{ ...dict.personal, earlyFinishBlocked: dict.books.earlyFinishBlocked }} />
+      <BookGroups
+        bookId={book.id}
+        memberGroups={memberGroups}
+        allGroups={groups}
+        dict={{
+          title: dict.groups.title,
+          addToGroup: dict.groups.addToGroup,
+          removeFromGroup: dict.groups.removeFromGroup,
+          manageGroups: dict.groups.manageGroups,
+          addedToast: dict.groups.addedToast,
+          removedToast: dict.groups.removedToast,
+          errorGeneric: dict.groups.errorGeneric,
+          cancelLabel: dict.facts.cancel,
+        }}
+      />
       <BookLending book={book} lendings={lendings} persons={persons} dict={dict.bookLending} />
     </div>
   );

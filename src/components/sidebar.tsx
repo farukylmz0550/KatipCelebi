@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect, useTransition } from "react";
 import {
   BookOpen,
+  Library,
   Handshake,
   BarChart3,
   Trophy,
@@ -31,6 +32,7 @@ type SidebarProps = {
 
 const MAIN_NAV: NavItem[] = [
   { href: "/books", label: "books", icon: BookOpen },
+  { href: "/groups", label: "groups", icon: Library },
   { href: "/lending", label: "lending", icon: Handshake },
   { href: "/stats", label: "stats", icon: BarChart3 },
 ];

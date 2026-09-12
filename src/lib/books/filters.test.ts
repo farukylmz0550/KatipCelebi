@@ -68,6 +68,24 @@ describe("allows", () => {
     expect(allows(book, true, { ...f, lent: "out" })).toBe(true);
     expect(allows(book, false, { ...f, lent: "home" })).toBe(true);
   });
+
+  it("filters by group membership (v2.8.0)", () => {
+    const grouped = { ...book, groupIds: ["g1", "g2"] };
+    expect(allows(grouped, false, { ...f, groupId: "any" })).toBe(true);
+    expect(allows(grouped, false, { ...f, groupId: "g1" })).toBe(true);
+    expect(allows(grouped, false, { ...f, groupId: "g9" })).toBe(false);
+    expect(allows(book, false, { ...f, groupId: "g1" })).toBe(false);
+  });
+
+  it("combines group and tag filters with AND semantics (v2.8.0)", () => {
+    const grouped = { ...book, groupIds: ["g1"], tags: "fiction, sci-fi" };
+    // In group g1 AND tagged sci-fi → passes.
+    expect(allows(grouped, false, { ...f, groupId: "g1", tag: "sci-fi" })).toBe(true);
+    // In group g1 but different tag → fails.
+    expect(allows(grouped, false, { ...f, groupId: "g1", tag: "poetry" })).toBe(false);
+    // Right tag but different group → fails.
+    expect(allows(book, false, { ...f, groupId: "g2", tag: "sci-fi" })).toBe(false);
+  });
 });
 
 describe("sortKey", () => {

@@ -7,10 +7,12 @@ export function FilterBar({
   onChange,
   tagsInUse,
   dict,
+  groups,
 }: {
   onChange: (f: Filters) => void;
   tagsInUse: string[];
   dict: Record<string, string>;
+  groups?: { id: string; name: string; color: string | null }[];
 }) {
   const [filters, setFilters] = useState<Filters>(defaultFilters);
   const [expanded, setExpanded] = useState(false);
@@ -26,7 +28,8 @@ export function FilterBar({
     filters.signed !== "any" ||
     filters.lent !== "any" ||
     filters.status !== "any" ||
-    filters.tag !== "any";
+    filters.tag !== "any" ||
+    filters.groupId !== "any";
 
   return (
     <div className="paper-surface rounded-[12px] border border-[var(--border)] bg-[var(--surface)] p-3">
@@ -108,6 +111,21 @@ export function FilterBar({
               </option>
             ))}
           </select>
+          {groups && groups.length > 0 && (
+            <select
+              value={filters.groupId}
+              onChange={(e) => update({ groupId: e.target.value })}
+              className="rounded-[8px] border border-[var(--border)] bg-[var(--surface-elevated)] px-2 py-1.5 text-xs font-[var(--font-sans)] text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+              aria-label={dict.group}
+            >
+              <option value="any">{dict.allGroups}</option>
+              {groups.map((g) => (
+                <option key={g.id} value={g.id}>
+                  {g.name}
+                </option>
+              ))}
+            </select>
+          )}
           <select
             value={filters.sort}
             onChange={(e) => update({ sort: e.target.value })}

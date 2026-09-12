@@ -39,6 +39,7 @@ model User {
   streakShields   StreakShield[]
   settings        UserSettings?
   readEvents      BookReadEvent[]
+  groups          BookGroup[]
 
   @@index([id])
 }
@@ -79,6 +80,7 @@ model Book {
 
   lendingRecords LendingRecord[]
   readEvents     BookReadEvent[]
+  groupMemberships BookGroupMembership[]
 
   @@index([userId])
   @@index([tags])
@@ -231,4 +233,34 @@ model AppSettings {
   xpPagesPer10        Int
   xpLending           Int
   xpPerLevelBase      Int
+}
+
+// v2.8.0 — personal groups/shelves: user-defined many-to-many organization for
+// books. Groups are NOT tags (metadata/genres remain on Book.tags); a book can
+// belong to multiple groups and a group can hold many books.
+model BookGroup {
+  id        String                @id @default(cuid())
+  userId    String
+  user      User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  color     String?
+  order     Int                   @default(0)
+  createdAt DateTime              @default(now())
+  memberships BookGroupMembership[]
+
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+model BookGroupMembership {
+  id      String    @id @default(cuid())
+  bookId  String
+  book    Book      @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  groupId String
+  group   BookGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  addedAt DateTime  @default(now())
+
+  @@unique([bookId, groupId])
+  @@index([bookId])
+  @@index([groupId])
 }

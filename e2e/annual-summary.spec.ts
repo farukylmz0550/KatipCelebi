@@ -32,7 +32,9 @@ test.describe("Annual Summary (v2.7.0)", () => {
 
     // Page-less books: manual finish stays available → completion + read event
     await page.getByText("Wrapped Book").first().click();
-    const finishPost = page.waitForResponse((r) => r.request().method() === "POST" && r.url().includes("/books/"), { timeout: 15000 });
+    const finishPost = page.waitForResponse((r) => r.request().method() === "POST" && r.url().includes("/books/"), {
+      timeout: 15000,
+    });
     await page.locator('select:has(option[value="FINISHED"])').first().selectOption("FINISHED");
     await finishPost.catch(() => {});
     await page.goto("/stats");
@@ -78,7 +80,9 @@ test.describe("Reading flow (v2.7.0)", () => {
 
     // Start reading via the book detail status select
     await page.getByText("Streak Book").first().click();
-    const readPost = page.waitForResponse((r) => r.request().method() === "POST" && r.url().includes("/books/"), { timeout: 15000 });
+    const readPost = page.waitForResponse((r) => r.request().method() === "POST" && r.url().includes("/books/"), {
+      timeout: 15000,
+    });
     await page.locator('select:has(option[value="FINISHED"])').first().selectOption("READING");
     await readPost.catch(() => {});
     await page.goto("/books");

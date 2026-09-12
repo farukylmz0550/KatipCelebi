@@ -8,7 +8,8 @@
     "leaderboard": "Liderlik Tablosu",
     "more": "Daha Fazla",
     "settings": "Ayarlar",
-    "logout": "Çıkış yap"
+    "logout": "Çıkış yap",
+    "groups": "Gruplar"
   },
   "theme": {
     "light": "Aydınlık",
@@ -67,7 +68,9 @@
     "clear": "Temizle",
     "noResults": "Sonuç yok — filtreleri temizlemeyi deneyin",
     "booksCount": "kitap",
-    "ofTotal": "/"
+    "ofTotal": "/",
+    "group": "Grup",
+    "allGroups": "Tüm gruplar"
   },
   "books": {
     "title": "Kitaplarım",
@@ -406,5 +409,38 @@
     "goalMonthStart": "Yeni ay başladı. Bu ayki okuma hedefin {target} kitap.",
     "goalProgressMid": "Bu ay {count} kitap okudun. Hedefinin %{percent}'indesin.",
     "goalProgressFinal": "Hedefine {remaining} kitap kaldı."
+  },
+  "groups": {
+    "title": "Gruplar",
+    "subtitle": "Raflarınız — kitapları kendi düzeninize ayırın",
+    "create": "Grup oluştur",
+    "createCta": "Oluştur",
+    "newGroup": "Yeni grup",
+    "name": "Grup adı",
+    "namePlaceholder": "örn. Favoriler",
+    "color": "Renk",
+    "noColor": "Renk yok",
+    "rename": "Grubu yeniden adlandır",
+    "delete": "Grubu sil",
+    "deleteConfirm": "Bu grup silinsin mi? Kitaplarınız kütüphanede kalır.",
+    "reorder": "Grupları sırala",
+    "moveUp": "Yukarı taşı",
+    "moveDown": "Aşağı taşı",
+    "empty": "Henüz grup yok",
+    "emptyHint": "Kitaplarınızı düzenlemek için bir raf oluşturun.",
+    "emptyShelf": "Bu rafta henüz bir şey yok.",
+    "addBooks": "Kitap ekle",
+    "back": "Gruplara dön",
+    "manageGroups": "Grupları yönet",
+    "addToGroup": "Gruba ekle",
+    "removeFromGroup": "Gruptan çıkar",
+    "createdToast": "Grup oluşturuldu",
+    "renamedToast": "Grup yeniden adlandırıldı",
+    "deletedToast": "Grup silindi",
+    "addedToast": "Gruba eklendi",
+    "removedToast": "Gruptan çıkarıldı",
+    "errorDuplicateName": "Bu adda bir grup zaten var.",
+    "errorNotFound": "Grup bulunamadı.",
+    "errorGeneric": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
   }
 }

@@ -8,7 +8,8 @@
     "leaderboard": "排行榜",
     "more": "更多",
     "settings": "设置",
-    "logout": "退出"
+    "logout": "退出",
+    "groups": "分组"
   },
   "theme": {
     "light": "浅色",
@@ -67,7 +68,9 @@
     "clear": "清除",
     "noResults": "无结果 — 尝试清除筛选",
     "booksCount": "本书",
-    "ofTotal": "/"
+    "ofTotal": "/",
+    "group": "分组",
+    "allGroups": "全部分组"
   },
   "books": {
     "title": "我的书籍",
@@ -406,5 +409,38 @@
     "goalMonthStart": "新的一月开始。你本月的阅读目标是 {target} 本书。",
     "goalProgressMid": "本月你已读 {count} 本书，完成了目标的 {percent}%。",
     "goalProgressFinal": "距离目标还剩 {remaining} 本书。"
+  },
+  "groups": {
+    "title": "分组",
+    "subtitle": "你的书架——按自己的方式整理书籍",
+    "create": "创建分组",
+    "createCta": "创建",
+    "newGroup": "新分组",
+    "name": "分组名称",
+    "namePlaceholder": "例如：最爱",
+    "color": "颜色",
+    "noColor": "无颜色",
+    "rename": "重命名分组",
+    "delete": "删除分组",
+    "deleteConfirm": "删除这个分组？你的书籍仍会保留在书库中。",
+    "reorder": "调整分组顺序",
+    "moveUp": "上移",
+    "moveDown": "下移",
+    "empty": "还没有分组",
+    "emptyHint": "创建一个书架来整理你的书。",
+    "emptyShelf": "这个书架上还没有书。",
+    "addBooks": "添加书籍",
+    "back": "返回分组",
+    "manageGroups": "管理分组",
+    "addToGroup": "添加到分组",
+    "removeFromGroup": "从分组移除",
+    "createdToast": "分组已创建",
+    "renamedToast": "分组已重命名",
+    "deletedToast": "分组已删除",
+    "addedToast": "已添加到分组",
+    "removedToast": "已从分组移除",
+    "errorDuplicateName": "已存在同名分组。",
+    "errorNotFound": "未找到分组。",
+    "errorGeneric": "出了点问题，请重试。"
   }
 }

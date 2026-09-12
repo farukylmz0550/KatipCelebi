@@ -2,6 +2,13 @@ import { describe, expect, it } from "vitest";
 import { dictionaries, LOCALES } from "./get-dictionary";
 
 describe("dictionary parity", () => {
+  it("groups block has identical key sets across all 6 languages (v2.8.0)", () => {
+    const enKeys = Object.keys(dictionaries.en.groups).sort();
+    for (const locale of LOCALES) {
+      expect(Object.keys(dictionaries[locale].groups).sort()).toEqual(enKeys);
+    }
+  });
+
   it("annual block has identical key sets across all 6 languages (R)", () => {
     const enKeys = Object.keys(dictionaries.en.annual).sort();
     for (const locale of LOCALES) {

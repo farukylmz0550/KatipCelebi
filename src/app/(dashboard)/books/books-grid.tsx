@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LayoutGrid, List } from "lucide-react";
-import { BookCard } from "./book-card";
+import { BookCard, type GroupInfo } from "./book-card";
 import { FilterBar } from "./filter-bar";
 import { Filters, defaultFilters, arrange } from "@/lib/books/filters";
 import { getInitialView, setViewCookie, type ViewMode } from "@/lib/books/view-mode";
@@ -24,6 +24,7 @@ type Book = {
   coverUrl?: string | null;
   currentPage?: number | null;
   numberOfPages?: string | null;
+  groupIds?: string[];
 };
 
 type CardDict = {
@@ -46,12 +47,14 @@ export function BooksGrid({
   dict,
   cardDict,
   pagesPerReadEvent,
+  groups,
 }: {
   books: Book[];
   lentMap: Record<string, boolean>;
   dict: { empty: string; noResults?: string } & Record<string, string>;
   cardDict: CardDict;
   pagesPerReadEvent: number;
+  groups?: GroupInfo[];
 }) {
   const router = useRouter();
   // v2.7.0 — "start a new book" flow after finishing one
@@ -91,6 +94,7 @@ export function BooksGrid({
         onChange={setFilters}
         tagsInUse={tagsInUse}
         dict={(dict as Record<string, unknown>).filter as Record<string, string>}
+        groups={groups}
       />
       <div className="flex items-center justify-between gap-2">
         <p className="font-[var(--font-sans)] text-xs text-muted-foreground">
@@ -143,6 +147,7 @@ export function BooksGrid({
               lentOut={!!lentMap[book.id]}
               statusLabels={{ toRead: dict.toRead, reading: dict.reading, finished: dict.finished }}
               pagesPerReadEvent={pagesPerReadEvent}
+              groups={groups}
               dict={{
                 toRead: dict.toRead,
                 reading: dict.reading,

@@ -20,6 +20,7 @@ export type Filters = {
   lent: string; // any | home | out
   status: string; // any | not_read | want_to_read | reading | read
   tag: string;
+  groupId: string; // v2.8.0 — any | <groupId>
   sort: string; // title | rating | year
   asc: boolean;
 };
@@ -32,6 +33,7 @@ export const defaultFilters: Filters = {
   lent: LENT_ANY,
   status: "any",
   tag: "any",
+  groupId: "any",
   sort: SORT_TITLE,
   asc: true,
 };
@@ -78,6 +80,7 @@ export function allows(
     author?: string | null;
     isbn?: string | null;
     publishers?: string | null;
+    groupIds?: string[]; // v2.8.0 — memberships for group filtering
   },
   lentOut: boolean,
   f: Filters,
@@ -90,6 +93,8 @@ export function allows(
   }
   if (f.status !== "any" && (book.status ?? "") !== f.status) return false;
   if (f.tag !== "any" && f.tag !== "" && !book.tags?.toLowerCase().includes(f.tag.toLowerCase())) return false;
+  // v2.8.0 — group condition ANDs with the tag/status/search conditions above.
+  if (f.groupId !== "any" && !book.groupIds?.includes(f.groupId)) return false;
   if (f.search.trim()) {
     const q = f.search.toLowerCase();
     const hay = haystack(book as never, lentOut);

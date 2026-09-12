@@ -25,6 +25,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   const sidebarDict: Record<string, string> = {
     books: dict.nav.books,
+    groups: dict.nav.groups,
     lending: dict.nav.lending,
     stats: dict.nav.stats,
     achievements: dict.nav.achievements,

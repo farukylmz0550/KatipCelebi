@@ -8,7 +8,8 @@
     "leaderboard": "Leaderboard",
     "more": "More",
     "settings": "Settings",
-    "logout": "Log out"
+    "logout": "Log out",
+    "groups": "Groups"
   },
   "theme": {
     "light": "Light",
@@ -67,7 +68,9 @@
     "clear": "Clear",
     "noResults": "No results — try clearing filters",
     "booksCount": "books",
-    "ofTotal": "of"
+    "ofTotal": "of",
+    "group": "Group",
+    "allGroups": "All groups"
   },
   "books": {
     "title": "My Books",
@@ -406,5 +409,38 @@
     "goalMonthStart": "New month started. Your reading goal this month is {target} books.",
     "goalProgressMid": "You read {count} books this month. You're at {percent}% of your goal.",
     "goalProgressFinal": "{remaining} books left to your goal."
+  },
+  "groups": {
+    "title": "Groups",
+    "subtitle": "Your shelves — organize books your way",
+    "create": "Create group",
+    "createCta": "Create",
+    "newGroup": "New group",
+    "name": "Group name",
+    "namePlaceholder": "e.g. Favorites",
+    "color": "Color",
+    "noColor": "No color",
+    "rename": "Rename group",
+    "delete": "Delete group",
+    "deleteConfirm": "Delete this group? Your books stay in the library.",
+    "reorder": "Reorder groups",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "empty": "No groups yet",
+    "emptyHint": "Create a shelf to organize your books.",
+    "emptyShelf": "Nothing on this shelf yet.",
+    "addBooks": "Add books",
+    "back": "Back to groups",
+    "manageGroups": "Manage groups",
+    "addToGroup": "Add to group",
+    "removeFromGroup": "Remove from group",
+    "createdToast": "Group created",
+    "renamedToast": "Group renamed",
+    "deletedToast": "Group deleted",
+    "addedToast": "Added to group",
+    "removedToast": "Removed from group",
+    "errorDuplicateName": "A group with this name already exists.",
+    "errorNotFound": "Group not found.",
+    "errorGeneric": "Something went wrong. Please try again."
   }
 }

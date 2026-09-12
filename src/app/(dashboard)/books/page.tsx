@@ -9,10 +9,28 @@ import { ExcelActions } from "./excel-actions";
 export default async function BooksPage() {
   const userId = await requireUserId();
   const dict = await getDictionary();
-  const [books, settings] = await Promise.all([
+  const [books, settings, groups, memberships] = await Promise.all([
     db.book.findMany({ where: { userId }, orderBy: { addedAt: "desc" } }),
     getAppSettings(),
+    db.bookGroup.findMany({
+      where: { userId },
+      orderBy: [{ order: "asc" }, { createdAt: "asc" }],
+      select: { id: true, name: true, color: true },
+    }),
+    // One indexed query for all memberships — no N+1 per book.
+    db.bookGroupMembership.findMany({
+      where: { group: { userId } },
+      select: { bookId: true, groupId: true },
+    }),
   ]);
+  const groupsByBook = new Map<string, string[]>();
+  memberships.forEach((m) => {
+    const list = groupsByBook.get(m.bookId) ?? [];
+    list.push(m.groupId);
+    groupsByBook.set(m.bookId, list);
+  });
+  const booksWithGroups = books.map((b) => ({ ...b, groupIds: groupsByBook.get(b.id) ?? [] }));
+
   const lentRecords = await db.lendingRecord.findMany({
     where: { book: { userId }, returnedAt: null },
     select: { bookId: true },
@@ -36,10 +54,11 @@ export default async function BooksPage() {
         excel={<ExcelActions dict={dict.excel} goodreadsDict={dict.goodreads as never} />}
       />
       <BooksGrid
-        books={books as never}
+        books={booksWithGroups as never}
         lentMap={lentMap}
         dict={{ ...dict.books, filter: dict.filter } as never}
         pagesPerReadEvent={settings.pagesPerReadEvent}
+        groups={groups}
         cardDict={{
           logPagesButton: dict.books.logPagesButton,
           logPagesToast: dict.books.logPagesToast,

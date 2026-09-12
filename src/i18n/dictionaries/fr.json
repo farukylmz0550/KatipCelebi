@@ -8,7 +8,8 @@
     "leaderboard": "Classement",
     "more": "Plus",
     "settings": "Paramètres",
-    "logout": "Déconnexion"
+    "logout": "Déconnexion",
+    "groups": "Groupes"
   },
   "theme": {
     "light": "Clair",
@@ -67,7 +68,9 @@
     "clear": "Effacer",
     "noResults": "Aucun résultat — essayez d'effacer les filtres",
     "booksCount": "livres",
-    "ofTotal": "sur"
+    "ofTotal": "sur",
+    "group": "Groupe",
+    "allGroups": "Tous les groupes"
   },
   "books": {
     "title": "Mes Livres",
@@ -406,5 +409,38 @@
     "goalMonthStart": "Un nouveau mois commence. Ton objectif de lecture ce mois-ci : {target} livres.",
     "goalProgressMid": "Tu as lu {count} livres ce mois-ci. Tu es à {percent} % de ton objectif.",
     "goalProgressFinal": "Il te reste {remaining} livres pour ton objectif."
+  },
+  "groups": {
+    "title": "Groupes",
+    "subtitle": "Vos étagères — organisez vos livres à votre façon",
+    "create": "Créer un groupe",
+    "createCta": "Créer",
+    "newGroup": "Nouveau groupe",
+    "name": "Nom du groupe",
+    "namePlaceholder": "ex. Favoris",
+    "color": "Couleur",
+    "noColor": "Aucune couleur",
+    "rename": "Renommer le groupe",
+    "delete": "Supprimer le groupe",
+    "deleteConfirm": "Supprimer ce groupe ? Vos livres restent dans la bibliothèque.",
+    "reorder": "Réordonner les groupes",
+    "moveUp": "Monter",
+    "moveDown": "Descendre",
+    "empty": "Aucun groupe pour le moment",
+    "emptyHint": "Créez une étagère pour organiser vos livres.",
+    "emptyShelf": "Cette étagère est encore vide.",
+    "addBooks": "Ajouter des livres",
+    "back": "Retour aux groupes",
+    "manageGroups": "Gérer les groupes",
+    "addToGroup": "Ajouter au groupe",
+    "removeFromGroup": "Retirer du groupe",
+    "createdToast": "Groupe créé",
+    "renamedToast": "Groupe renommé",
+    "deletedToast": "Groupe supprimé",
+    "addedToast": "Ajouté au groupe",
+    "removedToast": "Retiré du groupe",
+    "errorDuplicateName": "Un groupe portant ce nom existe déjà.",
+    "errorNotFound": "Groupe introuvable.",
+    "errorGeneric": "Une erreur est survenue. Veuillez réessayer."
   }
 }

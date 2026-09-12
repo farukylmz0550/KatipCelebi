@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef, useState, useTransition } from "react";
+import { useRef, useState, useMemo, useTransition } from "react";
 import { toast } from "sonner";
 import { BookPlus, RotateCcw } from "lucide-react";
 import { setBookStatus, logPagesRead, startReRead } from "@/app/actions/books";
 import { useSwipe, useLongPress } from "@/lib/touch-gestures";
 import { hapticFeedback } from "@/lib/haptic";
+import { GROUP_DOTS_MAX } from "@/lib/groups";
 import { getNextStatus, getPrevStatus, statusLabel, STATUS_ORDER, type StatusLabels } from "@/lib/books/status-cycle";
 
 type Book = {
@@ -20,7 +21,10 @@ type Book = {
   status?: string | null;
   currentPage?: number | null;
   numberOfPages?: string | null;
+  groupIds?: string[];
 };
+
+export type GroupInfo = { id: string; name: string; color: string | null };
 
 type CardDict = {
   toRead: string;
@@ -41,6 +45,7 @@ export function BookCard({
   statusLabels,
   pagesPerReadEvent,
   dict,
+  groups,
   onFinished,
 }: {
   book: Book;
@@ -48,6 +53,7 @@ export function BookCard({
   statusLabels?: StatusLabels;
   pagesPerReadEvent: number;
   dict: CardDict;
+  groups?: GroupInfo[];
   onFinished?: (title: string) => void;
 }) {
   const rating = book.rating ?? 0;
@@ -60,6 +66,12 @@ export function BookCard({
   const totalPages = book.numberOfPages ? parseInt(book.numberOfPages, 10) : null;
   const knownPages = totalPages !== null && !isNaN(totalPages) && totalPages > 0;
   const pagesLeft = knownPages ? Math.max(0, totalPages - (book.currentPage ?? 0)) : null;
+
+  // v2.8.0 — group dots: capped, tooltip-backed, never the sole identifier.
+  const memberGroups = useMemo(() => {
+    if (!groups || !book.groupIds?.length) return [];
+    return book.groupIds.map((id) => groups.find((g) => g.id === id)).filter((g): g is GroupInfo => !!g);
+  }, [groups, book.groupIds]);
 
   function changeStatus(next: string) {
     hapticFeedback("medium");
@@ -171,6 +183,27 @@ export function BookCard({
             <p className="font-[var(--font-sans)] text-sm leading-tight text-foreground/80 opacity-0 select-none line-clamp-1">
               —
             </p>
+          )}
+          {memberGroups.length > 0 && (
+            <span
+              className="flex items-center gap-1"
+              title={memberGroups.map((g) => g.name).join(", ")}
+              aria-label={memberGroups.map((g) => g.name).join(", ")}
+            >
+              {memberGroups.slice(0, GROUP_DOTS_MAX).map((g) => (
+                <span
+                  key={g.id}
+                  aria-hidden="true"
+                  className="h-2 w-2 shrink-0 rounded-full border border-[var(--border)]"
+                  style={g.color ? { backgroundColor: g.color } : undefined}
+                />
+              ))}
+              {memberGroups.length > GROUP_DOTS_MAX && (
+                <span className="font-[var(--font-sans)] text-[10px] text-muted-foreground">
+                  +{memberGroups.length - GROUP_DOTS_MAX}
+                </span>
+              )}
+            </span>
           )}
           <div className="flex items-center gap-1.5 pt-0.5">
             {rating > 0 ? (
